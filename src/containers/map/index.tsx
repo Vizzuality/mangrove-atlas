@@ -537,6 +537,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
           onClick={onClickHandler}
           onMouseMove={handleMouseMove}
           onLoad={handleMapLoad}
+          onError={(e) => console.warn('Map error:', e.error?.message)}
           cursor={cursor}
           preserveDrawingBuffer
           testMode={typeof navigator !== 'undefined' && navigator.webdriver === true}

@@ -10,6 +10,7 @@ import { TXProvider } from '@transifex/react';
 import { SessionProvider } from 'next-auth/react';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
+import { SessionSync } from '@/components/session-sync';
 import { MediaContextProvider } from 'components/media-query';
 import { Toaster } from 'components/ui/toast';
 import { TooltipProvider } from 'components/ui/tooltip';
@@ -45,7 +46,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           <MediaContextProvider disableDynamicMediaQueries>
             <MapProvider>
               <TooltipProvider delayDuration={200}>
-                <SessionProvider>{children}</SessionProvider>
+                <SessionProvider>
+                  <SessionSync />
+                  {children}
+                </SessionProvider>
               </TooltipProvider>
             </MapProvider>
             <Toaster position="top-right" />
