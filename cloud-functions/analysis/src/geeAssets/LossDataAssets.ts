@@ -7,7 +7,7 @@ export interface ILossDataAsset extends IDataAsset {
 
 export const LossDataAsset: ILossDataAsset = {
   assetPath: {
-    default: "projects/global-mangrove-watch/land-cover/mangrove_extent_loss-v3"
+    default: "projects/mangrove-atlas-246414/assets/land-cover/mangrove_extent_loss-v3"
   },
   name: "loss",
   getEEAsset(){
