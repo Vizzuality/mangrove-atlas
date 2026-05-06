@@ -65,7 +65,7 @@ test.fixme(
 );
 
 async function testCategoryWidgets(page, category: Category) {
-  await page.goto(`/?category="${category}"`);
+  await page.goto(`/?category=${category}`);
   // Wait for the wrapper to be attached (it may have no visible content for some categories)
   await page.getByTestId('widgets-wrapper').waitFor({ state: 'attached' });
 

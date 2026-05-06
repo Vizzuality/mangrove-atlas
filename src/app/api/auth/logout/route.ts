@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { clearSSOCookie } from '@/lib/auth/sso-cookie';
+
 import { getToken } from 'next-auth/jwt';
 
 export async function POST(request: NextRequest) {
@@ -18,8 +20,12 @@ export async function POST(request: NextRequest) {
       }).catch(() => {});
     }
 
-    return NextResponse.json({ ok: true });
+    const response = NextResponse.json({ ok: true });
+    clearSSOCookie(response);
+    return response;
   } catch {
-    return NextResponse.json({ ok: true });
+    const response = NextResponse.json({ ok: true });
+    clearSSOCookie(response);
+    return response;
   }
 }

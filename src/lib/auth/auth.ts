@@ -76,6 +76,35 @@ export const authOptions: NextAuthOptions = {
         };
       },
     }),
+
+    // SSO: token-based provider for restoring sessions from the shared httpOnly cookie.
+    // Used when a user logged in on MRTT visits GMW.
+    CredentialsProvider({
+      id: 'shared-token',
+      name: 'SharedToken',
+      credentials: {
+        token: { type: 'text' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.token) return null;
+
+        const res = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
+          headers: { Authorization: `Bearer ${credentials.token}` },
+        });
+
+        if (!res.ok) return null;
+
+        const data = await res.json();
+
+        return {
+          id: data.email,
+          email: data.email,
+          name: data.name || data.username,
+          organization: data.organization || null,
+          accessToken: credentials.token,
+        };
+      },
+    }),
   ],
 
   callbacks: {
