@@ -3,15 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSSOCorsHeaders, isAllowedRedirectUri } from '@/lib/auth/sso-config';
 import { clearSSOCookie, getSSOToken } from '@/lib/auth/sso-cookie';
 
-/**
- * SSO Logout endpoint.
- *
- * Clears the shared httpOnly cookie. Called by MRTT on logout
- * to ensure GMW session is also invalidated.
- *
- * POST /api/auth/sso/logout
- * Body: { redirect_uri?: string }
- */
 export async function POST(request: NextRequest) {
   const corsHeaders = getSSOCorsHeaders();
 

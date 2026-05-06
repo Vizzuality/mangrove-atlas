@@ -3,15 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getSSOCorsHeaders, isAllowedRedirectUri } from '@/lib/auth/sso-config';
 import { setSSOCookie } from '@/lib/auth/sso-cookie';
 
-/**
- * SSO Sync endpoint.
- *
- * Called by MRTT after a successful login to set the shared httpOnly cookie.
- * This way when the user visits GMW, the session can be restored.
- *
- * POST /api/auth/sso/sync
- * Body: { token: string, redirect_uri?: string }
- */
 export async function POST(request: NextRequest) {
   const corsHeaders = getSSOCorsHeaders();
 

@@ -5,15 +5,6 @@ import { clearSSOCookie, getSSOToken } from '@/lib/auth/sso-cookie';
 
 import { encode } from 'next-auth/jwt';
 
-/**
- * SSO Session Restore endpoint.
- *
- * Called by the SessionSync client component when no next-auth session exists
- * but an SSO cookie might. Validates the token, creates a next-auth JWT,
- * and sets the session cookie — all server-side, httpOnly throughout.
- *
- * GET /api/auth/sso/restore
- */
 export async function GET(request: NextRequest) {
   const token = getSSOToken(request);
 

@@ -4,15 +4,6 @@ import { generateSSOCode } from '@/lib/auth/sso-code';
 import { isAllowedRedirectUri } from '@/lib/auth/sso-config';
 import { clearSSOCookie, getSSOToken } from '@/lib/auth/sso-cookie';
 
-/**
- * SSO Authorize endpoint.
- *
- * MRTT redirects here when it has no local session.
- * If a valid SSO cookie exists, generates a short-lived authorization code
- * and redirects back to MRTT with the code.
- *
- * GET /api/auth/sso/authorize?redirect_uri=https://mrtt.globalmangrovewatch.org/auth/sso/callback
- */
 export async function GET(request: NextRequest) {
   const redirectUri = request.nextUrl.searchParams.get('redirect_uri');
 

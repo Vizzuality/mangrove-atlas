@@ -3,15 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifySSOCode } from '@/lib/auth/sso-code';
 import { getSSOCorsHeaders } from '@/lib/auth/sso-config';
 
-/**
- * SSO Code Exchange endpoint.
- *
- * MRTT calls this after receiving an authorization code from /authorize.
- * Verifies the code and returns the backend token + user info.
- *
- * POST /api/auth/sso/exchange
- * Body: { code: string }
- */
 export async function POST(request: NextRequest) {
   const corsHeaders = getSSOCorsHeaders();
 
