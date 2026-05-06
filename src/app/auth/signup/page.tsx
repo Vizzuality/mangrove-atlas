@@ -101,7 +101,7 @@ export default function SignupPage() {
         <LandingNavigation />
         <div className="flex h-full w-full flex-col justify-center space-y-10">
           <h1 className="text-brand-800 font-sans text-[40px] font-light">Sign up</h1>
-          <div className="space-y-6">
+          <div className="divide-text-gray-200 space-y-6 divide-y">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <fieldset className="space-y-4">
