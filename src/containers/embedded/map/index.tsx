@@ -113,6 +113,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMoveEnd={handleMoveEnd}
         onLoad={handleMapLoad}
+        onError={(e) => console.warn('Map error:', e.error?.message)}
         interactiveLayerIds={[]}
         cursor={cursor}
         preserveDrawingBuffer
