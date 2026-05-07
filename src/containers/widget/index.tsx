@@ -73,7 +73,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         })}
         style={props.index !== undefined ? { zIndex: 1000 - props.index } : undefined}
       >
-        <div className="relative rounded-3xl">
+        <div className="relative overflow-hidden rounded-3xl">
           {/* border layer */}
           <div
             aria-hidden
@@ -86,8 +86,8 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           />
 
           {/* content layer */}
-          <div className="relative z-10">
-            <div className="px-9 py-3" data-testid={`widget-${id}`}>
+          <div className="relative z-10 min-w-0">
+            <div className="min-w-0 px-9 py-3" data-testid={`widget-${id}`}>
               <Helper
                 className={{
                   button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',

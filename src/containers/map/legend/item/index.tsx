@@ -104,7 +104,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
               overlay={false}
             >
               <DialogTitle className="sr-only">Layer statistics</DialogTitle>
-              <div className="no-scrollbar relative overflow-y-auto px-3">
+              <div className="no-scrollbar relative w-full min-w-0 overflow-x-auto overflow-y-auto px-3">
                 <WidgetWrapper
                   key={l.id}
                   title={title}
