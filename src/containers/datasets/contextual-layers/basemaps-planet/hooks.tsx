@@ -16,35 +16,38 @@ type Mosaics = {
   value: string;
 };
 
-const getDates = (data) =>
-  data.map(({ first_acquired }) => ({
-    value: format(new Date(first_acquired), 'yyyy-MM'),
-    label: format(new Date(first_acquired), 'MMMM yyyy'),
-  }));
+type MosaicsResponse = {
+  links?: { [key: string]: string | number };
+  mosaics?: Mosaics[];
+  data?: Mosaics[];
+};
+
+const getDates = (data: Mosaics[] = []) =>
+  data
+    .filter((m) => m?.first_acquired)
+    .map(({ first_acquired }) => ({
+      value: format(new Date(first_acquired), 'yyyy-MM'),
+      label: format(new Date(first_acquired), 'MMMM yyyy'),
+    }));
+
+type DateOption = { value: string; label: string };
 
 export function useMosaicsFromSeriesPlanetSatelliteBasemaps(
   id: MosaicId,
   paramsOptions?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<{
-    links: { [key: string]: string | number };
-    mosaics: Mosaics[];
-  }>
+  queryOptions?: Omit<UseQueryOptions<MosaicsResponse, Error, DateOption[]>, 'select'>
 ) {
   const fetchPlanetMosaics = () =>
-    PlanetAPI.request({
+    PlanetAPI.request<MosaicsResponse>({
       method: 'GET',
       url: `/series/${id}/mosaics`,
-      params: {
-        paramsOptions,
-      },
+      params: paramsOptions,
     }).then((response) => response.data);
 
   return useQuery({
     queryKey: ['planet-satellite-mosaic-from-series', paramsOptions, id],
     queryFn: fetchPlanetMosaics,
-    select: ({ mosaics }: { mosaics: Mosaics[] }) => {
-      return getDates(mosaics);
-    },
+    select: (raw: MosaicsResponse) => getDates(raw?.mosaics ?? raw?.data ?? []),
     ...queryOptions,
   });
 }
