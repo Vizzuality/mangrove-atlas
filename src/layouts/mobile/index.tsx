@@ -35,6 +35,7 @@ const MobileLayout = () => {
           alt="Picture of the author"
           width={100}
           height={100}
+          priority
           className="h-[72px] w-[330px]"
         />
         <LOGO_MOBILE_SVG
