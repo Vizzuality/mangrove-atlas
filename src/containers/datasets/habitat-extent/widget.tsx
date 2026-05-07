@@ -1,10 +1,10 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
-import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
+import { habitatExtentIsPlaying, habitatExtentSettings } from '@/store/widgets/habitat-extent';
 
 import { useQueryClient } from '@tanstack/react-query';
 import type { PrimitiveAtom } from 'jotai';
@@ -16,6 +16,7 @@ import NoData from '@/containers/widgets/no-data';
 
 import Loading from '@/components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import TimelineSlider from '@/components/ui/timeline-slider';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SELECT_ARROW_STYLES,
@@ -31,6 +32,7 @@ import { useMangroveHabitatExtent, widgetSlug } from './hooks';
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
   const [year, setYear] = useAtom(habitatExtentSettings as unknown as PrimitiveAtom<number | null>);
+  const [isPlaying, setIsPlaying] = useAtom(habitatExtentIsPlaying);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
   const [isCanceled, setIsCanceled] = useState(false);
 
@@ -72,8 +74,41 @@ const HabitatExtent = () => {
     noData,
   } = data;
 
-  const handleClick = useCallback(
-    (y) => {
+  const sortedYears = useMemo(() => [...(years || [])].sort((a, b) => a - b), [years]);
+  const currentYear = year || defaultYear;
+
+  const yearRef = useRef(currentYear);
+  useEffect(() => {
+    yearRef.current = currentYear;
+  }, [currentYear]);
+
+  useEffect(() => {
+    if (!isPlaying || !sortedYears.length) return;
+    const intervalId = setInterval(() => {
+      const idx = sortedYears.indexOf(yearRef.current ?? sortedYears[sortedYears.length - 1]);
+      const next = (idx + 1) % sortedYears.length;
+      setYear(sortedYears[next]);
+    }, 1200);
+    return () => clearInterval(intervalId);
+  }, [isPlaying, sortedYears, setYear]);
+
+  const handleTogglePlay = useCallback(() => {
+    trackEvent('Widget iteration - timeline playback in habitat extent', {
+      category: 'Widget iteration',
+      action: isPlaying ? 'Pause' : 'Play',
+      label: 'Widget iteration - timeline playback in habitat extent',
+    });
+    setIsPlaying(!isPlaying);
+  }, [isPlaying, setIsPlaying]);
+
+  const handleYearChange = useCallback(
+    (y: number) => {
+      trackEvent('Widget iteration - date change in habitat extent', {
+        category: 'Widget iteration',
+        action: 'Select',
+        label: `Widget iteration - change date in habitat extent to ${y}`,
+        value: y,
+      });
       setYear(y);
     },
     [setYear]
@@ -159,55 +194,23 @@ const HabitatExtent = () => {
                 </PopoverContent>
               </Popover>
             </span>{' '}
-            in{' '}
-            <Popover>
-              <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES}`}>
-                  {year || defaultYear}
-                  <ARROW_SVG
-                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                    role="img"
-                    title="Arrow"
-                  />
-                </span>
-              </PopoverTrigger>
-              <PopoverContent className="shadow-border rounded-2xl px-2">
-                <ul className="z-20 max-h-56 space-y-0.5">
-                  {years?.map((y) => (
-                    <li key={y} className="last-of-type:pb-4">
-                      <button
-                        aria-label="select year"
-                        className={cn({
-                          'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
-                          'text-brand-800 font-semibold': y === year || y === defaultYear,
-                        })}
-                        type="button"
-                        onClick={() => {
-                          // Google Analytics tracking
-                          trackEvent('Widget iteration - date change in habitat extent', {
-                            category: 'Widget iteration',
-                            action: 'Select',
-                            label: `Widget iteration - change date in habitat extent to ${y}`,
-                            value: y,
-                          });
-                          handleClick(y);
-                        }}
-                      >
-                        {y || defaultYear}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </PopoverContent>
-            </Popover>
-            , this represents a linear coverage of{' '}
-            <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of the
+            in <span className="font-bold">{currentYear}</span>, this represents a linear coverage
+            of <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of the
             <span className="notranslate font-bold">
               {' '}
               {totalLength} {defaultUnitLinearCoverage}
             </span>{' '}
             of the coastline.
           </p>
+          {sortedYears.length > 1 && (
+            <TimelineSlider
+              years={sortedYears}
+              currentYear={currentYear}
+              isPlaying={isPlaying}
+              onYearChange={handleYearChange}
+              onTogglePlay={handleTogglePlay}
+            />
+          )}
           <div className="-mx-2">
             <ContextualLayersWrapper
               origin="mangrove_alerts"

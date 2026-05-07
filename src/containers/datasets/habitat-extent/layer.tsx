@@ -20,7 +20,8 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
 
   const SOURCE = useSource({ year: currentYear });
   const LAYERS = useLayers({
-    year: currentYear,
+    activeYear: currentYear,
+    years,
     id,
     opacity: parseFloat(activeLayer?.opacity ?? '1'),
     visibility: activeLayer?.visibility ?? 'visible',
