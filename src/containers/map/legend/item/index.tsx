@@ -116,10 +116,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
                   <Widget id={widgetId} />
                 </WidgetWrapper>
               </div>
-              <DialogClose
-                className="top-8 md:fixed md:top-18! md:left-148.75"
-                onClose={() => setStatisticsDialogVisibility(false)}
-              />
+              <DialogClose onClose={() => setStatisticsDialogVisibility(false)} />
             </DialogContent>
           </Dialog>
         </div>
