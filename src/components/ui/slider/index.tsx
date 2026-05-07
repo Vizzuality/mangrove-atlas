@@ -15,6 +15,8 @@ type SliderProps = {
   max?: number;
   step?: number;
   showValueLabel?: boolean;
+  thumbAriaLabel?: string;
+  thumbAriaValueText?: string;
   onValueChange?: (value: number[]) => void;
 };
 
@@ -25,6 +27,8 @@ const Slider = ({
   max = 1,
   step = 0.1,
   showValueLabel = true,
+  thumbAriaLabel,
+  thumbAriaValueText,
   onValueChange,
   className,
   trackClassName,
@@ -58,8 +62,10 @@ const Slider = ({
       </SliderPrimitive.Track>
 
       <SliderPrimitive.Thumb
+        aria-label={thumbAriaLabel}
+        aria-valuetext={thumbAriaValueText}
         className={cn(
-          'relative block h-3 w-3 cursor-pointer rounded-[10px] border border-white bg-black focus:outline-none',
+          'focus-visible:ring-ring relative block h-3 w-3 cursor-pointer rounded-[10px] border border-white bg-black focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
           thumbClassName
         )}
       >

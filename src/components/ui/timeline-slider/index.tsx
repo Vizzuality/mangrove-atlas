@@ -34,14 +34,15 @@ const TimelineSlider = ({
     <div className="flex items-center gap-3">
       <button
         aria-label={isPlaying ? 'Pause' : 'Play'}
+        aria-pressed={isPlaying}
         type="button"
         onClick={onTogglePlay}
-        className="bg-brand-800 hover:bg-brand-800/80 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white transition-colors"
+        className="bg-brand-800 hover:bg-brand-800/80 focus-visible:ring-ring flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
       >
         {isPlaying ? (
-          <PauseIcon className="h-3.5 w-3.5" />
+          <PauseIcon aria-hidden="true" className="h-3.5 w-3.5" />
         ) : (
-          <PlayIcon className="ml-0.5 h-3.5 w-3.5" />
+          <PlayIcon aria-hidden="true" className="ml-0.5 h-3.5 w-3.5" />
         )}
       </button>
 
@@ -53,12 +54,14 @@ const TimelineSlider = ({
           value={[value]}
           onValueChange={handleValueChange}
           showValueLabel={false}
+          thumbAriaLabel="Year"
+          thumbAriaValueText={String(currentYear)}
           trackClassName="bg-black/20"
           rangeClassName="bg-brand-800"
           thumbClassName="h-3.5 w-3.5 bg-brand-800 rounded-full border-2 shadow"
         />
 
-        <div className="relative mt-0.5 flex w-full justify-between px-0">
+        <div aria-hidden="true" className="relative mt-0.5 flex w-full justify-between px-0">
           {years.map((y, i) => (
             <span
               key={y}
