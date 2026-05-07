@@ -111,7 +111,7 @@ const NewsTooltip = ({
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <NewsButton showIndicator={showIndicator} onClick={onOpenDialog} />
         </TooltipTrigger>
 

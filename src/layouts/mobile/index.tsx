@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,8 +11,9 @@ import { mapViewAtom } from '@/store/sidebar';
 import { useAtomValue } from 'jotai';
 
 import NavigationBar from '@/containers/navigation/mobile';
-import WelcomeIntroMessage from '@/containers/welcome-message';
 import WidgetsContainer from '@/containers/widgets';
+
+const WelcomeIntroMessage = dynamic(() => import('@/containers/welcome-message'), { ssr: false });
 
 import LOGO_MOBILE_SVG from '@/svgs/logo-mobile';
 
