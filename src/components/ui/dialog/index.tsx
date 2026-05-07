@@ -56,7 +56,7 @@ const DialogContent = forwardRef<
         ref={ref}
         aria-describedby={ariaDescribedBy}
         className={cn({
-          'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-screen w-full overflow-x-hidden overflow-y-auto p-4 duration-300':
+          'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-x-hidden overflow-y-auto p-4 duration-300':
             true,
 
           [classNameContent || '']: !!classNameContent,
@@ -65,7 +65,7 @@ const DialogContent = forwardRef<
       >
         <div
           className={cn({
-            'shadow-card relative flex max-w-135 shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
+            'shadow-card pointer-events-auto relative flex max-w-135 shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
               true,
             [className || '']: !!className,
           })}

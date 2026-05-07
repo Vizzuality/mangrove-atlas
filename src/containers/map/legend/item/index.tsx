@@ -74,27 +74,23 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
               </button>
             )}
           </Media>
-          <Dialog open={statisticsDialogVisibility}>
-            <DialogTrigger asChild>
-              <Tooltip>
+          <Dialog open={statisticsDialogVisibility} onOpenChange={setStatisticsDialogVisibility}>
+            <Tooltip>
+              <DialogTrigger asChild>
                 <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    aria-label="Layer statistics"
-                    onClick={() => setStatisticsDialogVisibility(!statisticsDialogVisibility)}
-                  >
+                  <button type="button" aria-label="Layer statistics">
                     <p className="pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
                       {title}
                     </p>
                   </button>
                 </TooltipTrigger>
-                <TooltipPortal>
-                  <TooltipContent className="bg-gray-600 px-2 text-white">
-                    Layer statistics
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
-            </DialogTrigger>
+              </DialogTrigger>
+              <TooltipPortal>
+                <TooltipContent className="bg-gray-600 px-2 text-white">
+                  Layer statistics
+                </TooltipContent>
+              </TooltipPortal>
+            </Tooltip>
 
             <DialogContent
               className={cn({

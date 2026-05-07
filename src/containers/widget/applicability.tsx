@@ -32,7 +32,7 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
   return (
     <p
       className={cn({
-        'flex text-sm text-black/85 md:text-center md:whitespace-nowrap': true,
+        'text-sm text-black/85': true,
         hidden: isCollapsed,
         block: !isCollapsed,
       })}
@@ -40,15 +40,17 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
       <span className="font-normal">Data applicability:</span>{' '}
       <span className="font-light">{applicability}.</span>{' '}
       <Dialog>
-        <DialogTrigger>
-          <div className="text-brand-800 inline-flex underline hover:no-underline">Learn more</div>
+        <DialogTrigger asChild>
+          <button type="button" className="text-brand-800 underline hover:no-underline">
+            Learn more
+          </button>
         </DialogTrigger>
         <DialogContent className="md:mb-20">
           <DialogTitle className="sr-only">Data applicability</DialogTitle>
           <div className="no-scrollbar overflow-y-auto">
             <Info />
           </div>
-          <DialogClose className="fixed top-18! left-[595px]" />
+          <DialogClose />
         </DialogContent>
       </Dialog>
     </p>
