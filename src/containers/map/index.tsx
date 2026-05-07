@@ -160,7 +160,9 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   }, [map, tmpCamera]);
 
   const handleMoveEnd = useCallback(() => {
-    if (map) setURLBounds(map.getBounds().toArray());
+    if (map) {
+      setURLBounds(map.getBounds().toArray());
+    }
     setTmpCamera(null);
   }, [map, setURLBounds, setTmpCamera]);
 

@@ -1,7 +1,8 @@
 import cn from '@/lib/classnames';
 
-import * as SliderPrimitive from '@radix-ui/react-slider';
 import { LuPause, LuPlay } from 'react-icons/lu';
+
+import Slider from '@/components/ui/slider';
 
 const PauseIcon = LuPause as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 const PlayIcon = LuPlay as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
@@ -45,20 +46,17 @@ const TimelineSlider = ({
       </button>
 
       <div className="relative flex w-full flex-col">
-        <SliderPrimitive.Root
-          className="relative flex h-4 w-full touch-none items-center select-none"
+        <Slider
           min={0}
           max={years.length - 1}
           step={1}
           value={[value]}
           onValueChange={handleValueChange}
-        >
-          <SliderPrimitive.Track className="relative h-[3px] grow rounded-full bg-black/20">
-            <SliderPrimitive.Range className="bg-brand-800 absolute h-full rounded-full" />
-          </SliderPrimitive.Track>
-
-          <SliderPrimitive.Thumb className="bg-brand-800 block h-3.5 w-3.5 cursor-pointer rounded-full border-2 border-white shadow focus:outline-none" />
-        </SliderPrimitive.Root>
+          showValueLabel={false}
+          trackClassName="bg-black/20"
+          rangeClassName="bg-brand-800"
+          thumbClassName="h-3.5 w-3.5 bg-brand-800 rounded-full border-2 shadow"
+        />
 
         <div className="relative mt-0.5 flex w-full justify-between px-0">
           {years.map((y, i) => (

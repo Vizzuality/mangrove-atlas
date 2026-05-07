@@ -202,15 +202,17 @@ const HabitatExtent = () => {
             </span>{' '}
             of the coastline.
           </p>
-          {sortedYears.length > 1 && (
-            <TimelineSlider
-              years={sortedYears}
-              currentYear={currentYear}
-              isPlaying={isPlaying}
-              onYearChange={handleYearChange}
-              onTogglePlay={handleTogglePlay}
-            />
-          )}
+          <div className="py-4">
+            {sortedYears.length > 1 && (
+              <TimelineSlider
+                years={sortedYears}
+                currentYear={currentYear}
+                isPlaying={isPlaying}
+                onYearChange={handleYearChange}
+                onTogglePlay={handleTogglePlay}
+              />
+            )}
+          </div>
           <div className="-mx-2">
             <ContextualLayersWrapper
               origin="mangrove_alerts"

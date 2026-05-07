@@ -26,7 +26,9 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
     opacity: parseFloat(activeLayer?.opacity ?? '1'),
     visibility: activeLayer?.visibility ?? 'visible',
   });
+
   if (!SOURCE || !LAYERS) return null;
+
   return (
     <Source key={SOURCE.id} {...SOURCE}>
       {LAYERS.map((LAYER) => (
