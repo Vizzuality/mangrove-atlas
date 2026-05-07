@@ -38,35 +38,44 @@ const DialogContent = forwardRef<
     overlay?: boolean;
     classNameContent?: string;
   }
->(({ className, classNameContent, children, overlay = false, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn({
-        'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-screen w-full overflow-x-hidden overflow-y-auto p-4 duration-300':
-          true,
-        // 'sm:pr-16 md:left-0  md:pt-10 md:pl-14': true,
-
-        [classNameContent || '']: !!classNameContent,
-      })}
-      // style={{
-      //   background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
-      // }}
-      {...props}
-    >
-      <div
+>(
+  (
+    {
+      className,
+      classNameContent,
+      children,
+      overlay: _overlay,
+      'aria-describedby': ariaDescribedBy,
+      ...props
+    },
+    ref
+  ) => (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        aria-describedby={ariaDescribedBy}
         className={cn({
-          'shadow-card linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%) relative flex max-w-135 shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
+          'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-x-hidden overflow-y-auto p-4 duration-300':
             true,
-          [className || '']: !!className,
+
+          [classNameContent || '']: !!classNameContent,
         })}
+        {...props}
       >
-        {children}
-      </div>
-    </DialogPrimitive.Content>
-  </DialogPortal>
-));
+        <div
+          className={cn({
+            'shadow-card pointer-events-auto relative flex max-w-135 shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
+              true,
+            [className || '']: !!className,
+          })}
+        >
+          {children}
+        </div>
+      </DialogPrimitive.Content>
+    </DialogPortal>
+  )
+);
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (

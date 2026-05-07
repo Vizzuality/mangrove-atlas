@@ -2,8 +2,11 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import WelcomeIntroMessage from '@/containers/welcome-message';
+import dynamic from 'next/dynamic';
+
 import WidgetsContainer from '@/containers/widgets';
+
+const WelcomeIntroMessage = dynamic(() => import('@/containers/welcome-message'), { ssr: false });
 
 import Logo from 'components/logo';
 

@@ -11,15 +11,15 @@ const SvgClose = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRPr
       d="M12 4L4 12"
       stroke="currentColor"
       strokeWidth="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M4 4L12 12"
       stroke="currentColor"
       strokeWidth="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <svg
       xmlns="http://www.w3.org/2000/svg"

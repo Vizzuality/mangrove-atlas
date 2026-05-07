@@ -43,9 +43,9 @@ const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }
   );
 
   return (
-    <Tooltip>
-      <TooltipTrigger>
-        <div className={cn(className, { 'flex flex-col': true })}>
+    <div className={cn(className, { 'flex flex-col': true })}>
+      <Tooltip>
+        <TooltipTrigger asChild>
           <button
             className={cn({
               [COMMON_CLASSES]: true,
@@ -61,6 +61,11 @@ const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }
               title="Zoom-in"
             />
           </button>
+        </TooltipTrigger>
+        <TooltipContent className="bg-gray-600 px-2 text-white">Zoom in</TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger asChild>
           <button
             className={cn({
               [COMMON_CLASSES]: true,
@@ -76,10 +81,10 @@ const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }
               title="Zoom-out"
             />
           </button>
-        </div>
-      </TooltipTrigger>
-      <TooltipContent className="bg-gray-600 px-2 text-white">Zoom control</TooltipContent>
-    </Tooltip>
+        </TooltipTrigger>
+        <TooltipContent className="bg-gray-600 px-2 text-white">Zoom out</TooltipContent>
+      </Tooltip>
+    </div>
   );
 };
 

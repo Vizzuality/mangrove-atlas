@@ -74,27 +74,23 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
               </button>
             )}
           </Media>
-          <Dialog open={statisticsDialogVisibility}>
-            <DialogTrigger asChild>
-              <Tooltip>
+          <Dialog open={statisticsDialogVisibility} onOpenChange={setStatisticsDialogVisibility}>
+            <Tooltip>
+              <DialogTrigger asChild>
                 <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    aria-label="Layer statistics"
-                    onClick={() => setStatisticsDialogVisibility(!statisticsDialogVisibility)}
-                  >
+                  <button type="button" aria-label="Layer statistics">
                     <p className="pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
                       {title}
                     </p>
                   </button>
                 </TooltipTrigger>
-                <TooltipPortal>
-                  <TooltipContent className="bg-gray-600 px-2 text-white">
-                    Layer statistics
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
-            </DialogTrigger>
+              </DialogTrigger>
+              <TooltipPortal>
+                <TooltipContent className="bg-gray-600 px-2 text-white">
+                  Layer statistics
+                </TooltipContent>
+              </TooltipPortal>
+            </Tooltip>
 
             <DialogContent
               className={cn({
@@ -104,7 +100,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
               overlay={false}
             >
               <DialogTitle className="sr-only">Layer statistics</DialogTitle>
-              <div className="no-scrollbar relative overflow-y-auto px-3">
+              <div className="no-scrollbar relative w-full min-w-0 overflow-x-auto overflow-y-auto px-3">
                 <WidgetWrapper
                   key={l.id}
                   title={title}
@@ -116,10 +112,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
                   <Widget id={widgetId} />
                 </WidgetWrapper>
               </div>
-              <DialogClose
-                className="top-8 md:fixed md:top-18! md:left-148.75"
-                onClose={() => setStatisticsDialogVisibility(false)}
-              />
+              <DialogClose onClose={() => setStatisticsDialogVisibility(false)} />
             </DialogContent>
           </Dialog>
         </div>

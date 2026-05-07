@@ -23,8 +23,12 @@ SelectValue.displayName = SelectPrimitive.Value.displayName;
 const SelectIcon = forwardRef<
   ElementRef<typeof SelectPrimitive.Icon>,
   ComponentPropsWithoutRef<typeof SelectPrimitive.Icon>
->(({ className, children, ...props }) => (
-  <SelectPrimitive.Icon className={cn(className, { 'text-muted-foreground': true })} {...props}>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Icon
+    ref={ref}
+    className={cn(className, { 'text-muted-foreground': true })}
+    {...props}
+  >
     {children}
   </SelectPrimitive.Icon>
 ));
