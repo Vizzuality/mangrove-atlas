@@ -6,10 +6,13 @@ export const SSO_COOKIE_NAME = isProd ? '__Secure-gmw-sso-token' : 'gmw-sso-toke
 
 const COOKIE_DOMAIN = isProd ? '.globalmangrovewatch.org' : undefined;
 
+// SameSite=None required so the cookie persists when set via cross-site
+// fetch from MRTT (POST /api/auth/sso/sync). Browsers require Secure with
+// SameSite=None, so dev (non-HTTPS) falls back to Lax.
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: isProd,
-  sameSite: 'lax' as const,
+  sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
   path: '/',
   ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
 };
