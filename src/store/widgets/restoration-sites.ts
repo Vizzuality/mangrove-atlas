@@ -1,16 +1,5 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const RestorationSitesFilters = atom({
-  key: 'restoration-sites-filters',
-  default: {},
-});
+export const RestorationSitesMapFilters = atom({});
 
-export const RestorationSitesMapFilters = atom({
-  key: 'restoration-sites-map-filters',
-  default: {},
-});
-
-export const RestorationSitesFiltersApplication = atom({
-  key: 'restoration-sites-filters-application',
-  default: true,
-});
+export const RestorationSitesFiltersApplication = atom(true);

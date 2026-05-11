@@ -12,7 +12,7 @@ import PostComponent from '@/containers/news/post';
 import SafeHTML from '@/components/dompurify';
 import { DialogClose } from '@/components/ui/dialog';
 
-export const BlogContent = () => {
+const BlogContent = () => {
   const { data } = useBlogPosts({ wl_topic: [53] });
 
   const [postInfo, setPostInfo] = useState<PostProps | null>(null);

@@ -17,7 +17,7 @@ const WIDGETS_BY_CATEGORY = WIDGETS.filter(
 );
 
 test.beforeEach(async ({ page }) => {
-  await page.goto(`/?category="distribution_and_change"`);
+  await page.goto('/?category=distribution_and_change');
   await page.getByTestId('widgets-wrapper').waitFor();
 });
 

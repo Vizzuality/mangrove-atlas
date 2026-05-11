@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import { analysisAtom } from '@/store/analysis';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import NoData from '@/containers/widgets/no-data';
 
@@ -15,7 +15,7 @@ import { useMangroveHeight, widgetSlug } from './hooks';
 
 const HeightWidget = () => {
   const [isCanceled, setIsCanceled] = useState(false);
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
 
   const queryClient = useQueryClient();
 

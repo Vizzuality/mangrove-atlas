@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
@@ -16,11 +17,8 @@ import {
 import Indicator from './indicator';
 
 const ClimateWatchNationalDashboard = () => {
-  const {
-    query: { params },
-  } = useRouter();
-  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
-  const id = params?.[1];
+  const { type, id } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
 
   const {
     data: { name, iso },

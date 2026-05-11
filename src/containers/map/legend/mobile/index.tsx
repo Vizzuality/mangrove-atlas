@@ -2,12 +2,11 @@ import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { IconBaseProps } from 'react-icons/lib';
-import { useRecoilValue } from 'recoil';
 
 import LegendItem from '../item';
 
@@ -15,7 +14,7 @@ const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
 
 const Legend = () => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -33,7 +32,7 @@ const Legend = () => {
   };
 
   return (
-    <div className="flex w-screen justify-center print:hidden">
+    <div className="flex w-screen justify-center">
       {!!activeLayers?.length && (
         <>
           <button
@@ -61,8 +60,8 @@ const Legend = () => {
               className="fixed md:right-[73px]"
             >
               <div className="shadow-medium animate-in data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16 w-[360px] gap-4 rounded-3xl border bg-white duration-300">
-                <div className="box-content flex max-h-[70vh] flex-col space-y-1 divide-y divide-black/42 overflow-y-auto pt-4 md:px-4 md:print:hidden">
-                  <div className="box-content flex flex-col space-y-1 divide-y divide-black/42 overflow-y-auto px-4 pt-4 md:max-h-[55vh] print:hidden">
+                <div className="box-content flex max-h-[70vh] flex-col space-y-1 divide-y divide-black/42 overflow-y-auto pt-4 md:px-4">
+                  <div className="box-content flex flex-col space-y-1 divide-y divide-black/42 overflow-y-auto px-4 pt-4 md:max-h-[55vh]">
                     {activeLayers?.map((l) => {
                       return <LegendItem id={l.id} key={l.id} l={l} />;
                     })}

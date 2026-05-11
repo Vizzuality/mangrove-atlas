@@ -2,17 +2,11 @@
 
 import { useForm } from 'react-hook-form';
 
-import { useRouter } from 'next/router';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signOut, useSession } from 'next-auth/react';
 import { z } from 'zod';
 
 import { usePutUpdateUser } from '@/containers/auth/hooks';
-
-import { Button } from 'components/ui/button';
-import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
-import CHECK_SVG from '@/svgs/ui/check';
 
 import {
   Form,
@@ -23,6 +17,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Button } from 'components/ui/button';
+import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
+
+import CHECK_SVG from '@/svgs/ui/check';
 
 const formSchema = z.object({
   username: z.string().min(1, { message: 'Please enter your name' }).optional(),
@@ -43,7 +41,6 @@ const formSchema = z.object({
 });
 
 const AccountContent = () => {
-  const { push } = useRouter();
   const { data: session } = useSession();
 
   const user = session?.user;
@@ -241,8 +238,8 @@ const AccountContent = () => {
         />
 
         <div className="flex items-center justify-between">
-          <Button type="submit" disabled={updateUser.isLoading} className="h-9 font-semibold">
-            {updateUser.isLoading ? 'Saving…' : 'Save changes'}
+          <Button type="submit" disabled={updateUser.isPending} className="h-9 font-semibold">
+            {updateUser.isPending ? 'Saving…' : 'Save changes'}
           </Button>
           <Button
             type="button"

@@ -1,4 +1,4 @@
-import { forwardRef, ElementRef, ComponentPropsWithoutRef, HTMLAttributes } from 'react';
+import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -7,14 +7,6 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
-
-const DropdownMenuGroup = DropdownMenuPrimitive.Group;
-
-const DropdownMenuPortal = DropdownMenuPrimitive.Portal;
-
-const DropdownMenuSub = DropdownMenuPrimitive.Sub;
-
-const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
 const DropdownMenuContent = forwardRef<
   ElementRef<typeof DropdownMenuPrimitive.Content>,
@@ -47,7 +39,7 @@ const DropdownMenuItem = forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(className, {
-      'focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50':
+      'focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50':
         true,
     })}
     {...props}
@@ -55,56 +47,4 @@ const DropdownMenuItem = forwardRef<
 ));
 DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
-const DropdownMenuLabel = forwardRef<
-  ElementRef<typeof DropdownMenuPrimitive.Label>,
-  ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Label> & {
-    inset?: boolean;
-  }
->(({ className, ...props }, ref) => (
-  <DropdownMenuPrimitive.Label
-    ref={ref}
-    className={cn(className, {
-      'px-2 py-1.5 text-sm font-semibold': true,
-    })}
-    {...props}
-  />
-));
-DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
-
-const DropdownMenuSeparator = forwardRef<
-  ElementRef<typeof DropdownMenuPrimitive.Separator>,
-  ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <DropdownMenuPrimitive.Separator
-    ref={ref}
-    className={cn(className, { 'bg-muted -mx-1 my-1 h-px': true })}
-    {...props}
-  />
-));
-DropdownMenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
-
-const DropdownMenuShortcut = ({ className, ...props }: HTMLAttributes<HTMLSpanElement>) => {
-  return (
-    <span
-      className={cn(className, {
-        'ml-auto text-xs tracking-widest opacity-60': true,
-      })}
-      {...props}
-    />
-  );
-};
-DropdownMenuShortcut.displayName = 'DropdownMenuShortcut';
-
-export {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuRadioGroup,
-};
+export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem };

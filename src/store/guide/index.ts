@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const activeGuideAtom = atom<boolean>({
-  key: 'active-guide',
-  default: false,
-});
+export const activeGuideAtom = atom<boolean>(false);

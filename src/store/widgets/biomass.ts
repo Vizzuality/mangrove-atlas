@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const BiomassYearSettings = atom<number>({
-  key: 'biomass-year-setting',
-  default: null, // TO - DO: change to null, set it after fetching
-});
+export const BiomassYearSettings = atom(null as number | null);

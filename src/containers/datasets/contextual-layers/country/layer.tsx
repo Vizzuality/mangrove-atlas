@@ -6,7 +6,7 @@ import { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
 
-export const MangrovesCountryBoundariesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
+const MangrovesCountryBoundariesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({ id });
 

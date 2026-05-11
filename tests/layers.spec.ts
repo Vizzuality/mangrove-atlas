@@ -10,9 +10,9 @@ const ALL_DATASETS_CATEGORY = 'all_datasets';
 const CONTEXTUAL_LAYER_ID = 'contextual_layers';
 const STYLE_CONTEXTUAL_LAYERS = ['planet_medres_visual_monthly', 'planet_medres_analytic_monthly'];
 
-// Build active-widgets URL param from widget slugs
+// Build active-widgets URL param from widget slugs (nuqs parseAsArrayOf uses comma-separated values)
 function activeWidgetsParam(widgetSlugs: string[]) {
-  return `active-widgets=[${widgetSlugs.map((s) => `"${s}"`).join(',')}]`;
+  return `active-widgets=${widgetSlugs.join(',')}`;
 }
 
 // Use Playwright's native click: actionability checks wait for the element to
@@ -35,7 +35,7 @@ test.describe('Can activate contextual layers via widget toggles', () => {
       test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
       // Navigate with contextual_layers category, proper active-widgets, and empty layers
       await page.goto(
-        `/?category="contextual_layers"&${activeWidgetsParam(contextualSlugs)}&layers=[]`
+        `/?category=contextual_layers&${activeWidgetsParam(contextualSlugs)}&layers=[]`
       );
       await page.getByTestId('widgets-wrapper').waitFor();
 
@@ -56,7 +56,7 @@ test.describe('Can activate contextual basemaps via URL', () => {
   for (const layer of STYLE_CONTEXTUAL_LAYERS) {
     test(`Basemap ${layer} activates via URL`, async ({ page }) => {
       // Navigate with basemap-contextual set
-      await page.goto(`/?basemaps-contextual="${layer}"`);
+      await page.goto(`/?basemaps-contextual=${layer}`);
       await expect(page).toHaveURL(new RegExp(`basemaps-contextual=.*${layer}`));
 
       // Verify we can clear it
@@ -83,7 +83,7 @@ test.describe('Can activate worldwide layers in widgets', () => {
       test.fixme(browserName === 'firefox', 'Firefox: widgets-wrapper fails to render');
       const id = widget.slug;
       // Navigate with all_datasets category, proper active-widgets, and empty layers
-      await page.goto(`/?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`);
+      await page.goto(`/?category=all_datasets&${activeWidgetsParam(allSlugs)}&layers=[]`);
       await page.getByTestId('widgets-wrapper').waitFor();
 
       const layerSwitcher = page.getByTestId(id);
@@ -120,7 +120,7 @@ test.describe('Can activate and deactivate country layers in widgets', () => {
       test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
       const id = widget.slug;
       await page.goto(
-        `/country/NGA?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
+        `/country/NGA?category=all_datasets&${activeWidgetsParam(allSlugs)}&layers=[]`
       );
       await page.getByTestId('widgets-wrapper').waitFor();
 

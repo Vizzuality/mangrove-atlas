@@ -7,7 +7,7 @@ import { CSS } from '@dnd-kit/utilities';
 
 import { SortableItemProps } from '@/components/map/legend/types';
 
-export const SortableItem: React.FC<SortableItemProps> = ({
+const SortableItem: React.FC<SortableItemProps> = ({
   id,
   sortable,
   children,

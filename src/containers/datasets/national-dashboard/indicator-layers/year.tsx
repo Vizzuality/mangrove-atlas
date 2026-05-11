@@ -16,10 +16,10 @@ const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearPr
         {years?.length > 1 && (
           <Popover>
             <PopoverTrigger asChild>
-              <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+              <span className={`${WIDGET_SELECT_STYLES}`}>
                 {yearSelected}
                 <ARROW_SVG
-                  className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                  className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                   role="img"
                   title="Arrow"
                 />
