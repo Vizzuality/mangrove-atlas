@@ -1,5 +1,4 @@
 import cn from '@/lib/classnames';
-import NO_DATA_SVG from '@/svgs/ui/no-data';
 
 import ContactForm from '@/components/contact';
 import { buttonVariants } from '@/components/ui/button';
@@ -10,6 +9,8 @@ import {
   DialogTitle,
   DialogClose,
 } from '@/components/ui/dialog';
+
+import NO_DATA_SVG from '@/svgs/ui/no-data';
 
 const NoMetadata = () => {
   return (

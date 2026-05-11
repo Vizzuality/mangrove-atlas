@@ -650,11 +650,6 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   border: 2px dotted #202020;
   opacity: 0.5;
 }
-@media print {
-  .mapbox-improve-map {
-    display: none;
-  }
-}
 
 .mapboxgl-ctrl-attrib-inner {
   position: absolute !important;
@@ -676,8 +671,5 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   :nth-child(4),
   :nth-child(5) {
     visibility: visible;
-    @media print {
-      display: none;
-    }
   }
 }

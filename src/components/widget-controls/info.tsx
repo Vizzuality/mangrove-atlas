@@ -1,10 +1,8 @@
-import ReactMarkdown from 'react-markdown';
-
 import { trackEvent } from '@/lib/analytics/ga';
 
 import { activeGuideAtom } from '@/store/guide';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { INFO } from '@/containers/datasets';
 import Helper from '@/containers/help/helper';
@@ -16,6 +14,7 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
+import MarkdownText from '@/components/ui/markdown';
 
 import INFO_SVG from '@/svgs/ui/info';
 
@@ -23,7 +22,7 @@ import { HELPER_POSITION } from './constants';
 
 const Info = ({ id, content }) => {
   const Info = INFO[id];
-  const isHelpGuideActive = useRecoilValue(activeGuideAtom);
+  const isHelpGuideActive = useAtomValue(activeGuideAtom);
   if (!Info && !content) return null;
 
   // Google Analytics tracking
@@ -35,15 +34,14 @@ const Info = ({ id, content }) => {
     });
   };
 
-  const decodedContent =
-    typeof content === 'string' ? <ReactMarkdown>{content}</ReactMarkdown> : content;
+  const decodedContent = typeof content === 'string' ? <MarkdownText content={content} /> : content;
 
   return (
     <Dialog onOpenChange={handleAnalytics}>
       <Helper
         className={{
           button: HELPER_POSITION,
-          tooltip: 'w-fit-content max-w-[400px]',
+          tooltip: 'w-fit-content max-w-100',
         }}
         tooltipPosition={{ top: -35, left: 0 }}
         message="Click to find background information about a widget or map layer, including an overview, date of publication, authors, license, and associated publications."

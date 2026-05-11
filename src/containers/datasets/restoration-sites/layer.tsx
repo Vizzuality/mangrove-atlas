@@ -2,16 +2,14 @@ import { useEffect, useMemo } from 'react';
 
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilValue } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
 
 const MangrovesRestorationSitesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id.includes('mangrove_rest_sites'));
 
   const SOURCE = useSource();

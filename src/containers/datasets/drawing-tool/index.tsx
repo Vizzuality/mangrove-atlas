@@ -6,7 +6,8 @@ import cn from '@/lib/classnames';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { mapCursorAtom } from '@/store/map';
 
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useAtom, useSetAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 import Helper from '@/containers/help/helper';
 import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
@@ -14,11 +15,11 @@ import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
 import DRAW_SVG from '@/svgs/sidebar/draw';
 
 const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
-  const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
-  const resetDrawingUploadToolState = useResetRecoilState(drawingUploadToolAtom);
+  const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useAtom(drawingToolAtom);
+  const resetDrawingUploadToolState = useResetAtom(drawingUploadToolAtom);
 
-  const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
-  const setMapCursor = useSetRecoilState(mapCursorAtom);
+  const [{ uploadedGeojson }] = useAtom(drawingUploadToolAtom);
+  const setMapCursor = useSetAtom(mapCursorAtom);
 
   const handleDrawingMode = useCallback(() => {
     const nextEnabled = !isDrawingToolEnabled;

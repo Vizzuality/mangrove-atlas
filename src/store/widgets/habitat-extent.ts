@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const habitatExtentSettings = atom({
-  key: 'habitat-extent-settings',
-  default: null,
-});
+export const habitatExtentSettings = atom(null);

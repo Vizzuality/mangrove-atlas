@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -20,16 +20,11 @@ const WelcomeIntroMessage = () => {
     'welcomeIntroMessage',
     false
   );
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    if (!hasSeenWelcome) {
-      setIsOpen(true);
-    }
-  }, [hasSeenWelcome]);
+  const [dismissed, setDismissed] = useState(false);
+  const isOpen = !hasSeenWelcome && !dismissed;
 
   const handleClose = useCallback(() => {
-    setIsOpen(false);
+    setDismissed(true);
     setHasSeenWelcome(true);
   }, [setHasSeenWelcome]);
 
@@ -40,13 +35,14 @@ const WelcomeIntroMessage = () => {
         classNameContent="animate-none duration-0 min-h-fit"
         className="fixed top-0 right-0 bottom-0 left-0 min-h-fit w-screen max-w-screen space-y-6 p-0 text-black/85 shadow-sm sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:p-8 md:max-w-3xl md:p-0"
       >
-        <DialogDescription className="relative m-0 flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
+        <div className="relative m-0 flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
           <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-tl-3xl sm:rounded-bl-3xl">
             <div className="absolute inset-0 h-full w-full sm:h-full">
               <Image
                 src="/images/welcome-modal.webp"
                 alt="Mangrove"
                 fill
+                priority
                 className="absolute top-0 bottom-0 left-0 object-cover sm:rounded-tl-3xl sm:rounded-bl-3xl"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
@@ -58,19 +54,19 @@ const WelcomeIntroMessage = () => {
                 Thriving mangroves are key to the health of nature and effective climate action
               </DialogTitle>
             </DialogHeader>
-            <p className="text-sm font-light">
+            <DialogDescription className="text-sm font-light">
               Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
               data and tools for monitoring mangroves necessary for this. It gives universal access
               to near real-time information on where and what changes there are to mangroves across
               the world, and highlights why they are valuable...
-            </p>
+            </DialogDescription>
             <div className="flex items-center justify-between space-x-7">
               <Button onClick={handleClose} className="text-sm font-bold">
                 Let’s explore the tool
               </Button>
             </div>
           </div>
-        </DialogDescription>
+        </div>
         <DialogClose onClose={handleClose} />
       </DialogContent>
     </Dialog>

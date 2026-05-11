@@ -1,11 +1,10 @@
 import type { LayerProps, RasterSource } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -16,14 +15,9 @@ import type { ApiResponse, Data, DataResponse, ApiData } from './types';
 
 export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, TData>
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, TData>, 'queryKey' | 'queryFn'>
 ): UseQueryResult<TData, Error> {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
 
   const {
     data: { name: location, id: currentLocation, location_id },
@@ -56,11 +50,12 @@ export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
     };
   };
 
-  return useQuery<DataResponse, Error, TData>(
-    ['fishery-mitigation-potentials', params, location_id],
-    fetchMangroveFisheryMitigationPotentials,
-    { keepPreviousData: true, ...(queryOptions || {}) }
-  );
+  return useQuery<DataResponse, Error, TData>({
+    queryKey: ['fishery-mitigation-potentials', params, location_id],
+    queryFn: fetchMangroveFisheryMitigationPotentials,
+    placeholderData: (prev) => prev,
+    ...(queryOptions || {}),
+  });
 }
 
 export function useSource({ filter }: { filter?: Data['indicator'] }): RasterSource {

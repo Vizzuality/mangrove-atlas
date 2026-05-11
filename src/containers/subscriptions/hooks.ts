@@ -8,7 +8,7 @@ export type DataUserNotificationPreferencesToggleLocationAlerts = {
   newsletter: boolean;
 };
 
-export type UserNotificationPreferencesResponse = {
+type UserNotificationPreferencesResponse = {
   data: DataUserNotificationPreferencesToggleLocationAlerts;
   isPending: boolean;
 };
@@ -17,15 +17,13 @@ export type UserNotificationPreferencesResponse = {
 // Fetchers
 // ---------------------
 
-export const fetchUserNotificationPreferences = () =>
+const fetchUserNotificationPreferences = () =>
   API.request<UserNotificationPreferencesResponse>({
     method: 'GET',
     url: '/notification_preferences',
   }).then((r) => r.data);
 
-export const postToggleLocationAlerts = (
-  body: DataUserNotificationPreferencesToggleLocationAlerts
-) =>
+const postToggleLocationAlerts = (body: DataUserNotificationPreferencesToggleLocationAlerts) =>
   API.request<DataUserNotificationPreferencesToggleLocationAlerts>({
     method: 'POST',
     url: '/notification_preferences/toggle_location_alerts',
@@ -38,7 +36,7 @@ export const postToggleLocationAlerts = (
 // Keys
 // ---------------------
 
-export const notificationPreferencesKeys = {
+const notificationPreferencesKeys = {
   all: ['notification_preferences'] as const,
   list: () => [...notificationPreferencesKeys.all, 'list'] as const,
   toggleLocationAlerts: () =>
@@ -50,9 +48,14 @@ export const notificationPreferencesKeys = {
 // ---------------------
 
 export function useGetUserNotificationPreferences<T = UserNotificationPreferencesResponse>(
-  queryOptions: UseQueryOptions<UserNotificationPreferencesResponse, Error, T> = {}
+  queryOptions: Omit<
+    UseQueryOptions<UserNotificationPreferencesResponse, Error, T>,
+    'queryKey'
+  > = {}
 ) {
-  return useQuery(notificationPreferencesKeys.list(), fetchUserNotificationPreferences, {
+  return useQuery({
+    queryKey: notificationPreferencesKeys.list(),
+    queryFn: fetchUserNotificationPreferences,
     ...queryOptions,
   });
 }
@@ -60,19 +63,19 @@ export function useGetUserNotificationPreferences<T = UserNotificationPreference
 export function usePostToggleLocationAlerts() {
   const qc = useQueryClient();
 
-  return useMutation(
-    (body: { location_alerts: boolean; newsletter: boolean; platform_updates: boolean }) =>
-      postToggleLocationAlerts(body),
-
-    {
-      onSuccess: () => {
-        qc.invalidateQueries({
-          queryKey: notificationPreferencesKeys.list(),
-        });
-      },
-      onError: (error) => {
-        console.error('Error toggling location alerts:', error);
-      },
-    }
-  );
+  return useMutation({
+    mutationFn: (body: {
+      location_alerts: boolean;
+      newsletter: boolean;
+      platform_updates: boolean;
+    }) => postToggleLocationAlerts(body),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: notificationPreferencesKeys.list(),
+      });
+    },
+    onError: (error) => {
+      console.error('Error toggling location alerts:', error);
+    },
+  });
 }

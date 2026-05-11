@@ -41,7 +41,7 @@ const SubscriptionsContent = () => {
     return { ...userPreferences, ...selection };
   }, [userPreferences, selection]);
 
-  const isSaving = toggleMutation.isLoading;
+  const isSaving = toggleMutation.isPending;
 
   const setField = useCallback((key: keyof Draft, value: boolean) => {
     setSelection((prev) => ({ ...prev, [key]: value }));

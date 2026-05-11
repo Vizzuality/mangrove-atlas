@@ -5,8 +5,8 @@ import cn from '@/lib/classnames';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
+import { useAtom, useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'motion/react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Helper from '@/containers/help/helper';
 
@@ -15,7 +15,7 @@ import { WidgetSlugType } from 'types/widget';
 
 import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
-import { getLayerActive } from './selector';
+import { useIsLayerActive } from './selector';
 
 type ChildrenType = ReactElement & { type?: () => null };
 
@@ -36,11 +36,11 @@ type WidgetLayoutProps = {
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id, className, applicability, info } = props;
-  const { enabled: isDrawingToolEnabled } = useRecoilValue(drawingToolAtom);
-  const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
-  const isLayerActive = useRecoilValue(getLayerActive(id));
+  const { enabled: isDrawingToolEnabled } = useAtomValue(drawingToolAtom);
+  const { enabled: isDrawingUploadToolEnabled } = useAtomValue(drawingUploadToolAtom);
+  const isLayerActive = useIsLayerActive(id);
 
-  const [widgetsCollapsed] = useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
+  const [widgetsCollapsed] = useAtom<Record<string, boolean>>(widgetsCollapsedAtom);
 
   const widgetVariants = {
     collapsed: {
@@ -59,21 +59,21 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   return (
     <AnimatePresence>
       <motion.div
+        id={`widget-${id}`}
         initial={false}
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         exit="expanded"
         transition={{ type: 'tween', duration: 0.6 }}
         className={cn({
-          'bg-blur group shadow-card isolate w-full rounded-4xl bg-white md:ml-0 print:w-[90%]!':
-            true,
+          'bg-blur group shadow-card isolate w-full rounded-4xl bg-white md:ml-0': true,
           'w-full! border-none p-0! shadow-none!': info,
           [className]: !!className,
           'border-none p-0': info,
         })}
         style={props.index !== undefined ? { zIndex: 1000 - props.index } : undefined}
       >
-        <div className="relative rounded-3xl">
+        <div className="relative overflow-hidden rounded-3xl">
           {/* border layer */}
           <div
             aria-hidden
@@ -86,8 +86,8 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           />
 
           {/* content layer */}
-          <div className="relative z-10">
-            <div className="px-9 py-3" data-testid={`widget-${id}`}>
+          <div className="relative z-10 min-w-0">
+            <div className="min-w-0 px-9 py-3" data-testid={`widget-${id}`}>
               <Helper
                 className={{
                   button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',

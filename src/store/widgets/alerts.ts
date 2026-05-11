@@ -1,12 +1,6 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
 import type { DateOption } from 'types/widget';
 
-export const alertsStartDate = atom<DateOption | undefined>({
-  key: 'alerts-start-date',
-  default: undefined,
-});
-export const alertsEndDate = atom<DateOption | undefined>({
-  key: 'alerts-end-date',
-  default: undefined,
-});
+export const alertsStartDate = atom<DateOption | undefined>(undefined);
+export const alertsEndDate = atom<DateOption | undefined>(undefined);

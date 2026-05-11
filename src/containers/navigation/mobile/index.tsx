@@ -6,7 +6,7 @@ import News from '@/containers/navigation/mobile/news';
 
 const NavigationMobile = () => {
   return (
-    <div className="fixed -bottom-0.5 z-50 h-36 w-screen bg-[url(/images/mobile-sidebar-bg.svg)] bg-cover bg-no-repeat">
+    <div className="pointer-events-auto fixed -bottom-0.5 z-50 h-36 w-screen bg-[url(/images/mobile-sidebar-bg.svg)] bg-cover bg-no-repeat">
       <div className="mt-20 flex h-24 max-w-screen items-center justify-center space-x-6">
         <Locations />
         <News />

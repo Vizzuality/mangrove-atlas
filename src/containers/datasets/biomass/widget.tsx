@@ -4,7 +4,7 @@ import { analysisAtom } from '@/store/analysis';
 import { BiomassYearSettings } from '@/store/widgets/biomass';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 
 import NoData from '@/containers/widgets/no-data';
 
@@ -15,9 +15,9 @@ import BiomassChart from './chart';
 import { useMangroveBiomass, widgetSlug } from './hooks';
 
 const BiomassWidget = () => {
-  const [defaultYear, setYear] = useRecoilState(BiomassYearSettings);
+  const [defaultYear, setYear] = useAtom(BiomassYearSettings);
   const [isCanceled, setIsCanceled] = useState(false);
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
   const queryClient = useQueryClient();
   const handleQueryCancellation = useCallback(() => {
     setIsCanceled(true);

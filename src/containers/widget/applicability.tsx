@@ -6,7 +6,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WidgetSlugType } from 'types/widget';
@@ -21,10 +21,10 @@ type ApplicabilityProps = {
 
 const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) => {
   const { id, applicability } = props;
-  const { enabled: isDrawingToolEnabled } = useRecoilValue(drawingToolAtom);
-  const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
+  const { enabled: isDrawingToolEnabled } = useAtomValue(drawingToolAtom);
+  const { enabled: isDrawingUploadToolEnabled } = useAtomValue(drawingUploadToolAtom);
 
-  const [widgetsCollapsed] = useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
+  const [widgetsCollapsed] = useAtom<Record<string, boolean>>(widgetsCollapsedAtom);
 
   const isCollapsed: boolean =
     isDrawingToolEnabled || isDrawingUploadToolEnabled ? false : widgetsCollapsed[id];
@@ -32,7 +32,7 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
   return (
     <p
       className={cn({
-        'flex text-sm text-black/85 md:text-center md:whitespace-nowrap': true,
+        'text-sm text-black/85': true,
         hidden: isCollapsed,
         block: !isCollapsed,
       })}
@@ -40,15 +40,17 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
       <span className="font-normal">Data applicability:</span>{' '}
       <span className="font-light">{applicability}.</span>{' '}
       <Dialog>
-        <DialogTrigger>
-          <div className="text-brand-800 inline-flex underline hover:no-underline">Learn more</div>
+        <DialogTrigger asChild>
+          <button type="button" className="text-brand-800 underline hover:no-underline">
+            Learn more
+          </button>
         </DialogTrigger>
         <DialogContent className="md:mb-20">
           <DialogTitle className="sr-only">Data applicability</DialogTitle>
           <div className="no-scrollbar overflow-y-auto">
             <Info />
           </div>
-          <DialogClose className="fixed top-18! left-[595px]" />
+          <DialogClose />
         </DialogContent>
       </Dialog>
     </p>

@@ -6,17 +6,18 @@ import { drawingToolAtom } from '@/store/drawing-tool';
 import { mapSettingsAtom } from '@/store/map-settings';
 import { locationToolAtom } from '@/store/sidebar';
 
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useAtom, useSetAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 import MAP_SETTINGS_SVG from '@/svgs/sidebar/map-settings';
 
 import { STYLES } from '../constants';
 
 const MapSettings = () => {
-  const [mapSettings, setMapViewState] = useRecoilState(mapSettingsAtom);
-  const saveLocationTool = useSetRecoilState(locationToolAtom);
+  const [mapSettings, setMapViewState] = useAtom(mapSettingsAtom);
+  const saveLocationTool = useSetAtom(locationToolAtom);
 
-  const resetDrawingToolState = useResetRecoilState(drawingToolAtom);
+  const resetDrawingToolState = useResetAtom(drawingToolAtom);
   const handleMapSettingsView = useCallback(() => {
     setMapViewState(true);
     resetDrawingToolState();
@@ -38,7 +39,7 @@ const MapSettings = () => {
         >
           <MAP_SETTINGS_SVG
             className={cn({
-              'fill-current text-brand-800 h-9 w-9 p-1': true,
+              'text-brand-800 h-9 w-9 fill-current p-1': true,
               'text-white': mapSettings,
             })}
             role="img"

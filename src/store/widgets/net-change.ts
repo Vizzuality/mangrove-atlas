@@ -1,11 +1,5 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const netChangeStartYear = atom<number>({
-  key: 'net-change-start-year',
-  default: null,
-});
+export const netChangeStartYear = atom(null as number | null);
 
-export const netChangeEndYear = atom<number>({
-  key: 'net-change-end-year',
-  default: null,
-});
+export const netChangeEndYear = atom(null as number | null);

@@ -29,7 +29,7 @@ const SelectedFilters = ({
               })}
             >
               <button type="button" onClick={() => handleRemoveFilter(filter, value)}>
-                <CLOSE_SVG className="fill-current mr-1 h-3 w-3" role="img" aria-hidden={true} />
+                <CLOSE_SVG className="mr-1 h-3 w-3 fill-current" role="img" aria-hidden={true} />
               </button>
 
               <p className="whitespace overflow-hidden text-ellipsis">{value}</p>

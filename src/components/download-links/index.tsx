@@ -29,7 +29,7 @@ const Download = ({ info }: { info: Record<string, string | number>[] }) => {
               <div className="flex" onClick={() => handleClick(id as string)}>
                 <ARROW_SVG
                   className={cn({
-                    'fill-current h-3 w-3 font-bold': true,
+                    'h-3 w-3 fill-current font-bold': true,
                     'rotate-180 transform': isCollapsed[id],
                     hidden: !description,
                   })}
