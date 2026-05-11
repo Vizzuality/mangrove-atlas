@@ -2,9 +2,7 @@ import { useMemo, useCallback } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilState } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { INFO } from '@/containers/datasets';
 
@@ -28,7 +26,7 @@ type ControlTypes = {
 
 const Controls = ({ id, origin }: ControlTypes) => {
   const Info = INFO[id];
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const activeLayersIds = activeLayers?.map((l) => l.id);
   const isActive = useMemo(
     () => activeLayersIds?.includes(id as WidgetSlugType),

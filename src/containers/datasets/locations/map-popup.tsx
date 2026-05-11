@@ -1,14 +1,10 @@
 import { useCallback, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { locationBoundsAtom } from '@/store/map';
-
-import turfBbox from '@turf/bbox';
 import type { GeoJSONFeature } from 'mapbox-gl';
-import { useRecoilState } from 'recoil';
+
+import { useLocationNavigation } from 'hooks/location-navigation';
 
 import { useLocations } from '@/containers/datasets/locations/hooks';
 
@@ -28,11 +24,8 @@ const LocationPopUP = ({
   className?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(nonExpansible);
-  const [, setLocationBounds] = useRecoilState(locationBoundsAtom);
+  const { navigateToLocation } = useLocationNavigation();
 
-  const { push, asPath } = useRouter();
-
-  const queryParams = asPath.split('?')[1];
   const { info, feature } = locationPopUpInfo;
 
   const { type, name } = info?.location ?? {};
@@ -55,15 +48,7 @@ const LocationPopUP = ({
 
     const location = locations?.data?.find((l) => l.location_id === location_idn);
 
-    if (location) {
-      const bbox = turfBbox(location.bounds);
-
-      if (bbox) {
-        setLocationBounds(bbox as [number, number, number, number]);
-      }
-
-      void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, undefined);
-    }
+    if (location) navigateToLocation(location);
 
     // Google Analytics tracking
     trackEvent(`Location pop up - ${info?.location.name}`, {
@@ -72,7 +57,7 @@ const LocationPopUP = ({
       label: `Location pop up - ${info?.location.name}`,
       value: info?.location.name,
     });
-  }, [setLocationBounds, push, queryParams, locations, feature, info]);
+  }, [navigateToLocation, locations, feature, info]);
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
@@ -81,17 +66,7 @@ const LocationPopUP = ({
         return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
       });
 
-      if (location) {
-        const bbox = turfBbox(location.bounds);
-
-        if (bbox) {
-          setLocationBounds(bbox as [number, number, number, number]);
-        }
-        void push(
-          `/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`,
-          undefined
-        );
-      }
+      if (location) navigateToLocation(location);
 
       // Google Analytics tracking
       trackEvent(`Location pop up, protected area - ${info?.location.name}`, {
@@ -101,7 +76,7 @@ const LocationPopUP = ({
         value: info?.location.name,
       });
     },
-    [setLocationBounds, push, queryParams, locations, info]
+    [navigateToLocation, locations, info]
   );
 
   return (

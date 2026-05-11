@@ -2,9 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilState } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 import WidgetControls from '@/components/widget-controls';
@@ -28,7 +26,7 @@ const IndicatorSources = ({
   yearSelected,
   setYearSelected,
 }: IndicatorSourcesProps) => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
 
   const layerId = useMemo(
     () => `${NATIONAL_LAYER_ID}_${locationIso}` as `mangrove_national_dashboard_layer_${string}`,

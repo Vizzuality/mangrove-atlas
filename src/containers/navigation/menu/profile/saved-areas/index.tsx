@@ -2,12 +2,11 @@
 
 import { useMemo } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { groupBy } from 'lodash-es';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import { LocationTypes } from '@/containers/datasets/locations/types';
 import {
   useGetUserLocations,
   useGetUserSites,
@@ -21,14 +20,9 @@ import UserMRTTSites from './sites';
 import SitesItem from './sites/item';
 
 const SavedAreasContent = () => {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
+  const { type: locationType, id: routeId } = useSyncLocation();
 
-  const locationType = queryParams?.[0] as LocationTypes | undefined;
-  const routeId = queryParams?.[1];
-
-  const { data: location } = useLocation(routeId, locationType);
+  const { data: location } = useLocation(routeId, locationType ?? undefined);
   const { data: userLocationsRes, isLoading: isLoadingUserLocations } = useGetUserLocations();
 
   const userLocations = userLocationsRes?.data ?? [];
@@ -99,11 +93,10 @@ const SavedAreasContent = () => {
                 <LocationItemNew
                   key={`new-${locationType}-${routeLocationId ?? 'custom'}`}
                   name={routeName}
-                  // for system routes this is the system location id; for custom-area it can be undefined
                   systemLocationId={
                     typeof routeLocationId === 'number' ? routeLocationId : undefined
                   }
-                  locationType={locationType}
+                  locationType={locationType ?? undefined}
                   disabled={Boolean(meta && meta.current_count >= meta.max_locations)}
                 />
               )}

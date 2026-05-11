@@ -4,6 +4,6 @@ export const WIDGET_SENTENCE_STYLE =
 export const WIDGET_SUBTITLE_STYLE = 'm-0 text-xs font-semibold tracking-[0.0625rem] uppercase';
 export const BUTTON_STYLES = 'rounded-3xl py-1 px-4 text-sm font-semibold';
 export const WIDGET_SELECT_STYLES =
-  'first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold print:border-b-transparent';
+  'first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold';
 export const WIDGET_SELECT_ARROW_STYLES =
   'absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2';

@@ -3,10 +3,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { isEmpty } from 'lodash-es';
-import { useRecoilState } from 'recoil';
 
 import type {
   FloodProtectionIndicatorId,
@@ -80,7 +79,7 @@ const FloodProtection = ({
 
   const id = `mangrove_coastal_protection_${indicator}` satisfies WidgetSlugType;
 
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const activeLayersIds = activeLayers?.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds?.includes(id), [activeLayersIds, id]);
 
@@ -185,10 +184,10 @@ const FloodProtection = ({
             during {selectedPeriod === 'annual' ? 'an' : 'a'}{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {LABELS[selectedPeriod].short}
                   <ARROW_SVG
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current print:hidden"
+                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current"
                     role="img"
                     title="Arrow"
                   />

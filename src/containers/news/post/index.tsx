@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { usePostTags } from 'hooks/blog';
 import { PostProps } from 'hooks/blog/types';
 
-export const Post = ({ post }: { post: PostProps }) => {
+const Post = ({ post }: { post: PostProps }) => {
   const { data } = usePostTags(
     { id: post.id },
     {

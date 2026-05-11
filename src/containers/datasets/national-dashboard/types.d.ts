@@ -12,15 +12,21 @@ type Source = {
   years: number[];
 };
 
-type Data = { indicator: string; sources: Source[] };
+type Data = {
+  indicator: string;
+  sources: Source[];
+  legal_status?: string;
+  mangrove_breakthrough_committed?: boolean | null;
+  [key: string]: unknown;
+};
 
 type Metadata = {
   locations_id: string;
   note: string;
-  other_resources: unknown[];
+  other_resources: OtherResource[];
 };
 export type DataResponse = {
-  data: Data;
+  data: any;
   metadata: Metadata;
 };
 

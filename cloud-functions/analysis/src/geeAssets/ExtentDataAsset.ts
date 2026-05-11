@@ -7,7 +7,7 @@ export interface IExtentDataAsset extends IDataAsset {
 
 export const ExtentDataAsset: IExtentDataAsset = {
   assetPath: {
-    default: "projects/global-mangrove-watch/land-cover/mangrove_extent-v3"
+    default: "projects/mangrove-atlas-246414/assets/land-cover/mangrove_extent-v3"
   },
   numYears: 11,
   getEEAsset(){

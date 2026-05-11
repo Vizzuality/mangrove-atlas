@@ -43,7 +43,7 @@ test.beforeEach(async ({ page }) => {
 // rework for nested Radix Checkbox buttons.
 test.fixme(
   'Selecting a category changes the url query "category"',
-  async ({ page, browserName }) => {
+  async ({ page, browserName: _browserName }) => {
     const widgetsDeckTrigger = page.getByTestId('widgets-deck-trigger');
     await expect(widgetsDeckTrigger).toBeVisible();
     await clickByTestId(page, 'widgets-deck-trigger');
@@ -65,7 +65,7 @@ test.fixme(
 );
 
 async function testCategoryWidgets(page, category: Category) {
-  await page.goto(`/?category="${category}"`);
+  await page.goto(`/?category=${category}`);
   // Wait for the wrapper to be attached (it may have no visible content for some categories)
   await page.getByTestId('widgets-wrapper').waitFor({ state: 'attached' });
 

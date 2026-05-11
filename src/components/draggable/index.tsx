@@ -12,8 +12,6 @@ type DraggableProps = {
   }) => React.ReactNode;
 };
 
-let transformStyle: string | undefined;
-
 export default function Draggable({
   id,
   position = null,
@@ -28,14 +26,13 @@ export default function Draggable({
 
   const top = Math.max(0, position.y - offsetY);
 
+  let transformStyle: string | undefined;
   if (transform) {
     if (isPinned) {
       transformStyle = `translate3d(${transform.x}px, ${transform.y}px, 0)`;
     } else {
       transformStyle = `translate3d(${(transform.x ?? 0) + offsetX}px, ${(transform.y ?? 0) + offsetY}px, 0)`;
     }
-  } else {
-    transformStyle = undefined;
   }
 
   const style: React.CSSProperties = {

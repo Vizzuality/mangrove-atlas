@@ -50,10 +50,10 @@ const CarbonMarketPotentialWidget = () => {
             The extent of investible blue carbon (ha) at{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {label}
                   <ARROW_SVG
-                    className={`fill-current ${`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} print:hidden`}
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     title="Arrow"
                   />
@@ -93,10 +93,10 @@ const CarbonMarketPotentialWidget = () => {
             in <span className="font-bold"> {location}</span> is {investibleBlueCarbonValue}{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {unit.label}
                   <ARROW_SVG
-                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     title="Arrow"
                   />

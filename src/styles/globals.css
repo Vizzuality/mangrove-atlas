@@ -1,16 +1,6 @@
 @config '../../tailwind.config.mjs';
 @import 'tailwindcss';
 
-body {
-  background-color: #00c5bd;
-}
-
-@media print {
-  body {
-    background-color: #fff;
-  }
-}
-
 @-webkit-keyframes autofill {
   0%,
   100% {
@@ -80,10 +70,6 @@ body {
   .scroll-thin::-webkit-scrollbar {
     width: 0.5rem;
   }
-
-  .print {
-    display: none;
-  }
 }
 .recharts-brush-texts {
   display: none;
@@ -121,15 +107,26 @@ body {
   display: none !important;
 }
 
+/* Hide mapbox built-in controls */
+.print-report-map .mapboxgl-ctrl-top-left,
+.print-report-map .mapboxgl-ctrl-top-right,
+.print-report-map .mapboxgl-ctrl-bottom-left,
+.print-report-map .mapboxgl-ctrl-bottom-right {
+  display: none !important;
+}
+
 @media print {
-  @page {
-    size: landscape;
+  .print-report {
+    background-color: #fff;
   }
 
-  body {
-    width: 260mm; /* A4 width in millimeters */
-    height: 210mm; /* A4 height in millimeters */
-    margin: 0 auto;
+  .print-report-no-print {
+    display: none;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 10mm;
   }
 }
 

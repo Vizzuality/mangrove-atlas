@@ -1,4 +1,8 @@
-import { ReactElement } from 'react';
+import { ReactElement, useMemo } from 'react';
+
+import { usePathname } from 'next/navigation';
+
+import { useSyncActiveLayers } from '@/store/layers';
 
 import type { WidgetSlugType } from 'types/widget';
 
@@ -22,6 +26,13 @@ const ContextualLayersComponent = ({
   thumbSource,
   name,
 }: ContextualLayersComponentProps) => {
+  const pathname = usePathname();
+  const isPrintReport = pathname?.startsWith('/print-report');
+  const [activeLayers] = useSyncActiveLayers();
+  const isActive = useMemo(() => activeLayers?.some((l) => l.id === id), [activeLayers, id]);
+
+  if (isPrintReport && !isActive) return null;
+
   return (
     <div className="bg-brand-800/10 relative flex flex-col space-y-5 rounded-3xl p-3">
       <div className="flex items-center justify-between space-x-8">
@@ -32,7 +43,7 @@ const ContextualLayersComponent = ({
             <Content id={id} description={description} />
           </div>
         </div>
-        <Controls id={id} origin={origin} />
+        {!isPrintReport && <Controls id={id} origin={origin} />}
       </div>
     </div>
   );

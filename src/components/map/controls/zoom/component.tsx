@@ -16,7 +16,7 @@ const COMMON_CLASSES =
 
 const SVG_COMMON_CLASSES = 'h-4 w-4 group-disabled:fill-grey-75';
 
-export const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }) => {
+const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }) => {
   const { [mapId]: map } = useMap();
   const zoom = map?.getZoom() || MAP_DEFAULT_PROPS.initialViewState.zoom;
   const minZoom = map?.getMinZoom() || MAP_DEFAULT_PROPS.minZoom;
@@ -43,9 +43,9 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
   );
 
   return (
-    <Tooltip>
-      <TooltipTrigger>
-        <div className={cn(className, { 'flex flex-col': true })}>
+    <div className={cn(className, { 'flex flex-col': true })}>
+      <Tooltip>
+        <TooltipTrigger asChild>
           <button
             className={cn({
               [COMMON_CLASSES]: true,
@@ -61,6 +61,11 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
               title="Zoom-in"
             />
           </button>
+        </TooltipTrigger>
+        <TooltipContent className="bg-gray-600 px-2 text-white">Zoom in</TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger asChild>
           <button
             className={cn({
               [COMMON_CLASSES]: true,
@@ -76,10 +81,10 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
               title="Zoom-out"
             />
           </button>
-        </div>
-      </TooltipTrigger>
-      <TooltipContent className="bg-gray-600 px-2 text-white">Zoom control</TooltipContent>
-    </Tooltip>
+        </TooltipTrigger>
+        <TooltipContent className="bg-gray-600 px-2 text-white">Zoom out</TooltipContent>
+      </Tooltip>
+    </div>
   );
 };
 
