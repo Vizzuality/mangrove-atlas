@@ -5,7 +5,6 @@ import { useSyncActiveLayers } from '@/store/layers';
 import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
-import type { LayerSettingsType } from './types';
 
 const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
