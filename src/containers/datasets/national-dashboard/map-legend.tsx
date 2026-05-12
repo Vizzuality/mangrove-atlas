@@ -2,6 +2,10 @@ import { useSyncActiveLayers } from '@/store/layers';
 
 import chroma from 'chroma-js';
 
+import LegendControls from '@/containers/map/legend/legend-controls';
+
+import type { Layer } from 'types/layers';
+
 import { COLORS } from './constants';
 
 const NATIONAL_LAYER_PREFIX = 'mangrove_national_dashboard_layer_';
@@ -31,15 +35,16 @@ const NationalDashboardMapLegend = () => {
         const color = palette[layerIndex] ?? palette[0];
         const name = (layer.settings?.name as string) ?? '';
         return (
-          <li key={layer.id} className="flex items-start">
-            <div
-              style={{ backgroundColor: color }}
-              className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
-              aria-hidden="true"
-            />
-            <div className="flex flex-col items-start text-sm">
-              <p>{name}</p>
+          <li key={layer.id} className="flex w-full items-center justify-between gap-x-2">
+            <div className="flex min-w-0 items-start">
+              <div
+                style={{ backgroundColor: color }}
+                className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
+                aria-hidden="true"
+              />
+              <p className="truncate text-sm">{name}</p>
             </div>
+            <LegendControls id={layer.id} l={layer as Layer} hideInfo />
           </li>
         );
       })}

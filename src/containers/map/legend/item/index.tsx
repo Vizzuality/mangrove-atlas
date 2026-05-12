@@ -24,11 +24,20 @@ import DRAG_SVG from '@/svgs/legend/drag';
 
 import LegendControls from '../legend-controls';
 
+const NATIONAL_DASHBOARD_PREFIX = 'mangrove_national_dashboard_layer_';
+
 const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolean; l: Layer }) => {
   const [statisticsDialogVisibility, setStatisticsDialogVisibility] = useState(false);
   const [activeLayers] = useSyncActiveLayers();
   const guideIsActive = useAtomValue(activeGuideAtom);
   const widget = widgets.find((w) => w.slug === l.id);
+  const isNationalDashboard =
+    typeof l.id === 'string' && l.id.startsWith(NATIONAL_DASHBOARD_PREFIX);
+  const nationalDashboardLayerIds = isNationalDashboard
+    ? (activeLayers ?? [])
+        .filter((layer) => layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX))
+        .map((layer) => layer.id)
+    : undefined;
 
   const nationalDashboardLayerName = activeLayers?.find((l) =>
     l.id?.includes('mangrove_national_dashboard_layer')
@@ -125,7 +134,12 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
             tooltipPosition={{ top: -40, left: 210 }}
             message="Use the settings of each layer to obtain detailed information, manage the opacity, hide or show it or to remove it from the map."
           >
-            <LegendControls id={id} l={l} />
+            <LegendControls
+              id={id}
+              l={l}
+              hideOpacity={isNationalDashboard}
+              targetLayerIds={nationalDashboardLayerIds}
+            />
           </Helper>
         )}
       </div>

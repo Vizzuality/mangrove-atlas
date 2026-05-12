@@ -24,26 +24,49 @@ import OPACITY_SVG from '@/svgs/legend/opacity';
 import SHOW_SVG from '@/svgs/legend/show';
 import INFO_SVG from '@/svgs/ui/info';
 
-const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => {
+type LegendControlsProps = {
+  id: string;
+  embedded?: boolean;
+  l: Layer;
+  hideOpacity?: boolean;
+  hideInfo?: boolean;
+  // When provided, visibility and remove act on every layer id in this list
+  // instead of only on `l.id`. Used for the national-dashboard parent legend
+  // item which controls all of its source layers at once.
+  targetLayerIds?: Layer['id'][];
+};
+
+const LegendControls = ({
+  l,
+  hideOpacity = false,
+  hideInfo = false,
+  targetLayerIds,
+}: LegendControlsProps) => {
   const [infoDialogVisibility, setInfoDialogVisibility] = useState(false);
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const guideIsActive = useAtomValue(activeGuideAtom);
 
   const onChangeVisibility = useCallback(
     (layerId: Layer['id']) => {
-      const targetLayer = activeLayers?.find((l) => l.id === layerId);
+      const ids = targetLayerIds && targetLayerIds.length > 0 ? targetLayerIds : [layerId];
+      const referenceLayer = activeLayers?.find((layer) => ids.includes(layer.id));
 
-      if (!targetLayer) return;
+      if (!referenceLayer) return;
 
-      const nextVisibility = targetLayer.visibility === 'visible' ? 'none' : 'visible';
+      // Mixed-state semantics: if anything in the group is visible, hide all;
+      // otherwise show all. The button icon reflects "any visible".
+      const anyVisible = activeLayers?.some(
+        (layer) => ids.includes(layer.id) && layer.visibility === 'visible'
+      );
+      const nextVisibility = anyVisible ? 'none' : 'visible';
 
       const layersWithVisibility = activeLayers
-        ?.map((l) => {
-          if (l.id === 'custom-area') return null;
-          if (l.id !== layerId) return l;
+        ?.map((layer) => {
+          if (layer.id === 'custom-area') return null;
+          if (!ids.includes(layer.id)) return layer;
 
           return {
-            ...l,
+            ...layer,
             visibility: nextVisibility,
           };
         })
@@ -57,16 +80,14 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => 
 
       setActiveLayers(layersWithVisibility);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers, targetLayerIds]
   );
 
   const removeLayer = useCallback(
     (layer: string) => {
-      const updatedLayers = activeLayers?.filter((l) => {
-        return l.id !== layer;
-      });
+      const ids = targetLayerIds && targetLayerIds.length > 0 ? targetLayerIds : [layer];
+      const updatedLayers = activeLayers?.filter((entry) => !ids.includes(entry.id));
 
-      // Google Analytics tracking
       trackEvent(`Legend - Remove layer`, {
         category: 'Layers - legend',
         action: 'Click',
@@ -74,7 +95,7 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => 
       });
       setActiveLayers(updatedLayers);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers, targetLayerIds]
   );
 
   const layerName = (label) => {
@@ -105,7 +126,12 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => 
     ? 'mangrove_national_dashboard'
     : l.id;
 
-  const visibility = l.visibility === 'visible';
+  const visibility =
+    targetLayerIds && targetLayerIds.length > 0
+      ? (activeLayers ?? []).some(
+          (layer) => targetLayerIds.includes(layer.id) && layer.visibility === 'visible'
+        )
+      : l.visibility === 'visible';
 
   const layerNameToDisplay = layerName(l.id);
   if (layerNameToDisplay === undefined && !l.id.includes('mangrove_national_dashboard_layer'))
@@ -120,7 +146,7 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => 
 
   return (
     <div className="ml-2 flex items-center gap-x-0.5">
-      {WidgetInfo && (
+      {!hideInfo && WidgetInfo && (
         <Dialog open={infoDialogVisibility}>
           <DialogTrigger asChild>
             <Tooltip>
@@ -166,34 +192,36 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => 
         </Dialog>
       )}
 
-      <Popover>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <PopoverTrigger asChild>
-              <button type="button" aria-label="Layer opacity" className={iconBtn}>
-                <OPACITY_SVG aria-hidden="true" className="h-6.5 w-6.5" />
-              </button>
-            </PopoverTrigger>
-          </TooltipTrigger>
+      {!hideOpacity && (
+        <Popover>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <PopoverTrigger asChild>
+                <button type="button" aria-label="Layer opacity" className={iconBtn}>
+                  <OPACITY_SVG aria-hidden="true" className="h-6.5 w-6.5" />
+                </button>
+              </PopoverTrigger>
+            </TooltipTrigger>
 
-          <TooltipPortal>
-            <TooltipContent className="bg-gray-600 px-2 text-white">Opacity</TooltipContent>
-          </TooltipPortal>
-        </Tooltip>
+            <TooltipPortal>
+              <TooltipContent className="bg-gray-600 px-2 text-white">Opacity</TooltipContent>
+            </TooltipPortal>
+          </Tooltip>
 
-        <PopoverContent
-          sideOffset={2}
-          side="top"
-          align="end"
-          className={cn('rounded-none shadow-md!', { hidden: guideIsActive })}
-        >
-          <Slider
-            className="w-[150px] pt-2"
-            defaultValue={[l.opacity]}
-            onValueChange={(op: number[]) => onChangeOpacity(op[0], l.id)}
-          />
-        </PopoverContent>
-      </Popover>
+          <PopoverContent
+            sideOffset={2}
+            side="top"
+            align="end"
+            className={cn('rounded-none shadow-md!', { hidden: guideIsActive })}
+          >
+            <Slider
+              className="w-[150px] pt-2"
+              defaultValue={[l.opacity]}
+              onValueChange={(op: number[]) => onChangeOpacity(op[0], l.id)}
+            />
+          </PopoverContent>
+        </Popover>
+      )}
       <Tooltip>
         <TooltipTrigger asChild>
           <button
