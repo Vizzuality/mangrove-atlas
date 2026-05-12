@@ -10,10 +10,10 @@ export function updateLayers(newLayer: Layer, activeLayers: Layer[]): Layer[] {
     return [...activeLayers?.slice(0, index), ...activeLayers?.slice(index + 1)];
   }
 
-  trackEvent(`Add layer - ${id}`, {
+  trackEvent(`Add national dashboard layer - ${id}`, {
     category: 'Layers',
     action: 'Toggle',
-    label: `Add layer - ${id}`,
+    label: `Add national dashboard layer - ${id}`,
   });
   return [newLayer, ...activeLayers];
 }
