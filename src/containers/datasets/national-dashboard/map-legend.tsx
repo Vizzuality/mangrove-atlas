@@ -33,7 +33,7 @@ const SortableList = dynamic(() => import('@/components/map/legend/sortable/list
 });
 
 const iconBtn =
-  'inline-flex h-5 w-5 items-center justify-center rounded-full text-black/42 hover:bg-black/5';
+  'inline-flex h-7.5 w-7.5 items-center justify-center rounded-full text-black/42 hover:bg-black/5';
 
 type SourceRowProps = {
   id: string;
@@ -86,11 +86,11 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
   );
 
   return (
-    <div className="flex w-full items-center justify-between gap-x-2">
+    <div className="flex w-full items-center justify-between gap-2">
       <button
         type="button"
         aria-label={`Reorder source ${name}`}
-        className="flex h-5 w-3 shrink-0 cursor-grab items-center justify-center text-black/42"
+        className="flex shrink-0 cursor-grab items-center justify-center text-black/42"
       >
         <DRAG_SVG role="img" aria-hidden={true} />
       </button>
@@ -109,7 +109,7 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
             <TooltipTrigger asChild>
               <PopoverTrigger asChild>
                 <button type="button" aria-label="Layer opacity" className={iconBtn}>
-                  <OPACITY_SVG aria-hidden="true" className="h-4 w-4" />
+                  <OPACITY_SVG aria-hidden="true" className="h-6.5 w-6.5" />
                 </button>
               </PopoverTrigger>
             </TooltipTrigger>
@@ -140,9 +140,9 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
               className={iconBtn}
             >
               {isVisible ? (
-                <SHOW_SVG aria-hidden="true" className="h-5 w-5" />
+                <SHOW_SVG aria-hidden="true" className="h-7 w-7" />
               ) : (
-                <HIDE_SVG aria-hidden="true" className="h-5 w-5" />
+                <HIDE_SVG aria-hidden="true" className="h-7 w-7" />
               )}
             </button>
           </TooltipTrigger>
@@ -161,7 +161,7 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
               aria-label="Remove layer"
               className={iconBtn}
             >
-              <CLOSE_SVG role="img" aria-hidden={true} className="h-3 w-3" />
+              <CLOSE_SVG role="img" aria-hidden={true} />
             </button>
           </TooltipTrigger>
           <TooltipPortal>
@@ -205,10 +205,11 @@ const NationalDashboardMapLegend = () => {
   const palette = chroma.scale(COLORS).colors(Math.max(maxIndex + 1, COLORS.length));
 
   return (
-    <div className="w-full font-sans text-black/60">
+    <div className="w-full space-y-2 font-sans text-black/60">
       <SortableList
         onChangeOrder={handleChangeOrder}
         sortable={{ handle: true, enabled: nationalLayers.length > 1 }}
+        divided={false}
       >
         {nationalLayers.map((layer) => {
           const layerIndex = (layer.settings?.layerIndex as number) ?? 0;

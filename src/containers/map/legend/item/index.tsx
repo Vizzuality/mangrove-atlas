@@ -145,7 +145,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
       </div>
 
       {WidgetLegend && (
-        <div className="pt-4 pl-6">
+        <div className={cn('w-full pt-4', { 'pl-6': !isNationalDashboard })}>
           <WidgetLegend />
         </div>
       )}
