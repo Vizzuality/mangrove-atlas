@@ -30,6 +30,7 @@ type LegendControlsProps = {
   l: Layer;
   hideOpacity?: boolean;
   hideInfo?: boolean;
+  compact?: boolean;
   // When provided, visibility and remove act on every layer id in this list
   // instead of only on `l.id`. Used for the national-dashboard parent legend
   // item which controls all of its source layers at once.
@@ -40,6 +41,7 @@ const LegendControls = ({
   l,
   hideOpacity = false,
   hideInfo = false,
+  compact = false,
   targetLayerIds,
 }: LegendControlsProps) => {
   const [infoDialogVisibility, setInfoDialogVisibility] = useState(false);
@@ -141,11 +143,19 @@ const LegendControls = ({
 
   if (l.id === 'custom-area') return null;
 
-  const iconBtn =
-    'inline-flex h-7.5 w-7.5 items-center justify-center rounded-full text-black/42 hover:bg-black/5';
+  const iconBtn = compact
+    ? 'inline-flex h-5 w-5 items-center justify-center rounded-full text-black/42 hover:bg-black/5'
+    : 'inline-flex h-7.5 w-7.5 items-center justify-center rounded-full text-black/42 hover:bg-black/5';
+  const opacityIconCls = compact ? 'h-4 w-4' : 'h-6.5 w-6.5';
+  const showHideIconCls = compact ? 'h-5 w-5' : 'h-7 w-7';
+  const closeIconCls = compact ? 'h-3 w-3' : '';
+  const infoBtnCls = compact
+    ? 'mr-1 flex h-4 w-4 items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42'
+    : 'mr-1 flex h-5 w-5 items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42';
+  const infoIconCls = compact ? 'h-2 w-2 fill-current' : 'h-3 w-3 fill-current';
 
   return (
-    <div className="ml-2 flex items-center gap-x-0.5">
+    <div className="ml-auto flex items-center justify-end gap-x-0.5">
       {!hideInfo && WidgetInfo && (
         <Dialog open={infoDialogVisibility}>
           <DialogTrigger asChild>
@@ -154,13 +164,9 @@ const LegendControls = ({
                 asChild
                 onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
               >
-                <button
-                  type="button"
-                  aria-label="Layer info"
-                  className="mr-1 flex h-5 w-5 items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42"
-                >
+                <button type="button" aria-label="Layer info" className={infoBtnCls}>
                   <INFO_SVG
-                    className="h-3 w-3 fill-current"
+                    className={infoIconCls}
                     role="img"
                     aria-hidden={true}
                     aria-label="Info layer"
@@ -198,7 +204,7 @@ const LegendControls = ({
             <TooltipTrigger asChild>
               <PopoverTrigger asChild>
                 <button type="button" aria-label="Layer opacity" className={iconBtn}>
-                  <OPACITY_SVG aria-hidden="true" className="h-6.5 w-6.5" />
+                  <OPACITY_SVG aria-hidden="true" className={opacityIconCls} />
                 </button>
               </PopoverTrigger>
             </TooltipTrigger>
@@ -231,9 +237,9 @@ const LegendControls = ({
             className={iconBtn}
           >
             {visibility ? (
-              <SHOW_SVG aria-hidden="true" className="h-7 w-7" />
+              <SHOW_SVG aria-hidden="true" className={showHideIconCls} />
             ) : (
-              <HIDE_SVG aria-hidden="true" className="h-7 w-7" />
+              <HIDE_SVG aria-hidden="true" className={showHideIconCls} />
             )}
           </button>
         </TooltipTrigger>
@@ -257,7 +263,7 @@ const LegendControls = ({
             aria-label="Remove layer"
             className={iconBtn}
           >
-            <CLOSE_SVG role="img" aria-hidden={true} />
+            <CLOSE_SVG role="img" aria-hidden={true} className={closeIconCls} />
           </button>
         </TooltipTrigger>
         <TooltipPortal>
