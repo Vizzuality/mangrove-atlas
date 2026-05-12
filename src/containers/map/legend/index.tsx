@@ -37,7 +37,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const { data: locationData } = useLocation(locationId, locationType);
   const iso = locationData?.iso;
 
-  const currentNationalLayerId = iso ? `${NATIONAL_DASHBOARD_PREFIX}${iso}` : null;
+  const nationalLayerIdPrefix = iso ? `${NATIONAL_DASHBOARD_PREFIX}${iso}` : null;
 
   const filterLayersByLocationType = useCallback(
     (widgetsConfig: WidgetTypes[], currentLocationType: string): string[] => {
@@ -62,15 +62,25 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   );
 
   const filteredLayers = useMemo(() => {
-    return (activeLayers ?? []).filter((layer) => {
+    const matched = (activeLayers ?? []).filter((layer) => {
       const isStandardLayer = filteredLayersIds.includes(layer.id);
 
       const isCurrentNationalLayer =
-        !!currentNationalLayerId && layer.id === currentNationalLayerId;
+        !!nationalLayerIdPrefix &&
+        (layer.id === nationalLayerIdPrefix || layer.id.startsWith(`${nationalLayerIdPrefix}_`));
 
       return isStandardLayer || isCurrentNationalLayer;
     }) as Layer[];
-  }, [activeLayers, filteredLayersIds, currentNationalLayerId]);
+
+    // Collapse all active national-dashboard layers under a single LegendItem;
+    // the WidgetLegend component lists each source row.
+    const firstNationalIdx = matched.findIndex((layer) =>
+      layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX)
+    );
+    return matched.filter(
+      (layer, idx) => !layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX) || idx === firstNationalIdx
+    );
+  }, [activeLayers, filteredLayersIds, nationalLayerIdPrefix]);
 
   const [isOpen, setIsOpen] = useState(true);
 

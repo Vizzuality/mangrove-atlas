@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "indicator": "Habitat extent area",
+      "sources": [
+        {
+          "source": "CONABIO",
+          "unit": "km2",
+          "years": [2015, 2020],
+          "data_source": [
+            {
+              "year": 2015,
+              "value": 7755.55,
+              "layer_link": "globalmangrovewatch.conabio_2015",
+              "download_link": "https://example.com/conabio_2015.zip",
+              "layer_info": "CONABIO 2015 mangrove extent",
+              "source_layer": "conabio_2015"
+            },
+            {
+              "year": 2020,
+              "value": 7647.74,
+              "layer_link": "globalmangrovewatch.conabio_2020",
+              "download_link": "https://example.com/conabio_2020.zip",
+              "layer_info": "CONABIO 2020 mangrove extent",
+              "source_layer": "conabio_2020"
+            }
+          ]
+        },
+        {
+          "source": "TEST",
+          "unit": "km2",
+          "years": [2025],
+          "data_source": [
+            {
+              "year": 2025,
+              "value": 999,
+              "layer_link": "globalmangrovewatch.test_2025",
+              "download_link": null,
+              "layer_info": "TEST 2025 mangrove extent",
+              "source_layer": "test_2025"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "location_id": "MEX",
+    "legal_status_options": [],
+    "other_resources": [],
+    "note": null
+  }
+}

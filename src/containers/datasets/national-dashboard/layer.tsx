@@ -10,12 +10,12 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
-  const SOURCE = useSource({ settings: activeLayer.settings });
+  const SOURCE = useSource({ id: activeLayer?.id, settings: activeLayer?.settings });
   const LAYER = useLayers({
-    id: activeLayer.id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
-    settings: activeLayer.settings,
+    id: activeLayer?.id,
+    opacity: activeLayer ? parseFloat(activeLayer.opacity) : 1,
+    visibility: activeLayer?.visibility,
+    settings: activeLayer?.settings,
   });
 
   if (!SOURCE || !LAYER) return null;

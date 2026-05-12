@@ -13,16 +13,16 @@ export type IndicatorSourcesProps = {
   id: WidgetSlugType;
   locationIso: string;
   layerIndex: number;
+  layerKey: string;
+  indicator: string;
 
   source: string;
   years: number[];
   unit: string;
 
-  dataSource: DataSourceType;
+  data_source: DataSourceType[];
 
   color: string;
-  yearSelected: number;
-  setYearSelected: (year: number) => void;
 };
 
 export type IndicatorSourceProps = {
@@ -38,5 +38,5 @@ export type IndicatorYearProps = {
 
 export type IndicatorExtentProps = {
   unit: string;
-  dataSource: DataSourceType;
+  dataSource: DataSourceType | undefined;
 };

@@ -19,8 +19,6 @@ import type { DataResponse, LayerSettingsType } from './types';
 
 type NationalDashboardResult = DataResponse & { locationIso: string };
 
-const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
-
 // widget data
 export function useNationalDashboard(
   params?: UseParamsOptions,
@@ -61,8 +59,10 @@ export function useNationalDashboard(
 }
 
 export function useSource({
+  id,
   settings,
 }: {
+  id: LayerProps['id'];
   settings: LayerSettingsType;
 }): (SourceProps & { url: string }) | null {
   if (!settings?.source) return null;
@@ -72,7 +72,7 @@ export function useSource({
     : `mapbox://${settings.source}`;
 
   return {
-    id: 'national-dashboard-sources',
+    id: `${id}-source`,
     type: 'vector',
     url,
   };
@@ -91,11 +91,12 @@ export function useLayers({
 }): LayerProps | null {
   if (!settings?.source_layer || settings.layerIndex == null) return null;
 
-  const color = colorsScale[settings.layerIndex] ?? colorsScale[0];
+  const palette = chroma.scale(COLORS).colors(Math.max(settings.layerIndex + 1, COLORS.length));
+  const color = palette[settings.layerIndex] ?? palette[0];
 
   return {
     id,
-    source: 'national-dashboard-sources',
+    source: `${id}-source`,
     'source-layer': settings.source_layer,
     type: 'fill',
     paint: {

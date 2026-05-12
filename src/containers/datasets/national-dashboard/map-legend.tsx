@@ -3,34 +3,47 @@ import { useSyncActiveLayers } from '@/store/layers';
 import chroma from 'chroma-js';
 
 import { COLORS } from './constants';
-import { useNationalDashboard } from './hooks';
 
-const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
+const NATIONAL_LAYER_PREFIX = 'mangrove_national_dashboard_layer_';
 
 const NationalDashboardMapLegend = () => {
   const [activeLayers] = useSyncActiveLayers();
-  const { data } = useNationalDashboard();
-  const ISO = data?.locationIso;
-  const layer = activeLayers?.find(({ id }) => id === `mangrove_national_dashboard_layer_${ISO}`);
-  const sources = data?.data[0]?.sources;
-  const color = colorsScale.filter((c, i) => i === layer?.settings?.layerIndex) as string[];
+
+  const nationalLayers = (activeLayers ?? []).filter(
+    (layer) => typeof layer.id === 'string' && layer.id.startsWith(NATIONAL_LAYER_PREFIX)
+  );
+
+  if (nationalLayers.length === 0) return null;
+
+  const maxIndex = nationalLayers.reduce(
+    (max, l) => Math.max(max, (l.settings?.layerIndex as number) ?? 0),
+    0
+  );
+  const palette = chroma.scale(COLORS).colors(Math.max(maxIndex + 1, COLORS.length));
 
   return (
-    <div className="flex w-full flex-col justify-between space-y-2 font-sans text-black/60">
-      {sources?.map(({ source }) => {
+    <ul
+      role="list"
+      className="flex w-full flex-col justify-between space-y-2 font-sans text-black/60"
+    >
+      {nationalLayers.map((layer) => {
+        const layerIndex = (layer.settings?.layerIndex as number) ?? 0;
+        const color = palette[layerIndex] ?? palette[0];
+        const name = (layer.settings?.name as string) ?? '';
         return (
-          <div key={source} className="flex items-start">
+          <li key={layer.id} className="flex items-start">
             <div
-              style={{ backgroundColor: color[0] }}
+              style={{ backgroundColor: color }}
               className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
+              aria-hidden="true"
             />
             <div className="flex flex-col items-start text-sm">
-              <p>{source}</p>
+              <p>{name}</p>
             </div>
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 };
 
