@@ -120,7 +120,6 @@
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
-      "tinyglobby>picomatch": "4.0.4",
       "minimatch>brace-expansion@^1": "1.1.14",
       "minimatch>brace-expansion@^5": "5.0.5",
       "next>postcss": "8.5.10"
