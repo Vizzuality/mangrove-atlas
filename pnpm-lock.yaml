@@ -5,8 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  minimatch>brace-expansion@^1: 1.1.14
-  minimatch>brace-expansion@^5: 5.0.5
   next>postcss: 8.5.10
 
 importers:
