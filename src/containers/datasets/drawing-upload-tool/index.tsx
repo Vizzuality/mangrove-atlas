@@ -95,6 +95,8 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
         fetchUploadFile(files)
           .then((data) => {
             setFileUpload(false);
+            void router.push(`/custom-area${queryParams ? `?${queryParams}` : ''}`);
+
             setDrawingUploadToolState((drawingToolState) => ({
               ...drawingToolState,
               uploadedGeojson: data?.data,
@@ -111,7 +113,6 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               ...prevAnalysisState,
               enabled: true,
             }));
-            void router.push(`/custom-area${queryParams ? `?${queryParams}` : ''}`);
 
             toast.success('File uploaded successfully');
           })

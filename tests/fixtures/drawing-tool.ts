@@ -70,6 +70,13 @@ export const useDrawingTool = (page: Page) => ({
   ],
 
   uploadGeojson: async (file: string) => {
+    const responsePromise = page.waitForResponse(
+      (res) => res.url().includes('/spatial_file/converter') && res.request().method() === 'POST'
+    );
     await page.getByTestId('shapefile-upload').setInputFiles(file);
+    const res = await responsePromise;
+    if (res.ok()) {
+      await page.waitForURL(/.*\/custom-area.*/);
+    }
   },
 });
