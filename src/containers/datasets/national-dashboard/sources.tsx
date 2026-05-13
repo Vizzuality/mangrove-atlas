@@ -1,52 +1,49 @@
-import { useState } from 'react';
-
-import flatten from 'lodash-es/flatten';
-
 import chroma from 'chroma-js';
 
 import { COLORS } from './constants';
 import IndicatorSource from './indicator-layers';
 
-const Sources = ({ data, iso }) => {
-  const [yearSelected, setYearSelected] = useState<number>(data?.sources?.years?.[0] || null);
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
-  const sources = flatten(
-    data?.map(({ sources }) =>
-      flatten(
-        sources.map(({ data_source }) =>
-          data_source.map(({ layer_link }) => `mapbox://${layer_link}`)
-        )
-      )
-    )
-  );
-  const colorsScale = chroma
+const Sources = ({ data, iso }) => {
+  const sourceColorMap = new Map<string, number>();
+  data?.forEach(({ sources }) => {
+    sources?.forEach(({ source }) => {
+      if (!sourceColorMap.has(source)) {
+        sourceColorMap.set(source, sourceColorMap.size);
+      }
+    });
+  });
+
+  const palette = chroma
     .scale(COLORS)
-    .colors(sources.length > COLORS.length ? sources.length : COLORS.length);
-  const years = data?.[0]?.sources[0]?.years;
-  const currentYear = yearSelected || years?.[years?.length - 1];
+    .colors(sourceColorMap.size > COLORS.length ? sourceColorMap.size : COLORS.length);
 
   return (
     <section className="space-y-6.25">
-      {data?.map(({ indicator, sources }, index) => (
+      {data?.map(({ indicator, sources }) => (
         <div key={indicator}>
-          {/* <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3> */}
           {sources.map(({ source, years, unit, data_source }) => {
-            const dataSource = data_source.find((d) => d.year === currentYear);
-
-            const color = colorsScale.filter((c, i) => i === index);
+            const colorIndex = sourceColorMap.get(source) ?? 0;
+            const color = palette[colorIndex % palette.length];
+            const layerKey = slugify(`${indicator}__${source}`);
             return (
               <IndicatorSource
                 id={`mangrove_national_dashboard_layer_${iso}`}
                 locationIso={iso}
-                layerIndex={index}
-                key={source}
+                layerIndex={colorIndex}
+                layerKey={layerKey}
+                key={layerKey}
+                indicator={indicator}
                 source={source}
                 years={years}
                 unit={unit}
-                dataSource={dataSource}
+                data_source={data_source}
                 color={color}
-                yearSelected={currentYear}
-                setYearSelected={setYearSelected}
               />
             );
           })}

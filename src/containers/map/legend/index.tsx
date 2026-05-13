@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
@@ -37,7 +37,24 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const { data: locationData } = useLocation(locationId, locationType);
   const iso = locationData?.iso;
 
-  const currentNationalLayerId = iso ? `${NATIONAL_DASHBOARD_PREFIX}${iso}` : null;
+  const nationalLayerIdPrefix = iso ? `${NATIONAL_DASHBOARD_PREFIX}${iso}` : null;
+
+  // When the user navigates to another country, drop any national-dashboard
+  // layers belonging to the previous ISO so the URL state stays in sync and
+  // we don't try to render Mapbox sources from a different country.
+  useEffect(() => {
+    if (!iso) return;
+    setActiveLayers((prev) => {
+      const current = prev ?? [];
+      const next = current.filter(
+        (layer) =>
+          !layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX) ||
+          layer.id.startsWith(`${NATIONAL_DASHBOARD_PREFIX}${iso}_`) ||
+          layer.id === `${NATIONAL_DASHBOARD_PREFIX}${iso}`
+      );
+      return next.length === current.length ? prev : next;
+    });
+  }, [iso, setActiveLayers]);
 
   const filterLayersByLocationType = useCallback(
     (widgetsConfig: WidgetTypes[], currentLocationType: string): string[] => {
@@ -62,15 +79,25 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   );
 
   const filteredLayers = useMemo(() => {
-    return (activeLayers ?? []).filter((layer) => {
+    const matched = (activeLayers ?? []).filter((layer) => {
       const isStandardLayer = filteredLayersIds.includes(layer.id);
 
       const isCurrentNationalLayer =
-        !!currentNationalLayerId && layer.id === currentNationalLayerId;
+        !!nationalLayerIdPrefix &&
+        (layer.id === nationalLayerIdPrefix || layer.id.startsWith(`${nationalLayerIdPrefix}_`));
 
       return isStandardLayer || isCurrentNationalLayer;
     }) as Layer[];
-  }, [activeLayers, filteredLayersIds, currentNationalLayerId]);
+
+    // Collapse all active national-dashboard layers under a single LegendItem;
+    // the WidgetLegend component lists each source row.
+    const firstNationalIdx = matched.findIndex((layer) =>
+      layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX)
+    );
+    return matched.filter(
+      (layer, idx) => !layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX) || idx === firstNationalIdx
+    );
+  }, [activeLayers, filteredLayersIds, nationalLayerIdPrefix]);
 
   const [isOpen, setIsOpen] = useState(true);
 

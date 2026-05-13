@@ -16,23 +16,28 @@ const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearPr
         {years?.length > 1 && (
           <Popover>
             <PopoverTrigger asChild>
-              <span className={`${WIDGET_SELECT_STYLES}`}>
+              <button
+                type="button"
+                aria-haspopup="listbox"
+                aria-label={`Select year, current ${yearSelected}`}
+                className={`${WIDGET_SELECT_STYLES}`}
+              >
                 {yearSelected}
                 <ARROW_SVG
                   className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                  role="img"
-                  title="Arrow"
+                  aria-hidden="true"
                 />
-              </span>
+              </button>
             </PopoverTrigger>
 
             <PopoverContent className="shadow-border rounded-2xl px-2">
-              <ul className="max-h-32 space-y-0.5">
+              <ul role="listbox" className="max-h-32 space-y-0.5">
                 {years?.map((u) => (
                   <li key={u}>
                     <button
                       key={u}
-                      aria-label="set year"
+                      role="option"
+                      aria-selected={yearSelected === u}
                       className={cn({
                         'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                         'hover:text-brand-800': yearSelected !== u,

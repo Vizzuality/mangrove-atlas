@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
@@ -19,18 +19,25 @@ const IndicatorSources = ({
   source,
   locationIso,
   layerIndex,
+  layerKey,
+  indicator,
   years,
   unit,
-  dataSource,
+  data_source,
   color,
-  yearSelected,
-  setYearSelected,
 }: IndicatorSourcesProps) => {
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
+  const [yearSelected, setYearSelected] = useState<number>(years?.[years.length - 1]);
+
+  const dataSource = useMemo(
+    () => data_source.find((d) => d.year === yearSelected) ?? data_source[data_source.length - 1],
+    [data_source, yearSelected]
+  );
 
   const layerId = useMemo(
-    () => `${NATIONAL_LAYER_ID}_${locationIso}` as `mangrove_national_dashboard_layer_${string}`,
-    [locationIso]
+    () =>
+      `${NATIONAL_LAYER_ID}_${locationIso}_${layerKey}` as `mangrove_national_dashboard_layer_${string}`,
+    [locationIso, layerKey]
   );
 
   const isNationalLayerActive = useMemo(
@@ -47,8 +54,8 @@ const IndicatorSources = ({
         name: source,
         location: locationIso,
         layerIndex,
-        source: dataSource.layer_link,
-        source_layer: dataSource.source_layer,
+        source: dataSource?.layer_link,
+        source_layer: dataSource?.source_layer,
         year: yearSelected,
       },
     }),
@@ -57,24 +64,10 @@ const IndicatorSources = ({
       source,
       locationIso,
       layerIndex,
-      dataSource.layer_link,
-      dataSource.source_layer,
+      dataSource?.layer_link,
+      dataSource?.source_layer,
       yearSelected,
     ]
-  );
-
-  const isNationalLayer = useCallback((id: Layer['id']) => {
-    return typeof id === 'string' && id.startsWith(`${NATIONAL_LAYER_ID}_`);
-  }, []);
-
-  const replaceNationalLayer = useCallback(
-    (layers: Layer[] = []): Layer[] => {
-      const nextLayer = buildLayer();
-      const withoutNationalLayers = layers.filter((layer) => !isNationalLayer(layer.id));
-
-      return [nextLayer, ...withoutNationalLayers];
-    },
-    [buildLayer, isNationalLayer]
   );
 
   const updateCurrentLayer = useCallback(
@@ -88,8 +81,8 @@ const IndicatorSources = ({
                 name: source,
                 location: locationIso,
                 layerIndex,
-                source: dataSource.layer_link,
-                source_layer: dataSource.source_layer,
+                source: dataSource?.layer_link,
+                source_layer: dataSource?.source_layer,
                 year: yearSelected,
               },
             }
@@ -100,8 +93,8 @@ const IndicatorSources = ({
       source,
       locationIso,
       layerIndex,
-      dataSource.layer_link,
-      dataSource.source_layer,
+      dataSource?.layer_link,
+      dataSource?.source_layer,
       yearSelected,
     ]
   );
@@ -120,17 +113,17 @@ const IndicatorSources = ({
         return prevLayers.filter((layer) => layer.id !== layerId);
       }
 
-      return replaceNationalLayer(prevLayers);
+      return [buildLayer(), ...prevLayers];
     });
 
     if (!isNationalLayerActive) {
       trackEvent(`Add mangrove national dashboard indicator layer - ${locationIso}`, {
         category: 'Layers',
         action: 'Toggle',
-        label: `Add mangrove national dashboard indicator layer - ${locationIso}`,
+        label: `Add mangrove national dashboard indicator layer - ${locationIso} - ${source}`,
       });
     }
-  }, [setActiveLayers, layerId, replaceNationalLayer, isNationalLayerActive, locationIso]);
+  }, [setActiveLayers, layerId, buildLayer, isNationalLayerActive, locationIso, source]);
 
   return (
     <div className="flex w-full items-start justify-between space-x-4 py-4">
@@ -141,13 +134,18 @@ const IndicatorSources = ({
       <div className="flex min-h-min justify-end space-x-2">
         <WidgetControls
           content={{
-            link: dataSource.download_link ?? undefined,
-            description: dataSource.layer_info,
+            link: dataSource?.download_link ?? undefined,
+            description: dataSource?.layer_info ?? '',
             name: source,
           }}
         />
         <SwitchWrapper id={layerId}>
-          <SwitchRoot id={layerId} onClick={handleClick} checked={isNationalLayerActive}>
+          <SwitchRoot
+            id={layerId}
+            onClick={handleClick}
+            checked={isNationalLayerActive}
+            aria-label={`Toggle ${source} ${indicator} layer`}
+          >
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>

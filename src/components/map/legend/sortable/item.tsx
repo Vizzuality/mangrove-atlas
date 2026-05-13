@@ -10,6 +10,7 @@ import { SortableItemProps } from '@/components/map/legend/types';
 const SortableItem: React.FC<SortableItemProps> = ({
   id,
   sortable,
+  divided = true,
   children,
   'data-testid': dataTestId,
 }: SortableItemProps) => {
@@ -32,8 +33,8 @@ const SortableItem: React.FC<SortableItemProps> = ({
     <div
       ref={setNodeRef}
       className={cn({
-        'w-full border-b border-gray-200 py-4 first:pt-0 nth-last-3:border-b-0 nth-last-3:pb-0':
-          true,
+        'w-full': true,
+        'border-b border-gray-200 py-4 first:pt-0 nth-last-3:border-b-0 nth-last-3:pb-0': divided,
         'opacity-0': isDragging,
       })}
       style={style}
