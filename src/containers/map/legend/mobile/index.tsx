@@ -57,7 +57,7 @@ const Legend = () => {
               animate={isOpen ? 'open' : 'close'}
               exit="close"
               transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-              className="fixed md:right-[73px]"
+              className="relative xl:fixed xl:right-[73px]"
             >
               <div className="shadow-medium animate-in data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16 w-[360px] gap-4 rounded-3xl border bg-white duration-300">
                 <div className="box-content flex max-h-[70vh] flex-col space-y-1 divide-y divide-black/42 overflow-y-auto pt-4 md:px-4">

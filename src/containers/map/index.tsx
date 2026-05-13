@@ -554,7 +554,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                 />
               )}
               {!hideControls && (
-                <Controls className="absolute right-5 bottom-9 hidden items-center md:block">
+                <Controls className="absolute right-5 bottom-9 hidden items-center xl:block">
                   <div className="flex flex-col space-y-2 pt-1">
                     {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                     <Helper
@@ -636,12 +636,12 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
 
         {!hideControls && (
           <>
-            <Media lessThan="md">
-              <div className="absolute top-20">
+            <Media lessThan="xl">
+              <div className="absolute top-20 z-20 w-full">
                 <MobileLegend />
               </div>
             </Media>
-            <Media greaterThanOrEqual="md">
+            <Media greaterThanOrEqual="xl">
               <div className="absolute right-18 bottom-9 z-50 mr-0.5">
                 <Legend />
               </div>

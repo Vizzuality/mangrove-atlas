@@ -158,11 +158,12 @@ const WidgetsContainer: FC = () => {
               initial="rest"
               whileHover="hover"
               animate="rest"
-              // centers the button in the middle of the sidebar (sidebar width less the button width divided by 2)
-              className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20"
+              className="fixed bottom-3 left-1/2 z-20 -translate-x-1/2 xl:left-[calc((572px-48px)/2)] xl:translate-x-0"
             >
               <motion.button
-                className="bg-brand-800 shadow-control flex min-w-[48px] items-center space-x-4 rounded-full p-4 text-xs font-semibold text-white"
+                type="button"
+                aria-label="Open widgets deck"
+                className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 flex h-12 min-w-[48px] items-center space-x-4 rounded-full p-4 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                 variants={buttonMotion}
               >
                 <SETTINGS_SVG
@@ -197,9 +198,11 @@ const WidgetsContainer: FC = () => {
                 <span>
                   <button
                     type="button"
-                    className="bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-6 py-2 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                    aria-label="Print PDF report"
+                    className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                     onClick={handlePrintReport}
                     disabled={isPrintDisabled}
+                    aria-busy={isPrintDisabled || undefined}
                   >
                     Print PDF report
                   </button>
