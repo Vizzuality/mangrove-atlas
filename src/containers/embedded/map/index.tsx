@@ -95,7 +95,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
           top: 50,
           right: 20,
           bottom: 50,
-          left: screenWidth >= breakpoints.lg ? 620 + 20 : 20,
+          left: screenWidth >= breakpoints.xl ? 620 + 20 : 20,
         },
       }
     );

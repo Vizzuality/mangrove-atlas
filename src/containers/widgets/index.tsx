@@ -107,8 +107,8 @@ const WidgetsContainer: FC = () => {
 
       <WidgetsCardsControls />
 
-      {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
-        <div className="pb-16 md:pb-0">
+      {screenWidth > 0 && screenWidth < breakpoints.xl && !!widgets.length && (
+        <div className="pb-16 xl:pb-0">
           {widgetsAvailable.map(({ slug, name, index, ...props }) => {
             const Widget = WIDGETS[slug] satisfies () => JSX.Element;
             return (
@@ -126,7 +126,7 @@ const WidgetsContainer: FC = () => {
         </div>
       )}
 
-      {screenWidth > 0 && screenWidth >= breakpoints.md && (
+      {screenWidth > 0 && screenWidth >= breakpoints.xl && (
         <div data-testid="widgets-wrapper">
           {widgetsAvailable.map(({ slug, name, ...props }) => {
             const Widget = WIDGETS[slug];
