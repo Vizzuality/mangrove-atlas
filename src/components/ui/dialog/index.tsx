@@ -19,7 +19,11 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal {...props}>
+<<<<<<< HEAD
     <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-start sm:justify-center md:items-center xl:items-start xl:justify-start">
+=======
+    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-start sm:justify-center md:items-center">
+>>>>>>> 3d311aa3 (feat(mobile): responsive dialog, widget collapse, nav bp alignment)
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -59,6 +63,7 @@ const DialogContent = forwardRef<
       ...props
     },
     ref
+<<<<<<< HEAD
   ) => {
     const childArray = Children.toArray(children);
     const isClose = (child: ReactNode) =>
@@ -66,6 +71,17 @@ const DialogContent = forwardRef<
       (child.type as { displayName?: string })?.displayName === 'DialogClose';
     const closeButton = childArray.find(isClose);
     const restChildren = childArray.filter((c) => !isClose(c));
+=======
+  ) => (
+    <DialogPortal>
+      <DialogOverlay />
+      <DialogPrimitive.Content
+        ref={ref}
+        aria-describedby={ariaDescribedBy}
+        className={cn({
+          'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-hidden duration-300 sm:p-4':
+            true,
+>>>>>>> 3d311aa3 (feat(mobile): responsive dialog, widget collapse, nav bp alignment)
 
     return (
       <DialogPortal>
@@ -74,7 +90,11 @@ const DialogContent = forwardRef<
           ref={ref}
           aria-describedby={ariaDescribedBy}
           className={cn({
+<<<<<<< HEAD
             'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-hidden duration-300 sm:p-4':
+=======
+            'sm:shadow-card pointer-events-auto relative flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-2rem)] sm:max-w-135 sm:p-8 md:rounded-3xl':
+>>>>>>> 3d311aa3 (feat(mobile): responsive dialog, widget collapse, nav bp alignment)
               true,
 
             [classNameContent || '']: !!classNameContent,
