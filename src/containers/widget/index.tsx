@@ -103,7 +103,6 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
               <div
                 data-testid={`widget-${id}-content`}
                 className={cn({
-                  'group-last-of-type:block': true,
                   hidden: isCollapsed,
                   block: !isCollapsed,
                 })}

@@ -16,8 +16,7 @@ const WidgetsDeckContent: FC = () => {
   return (
     <DialogContent
       className={cn({
-        'absolute top-0 left-0 min-h-screen w-screen sm:mb-10 sm:border-2 md:top-4 md:left-4 md:w-auto':
-          true,
+        'absolute top-0 left-0 w-screen sm:mb-10 sm:border-2 md:top-4 md:left-4 md:w-auto': true,
       })}
     >
       <DialogClose className="top-5 right-5 md:absolute md:top-18! md:-right-10" />

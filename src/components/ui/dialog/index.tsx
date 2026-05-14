@@ -11,7 +11,7 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal {...props}>
-    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-center md:items-center">
+    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-start sm:justify-center md:items-center">
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -56,7 +56,7 @@ const DialogContent = forwardRef<
         ref={ref}
         aria-describedby={ariaDescribedBy}
         className={cn({
-          'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-x-hidden overflow-y-auto p-4 duration-300':
+          'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-hidden duration-300 sm:p-4':
             true,
 
           [classNameContent || '']: !!classNameContent,
@@ -65,7 +65,7 @@ const DialogContent = forwardRef<
       >
         <div
           className={cn({
-            'shadow-card pointer-events-auto relative flex max-w-135 shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
+            'sm:shadow-card pointer-events-auto relative flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-2rem)] sm:max-w-135 sm:p-8 md:rounded-3xl':
               true,
             [className || '']: !!className,
           })}
@@ -100,7 +100,7 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'md:shadow-card absolute -top-2 -right-10 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none md:top-9 md:-z-10 md:bg-white/70 md:backdrop-blur-sm':
+        'md:shadow-card absolute top-4 right-4 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-9 md:-z-10 md:bg-white/70 md:backdrop-blur-sm':
           true,
         [className || '']: !!className,
       })}

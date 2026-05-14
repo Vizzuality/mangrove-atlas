@@ -12,7 +12,7 @@ import WidgetsDeck from '@/containers/widgets/widgets-cards-controls/widgets-dec
 const WidgetsCardsControls: FC = () => {
   const locationTool = useAtomValue(locationToolAtom);
   return (
-    <div className="py-1">
+    <div className="hidden py-1 xl:block">
       <div
         className={cn({
           'grid w-full grid-cols-2 justify-between gap-1': true,

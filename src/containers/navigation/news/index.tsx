@@ -42,7 +42,7 @@ const NewsButton = ({
         tooltipPosition={{ top: -40, left: 0 }}
         message="Latest news from the Global Mangrove Alliance"
       >
-        <div className="flex flex-col items-center space-y-2">
+        <div className="flex flex-col items-center space-y-2 xl:flex-row xl:space-y-0 xl:space-x-2">
           {hasSeenWelcome && (
             <span className="relative inline-block h-6 w-6">
               <NEWS_SVG className="h-6 w-6 fill-current text-white" role="img" title="News" />
