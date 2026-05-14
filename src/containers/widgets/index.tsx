@@ -11,6 +11,8 @@ import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
 import { useWindowSize } from 'usehooks-ts';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import WidgetsLayout from '@/layouts/widgets';
 
 import { WIDGETS } from '@/containers/datasets';
@@ -27,7 +29,6 @@ import { WidgetTypes } from 'types/widget';
 
 import SETTINGS_SVG from '@/svgs/ui/settings';
 
-import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
 import WidgetsDeckContent from './widgets-deck/content';
 
@@ -76,15 +77,18 @@ const WidgetsContainer: FC = () => {
 
   const { width: screenWidth } = useWindowSize();
   const [activeWidgets] = useSyncActiveWidgets();
-  const enabledWidgets = useWidgets();
+  const { type: locationType } = useSyncLocation();
+  const currentLocation = locationType || 'worldwide';
   const widgetsAvailable = useMemo(() => {
     if (customGeojson || uploadedGeojson) {
       return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));
     }
-    return enabledWidgets.filter(
-      ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool'
+    return widgets.filter(
+      ({ slug, locationType: widgetLocations }) =>
+        widgetLocations.includes(currentLocation) &&
+        (activeWidgets?.includes(slug) || slug === 'widgets_deck_tool')
     );
-  }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
+  }, [activeWidgets, currentLocation, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   const locationTool = useAtomValue(locationToolAtom);
   const isCustomArea = !!(customGeojson || uploadedGeojson);
