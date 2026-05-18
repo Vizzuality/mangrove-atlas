@@ -48,7 +48,8 @@ const WidgetsMenu: FC = () => {
     } else {
       setActiveWidgets(widgetsIds);
     }
-  }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
+    setCategory('custom');
+  }, [widgetsIds, setActiveWidgets, activeWidgets, widgets, setCategory]);
 
   const handleAllLayers = useCallback(() => {
     if (activeLayers?.length <= LAYERS.length && activeLayers?.length > 0) {
