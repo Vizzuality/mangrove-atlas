@@ -60,7 +60,7 @@ const Info = ({ id, content }) => {
           {id && <Info />}
           {content && <>{decodedContent}</>}
         </div>
-        <DialogClose className="md:0 -top-2 md:absolute" />
+        <DialogClose />
       </DialogContent>
     </Dialog>
   );

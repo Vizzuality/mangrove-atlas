@@ -1,4 +1,12 @@
-import { forwardRef, ElementRef, ComponentPropsWithoutRef, HTMLAttributes } from 'react';
+import {
+  Children,
+  forwardRef,
+  isValidElement,
+  ElementRef,
+  ComponentPropsWithoutRef,
+  HTMLAttributes,
+  ReactNode,
+} from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -11,7 +19,7 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal {...props}>
-    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-center md:items-center">
+    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-start sm:justify-center md:items-center xl:items-start xl:justify-start">
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -49,32 +57,44 @@ const DialogContent = forwardRef<
       ...props
     },
     ref
-  ) => (
-    <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Content
-        ref={ref}
-        aria-describedby={ariaDescribedBy}
-        className={cn({
-          'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-x-hidden overflow-y-auto p-4 duration-300':
-            true,
+  ) => {
+    const childArray = Children.toArray(children);
+    const isClose = (child: ReactNode) =>
+      isValidElement(child) &&
+      (child.type as { displayName?: string })?.displayName === 'DialogClose';
+    const closeButton = childArray.find(isClose);
+    const restChildren = childArray.filter((c) => !isClose(c));
 
-          [classNameContent || '']: !!classNameContent,
-        })}
-        {...props}
-      >
-        <div
+    return (
+      <DialogPortal>
+        <DialogOverlay />
+        <DialogPrimitive.Content
+          ref={ref}
+          aria-describedby={ariaDescribedBy}
           className={cn({
-            'shadow-card pointer-events-auto relative flex max-w-135 shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
+            'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-hidden duration-300 sm:p-4':
               true,
-            [className || '']: !!className,
+
+            [classNameContent || '']: !!classNameContent,
           })}
+          {...props}
         >
-          {children}
-        </div>
-      </DialogPrimitive.Content>
-    </DialogPortal>
-  )
+          <div className="pointer-events-auto relative mx-auto w-full sm:max-w-135 xl:mx-0 xl:mt-10 xl:ml-6">
+            <div
+              className={cn({
+                'sm:shadow-card flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-2rem)] sm:p-8 md:rounded-3xl':
+                  true,
+                [className || '']: !!className,
+              })}
+            >
+              {restChildren}
+            </div>
+            {closeButton}
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPortal>
+    );
+  }
 );
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
@@ -100,7 +120,7 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'md:shadow-card absolute -top-2 -right-10 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none md:top-9 md:-z-10 md:bg-white/70 md:backdrop-blur-sm':
+        'md:shadow-card absolute top-4 right-4 z-10 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-9 md:bg-white/70 md:backdrop-blur-sm':
           true,
         [className || '']: !!className,
       })}

@@ -157,7 +157,7 @@ const LegendControls = ({
   return (
     <div className="ml-auto flex items-center justify-end gap-x-0.5">
       {!hideInfo && WidgetInfo && (
-        <Dialog open={infoDialogVisibility}>
+        <Dialog open={infoDialogVisibility} onOpenChange={setInfoDialogVisibility}>
           <DialogTrigger asChild>
             <Tooltip>
               <TooltipTrigger
@@ -190,10 +190,7 @@ const LegendControls = ({
             <div className="no-scrollbar overflow-y-auto">
               <div className="no-scrollbar overflow-y-auto">{WidgetInfo && <WidgetInfo />}</div>
             </div>
-            <DialogClose
-              className="top-8 md:absolute md:top-18! md:-right-10"
-              onClose={() => setInfoDialogVisibility(false)}
-            />
+            <DialogClose onClose={() => setInfoDialogVisibility(false)} />
           </DialogContent>
         </Dialog>
       )}

@@ -5,6 +5,8 @@ import { mapViewAtom } from '@/store/sidebar';
 
 import { useAtom } from 'jotai';
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+
 import CLOSE_SVG from '@/svgs/ui/close';
 
 const MapToggle = () => {
@@ -12,28 +14,33 @@ const MapToggle = () => {
   const [mapView, setMapView] = useAtom(mapViewAtom);
 
   return (
-    <div className="flex h-full flex-col items-center">
-      <button
-        className={cn({
-          'my-0.5 box-border flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-2 border-white':
-            true,
-          'bg-white': mapView,
-        })}
-        onClick={() => setMapView(!mapView)}
-      >
-        {mapView && (
-          <CLOSE_SVG
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          aria-label={mapView ? 'Close map' : 'Open map'}
+          onClick={() => setMapView(!mapView)}
+          className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
+        >
+          <span
             className={cn({
-              'fill-brand-600 h-5 w-5 fill-current': true,
+              'box-border flex h-8 w-8 items-center justify-center rounded-full border-2 border-white':
+                true,
+              'bg-white': mapView,
             })}
-            role="img"
-            title="Close"
-          />
-        )}
-        {!mapView && <p className="font-sans text-sm text-white">{activeLayers?.length}</p>}
-      </button>
-      <div className="text-xxs text-center font-sans text-white">Map</div>
-    </div>
+          >
+            {mapView && (
+              <CLOSE_SVG className="fill-brand-600 h-4 w-4 fill-current" role="img" title="Close" />
+            )}
+            {!mapView && (
+              <span className="font-sans text-sm text-white">{activeLayers?.length}</span>
+            )}
+          </span>
+          <span className="text-xxs font-sans leading-none text-white">Map</span>
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="top">{mapView ? 'Close map' : 'Open map'}</TooltipContent>
+    </Tooltip>
   );
 };
 

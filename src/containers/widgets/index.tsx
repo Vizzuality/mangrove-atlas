@@ -11,6 +11,8 @@ import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
 import { useWindowSize } from 'usehooks-ts';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import WidgetsLayout from '@/layouts/widgets';
 
 import { WIDGETS } from '@/containers/datasets';
@@ -27,7 +29,6 @@ import { WidgetTypes } from 'types/widget';
 
 import SETTINGS_SVG from '@/svgs/ui/settings';
 
-import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
 import WidgetsDeckContent from './widgets-deck/content';
 
@@ -76,15 +77,18 @@ const WidgetsContainer: FC = () => {
 
   const { width: screenWidth } = useWindowSize();
   const [activeWidgets] = useSyncActiveWidgets();
-  const enabledWidgets = useWidgets();
+  const { type: locationType } = useSyncLocation();
+  const currentLocation = locationType || 'worldwide';
   const widgetsAvailable = useMemo(() => {
     if (customGeojson || uploadedGeojson) {
       return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));
     }
-    return enabledWidgets.filter(
-      ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool'
+    return widgets.filter(
+      ({ slug, locationType: widgetLocations }) =>
+        widgetLocations.includes(currentLocation) &&
+        (activeWidgets?.includes(slug) || slug === 'widgets_deck_tool')
     );
-  }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
+  }, [activeWidgets, currentLocation, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   const locationTool = useAtomValue(locationToolAtom);
   const isCustomArea = !!(customGeojson || uploadedGeojson);
@@ -107,8 +111,8 @@ const WidgetsContainer: FC = () => {
 
       <WidgetsCardsControls />
 
-      {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
-        <div className="pb-16 md:pb-0">
+      {screenWidth > 0 && screenWidth < breakpoints.xl && !!widgets.length && (
+        <div className="mt-5 pb-16 xl:mt-0 xl:pb-0">
           {widgetsAvailable.map(({ slug, name, index, ...props }) => {
             const Widget = WIDGETS[slug] satisfies () => JSX.Element;
             return (
@@ -126,7 +130,7 @@ const WidgetsContainer: FC = () => {
         </div>
       )}
 
-      {screenWidth > 0 && screenWidth >= breakpoints.md && (
+      {screenWidth > 0 && screenWidth >= breakpoints.xl && (
         <div data-testid="widgets-wrapper">
           {widgetsAvailable.map(({ slug, name, ...props }) => {
             const Widget = WIDGETS[slug];
@@ -158,11 +162,12 @@ const WidgetsContainer: FC = () => {
               initial="rest"
               whileHover="hover"
               animate="rest"
-              // centers the button in the middle of the sidebar (sidebar width less the button width divided by 2)
-              className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20"
+              className="fixed bottom-3 left-1/2 z-20 -translate-x-1/2 xl:left-[calc((572px-48px)/2)] xl:translate-x-0"
             >
               <motion.button
-                className="bg-brand-800 shadow-control flex min-w-[48px] items-center space-x-4 rounded-full p-4 text-xs font-semibold text-white"
+                type="button"
+                aria-label="Open widgets deck"
+                className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 flex h-12 min-w-[48px] items-center space-x-4 rounded-full p-4 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                 variants={buttonMotion}
               >
                 <SETTINGS_SVG
@@ -197,9 +202,11 @@ const WidgetsContainer: FC = () => {
                 <span>
                   <button
                     type="button"
-                    className="bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-6 py-2 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                    aria-label="Print PDF report"
+                    className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                     onClick={handlePrintReport}
                     disabled={isPrintDisabled}
+                    aria-busy={isPrintDisabled || undefined}
                   >
                     Print PDF report
                   </button>

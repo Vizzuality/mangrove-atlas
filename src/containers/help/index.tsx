@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
@@ -6,7 +8,8 @@ import cn from '@/lib/classnames';
 import { activeGuideAtom } from '@/store/guide';
 
 import { useAtom } from 'jotai';
-import { useLocalStorage } from 'usehooks-ts';
+
+import { useClientLocalStorage } from 'hooks/use-client-local-storage';
 
 import Contact from '@/containers/contact';
 
@@ -30,7 +33,7 @@ const THEME = {
 };
 
 const HelpContainer = ({ theme = 'light', hasArrow = false, className }: HelpContainerProps) => {
-  const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
+  const [guideLocalStorage] = useClientLocalStorage<boolean>('guideLocalStorage', false);
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useAtom(activeGuideAtom);
 

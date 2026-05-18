@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 const LuLanguagesIcon = LuLanguages as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
@@ -48,30 +49,36 @@ const LanguageSelector = () => {
   }, []);
 
   return (
-    <div className="flex h-full flex-col items-center">
-      <DropdownMenu>
-        <DropdownMenuTrigger className="flex h-full flex-col items-center space-y-1 pt-1 text-white">
-          <LuLanguagesIcon className="h-8 w-8" />
-          <span className="text-xxs">{currentLanguage}</span>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          {languages?.map((lang: { code: string; name: string }) => (
-            <DropdownMenuItem key={lang.code} asChild>
-              <button
-                data-testid={`${lang.code}-button`}
-                id={lang.name}
-                value={lang.code}
-                type="button"
-                className="hover:bg-white"
-                onClick={handleChange}
-              >
-                <span className="hover:text-brand-800">{lang.name}</span>
-              </button>
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <DropdownMenu>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger
+            aria-label="Language"
+            className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
+          >
+            <LuLanguagesIcon className="h-8 w-8" />
+            <span className="text-xxs font-sans leading-none text-white">{currentLanguage}</span>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent side="top">Change language</TooltipContent>
+      </Tooltip>
+      <DropdownMenuContent>
+        {languages?.map((lang: { code: string; name: string }) => (
+          <DropdownMenuItem key={lang.code} asChild>
+            <button
+              data-testid={`${lang.code}-button`}
+              id={lang.name}
+              value={lang.code}
+              type="button"
+              className="hover:bg-white"
+              onClick={handleChange}
+            >
+              <span className="hover:text-brand-800">{lang.name}</span>
+            </button>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

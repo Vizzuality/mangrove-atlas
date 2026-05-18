@@ -6,6 +6,7 @@ import { Map, Marker, useMap, type MapProps } from 'react-map-gl';
 
 import Image from 'next/image';
 
+import cn from '@/lib/classnames';
 import { flyMapTo, registerMapRef } from '@/lib/map-fly';
 
 import { analysisAtom } from '@/store/analysis';
@@ -21,12 +22,13 @@ import {
   useSyncBasemap,
   useSyncURLBounds,
 } from '@/store/map';
+import { mapViewAtom } from '@/store/sidebar';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { useAtom, useAtomValue } from 'jotai';
 import type { GeoJSONFeature, LngLatBoundsLike } from 'mapbox-gl';
-import { useOnClickOutside } from 'usehooks-ts';
+import { useOnClickOutside, useWindowSize } from 'usehooks-ts';
 
 import { useLocationNavigation } from 'hooks/location-navigation';
 import { useSyncLocation } from 'hooks/use-sync-location';
@@ -47,7 +49,7 @@ import PitchReset from '@/components/map/controls/pitch-reset';
 import ShareControl from '@/components/map/controls/share';
 import ZoomControl from '@/components/map/controls/zoom';
 import DrawControl from '@/components/map/drawing-tool';
-import { Media } from '@/components/media-query';
+import { breakpoints } from '@/styles/styles.config';
 import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
@@ -86,6 +88,10 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
 
   const [, setAnalysisState] = useAtom(analysisAtom);
   const guideIsActive = useAtomValue(activeGuideAtom);
+  const mapView = useAtomValue(mapViewAtom);
+  const { width: screenWidth } = useWindowSize();
+  const isDesktop = screenWidth >= breakpoints.xl;
+  const isMobile = screenWidth > 0 && screenWidth < breakpoints.xl;
   const [locationPopUp, setLocationPopUp] = useState<{
     position: { x: number | null; y: number | null };
     info: LocationPopUp | null;
@@ -554,7 +560,12 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                 />
               )}
               {!hideControls && (
-                <Controls className="absolute right-5 bottom-9 hidden items-center md:block">
+                <Controls
+                  className={cn(
+                    'absolute right-5 bottom-40 z-20 items-center xl:bottom-9 xl:z-auto',
+                    !mapView && 'hidden xl:flex'
+                  )}
+                >
                   <div className="flex flex-col space-y-2 pt-1">
                     {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                     <Helper
@@ -636,16 +647,16 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
 
         {!hideControls && (
           <>
-            <Media lessThan="md">
-              <div className="absolute top-20">
+            {isMobile && mapView && (
+              <div className="absolute top-5 z-20 w-full">
                 <MobileLegend />
               </div>
-            </Media>
-            <Media greaterThanOrEqual="md">
+            )}
+            {isDesktop && (
               <div className="absolute right-18 bottom-9 z-50 mr-0.5">
                 <Legend />
               </div>
-            </Media>
+            )}
           </>
         )}
       </div>
