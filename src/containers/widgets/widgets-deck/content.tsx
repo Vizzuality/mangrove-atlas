@@ -19,7 +19,7 @@ const WidgetsDeckContent: FC = () => {
         'absolute top-0 left-0 w-screen sm:mb-10 sm:border-2 md:top-4 md:left-4 md:w-auto': true,
       })}
     >
-      <DialogClose className="top-5 right-5 md:absolute md:top-18! md:-right-10" />
+      <DialogClose />
       <div className="no-scrollbar space-y-8">
         <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
           Widgets deck settings

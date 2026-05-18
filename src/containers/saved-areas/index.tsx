@@ -61,7 +61,7 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
             </div>
           )}
         </div>
-        <DialogClose className="md:0 -top-2 md:absolute" />
+        <DialogClose />
       </DialogContent>
     </Dialog>
   );

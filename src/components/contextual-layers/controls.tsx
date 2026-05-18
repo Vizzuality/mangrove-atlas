@@ -60,7 +60,7 @@ const Controls = ({ id, origin }: ControlTypes) => {
           <div className="no-scrollbar overflow-y-auto">
             <Info />
           </div>
-          <DialogClose className="md:0 -top-2 md:absolute" />
+          <DialogClose />
         </DialogContent>
       </Dialog>
 

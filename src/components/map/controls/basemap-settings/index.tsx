@@ -82,7 +82,7 @@ const BasemapSettings = () => {
                     <div className="no-scrollbar overflow-y-auto">
                       <InfoHiRes />
                     </div>
-                    <DialogClose className="md:0 -top-2 md:absolute" />
+                    <DialogClose />
                   </DialogContent>
                 </Dialog>
               </div>
@@ -110,7 +110,7 @@ const BasemapSettings = () => {
                     <div className="no-scrollbar overflow-y-auto">
                       <Info />
                     </div>
-                    <DialogClose className="md:0 -top-2 md:absolute" />
+                    <DialogClose />
                   </DialogContent>
                 </Dialog>
               </div>
