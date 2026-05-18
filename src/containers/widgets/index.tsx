@@ -184,7 +184,7 @@ const WidgetsContainer: FC = () => {
         </Helper>
         <WidgetsDeckContent />
       </Dialog>
-      {!!widgetsAvailable.length && (
+      {!!widgetsAvailable.length && isCustomArea && (
         <div className="flex w-full justify-center py-4">
           <Helper
             className={{

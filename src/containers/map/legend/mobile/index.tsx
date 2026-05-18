@@ -1,84 +1,49 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
-import cn from '@/lib/classnames';
-
-import { useSyncActiveLayers } from '@/store/layers';
-
-import { AnimatePresence, motion } from 'motion/react';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
-import { IconBaseProps } from 'react-icons/lib';
+import SortableList from '@/components/map/legend/sortable/list';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 import LegendItem from '../item';
+import { useLegendLayers } from '../use-legend-layers';
 
-const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
-const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
+const PANEL_STYLE = 'shadow-medium rounded-3xl border border-black/10 bg-white';
 
 const Legend = () => {
-  const [activeLayers] = useSyncActiveLayers();
-
+  const { legendLayers, handleChangeOrder } = useLegendLayers();
   const [isOpen, setIsOpen] = useState(true);
 
-  const openLegend = useCallback(() => {
-    if (!!activeLayers?.length) setIsOpen(true);
-  }, [activeLayers]);
-
-  const closeLegend = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
-  const contentVariants = {
-    open: { y: '0%', opacity: 1 },
-    close: { y: '-200%', opacity: 0 },
-  };
+  if (!legendLayers?.length) return null;
 
   return (
-    <div className="flex w-screen justify-center">
-      {!!activeLayers?.length && (
-        <>
-          <button
-            onClick={openLegend}
-            className={cn({
-              'shadow-control flex h-11 w-[360px] cursor-pointer items-center justify-between rounded-3xl bg-white px-10 py-2':
-                true,
-              hidden: isOpen,
-            })}
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="flex w-screen flex-col items-center gap-2"
+    >
+      <CollapsibleTrigger
+        className={`${PANEL_STYLE} group hover:bg-grey-50 flex w-90 cursor-pointer items-center justify-between px-4 py-3 transition-colors`}
+      >
+        <p className="text-xs font-bold whitespace-nowrap text-black/85 uppercase opacity-85">
+          <span className="group-data-[state=open]:hidden">Show legend</span>
+          <span className="group-data-[state=closed]:hidden">Hide legend</span>
+        </p>
+      </CollapsibleTrigger>
+
+      <CollapsibleContent
+        className={`${PANEL_STYLE} data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down w-90 overflow-hidden`}
+      >
+        <div className="box-content flex max-h-[calc(100vh-266px)] flex-col overflow-y-auto p-4">
+          <SortableList
+            onChangeOrder={handleChangeOrder}
+            sortable={{ handle: true, enabled: true }}
           >
-            <p className="text-xs font-bold whitespace-nowrap text-black/85 uppercase opacity-85">
-              Show legend
-            </p>
-
-            <FaArrowUpIcon className="mb-1" />
-          </button>
-
-          <AnimatePresence>
-            <motion.div
-              initial={false}
-              variants={contentVariants}
-              animate={isOpen ? 'open' : 'close'}
-              exit="close"
-              transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-              className="relative xl:fixed xl:right-[73px]"
-            >
-              <div className="shadow-medium animate-in data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16 w-[360px] gap-4 rounded-3xl border bg-white duration-300">
-                <div className="box-content flex max-h-[70vh] flex-col space-y-1 divide-y divide-black/42 overflow-y-auto pt-4 md:px-4">
-                  <div className="box-content flex flex-col space-y-1 divide-y divide-black/42 overflow-y-auto px-4 pt-4 md:max-h-[55vh]">
-                    {activeLayers?.map((l) => {
-                      return <LegendItem id={l.id} key={l.id} l={l} />;
-                    })}
-                  </div>
-                </div>
-                <button
-                  onClick={closeLegend}
-                  className="absolute -top-[30px] right-5 z-50 rounded-t-3xl bg-white p-2"
-                >
-                  <FaArrowDownIcon />
-                </button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </>
-      )}
-    </div>
+            {legendLayers.map((layer) => (
+              <LegendItem id={layer.id} key={layer.id} l={layer} />
+            ))}
+          </SortableList>
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   );
 };
 
