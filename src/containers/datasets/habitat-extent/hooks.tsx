@@ -214,11 +214,11 @@ export function useMangroveHabitatExtent(
   }, [data, isFetching, isError, refetch, DATA]);
 }
 
-export function useSource(): SourceProps {
+export function useSource({ year }: { year: number }): SourceProps {
   return {
-    id: 'habitat_extent',
+    id: `habitat_extent_${year}`,
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.20cshxs9,globalmangrovewatch.b1wlg2x7,globalmangrovewatch.2cws6y26,globalmangrovewatch.bgrhiwte,globalmangrovewatch.aokkuxu7,globalmangrovewatch.0l7s8iga,globalmangrovewatch.a08vpx09,globalmangrovewatch.7kyxxf0e,globalmangrovewatch.1cu4rmy9,globalmangrovewatch.6st408jz,globalmangrovewatch.1clkx4nk',
+    url: `mapbox://globalmangrovewatch.gmw-v4-extent-${year}`,
   };
 }
 
@@ -236,10 +236,10 @@ export function useLayers({
   return year
     ? [
         {
-          id: `${id}_${year}_line`,
+          id: `${id}_${year}_fill`,
           type: 'fill',
-          source: 'habitat_extent',
-          'source-layer': `mng_mjr_${year}`,
+          source: `habitat_extent_${year}`,
+          'source-layer': `gmw_v4_extent_${year}`,
           paint: {
             'fill-color': '#06C4BD',
             'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, opacity * 1.2, 12, opacity],
@@ -249,10 +249,10 @@ export function useLayers({
           },
         },
         {
-          id: `${id}_${year}_fill`,
+          id: `${id}_${year}_line`,
           type: 'line',
-          source: 'habitat_extent',
-          'source-layer': `mng_mjr_${year}`,
+          source: `habitat_extent_${year}`,
+          'source-layer': `gmw_v4_extent_${year}`,
           paint: {
             'line-color': '#06C4BD',
             'line-opacity': opacity,

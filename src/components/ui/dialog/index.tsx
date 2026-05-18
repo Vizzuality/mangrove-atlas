@@ -79,15 +79,17 @@ const DialogContent = forwardRef<
           })}
           {...props}
         >
-          <div className="pointer-events-auto relative mx-auto w-full sm:max-w-135 xl:mx-0 xl:mt-10 xl:ml-6">
+          <div className="pointer-events-auto relative mx-auto w-full sm:max-w-135 xl:mx-0 xl:mt-4 xl:ml-6">
             <div
               className={cn({
-                'sm:shadow-card flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-2rem)] sm:p-8 md:rounded-3xl':
+                'sm:shadow-card flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-4rem)] sm:p-8 md:rounded-3xl':
                   true,
                 [className || '']: !!className,
               })}
             >
+              <div className="pointer-events-none sticky -top-6 z-20 -mx-6 -mt-6 -mb-2 h-8 shrink-0 bg-gradient-to-b from-white to-transparent sm:-top-8 sm:-mx-8 sm:-mt-8 sm:mb-0" />
               {restChildren}
+              <div className="pointer-events-none sticky -bottom-6 z-20 -mx-6 -mt-2 -mb-6 h-8 shrink-0 bg-gradient-to-t from-white to-transparent sm:-bottom-8 sm:-mx-8 sm:mt-0 sm:-mb-8" />
             </div>
             {closeButton}
           </div>

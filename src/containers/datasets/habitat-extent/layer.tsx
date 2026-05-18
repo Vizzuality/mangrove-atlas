@@ -18,7 +18,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
 
   const currentYear = year || years[years.length - 1];
 
-  const SOURCE = useSource();
+  const SOURCE = useSource({ year: currentYear });
   const LAYERS = useLayers({
     year: currentYear,
     id,
