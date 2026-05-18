@@ -2,10 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { useLocalStorage } from 'usehooks-ts';
-
 import { useBlogPosts } from 'hooks/blog';
 import type { PostProps } from 'hooks/blog/types';
+import { useClientLocalStorage } from 'hooks/use-client-local-storage';
 
 const UPDATE_WINDOW_DAYS = 4 * 12;
 
@@ -25,7 +24,7 @@ export type NewsData = {
 export function useNews() {
   const [open, setOpen] = useState(false);
 
-  const [platformUpdates, setPlatformUpdates] = useLocalStorage<PlatformUpdatesLastSeen>(
+  const [platformUpdates, setPlatformUpdates] = useClientLocalStorage<PlatformUpdatesLastSeen>(
     'platformUpdates',
     { seenLastPostDate: undefined }
   );

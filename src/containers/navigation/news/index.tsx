@@ -3,7 +3,8 @@
 import { activeGuideAtom } from '@/store/guide';
 
 import { useAtomValue } from 'jotai';
-import { useLocalStorage } from 'usehooks-ts';
+
+import { useClientLocalStorage } from 'hooks/use-client-local-storage';
 
 import Helper from '@/containers/help/helper';
 import NewsTooltipBody from '@/containers/navigation/news/news-tooltip-body';
@@ -28,7 +29,7 @@ const NewsButton = ({
   showIndicator: boolean;
   onClick: () => void;
 }) => {
-  const [hasSeenWelcome] = useLocalStorage<boolean>('welcomeIntroMessage', false);
+  const [hasSeenWelcome] = useClientLocalStorage<boolean>('welcomeIntroMessage', false);
   return (
     <button
       type="button"

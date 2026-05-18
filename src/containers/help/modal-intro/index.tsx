@@ -1,7 +1,10 @@
+'use client';
+
 import { activeGuideAtom } from '@/store/guide';
 
 import { useAtomValue } from 'jotai';
-import { useLocalStorage } from 'usehooks-ts';
+
+import { useClientLocalStorage } from 'hooks/use-client-local-storage';
 
 import VideoIntro from '@/containers/help/video-intro';
 
@@ -15,7 +18,7 @@ import {
 } from '@/components/ui/dialog';
 
 const GuideModalIntro = ({ isOpen, setIsOpen }) => {
-  const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>(
+  const [guideLocalStorage, setGuideLocalStorage] = useClientLocalStorage<boolean>(
     'guideLocalStorage',
     false
   );
