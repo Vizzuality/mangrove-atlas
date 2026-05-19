@@ -7,7 +7,13 @@ import LoginForm from '@/containers/auth/login-form';
 import Helper from '@/containers/help/helper';
 
 import FooterSignup from '@/components/auth/footer-signup';
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 import ForgotPassword from '../../components/auth/forgot-password';
 import SavedAreasContent from '../navigation/menu/profile/saved-areas';
@@ -42,14 +48,18 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         <div>
           {status === 'authenticated' ? (
             <div className="space-y-6">
-              <h2 className="text-3xl leading-8 font-light text-black/85">My areas</h2>
+              <DialogTitle asChild>
+                <h2 className="text-3xl leading-8 font-light text-black/85">My areas</h2>
+              </DialogTitle>
               <SavedAreasContent />{' '}
             </div>
           ) : (
             <div>
-              <h2 className="mb-4 text-2xl font-light text-black/85">
-                Log in to save areas of interest and receive alerts.
-              </h2>
+              <DialogTitle asChild>
+                <h2 className="mb-4 text-2xl font-light text-black/85">
+                  Log in to save areas of interest and receive alerts.
+                </h2>
+              </DialogTitle>
               <div className="space-y-6">
                 <LoginForm />
                 <div className="text-brand-800 w-full text-center">
