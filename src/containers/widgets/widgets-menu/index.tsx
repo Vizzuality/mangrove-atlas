@@ -135,7 +135,7 @@ const WidgetsMenu: FC = () => {
             checked={widgets.length === activeWidgets.length}
             defaultChecked={categorySelected === 'all_datasets'}
             className={cn({
-              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white text-white':
+              'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white text-white':
                 true,
               'bg-brand-800': widgets.length === activeWidgets.length,
             })}
@@ -152,7 +152,7 @@ const WidgetsMenu: FC = () => {
             defaultChecked={false}
             checked={LAYERS.length === activeLayers?.length}
             className={cn({
-              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white text-white':
+              'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white text-white':
                 true,
               'bg-brand-800': LAYERS.length === activeLayers?.length,
             })}
@@ -187,7 +187,8 @@ const WidgetsMenu: FC = () => {
                 disabled={!enabledWidgets.includes(slug)}
                 checked={activeWidgets.includes(slug)}
                 className={cn({
-                  'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
+                  'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white':
+                    true,
                   'bg-brand-800 text-white':
                     activeWidgets.includes(slug) && enabledWidgets.includes(slug),
                 })}
@@ -212,7 +213,7 @@ const WidgetsMenu: FC = () => {
                   defaultChecked
                   checked={activeLayersIds?.includes(slug)}
                   className={cn({
-                    'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white':
+                    'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white':
                       true,
                     'bg-brand-800 font-bold text-white':
                       activeLayersIds?.includes(slug) && enabledWidgets.includes(slug),

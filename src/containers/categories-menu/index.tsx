@@ -73,6 +73,7 @@ const Category = () => {
               onClick={handleClick}
               aria-pressed={isSelected}
               data-testid={category.value}
+              className="cursor-pointer"
             >
               <div
                 className={cn({
@@ -88,7 +89,6 @@ const Category = () => {
                   className={cn(
                     'absolute right-1 bottom-1 flex h-4 w-4 items-center justify-center rounded-full md:h-6 md:w-6',
                     {
-                      'border-brand-800/50 border-2': !isSelected,
                       'border-brand-800 bg-brand-800 border-4 text-white': isSelected,
                     }
                   )}

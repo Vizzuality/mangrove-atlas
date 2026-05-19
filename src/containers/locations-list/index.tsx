@@ -143,7 +143,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               aria-disabled={locationId === locationsToDisplay[index].id || undefined}
               tabIndex={-1}
               className={cn({
-                'hover:bg-brand-800/10 flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl':
+                'hover:bg-brand-800/10 flex h-full w-full flex-1 cursor-pointer items-center justify-between px-4 py-1 hover:rounded-2xl':
                   true,
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
                 'bg-brand-800/5 border-brand-800 rounded-2xl border-2': focusedIndex === index,
@@ -218,7 +218,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           <button
             type="button"
             aria-label="Clear search"
-            className="absolute top-1/2 right-6 flex -translate-y-1/2 items-center"
+            className="absolute top-1/2 right-6 flex -translate-y-1/2 cursor-pointer items-center"
             onClick={() => setSearchValue('')}
           >
             <CLOSE_SVG
