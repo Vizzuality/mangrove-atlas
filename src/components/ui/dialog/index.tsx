@@ -128,7 +128,7 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'md:shadow-card absolute top-4 right-4 z-10 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-9 md:bg-white/70 md:backdrop-blur-sm':
+        'md:shadow-card absolute top-4 right-4 z-10 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-7 md:bg-white/70 md:backdrop-blur-sm':
           true,
         [className || '']: !!className,
       })}

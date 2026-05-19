@@ -68,7 +68,7 @@ const HelpContainer = ({ theme = 'light', hasArrow = false, className }: HelpCon
           <div className="flex space-x-2">
             <span>Navigation help</span>
 
-            <SwitchWrapper id="guide-intro" className="h-2 w-4">
+            <SwitchWrapper id="guide-intro" label="Navigation help" className="h-2 w-4">
               <SwitchRoot
                 data-testid="guide-switch"
                 onClick={handleClick}

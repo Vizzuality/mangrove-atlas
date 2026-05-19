@@ -95,7 +95,7 @@ const SubscriptionsContent = () => {
                     </p>
                   </div>
 
-                  <SwitchWrapper id="alerts">
+                  <SwitchWrapper id="alerts" label="Alerts notification">
                     <SwitchRoot
                       checked={!!effective?.location_alerts}
                       disabled={isDisabled}
@@ -130,7 +130,7 @@ const SubscriptionsContent = () => {
               </p>
             </div>
 
-            <SwitchWrapper id="newsletter">
+            <SwitchWrapper id="newsletter" label="Newsletter">
               <SwitchRoot
                 checked={!!effective?.newsletter}
                 disabled={isSaving}
