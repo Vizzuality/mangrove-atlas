@@ -36,7 +36,7 @@ const NewsButton = ({
       data-testid="news-button"
       aria-label="Open news and updates"
       onClick={onClick}
-      className="relative flex h-full items-center rounded px-2 transition outline-none"
+      className="relative flex h-full cursor-pointer items-center rounded px-2 transition outline-none"
     >
       <Helper
         className={{ button: '-top-2.5 -right-4 z-20', tooltip: 'w-fit-content' }}

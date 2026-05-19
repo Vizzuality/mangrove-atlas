@@ -14,7 +14,7 @@ const CheckboxIndicator = ({
   <CheckboxPrimitive.Indicator
     {...props}
     className={cn(className, {
-      'flex items-center justify-center p-px text-brand-400': true,
+      'text-brand-400 flex items-center justify-center p-px': true,
     })}
   >
     {children}
@@ -28,7 +28,7 @@ const Checkbox = forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(className, {
-      'shrink-0 rounded border-2 border-brand-800/50 text-brand-800 disabled:cursor-not-allowed disabled:opacity-50 data-[state-checked]:border-4 data-[state-checked]:bg-brand-800 data-[state-checked]:text-white':
+      'border-brand-800/50 text-brand-800 data-state-checked:bg-brand-800 shrink-0 cursor-pointer rounded border-2 disabled:cursor-not-allowed disabled:opacity-50 data-state-checked:border-4 data-state-checked:text-white':
         true,
     })}
     {...props}
@@ -37,7 +37,9 @@ const Checkbox = forwardRef<
       children
     ) : (
       <CheckboxIndicator
-        className={cn({ 'flex h-4 w-4 items-center justify-center p-px text-brand-400': true })}
+        className={cn({
+          'text-brand-400 flex h-4 w-4 items-center justify-center p-px': true,
+        })}
       >
         <CHECK_SVG className="h-full w-full fill-current" role="img" title="Checkmark" />
       </CheckboxIndicator>
