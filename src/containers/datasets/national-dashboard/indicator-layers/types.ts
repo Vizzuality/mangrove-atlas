@@ -23,6 +23,7 @@ export type IndicatorSourcesProps = {
   data_source: DataSourceType[];
 
   color: string;
+  className?: string;
 };
 
 export type IndicatorSourceProps = {

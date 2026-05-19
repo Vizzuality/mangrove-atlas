@@ -7,6 +7,7 @@ import * as SwitchRadix from '@radix-ui/react-switch';
 type WrapperProps = Readonly<{
   'data-testid'?: string;
   id: string;
+  label: string;
   children: ReactNode;
   className?: string;
 }>;
@@ -66,7 +67,7 @@ const SwitchThumb = ({
   </SwitchRadix.Thumb>
 );
 
-const SwitchWrapper = ({ id, children, className }: WrapperProps) => (
+const SwitchWrapper = ({ id, label, children, className }: WrapperProps) => (
   <div className="flex items-center">
     <label
       className={cn(className, {
@@ -74,7 +75,7 @@ const SwitchWrapper = ({ id, children, className }: WrapperProps) => (
       })}
       htmlFor={id}
     >
-      {id}
+      {label}
     </label>
     {children}
   </div>

@@ -23,10 +23,17 @@ const Sources = ({ data, iso }) => {
     .scale(COLORS)
     .colors(sourceColorMap.size > COLORS.length ? sourceColorMap.size : COLORS.length);
 
+  const gridCols = 'grid grid-cols-[140px_max-content_1fr_max-content] items-center gap-x-4';
   return (
     <section className="space-y-6.25">
       {data?.map(({ indicator, sources }) => (
         <div key={indicator}>
+          <div className={`${gridCols} py-2`}>
+            <h5 className="text-sm font-normal">Source</h5>
+            <h5 className="text-sm font-normal">Year</h5>
+            <h5 className="text-sm font-normal">Extent</h5>
+            <span />
+          </div>
           {sources.map(({ source, years, unit, data_source }) => {
             const colorIndex = sourceColorMap.get(source) ?? 0;
             const color = palette[colorIndex % palette.length];
@@ -44,6 +51,7 @@ const Sources = ({ data, iso }) => {
                 unit={unit}
                 data_source={data_source}
                 color={color}
+                className={`${gridCols} py-3`}
               />
             );
           })}

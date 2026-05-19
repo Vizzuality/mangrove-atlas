@@ -178,7 +178,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   };
 
   return (
-    <div className="space-y-4 overflow-hidden pt-8 after:bg-linear-to-b after:from-white/20 after:to-white after:content-[''] md:pt-0">
+    <div className="relative space-y-4 overflow-hidden pt-8 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:z-10 after:h-16 after:bg-linear-to-b after:from-white/0 after:to-white after:content-[''] md:pt-0">
       <div className="relative box-border w-full px-1 pt-0.5">
         <Helper
           className={{

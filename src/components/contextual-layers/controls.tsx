@@ -64,7 +64,7 @@ const Controls = ({ id, origin }: ControlTypes) => {
         </DialogContent>
       </Dialog>
 
-      <SwitchWrapper id={id}>
+      <SwitchWrapper id={id} label="Toggle contextual layer">
         <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
           <SwitchThumb />
         </SwitchRoot>

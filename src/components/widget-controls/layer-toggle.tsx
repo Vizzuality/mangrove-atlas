@@ -57,7 +57,7 @@ const LayerToggle = ({ id }: WidgetControlsType) => {
       tooltipPosition={{ top: -35, left: 0 }}
       message="Use this icon to toggle the map layer on or off. If a widget does not have this icon, it means that there is no associated map layer."
     >
-      <SwitchWrapper id={id as string}>
+      <SwitchWrapper id={id as string} label="Toggle map layer">
         <SwitchRoot
           data-testid={id}
           onClick={handleClick}

@@ -25,6 +25,7 @@ const IndicatorSources = ({
   unit,
   data_source,
   color,
+  className,
 }: IndicatorSourcesProps) => {
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const [yearSelected, setYearSelected] = useState<number>(years?.[years.length - 1]);
@@ -126,7 +127,7 @@ const IndicatorSources = ({
   }, [setActiveLayers, layerId, buildLayer, isNationalLayerActive, locationIso, source]);
 
   return (
-    <div className="flex w-full items-start justify-between space-x-4 py-4">
+    <div className={className}>
       <IndicatorSource source={source} color={color} />
       <IndicatorYear yearSelected={yearSelected} setYearSelected={setYearSelected} years={years} />
       <IndicatorExtent unit={unit} dataSource={dataSource} />
@@ -139,7 +140,7 @@ const IndicatorSources = ({
             name: source,
           }}
         />
-        <SwitchWrapper id={layerId}>
+        <SwitchWrapper id={layerId} label={`Toggle ${source} ${indicator} layer`}>
           <SwitchRoot
             id={layerId}
             onClick={handleClick}
