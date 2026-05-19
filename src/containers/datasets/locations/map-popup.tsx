@@ -92,7 +92,7 @@ const LocationPopUP = ({
           <button
             type="button"
             onClick={handleClickLocation}
-            className="grid w-full grid-cols-10 gap-4"
+            className="grid w-full cursor-pointer grid-cols-10 gap-4"
           >
             <span className="text-brand-800 col-span-7 text-left text-sm font-semibold">
               {name}
