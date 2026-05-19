@@ -10,7 +10,6 @@ import { useSyncActiveWidgets } from '@/store/widgets';
 import CATEGORY_OPTIONS from '@/containers/navigation/constants';
 import widgets, { LAYERS_BY_CATEGORY } from '@/containers/widgets/constants';
 
-import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
 import type { Category } from 'types/category';
 import type { Layer } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
@@ -61,45 +60,51 @@ const Category = () => {
       <p className="text-xs font-bold tracking-[1px] uppercase">presets</p>
 
       <div className="grid grid-cols-3 gap-4 py-2">
-        {CATEGORY_OPTIONS.map((category) => (
-          <button
-            key={category.value}
-            type="button"
-            value={category.value}
-            onClick={handleClick}
-            data-testid={category.value}
-          >
-            <div
-              className={cn({
-                'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm':
-                  true,
-                'border-brand-800 text-brand-800 border-2 font-bold':
-                  category.value === categorySelected ||
-                  (categorySelected === 'all_datasets' && category.value === 'custom'),
-              })}
-            >
-              <h4 className="flex min-h-10 items-center justify-center">{category.label}</h4>
+        {CATEGORY_OPTIONS.map((category) => {
+          const isSelected =
+            category.value === categorySelected ||
+            (categorySelected === 'all_datasets' && category.value === 'custom');
 
-              <Checkbox
+          return (
+            <button
+              key={category.value}
+              type="button"
+              value={category.value}
+              onClick={handleClick}
+              aria-pressed={isSelected}
+              data-testid={category.value}
+            >
+              <div
                 className={cn({
-                  'absolute right-1 bottom-1 h-4 w-4 rounded-full border-none md:h-6 md:w-6': true,
+                  'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm':
+                    true,
+                  'border-brand-800 text-brand-800 border-2 font-bold': isSelected,
                 })}
-                checked={
-                  category.value === categorySelected ||
-                  (categorySelected === 'all_datasets' && category.value === 'custom')
-                }
               >
-                <CheckboxIndicator>
-                  <CHECK_SVG
-                    className="h-full w-full fill-current text-white"
-                    role="img"
-                    title="Checkmark"
-                  />
-                </CheckboxIndicator>
-              </Checkbox>
-            </div>
-          </button>
-        ))}
+                <h4 className="flex min-h-10 items-center justify-center">{category.label}</h4>
+
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    'absolute right-1 bottom-1 flex h-4 w-4 items-center justify-center rounded-full md:h-6 md:w-6',
+                    {
+                      'border-brand-800/50 border-2': !isSelected,
+                      'border-brand-800 bg-brand-800 border-4 text-white': isSelected,
+                    }
+                  )}
+                >
+                  {isSelected && (
+                    <CHECK_SVG
+                      className="h-full w-full fill-current p-px text-white"
+                      role="img"
+                      title="Checkmark"
+                    />
+                  )}
+                </span>
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
