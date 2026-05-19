@@ -45,6 +45,7 @@ const DialogContent = forwardRef<
   ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
     overlay?: boolean;
     classNameContent?: string;
+    hideScrollFade?: boolean;
   }
 >(
   (
@@ -53,6 +54,7 @@ const DialogContent = forwardRef<
       classNameContent,
       children,
       overlay: _overlay,
+      hideScrollFade,
       'aria-describedby': ariaDescribedBy,
       ...props
     },
@@ -87,9 +89,13 @@ const DialogContent = forwardRef<
                 [className || '']: !!className,
               })}
             >
-              <div className="pointer-events-none sticky -top-6 z-20 -mx-6 -mt-6 -mb-2 h-8 shrink-0 bg-gradient-to-b from-white to-transparent sm:-top-8 sm:-mx-8 sm:-mt-8 sm:mb-0" />
+              {!hideScrollFade && (
+                <div className="pointer-events-none sticky -top-6 z-20 -mx-6 -mt-6 -mb-2 h-8 shrink-0 bg-gradient-to-b from-white to-transparent sm:-top-8 sm:-mx-8 sm:-mt-8 sm:mb-0" />
+              )}
               {restChildren}
-              <div className="pointer-events-none sticky -bottom-6 z-20 -mx-6 -mt-2 -mb-6 h-8 shrink-0 bg-gradient-to-t from-white to-transparent sm:-bottom-8 sm:-mx-8 sm:mt-0 sm:-mb-8" />
+              {!hideScrollFade && (
+                <div className="pointer-events-none sticky -bottom-6 z-20 -mx-6 -mt-2 -mb-6 h-8 shrink-0 bg-gradient-to-t from-white to-transparent sm:-bottom-8 sm:-mx-8 sm:mt-0 sm:-mb-8" />
+              )}
             </div>
             {closeButton}
           </div>
