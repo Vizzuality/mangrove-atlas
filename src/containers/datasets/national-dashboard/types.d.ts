@@ -36,7 +36,7 @@ export type LayerSettingsType = {
   source_layer?: string;
   layerIndex?: number;
   year?: number;
-  [key: string]: string | number;
+  [key: string]: string | number | undefined;
 };
 
 export type IndicatorResponse = {

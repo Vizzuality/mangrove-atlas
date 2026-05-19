@@ -86,7 +86,8 @@ export const useLegendLayers = () => {
   );
 
   const legendLayers = useMemo(() => {
-    const isNationalDashboardLocation = NATIONAL_DASHBOARD_LOCATIONS.includes(locationId);
+    const isNationalDashboardLocation =
+      locationId != null && NATIONAL_DASHBOARD_LOCATIONS.includes(locationId);
     if (isNationalDashboardLocation) return activeLayerNoPlanet;
     return activeLayerNoPlanet?.filter((layer) => !layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX));
   }, [activeLayerNoPlanet, locationId]);

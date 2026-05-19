@@ -63,7 +63,7 @@ export function useSource({
   settings,
 }: {
   id: LayerProps['id'];
-  settings: LayerSettingsType;
+  settings: LayerSettingsType | undefined;
 }): (SourceProps & { url: string }) | null {
   if (!settings?.source) return null;
 
@@ -87,7 +87,7 @@ export function useLayers({
   id: LayerProps['id'];
   opacity?: number;
   visibility?: Visibility;
-  settings: LayerSettingsType;
+  settings: LayerSettingsType | undefined;
 }): LayerProps | null {
   if (!settings?.source_layer || settings.layerIndex == null) return null;
 

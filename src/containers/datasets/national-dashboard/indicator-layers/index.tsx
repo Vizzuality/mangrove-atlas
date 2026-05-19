@@ -134,7 +134,7 @@ const IndicatorSources = ({
       <div className="flex min-h-min justify-end space-x-2">
         <WidgetControls
           content={{
-            link: dataSource?.download_link ?? undefined,
+            link: dataSource?.download_link ?? '',
             description: dataSource?.layer_info ?? '',
             name: source,
           }}
