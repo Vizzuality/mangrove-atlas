@@ -38,7 +38,8 @@ class NetChangeCalculationsClass extends BaseCalculation {
                             geometry: geom,
                             scale: 30,
                             maxPixels: 1e12,
-                            bestEffort: true
+                            bestEffort: true,
+                            tileScale: 4, // subdivide tiles to reduce memory pressure on large geometries
                           })))
               .toList(10000)
   }

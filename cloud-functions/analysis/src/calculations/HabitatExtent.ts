@@ -37,23 +37,28 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
   _getCoastalExtent(coast: ee.FeatureCollection, geo: ee.Geometry): ee.List {
     const coastlineImage = ee.Image().toByte().paint(coast, 1, 1).rename('value');
 
+    // Build the distance mask once outside the per-year map()
+    const extentSample = ee.Image(this.extentAsset.getEEAsset().first());
+    const mask = extentSample.unmask()
+      .distance(ee.Kernel.euclidean(200, 'meters'), true)
+      .add(extentSample.unmask());
+
+    const maskedCoastline = coastlineImage.updateMask(mask)
+      .multiply(ee.Image.pixelArea()).sqrt().divide(1000);
+
     const regionReducer = {
-      reducer:ee.Reducer.sum(),
+      reducer: ee.Reducer.sum(),
       geometry: geo,
       scale: 30,
-      bestEffort: true
+      bestEffort: true,
+      tileScale: 4, // subdivide tiles to reduce memory pressure on large geometries
     };
 
     return this.extentAsset.getEEAsset().map((image: ee.Image) => {
-      const mask = image.unmask()
-                .distance(ee.Kernel.euclidean(200, 'meters'), true)
-                .add(image.unmask());
-      const year = ee.Number.parse(ee.String(image.id()).split('_').get(-1))
+      const year = ee.Number.parse(ee.String(image.id()).split('_').get(-1));
 
       return ee.Feature(null, ee.Dictionary(
-        coastlineImage.updateMask(mask)
-        .multiply(ee.Image.pixelArea()).sqrt().divide(1000)
-        .reduceRegion(regionReducer)).combine(
+        maskedCoastline.reduceRegion(regionReducer)).combine(
           {
           'year': year,
           'indicator': 'linear_coverage'}
@@ -80,7 +85,8 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
         geometry: geo,
         scale: 30,
         maxPixels: 1e12,
-        bestEffort: true
+        bestEffort: true,
+        tileScale: 4, // subdivide tiles to reduce memory pressure on large geometries
       }
       )).combine({
         'year': ee.Number.parse(ee.String(image.id()).split('_').get(-1)),
