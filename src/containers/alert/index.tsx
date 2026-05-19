@@ -86,7 +86,7 @@ const AnalysisAlert = () => {
 
   return (
     <>
-      <Dialog open={isAnalysisAlertOpen}>
+      <Dialog open={isAnalysisAlertOpen} onOpenChange={(open) => !open && setAnalysisAlert(false)}>
         <DialogPortal>
           <DialogContent onEscapeKeyDown={() => setAnalysisAlert(false)} overlay>
             <DialogTitle className="sr-only">Reset page</DialogTitle>
