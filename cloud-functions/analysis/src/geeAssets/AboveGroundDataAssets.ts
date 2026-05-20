@@ -7,7 +7,7 @@ export interface IHansenDataAsset extends IDataAsset {
 
 export const AbovegroundBiomassDataAsset: IHansenDataAsset = {
   assetPath: {
-    default: "projects/global-mangrove-watch/mangrove-properties/mangrove_aboveground_biomass-v3"
+    default: "projects/mangrove-atlas-246414/assets/mangrove-properties/mangrove_aboveground_biomass-v3"
   },
   numYears: 20,
   getEEAsset(){
