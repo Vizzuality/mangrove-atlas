@@ -73,11 +73,11 @@ export function useLocation(
     queryFn: () => fetchLocation(_id),
     placeholderData: {
       data: {
-        id: _id,
-        location_id: _id,
+        id: 0,
+        location_id: 'worldwide',
         name: '',
         iso: '',
-        location_type: locationType || 'worldwide',
+        location_type: 'worldwide',
         bounds: null,
       } as unknown as DataResponse['data'][0],
     },
