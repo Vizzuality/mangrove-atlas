@@ -43,7 +43,7 @@ const BlogContent = () => {
                   aria-label={`navigate to post - ${post.title.rendered}`}
                   key={post.id}
                   data-testid={`post-${post.id}`}
-                  className="flex h-32 w-full items-center rounded-3xl border border-slate-100 px-2 transition duration-300 hover:border-slate-400"
+                  className="flex h-32 w-full cursor-pointer items-center rounded-3xl border border-slate-100 px-2 transition duration-300 hover:border-slate-400"
                   onClick={() => setPostInfo(post)}
                 >
                   <PostComponent post={post} />
@@ -71,7 +71,7 @@ const BlogContent = () => {
                 data-testid="back-to-news-button"
                 type="button"
                 aria-label="back to news"
-                className="pointer-events-all text-brand-800 hover:bg-brand-800 absolute top-8 left-8 z-20 bg-white px-4 py-1 text-sm transition delay-150 duration-300 ease-in-out hover:text-white md:top-4 md:rounded-3xl"
+                className="pointer-events-all text-brand-800 hover:bg-brand-800 absolute top-8 left-8 z-20 cursor-pointer bg-white px-4 py-1 text-sm transition delay-150 duration-300 ease-in-out hover:text-white md:top-4 md:rounded-3xl"
                 onClick={(e) => {
                   e.stopPropagation();
                   return setPostInfo(null);

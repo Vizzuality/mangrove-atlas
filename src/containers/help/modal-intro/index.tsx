@@ -31,7 +31,7 @@ const GuideModalIntro = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <Dialog open={isActive && isOpen}>
+    <Dialog open={isActive && isOpen} onOpenChange={(open) => !open && setIsOpen(false)}>
       <DialogContent className="z-50 space-y-6 p-8 text-black/85">
         <DialogHeader className="space-y-6">
           <DialogTitle className="text-3xl font-light">Navigation help</DialogTitle>

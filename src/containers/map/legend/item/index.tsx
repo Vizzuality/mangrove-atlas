@@ -78,7 +78,11 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
         <div className="flex items-start gap-2">
           <Media greaterThanOrEqual="md">
             {!embedded && (
-              <button>
+              <button
+                type="button"
+                aria-label="Drag to reorder"
+                className="cursor-grab active:cursor-grabbing"
+              >
                 <DRAG_SVG role="img" title="Order layer" />
               </button>
             )}

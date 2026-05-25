@@ -158,7 +158,7 @@ const FloodProtection = ({
           <header className="flex justify-between">
             <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3>
             <div className="flex items-start space-x-2">
-              <SwitchWrapper id="planet_medres_visual_monthly">
+              <SwitchWrapper id="planet_medres_visual_monthly" label="Planet monthly mosaic">
                 <SwitchRoot
                   data-testid={id}
                   onClick={handleClick}

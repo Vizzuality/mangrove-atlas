@@ -34,6 +34,7 @@ const WelcomeIntroMessage = () => {
       <DialogContent
         classNameContent="animate-none duration-0 min-h-fit"
         className="fixed top-0 right-0 bottom-0 left-0 min-h-fit w-screen max-w-screen space-y-6 p-0 text-black/85 shadow-sm sm:top-1/2 sm:left-1/2 sm:w-auto sm:max-w-xl sm:-translate-x-1/2 sm:-translate-y-1/2 sm:overflow-visible sm:p-8 md:max-w-3xl md:p-0"
+        hideScrollFade
       >
         <div className="relative m-0 flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
           <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-tl-3xl sm:rounded-bl-3xl">

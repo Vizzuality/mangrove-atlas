@@ -41,7 +41,10 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
       <span className="font-light">{applicability}.</span>{' '}
       <Dialog>
         <DialogTrigger asChild>
-          <button type="button" className="text-brand-800 underline hover:no-underline">
+          <button
+            type="button"
+            className="text-brand-800 cursor-pointer underline hover:no-underline"
+          >
             Learn more
           </button>
         </DialogTrigger>
