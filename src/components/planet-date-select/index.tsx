@@ -103,7 +103,7 @@ const DateSelect = ({
       </SelectTrigger>
 
       <SelectContent
-        className="relative z-70 cursor-pointer overflow-hidden rounded-3xl border bg-white px-4 py-2 text-sm shadow-md after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:z-10 after:h-12 after:bg-linear-to-b after:from-white/0 after:to-white after:content-['']"
+        className="relative z-70 cursor-pointer overflow-hidden rounded-3xl border bg-white px-4 py-2 text-sm shadow-md before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:z-10 before:h-12 before:bg-linear-to-b before:from-white before:to-white/0 before:content-[''] after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:z-10 after:h-12 after:bg-linear-to-b after:from-white/0 after:to-white after:content-['']"
         viewportStyle={{ maxHeight: 224 }}
         alignOffset={0}
         sideOffset={50}
