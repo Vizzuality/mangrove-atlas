@@ -103,9 +103,10 @@ const DateSelect = ({
       </SelectTrigger>
 
       <SelectContent
-        className="z-70 flex max-h-56 cursor-pointer items-center justify-between overflow-y-auto rounded-3xl border bg-white px-4 py-2 text-sm shadow-md"
+        className="relative z-70 cursor-pointer overflow-hidden rounded-3xl border bg-white px-4 py-2 text-sm shadow-md after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:z-10 after:h-12 after:bg-linear-to-b after:from-white/0 after:to-white after:content-['']"
+        viewportStyle={{ maxHeight: 224 }}
         alignOffset={0}
-        sideOffset={-30}
+        sideOffset={50}
       >
         {orderedDates?.map((d) => (
           <SelectItem
