@@ -68,10 +68,14 @@ const CommercialFisheriesProduction = () => {
       }
     );
   // Sort once (case/diacritics-insensitive)
-  const indicatorsWithData = useMemo(() => {
-    const list = data?.indicators?.filter((d) => d.absolute) ?? [];
-    return [...list].sort((a, b) => cmp(a.indicator, b.indicator));
-  }, [data]);
+  const sortedIndicators = useMemo(
+    () => [...(data?.indicators ?? [])].sort((a, b) => cmp(a.indicator, b.indicator)),
+    [data]
+  );
+  const indicatorsWithData = useMemo(
+    () => sortedIndicators.filter((d) => d.absolute),
+    [sortedIndicators]
+  );
 
   const updateIndicatorAndLayer = useCallback(
     (value: GroupedData['indicator']) => {
@@ -159,58 +163,55 @@ const CommercialFisheriesProduction = () => {
           </p>
           <div className="space-y-4">
             <div className="grid flex-1 grid-cols-2 flex-col items-center gap-2">
-              {data.indicators
-                ?.slice()
-                .sort((a, b) => cmp(a.indicator, b.indicator))
-                .map(({ indicator, absolute, density }) => {
-                  const disabled = !density && !absolute;
-                  const selected = indicator === selectedIndicator;
-                  const IndicatorIcon = INDICATOR_ICONS[indicator as keyof typeof INDICATOR_ICONS];
-                  return (
-                    <button
-                      key={indicator}
-                      id={indicator}
-                      value={indicator}
-                      type="button"
-                      onClick={handleIndicator}
-                      className="flex items-center space-x-4"
-                      disabled={disabled}
-                      aria-disabled={disabled}
-                      aria-pressed={selected}
-                      aria-label={
-                        disabled
-                          ? `${indicator}: no data`
-                          : `${indicator}: ${selected ? 'selected' : 'select'}`
-                      }
+              {sortedIndicators.map(({ indicator, absolute, density }) => {
+                const disabled = !density && !absolute;
+                const selected = indicator === selectedIndicator;
+                const IndicatorIcon = INDICATOR_ICONS[indicator as keyof typeof INDICATOR_ICONS];
+                return (
+                  <button
+                    key={indicator}
+                    id={indicator}
+                    value={indicator}
+                    type="button"
+                    onClick={handleIndicator}
+                    className="flex items-center space-x-4"
+                    disabled={disabled}
+                    aria-disabled={disabled}
+                    aria-pressed={selected}
+                    aria-label={
+                      disabled
+                        ? `${indicator}: no data`
+                        : `${indicator}: ${selected ? 'selected' : 'select'}`
+                    }
+                  >
+                    <div
+                      className={cn(
+                        'bg-grey-400/15 box-content flex w-8 items-center justify-center rounded-md p-1 align-middle text-blue-400',
+                        selected && 'bg-brand-800 text-white',
+                        disabled && 'bg-grey-400/15 text-opacity-80 text-gray-400'
+                      )}
                     >
-                      <div
-                        className={cn(
-                          'bg-grey-400/15 box-content flex w-8 items-center justify-center rounded-md p-1 align-middle text-blue-400',
-                          selected && 'bg-brand-800 text-white',
-                          disabled && 'bg-grey-400/15 text-opacity-80 text-gray-400'
-                        )}
-                      >
-                        <IndicatorIcon
-                          className="box-content h-6 w-6 rounded-md fill-current p-1"
-                          role="img"
-                          aria-hidden={true}
-                        />
-                      </div>
-                      <div className="flex flex-col text-start text-xs">
-                        <span className="first-letter:uppercase">{indicator}</span>
-                        {disabled && <span className="font-bold">No data</span>}
-                        {!!absolute && (
-                          <span className="font-bold">{formatAxis(Math.round(absolute))}</span>
-                        )}
-                        {!!density && (
-                          <span className="text-[10px] font-bold">
-                            ({formatAxis(Math.round(density))} / 100 m<sup>2</sup>)
-                          </span>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
+                      <IndicatorIcon
+                        className="box-content h-6 w-6 rounded-md fill-current p-1"
+                        role="img"
+                        aria-hidden={true}
+                      />
+                    </div>
+                    <div className="flex flex-col text-start text-xs">
+                      <span className="first-letter:uppercase">{indicator}</span>
+                      {disabled && <span className="font-bold">No data</span>}
+                      {!!absolute && (
+                        <span className="font-bold">{formatAxis(Math.round(absolute))}</span>
+                      )}
+                      {!!density && (
+                        <span className="text-[10px] font-bold">
+                          ({formatAxis(Math.round(density))} / 100 m<sup>2</sup>)
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
