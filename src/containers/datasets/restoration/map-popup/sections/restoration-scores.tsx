@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { trackEvent } from '@/lib/analytics/ga';
 
 import RestorationDataGroup from '@/containers/datasets/restoration/map-popup/restoration-data-group';
@@ -11,7 +9,7 @@ import type { RestorationPopUp } from 'types/map';
 const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
   const { Class, Max_Area_20_ha, Area_loss_ha, Rest_Area_Loss, Loss_Driver, Rest_Score } = data;
 
-  const nonRestScore = useMemo(() => 100 - Rest_Score, [Rest_Score]);
+  const nonRestScore = 100 - Rest_Score;
 
   const handleAnalytics = () => {
     // Google Analytics tracking

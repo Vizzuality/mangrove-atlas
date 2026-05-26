@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement } from 'react';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
@@ -13,10 +13,9 @@ const Content = ({
   children?: ReactElement;
 }) => {
   const [activeLayers] = useSyncActiveLayers();
-  const isActive = useMemo(
-    () => activeLayers?.find((layer) => layer.id.includes('planet_medres_visual_monthly'))?.id,
-    [activeLayers]
-  );
+  const isActive = activeLayers?.find((layer) =>
+    layer.id.includes('planet_medres_visual_monthly')
+  )?.id;
 
   return (
     <div className="space-y-2">

@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import Image from 'next/image';
 
 import cn from '@/lib/classnames';
@@ -42,10 +40,8 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
   const [basemapStored, setBasemap] = useSyncBasemap();
   const [basemapContextualSelected, setBasemapContextual] = useSyncBasemapContextual();
 
-  const isActive = useMemo(() => {
-    if (type === 'contextual-basemap') return basemapContextualSelected === id;
-    if (type === 'basemap') return basemapStored === id;
-  }, [basemapContextualSelected, basemapStored, type, id]);
+  const isActive =
+    type === 'contextual-basemap' ? basemapContextualSelected === id : basemapStored === id;
 
   const info = INFO[id];
 

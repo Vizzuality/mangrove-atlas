@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
@@ -19,14 +19,12 @@ const LayerToggle = ({ id }: WidgetControlsType) => {
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const activeLayersIds = activeLayers?.map((l) => l.id);
 
-  const isActive = useMemo(() => {
-    if (!id) return false;
-    const isCurrentlyActive = activeLayersIds?.includes(id);
-    const isAnyActiveNationalDashboard =
-      id?.startsWith('mangrove_national_dashboard') &&
-      activeLayersIds.some((layerId) => layerId.startsWith('mangrove_national_dashboard'));
-    return isCurrentlyActive || isAnyActiveNationalDashboard;
-  }, [activeLayersIds, id]);
+  const isCurrentlyActive = !!id && activeLayersIds?.includes(id);
+  const isAnyActiveNationalDashboard =
+    !!id &&
+    id.startsWith('mangrove_national_dashboard') &&
+    activeLayersIds?.some((layerId) => layerId.startsWith('mangrove_national_dashboard'));
+  const isActive = !!id && (isCurrentlyActive || isAnyActiveNationalDashboard);
 
   const handleClick = useCallback(
     (e) => {
