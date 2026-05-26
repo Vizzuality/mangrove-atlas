@@ -12,6 +12,11 @@ const MOCK_MOSAICS = {
   }),
 };
 
+const ACTIVE_LAYERS = JSON.stringify([
+  { id: PLANET_LAYER, opacity: '1', visibility: 'visible' },
+  { id: 'mangrove_habitat_extent', opacity: '1', visibility: 'visible' },
+]);
+
 test.describe('Planet date select popup', () => {
   test('caps popup height and scrolls to reach all dates', async ({ page, browserName }) => {
     test.fixme(browserName === 'firefox', 'Firefox: flaky popup rendering');
@@ -20,17 +25,11 @@ test.describe('Planet date select popup', () => {
       route.fulfill({ status: 200, json: MOCK_MOSAICS })
     );
 
-    await page.goto('/');
+    await page.goto(`/?layers=${encodeURIComponent(ACTIVE_LAYERS)}`);
     await page.getByTestId('widgets-wrapper').waitFor();
-    await page.waitForLoadState('networkidle');
-
-    const settingsButton = page.getByTestId('basemap-settings-button');
-    await settingsButton.waitFor({ timeout: 90000 });
-    await settingsButton.click();
-    await page.getByTestId(PLANET_LAYER).click();
 
     const trigger = page.getByLabel('Select period');
-    await expect(trigger).toBeVisible();
+    await expect(trigger).toBeVisible({ timeout: 30000 });
     await trigger.click();
 
     const popup = page.getByRole('listbox');
@@ -43,14 +42,17 @@ test.describe('Planet date select popup', () => {
     const items = page.getByRole('option');
     await expect(items).toHaveCount(MOCK_MOSAICS.mosaics.length);
 
-    const lastItem = items.last();
-    await expect(lastItem).not.toBeInViewport();
+    // Radix auto-scrolls the popup to the selected item (oldest mosaic, last
+    // in DOM order after desc sort), so the newest mosaic (first in DOM) is
+    // off-screen on open and only reachable by scrolling up.
+    const firstItem = items.first();
+    await expect(firstItem).not.toBeInViewport();
 
     const scrollViewport = popup.locator('[data-slot="select-viewport"]').first();
     await scrollViewport.evaluate((el) => {
-      el.scrollTop = el.scrollHeight;
+      el.scrollTop = 0;
     });
 
-    await expect(lastItem).toBeInViewport();
+    await expect(firstItem).toBeInViewport();
   });
 });
