@@ -21,7 +21,7 @@ import INFO_SVG from '@/svgs/ui/info';
 
 const BasemapSettings = () => {
   return (
-    <Dialog>
+    <Dialog modal={false}>
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger
@@ -114,12 +114,11 @@ const BasemapSettings = () => {
                   </DialogContent>
                 </Dialog>
               </div>
-
-              <BasemapsContextualMapSettings />
             </>
           </Helper>
         </div>
         <DialogClose />
+        <BasemapsContextualMapSettings />
       </DialogContent>
     </Dialog>
   );

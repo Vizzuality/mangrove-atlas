@@ -1,95 +1,102 @@
-import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
+import { ComponentProps, CSSProperties } from 'react';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
 import cn from 'classnames';
 
 const Select = SelectPrimitive.Root;
 
-const SelectValue = forwardRef<
-  ElementRef<typeof SelectPrimitive.Value>,
-  ComponentPropsWithoutRef<typeof SelectPrimitive.Value>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Value
-    ref={ref}
-    className={cn(className, { 'truncate text-3xl': true })}
-    {...props}
-  >
-    {children}
-  </SelectPrimitive.Value>
-));
+function SelectValue({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Value>) {
+  return (
+    <SelectPrimitive.Value className={cn(className, 'truncate text-3xl')} {...props}>
+      {children}
+    </SelectPrimitive.Value>
+  );
+}
 
-SelectValue.displayName = SelectPrimitive.Value.displayName;
+function SelectIcon({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Icon>) {
+  return (
+    <SelectPrimitive.Icon className={cn(className, 'text-muted-foreground')} {...props}>
+      {children}
+    </SelectPrimitive.Icon>
+  );
+}
 
-const SelectIcon = forwardRef<
-  ElementRef<typeof SelectPrimitive.Icon>,
-  ComponentPropsWithoutRef<typeof SelectPrimitive.Icon>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Icon
-    ref={ref}
-    className={cn(className, { 'text-muted-foreground': true })}
-    {...props}
-  >
-    {children}
-  </SelectPrimitive.Icon>
-));
-
-SelectIcon.displayName = SelectPrimitive.Icon.displayName;
-
-const SelectTrigger = forwardRef<
-  ElementRef<typeof SelectPrimitive.Trigger>,
-  ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(className, {
-      'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-3xl px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50':
-        true,
-    })}
-    {...props}
-  >
-    {children}
-  </SelectPrimitive.Trigger>
-));
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
-
-const SelectContent = forwardRef<
-  ElementRef<typeof SelectPrimitive.Content>,
-  ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = 'popper', ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
+function SelectTrigger({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Trigger>) {
+  return (
+    <SelectPrimitive.Trigger
       className={cn(
-        'shadow-medium animate-in fade-in-70 relative -top-11 z-50 w-(--radix-select-trigger-width) duration-300',
-        position === 'popper' && 'translate-y-1',
-        className
+        className,
+        'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-3xl px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
       )}
-      position={position}
       {...props}
     >
-      <SelectPrimitive.Viewport className={cn('p-1', position === 'popper' && 'w-full')}>
-        {children}
-      </SelectPrimitive.Viewport>
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-));
-SelectContent.displayName = SelectPrimitive.Content.displayName;
+      {children}
+    </SelectPrimitive.Trigger>
+  );
+}
 
-const SelectItem = forwardRef<
-  ElementRef<typeof SelectPrimitive.Item>,
-  ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={cn(
-      'focus:bg-accent focus:text-accent-foreground relative w-full cursor-pointer items-center justify-between outline-none',
-      className
-    )}
-    {...props}
-  >
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-));
-SelectItem.displayName = SelectPrimitive.Item.displayName;
+function SelectContent({
+  className,
+  viewportClassName,
+  viewportStyle,
+  children,
+  position = 'popper',
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Content> & {
+  viewportClassName?: string;
+  viewportStyle?: CSSProperties;
+}) {
+  return (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        className={cn(
+          'shadow-medium animate-in fade-in-70 relative -top-11 z-50 w-(--radix-select-trigger-width) duration-300',
+          position === 'popper' && 'translate-y-1',
+          className
+        )}
+        position={position}
+        {...props}
+      >
+        <SelectPrimitive.Viewport
+          data-slot="select-viewport"
+          style={viewportStyle}
+          className={cn('p-1', position === 'popper' && 'w-full', viewportClassName)}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  );
+}
+
+function SelectItem({
+  className,
+  children,
+  ...props
+}: ComponentProps<typeof SelectPrimitive.Item>) {
+  return (
+    <SelectPrimitive.Item
+      className={cn(
+        'focus:bg-accent focus:text-accent-foreground relative w-full cursor-pointer items-center justify-between outline-none',
+        className
+      )}
+      {...props}
+    >
+      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    </SelectPrimitive.Item>
+  );
+}
 
 export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectIcon };
