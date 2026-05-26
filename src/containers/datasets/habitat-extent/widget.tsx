@@ -16,7 +16,7 @@ import NoData from '@/containers/widgets/no-data';
 
 import Loading from '@/components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import TimelineSlider from '@/components/ui/timeline-slider';
+import Timeline from '@/components/ui/timeline';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SELECT_ARROW_STYLES,
@@ -155,73 +155,11 @@ const HabitatExtent = () => {
           </button>
         </div>
       )}
-      {!!data && !isFetching && !isError && (
-        <div className="space-y-4">
-          {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}').timeline_slider === true && (
-            <>
-              <p className={WIDGET_SENTENCE_STYLE}>
-                The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
-                <span className="notranslate font-bold">
-                  {area}{' '}
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <span className={`${WIDGET_SELECT_STYLES}`}>
-                        {selectedUnitAreaExtent}
-                        <ARROW_SVG
-                          className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                          role="img"
-                          title="Arrow"
-                        />
-                      </span>
-                    </PopoverTrigger>
-                    <PopoverContent className="shadow-border rounded-2xl px-2">
-                      <ul className="z-20 max-h-32 space-y-0.5">
-                        {unitOptions?.map((u) => (
-                          <li key={u}>
-                            <button
-                              aria-label="select unit"
-                              className={cn({
-                                'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
-                                'hover:text-brand-800': selectedUnitAreaExtent !== u,
-                                'pointer-events-none opacity-50': selectedUnitAreaExtent === u,
-                              })}
-                              type="button"
-                              onClick={() => setUnitAreaExtent(u)}
-                              disabled={selectedUnitAreaExtent === u}
-                            >
-                              {u}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    </PopoverContent>
-                  </Popover>
-                </span>{' '}
-                in <span className="font-bold">{currentYear}</span>, this represents a linear
-                coverage of <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of
-                the
-                <span className="notranslate font-bold">
-                  {' '}
-                  {totalLength} {defaultUnitLinearCoverage}
-                </span>{' '}
-                of the coastline.
-              </p>
-
-              <div className="py-4">
-                {sortedYears.length > 1 && (
-                  <TimelineSlider
-                    years={sortedYears}
-                    currentYear={currentYear}
-                    isPlaying={isPlaying}
-                    onYearChange={handleYearChange}
-                    onTogglePlay={handleTogglePlay}
-                  />
-                )}
-              </div>
-            </>
-          )}
-          {(JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}').timeline_slider === false ||
-            metadata.location_id === 'custom-area') && (
+      {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}').timeline_slider === false &&
+        !!data &&
+        !isFetching &&
+        !isError && (
+          <div className="space-y-4">
             <p className={WIDGET_SENTENCE_STYLE}>
               The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
               <span className="notranslate font-bold">
@@ -309,17 +247,81 @@ const HabitatExtent = () => {
               </span>{' '}
               of the coastline.
             </p>
-          )}
-          <div className="-mx-2">
+
+            <div className="-mx-2">
+              <ContextualLayersWrapper
+                origin="mangrove_alerts"
+                id={contextualLayers[0].id}
+                description={contextualLayers[0].description}
+              />
+              <HabitatExtentChart legend={legend} config={config} />
+            </div>
+          </div>
+        )}
+
+      {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}').timeline_slider === true &&
+        !!data &&
+        !isFetching &&
+        !isError && (
+          <div className="space-y-4">
+            <p className={WIDGET_SENTENCE_STYLE}>
+              The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
+              <span className="notranslate font-bold">
+                {area}{' '}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <span className={`${WIDGET_SELECT_STYLES}`}>
+                      {selectedUnitAreaExtent}
+                      <ARROW_SVG
+                        className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
+                        role="img"
+                        title="Arrow"
+                      />
+                    </span>
+                  </PopoverTrigger>
+                  <PopoverContent className="shadow-border rounded-2xl px-2">
+                    <ul className="z-20 max-h-32 space-y-0.5">
+                      {unitOptions?.map((u) => (
+                        <li key={u}>
+                          <button
+                            aria-label="select unit"
+                            className={cn({
+                              'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
+                              'hover:text-brand-800': selectedUnitAreaExtent !== u,
+                              'pointer-events-none opacity-50': selectedUnitAreaExtent === u,
+                            })}
+                            type="button"
+                            onClick={() => setUnitAreaExtent(u)}
+                            disabled={selectedUnitAreaExtent === u}
+                          >
+                            {u}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </PopoverContent>
+                </Popover>
+              </span>{' '}
+              in <span className="font-bold">{currentYear}</span>.
+            </p>
+            <div className="py-4">
+              {sortedYears.length > 1 && (
+                <Timeline
+                  years={sortedYears}
+                  currentYear={currentYear}
+                  isPlaying={isPlaying}
+                  onYearChange={handleYearChange}
+                  onTogglePlay={handleTogglePlay}
+                />
+              )}
+            </div>
             <ContextualLayersWrapper
               origin="mangrove_alerts"
               id={contextualLayers[0].id}
               description={contextualLayers[0].description}
             />
-            <HabitatExtentChart legend={legend} config={config} />
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };
