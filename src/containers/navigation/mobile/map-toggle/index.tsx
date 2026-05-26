@@ -29,9 +29,7 @@ const MapToggle = () => {
               'bg-white': mapView,
             })}
           >
-            {mapView && (
-              <CLOSE_SVG className="fill-brand-600 h-4 w-4 fill-current" role="img" title="Close" />
-            )}
+            {mapView && <CLOSE_SVG className="text-brand-800 h-4 w-4" role="img" title="Close" />}
             {!mapView && (
               <span className="font-sans text-sm text-white">{activeLayers?.length}</span>
             )}

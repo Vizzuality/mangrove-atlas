@@ -125,7 +125,7 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
           >
             <Slider
               className="w-[150px] pt-2"
-              defaultValue={[layer.opacity]}
+              defaultValue={[parseFloat(layer.opacity)]}
               onValueChange={(op: number[]) => changeOpacity(op[0])}
             />
           </PopoverContent>

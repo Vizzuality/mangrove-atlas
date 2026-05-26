@@ -243,6 +243,7 @@ export function useLayers({
           paint: {
             'fill-color': '#06C4BD',
             'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, opacity * 1.2, 12, opacity],
+            'fill-opacity-transition': { duration: 600, delay: 0 },
           },
           layout: {
             visibility,
@@ -258,6 +259,7 @@ export function useLayers({
             'line-opacity': opacity,
             'line-width': ['interpolate', ['linear'], ['zoom'], 0, 8, 12, 1],
             'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 50, 12, 0],
+            'line-opacity-transition': { duration: 600, delay: 0 },
           },
           layout: {
             visibility,
