@@ -1,22 +1,21 @@
+import { env } from '../../../env.mjs';
+
 /**
  * Allowed origins for SSO redirect URIs.
  * Prevents open-redirect attacks on authorize/sync/logout endpoints.
+ *
+ * Sourced from the Zod-validated env so a missing or malformed value fails
+ * at startup rather than degrading SSO silently.
  */
 export const SSO_ALLOWED_ORIGINS: string[] = [
-  process.env.NEXT_PUBLIC_MRTT_SITE,
-  process.env.NEXTAUTH_URL,
-].filter((v): v is string => Boolean(v));
+  new URL(env.NEXT_PUBLIC_MRTT_SITE).origin,
+  new URL(env.NEXTAUTH_URL).origin,
+];
 
-/**
- * Validate that a redirect URI belongs to an allowed origin.
- */
 export function isAllowedRedirectUri(uri: string): boolean {
   try {
     const parsed = new URL(uri);
-    return SSO_ALLOWED_ORIGINS.some((origin) => {
-      const allowed = new URL(origin);
-      return parsed.origin === allowed.origin;
-    });
+    return SSO_ALLOWED_ORIGINS.includes(parsed.origin);
   } catch {
     return false;
   }
@@ -26,18 +25,11 @@ export function isAllowedRedirectUri(uri: string): boolean {
  * CORS headers for SSO endpoints that MRTT calls directly (exchange, sync, logout).
  */
 export function getSSOCorsHeaders(): Record<string, string> {
-  const mrttOrigin = process.env.NEXT_PUBLIC_MRTT_SITE;
-  if (!mrttOrigin) return {};
-
-  try {
-    const origin = new URL(mrttOrigin).origin;
-    return {
-      'Access-Control-Allow-Origin': origin,
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Credentials': 'true',
-    };
-  } catch {
-    return {};
-  }
+  return {
+    'Access-Control-Allow-Origin': new URL(env.NEXT_PUBLIC_MRTT_SITE).origin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Credentials': 'true',
+    Vary: 'Origin',
+  };
 }

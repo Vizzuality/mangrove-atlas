@@ -24,17 +24,17 @@ export function SessionSync() {
     if (status !== 'unauthenticated' || attempted.current) return;
     attempted.current = true;
 
-    // Prevent rapid retries across navigations
+    // Prevent rapid retries across navigations. Only set the suppression flag
+    // on a successful or definitive negative response so that transient
+    // network/CORS failures don't lock the user out of retries for 60s.
     const lastAttempt = sessionStorage.getItem(SSO_RESTORE_KEY);
     if (lastAttempt && Date.now() - Number(lastAttempt) < SSO_RESTORE_TTL) return;
-
-    sessionStorage.setItem(SSO_RESTORE_KEY, String(Date.now()));
 
     fetch('/api/auth/sso/restore')
       .then((res) => res.json())
       .then((data) => {
+        sessionStorage.setItem(SSO_RESTORE_KEY, String(Date.now()));
         if (data.ok) {
-          // next-auth session cookie was set by the server — refresh client state
           update();
         }
       })
