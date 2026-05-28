@@ -104,7 +104,7 @@ const About = () => {
                 alt="Vizzuality"
                 width={300}
                 height={300}
-                className="-mt-1 ml-2 w-40"
+                className="w-40"
               />
             </a>
           </div>

@@ -35,9 +35,8 @@ const MobileLayout = () => {
         <Image
           src="/images/mobile-header.svg"
           alt="Global Mangrove Watch"
-          width={100}
-          height={100}
-          priority
+          width={330}
+          height={72}
           className="h-[72px] w-[330px]"
         />
         <LOGO_MOBILE_SVG
