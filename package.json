@@ -120,7 +120,8 @@
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
-      "next>postcss": "8.5.10"
+      "next>postcss": "8.5.10",
+      "minimatch@^10>brace-expansion": "5.0.6"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
