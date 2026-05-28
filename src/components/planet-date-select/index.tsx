@@ -39,31 +39,21 @@ const DateSelect = ({
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
 
-  const layerToUpdate = useMemo(
-    () => activeLayers?.find((layer) => layer.id === id),
-    [activeLayers, id]
-  );
-
-  const selectedDate = useMemo(
-    () => layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
-    [dates, layerToUpdate]
-  );
-
-  const labelToDisplay = useMemo(
-    () => dates?.find((d) => d.value === selectedDate)?.label,
-    [dates, selectedDate]
-  );
+  const layerToUpdate = activeLayers?.find((layer) => layer.id === id);
+  const selectedDate = layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value;
+  const labelToDisplay = dates?.find((d) => d.value === selectedDate)?.label;
 
   const handleDate = useCallback(
     (value: string) => {
+      const layer = activeLayers?.find((l) => l.id === id);
       const filteredLayers = activeLayers?.filter((l) => l.id !== id);
-      if (!!layerToUpdate) {
+      if (!!layer) {
         setActiveLayers([
           {
-            ...layerToUpdate,
+            ...layer,
             id: id as ContextualBasemapsId,
             settings: {
-              ...layerToUpdate.settings,
+              ...layer.settings,
               date: value,
             },
           },
@@ -79,7 +69,7 @@ const DateSelect = ({
         value: value,
       });
     },
-    [layerToUpdate, activeLayers, id, setActiveLayers]
+    [activeLayers, id, setActiveLayers]
   );
 
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);

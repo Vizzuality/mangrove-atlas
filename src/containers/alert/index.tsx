@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -31,8 +31,6 @@ const AnalysisAlert = () => {
   const resetDrawingState = useResetAtom(drawingToolAtom);
   const resetDrawingUploadState = useResetAtom(drawingUploadToolAtom);
 
-  const queryParams = useMemo(() => searchParams.toString(), [searchParams]);
-
   const { [`default-desktop`]: map } = useMap();
 
   const handleCancelResetPage = useCallback(() => {
@@ -44,13 +42,13 @@ const AnalysisAlert = () => {
     resetDrawingState();
     resetAnalysisState();
 
-    router.replace(`/?${queryParams}`);
+    router.replace(`/?${searchParams.toString()}`);
 
     map?.flyTo({
       center: [0, 20],
       zoom: 2,
     });
-  }, [router, map, queryParams, resetAnalysisState, resetDrawingState]);
+  }, [router, map, searchParams, resetAnalysisState, resetDrawingState]);
 
   const handleResetPage = useCallback(() => {
     if (skipAnalysisAlert) {
@@ -65,12 +63,12 @@ const AnalysisAlert = () => {
     resetAnalysisState();
     resetDrawingUploadState();
 
-    router.replace(`/?${queryParams}`);
+    router.replace(`/?${searchParams.toString()}`);
 
     setAnalysisAlert(false);
   }, [
     locationTool,
-    queryParams,
+    searchParams,
     router,
     resetDrawingState,
     resetDrawingUploadState,

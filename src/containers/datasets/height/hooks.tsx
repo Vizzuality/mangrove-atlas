@@ -137,9 +137,12 @@ export function useMangroveHeight(
   const unit = data?.metadata?.units?.value;
   const years = data?.metadata?.year || [];
   const year = Math.max(...years);
-  const COLORS_BY_INDICATOR = getColorKeys(data?.data);
+  const COLORS_BY_INDICATOR = useMemo(() => getColorKeys(data?.data), [data?.data]);
 
-  const chartData = getData(data?.data, unit, COLORS_BY_INDICATOR);
+  const chartData = useMemo(
+    () => getData(data?.data, unit, COLORS_BY_INDICATOR),
+    [data?.data, unit, COLORS_BY_INDICATOR]
+  );
 
   const bars = useMemo(
     () => getBars(data?.data, COLORS_BY_INDICATOR),
