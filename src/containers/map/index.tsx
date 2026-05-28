@@ -637,7 +637,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                       setPosition(null);
                     }}
                   >
-                    <Image src="/images/MapMarker.png" alt="Map Marker" width={30} height={10} />
+                    <Image src="/images/MapMarker.png" alt="Map Marker" width={24} height={40} />
                   </button>
                 </Marker>
               )}
