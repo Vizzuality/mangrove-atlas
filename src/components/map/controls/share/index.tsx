@@ -77,12 +77,14 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
             <TooltipTrigger asChild>
               <DialogTrigger asChild>
                 <button
+                  type="button"
+                  aria-label="Share"
                   className={cn({
-                    'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white text-black hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+                    'group shadow-control inline-flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white text-black hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                       true,
                   })}
                 >
-                  <SHARE_SVG className="h-4 w-4 group-hover:bg-gray-100" role="img" title="Share" />
+                  <SHARE_SVG className="h-4 w-4 group-hover:bg-gray-100" aria-hidden="true" />
                 </button>
               </DialogTrigger>
             </TooltipTrigger>
@@ -123,19 +125,21 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
       )}
       {disabled && (
         <Tooltip>
-          <TooltipTrigger>
-            <div
+          <TooltipTrigger asChild>
+            <button
+              type="button"
+              disabled
+              aria-label="Share (unavailable for custom areas)"
               className={cn(className, {
-                'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+                'group shadow-control inline-flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                   true,
               })}
             >
               <SHARE_SVG
                 className="h-4 w-4 bg-white fill-current opacity-40 group-hover:bg-gray-100"
-                role="img"
-                title="Share"
+                aria-hidden="true"
               />
-            </div>
+            </button>
           </TooltipTrigger>
 
           <TooltipPortal>

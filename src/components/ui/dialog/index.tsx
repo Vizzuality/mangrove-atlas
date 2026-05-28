@@ -133,9 +133,9 @@ const DialogClose = ({
         [className || '']: !!className,
       })}
       onClick={onClose}
-      aria-label="close dialog"
+      aria-label="Close dialog"
     >
-      <CLOSE_SVG className="mr-2.5 h-7 w-7 fill-current md:h-6 md:w-6" role="img" title="Cross" />
+      <CLOSE_SVG className="mr-2.5 h-7 w-7 fill-current md:h-6 md:w-6" aria-hidden="true" />
     </button>
   </DialogPrimitive.Close>
 );

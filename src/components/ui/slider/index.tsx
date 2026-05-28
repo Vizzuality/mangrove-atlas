@@ -65,7 +65,7 @@ const Slider = ({
         aria-label={thumbAriaLabel}
         aria-valuetext={thumbAriaValueText}
         className={cn(
-          'focus-visible:ring-ring relative block h-3 w-3 cursor-pointer rounded-[10px] border border-white bg-black focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+          'focus-visible:ring-ring relative flex min-h-6 min-w-6 cursor-pointer items-center justify-center bg-transparent before:block before:h-4 before:w-4 before:rounded-full before:border before:border-white before:bg-black before:content-[""] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
           thumbClassName
         )}
       >

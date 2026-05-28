@@ -103,8 +103,7 @@ const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   'text-brand-800 h-3.5 w-3.5 shrink-0 fill-current': true,
                   'rotate-180 delay-200': open,
                 })}
-                role="img"
-                title="Arrow"
+                aria-hidden="true"
               />
             </Listbox.Button>
 

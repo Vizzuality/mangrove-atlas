@@ -34,7 +34,7 @@ const MobileLayout = () => {
       <Link className="pointer-events-auto fixed -top-1 left-0 z-10" href="/" onClick={handleReset}>
         <Image
           src="/images/mobile-header.svg"
-          alt="Picture of the author"
+          alt="Global Mangrove Watch"
           width={100}
           height={100}
           priority
@@ -42,13 +42,12 @@ const MobileLayout = () => {
         />
         <LOGO_MOBILE_SVG
           className="absolute top-2 left-4 z-50 h-8 w-20 fill-current"
-          role="img"
-          title="Logo"
+          aria-hidden="true"
         />
       </Link>
       <NavigationBar />
       <WelcomeIntroMessage />
-      {!mapView && <WidgetsContainer />}
+      <main id="main-content">{!mapView && <WidgetsContainer />}</main>
     </div>
   );
 };

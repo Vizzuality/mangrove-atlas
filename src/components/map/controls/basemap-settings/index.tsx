@@ -74,8 +74,11 @@ const BasemapSettings = () => {
                   High-resolution Mangrove extent
                 </p>
                 <Dialog>
-                  <DialogTrigger className="border-brand-800/20 text-brand-800 flex h-5 w-5 items-center justify-center rounded-full border-2">
-                    <INFO_SVG className="h-3 w-3 shrink-0 fill-current" role="img" title="Info" />
+                  <DialogTrigger
+                    aria-label="High-resolution Mangrove extent info"
+                    className="border-brand-800/20 text-brand-800 flex min-h-6 min-w-6 items-center justify-center rounded-full border-2"
+                  >
+                    <INFO_SVG className="h-3 w-3 shrink-0 fill-current" aria-hidden="true" />
                   </DialogTrigger>
                   <DialogContent className="w-screen md:mb-20 md:w-auto">
                     <DialogTitle className="sr-only">High-resolution Mangrove extent</DialogTitle>
@@ -102,8 +105,11 @@ const BasemapSettings = () => {
               <div className="flex items-center space-x-2">
                 <p className="text-xs font-semibold tracking-[1px] uppercase">planet imagery</p>
                 <Dialog>
-                  <DialogTrigger className="border-brand-800/20 text-brand-800 flex h-5 w-5 items-center justify-center rounded-full border-2">
-                    <INFO_SVG className="h-3 w-3 shrink-0 fill-current" role="img" title="Info" />
+                  <DialogTrigger
+                    aria-label="Planet imagery info"
+                    className="border-brand-800/20 text-brand-800 flex min-h-6 min-w-6 items-center justify-center rounded-full border-2"
+                  >
+                    <INFO_SVG className="h-3 w-3 shrink-0 fill-current" aria-hidden="true" />
                   </DialogTrigger>
                   <DialogContent className="w-screen md:mb-20 md:w-auto">
                     <DialogTitle className="sr-only">Planet imagery</DialogTitle>
