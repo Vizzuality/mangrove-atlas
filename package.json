@@ -121,7 +121,8 @@
   "pnpm": {
     "overrides": {
       "next>postcss": "8.5.10",
-      "minimatch@^10>brace-expansion": "5.0.6"
+      "minimatch@^10>brace-expansion": "5.0.6",
+      "next-auth>uuid": "11.1.1"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
