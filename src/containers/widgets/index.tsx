@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { useWindowSize } from 'usehooks-ts';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
