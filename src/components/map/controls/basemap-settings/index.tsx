@@ -121,10 +121,10 @@ const BasemapSettings = () => {
                 </Dialog>
               </div>
             </>
+            <BasemapsContextualMapSettings />
           </Helper>
         </div>
         <DialogClose />
-        <BasemapsContextualMapSettings />
       </DialogContent>
     </Dialog>
   );

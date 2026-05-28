@@ -21,7 +21,8 @@ const RadioGroupItem = ({
   <div className="flex items-center space-x-4">
     <RadioGroup.Item
       className={cn(className, {
-        'group inline-flex min-h-6 min-w-6 shrink-0 items-center justify-center rounded-full': true,
+        'group inline-flex h-3 w-3 shrink-0 cursor-pointer items-center justify-center rounded-full':
+          true,
       })}
       value={option.value}
       id={option.value}
@@ -36,7 +37,10 @@ const RadioGroupItem = ({
       </span>
     </RadioGroup.Item>
     {label && (
-      <label className="font-sm text-brand-800 m-0 text-sm font-semibold" htmlFor={option.value}>
+      <label
+        className="font-sm text-brand-800 m-0 cursor-pointer text-sm leading-none font-semibold"
+        htmlFor={option.value}
+      >
         {option.label}
       </label>
     )}
