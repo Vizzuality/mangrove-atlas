@@ -43,8 +43,8 @@ const buttonMotion = {
     },
   },
   hover: {
-    width: 140,
-    x: -46,
+    width: 172,
+    x: -62,
     transition: {
       duration: 0.2,
       type: 'tween',
@@ -167,7 +167,7 @@ const WidgetsContainer: FC = () => {
               <motion.button
                 type="button"
                 aria-label="Open widgets deck"
-                className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 flex h-12 min-w-[48px] items-center space-x-4 rounded-full p-4 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 flex h-12 min-w-[48px] cursor-pointer items-center gap-2 rounded-full py-4 pr-5 pl-4 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                 variants={buttonMotion}
               >
                 <SETTINGS_SVG
@@ -203,7 +203,7 @@ const WidgetsContainer: FC = () => {
                   <button
                     type="button"
                     aria-label="Print PDF report"
-                    className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 inline-flex h-12 cursor-pointer items-center justify-center rounded-full px-6 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                     onClick={handlePrintReport}
                     disabled={isPrintDisabled}
                     aria-busy={isPrintDisabled || undefined}
