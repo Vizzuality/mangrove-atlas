@@ -18,7 +18,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
     <div className="space-y-2 rounded-2xl bg-white px-6 py-2 font-sans text-sm shadow-lg">
       {name && <p className="flex justify-center">{name}</p>}
       <div key="label" className="flex flex-col">
-        <p key={name} className={cn({ 'flex space-x-4': true })}>
+        <div key={name} className={cn({ 'flex space-x-4': true })}>
           <span className="flex items-center space-x-2">
             {color && (
               <div
@@ -31,7 +31,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
             {<span className="font-bold">{label}</span>}
           </span>
           <span> {numberFormat(net_change)} km²</span>
-        </p>
+        </div>
       </div>
     </div>
   );
