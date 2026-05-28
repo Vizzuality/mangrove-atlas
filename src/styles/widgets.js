@@ -1,6 +1,4 @@
 export const WIDGET_CARD_WRAPPER_STYLE = 'pb-6 font-light text-black/85 space-y-4';
-export const WIDGET_FAB_BUTTON_STYLE =
-  'bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 h-12 rounded-full text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none';
 export const WIDGET_SENTENCE_STYLE =
   'first-letter:uppercase text-black/85 text-lg font-light leading-7';
 export const WIDGET_SUBTITLE_STYLE = 'm-0 text-xs font-semibold tracking-[0.0625rem] uppercase';
