@@ -7,7 +7,7 @@ export interface IHansenDataAsset extends IDataAsset {
 
 export const TreeHeightDataAsset: IHansenDataAsset = {
   assetPath: {
-    default: "projects/global-mangrove-watch/mangrove-properties/mangrove_canopy_height-v3"
+    default: "projects/mangrove-atlas-246414/assets/mangrove-properties/mangrove_canopy_height-v3"
   },
   numYears: 11,
   getEEAsset(){
