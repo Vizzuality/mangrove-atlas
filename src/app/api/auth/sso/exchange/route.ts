@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Validate token with backend and get user info
-  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
+  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -41,7 +41,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const user = await userRes.json();
+  // Backend shape: { user: { name, email, organization } }
+  const payload = await userRes.json();
+  const user = payload?.user ?? payload;
 
   return NextResponse.json(
     {

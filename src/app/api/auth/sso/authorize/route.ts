@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
+  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

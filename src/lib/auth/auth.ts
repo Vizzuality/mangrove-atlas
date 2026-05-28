@@ -88,13 +88,14 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.token) return null;
 
-        const res = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
+        const res = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
           headers: { Authorization: `Bearer ${credentials.token}` },
         });
 
         if (!res.ok) return null;
 
-        const data = await res.json();
+        const payload = await res.json();
+        const data = payload?.user ?? payload;
 
         return {
           id: data.email,
