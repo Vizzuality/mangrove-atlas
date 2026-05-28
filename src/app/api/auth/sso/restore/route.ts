@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Validate token with backend
-  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
+  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -23,7 +23,9 @@ export async function GET(request: NextRequest) {
     return response;
   }
 
-  const user = await userRes.json();
+  // Backend shape: { user: { name, email, organization } }
+  const payload = await userRes.json();
+  const user = payload?.user ?? payload;
 
   // Build next-auth JWT payload (same shape as authOptions callbacks produce)
   const secret = process.env.NEXTAUTH_SECRET;

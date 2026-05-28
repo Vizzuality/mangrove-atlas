@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Validate token with backend before trusting it
-  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/me`, {
+  const userRes = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
     headers: { Authorization: `Bearer ${body.token}` },
   });
 
