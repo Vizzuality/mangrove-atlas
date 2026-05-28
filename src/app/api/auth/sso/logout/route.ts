@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { getSSOCorsHeaders, isAllowedRedirectUri } from '@/lib/auth/sso-config';
-import { clearSSOCookie, getSSOToken } from '@/lib/auth/sso-cookie';
+import { clearNextAuthCookies, clearSSOCookie, getSSOToken } from '@/lib/auth/sso-cookie';
 
 export async function POST(request: NextRequest) {
   const corsHeaders = getSSOCorsHeaders();
@@ -30,11 +30,13 @@ export async function POST(request: NextRequest) {
   if (redirectUri && isAllowedRedirectUri(redirectUri)) {
     const response = NextResponse.redirect(redirectUri);
     clearSSOCookie(response);
+    clearNextAuthCookies(response);
     return response;
   }
 
   const response = NextResponse.json({ ok: true }, { headers: corsHeaders });
   clearSSOCookie(response);
+  clearNextAuthCookies(response);
   return response;
 }
 

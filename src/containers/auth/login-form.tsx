@@ -86,7 +86,14 @@ function LoginForm() {
 
     // Set the shared httpOnly SSO cookie so MRTT can pick up the session.
     // Token stays server-side — this endpoint reads the next-auth JWT cookie.
-    await fetch('/api/auth/sso/set-from-session', { method: 'POST' }).catch(() => {});
+    try {
+      const ssoRes = await fetch('/api/auth/sso/set-from-session', { method: 'POST' });
+      if (!ssoRes.ok) {
+        console.error('SSO cookie sync returned non-OK status:', ssoRes.status);
+      }
+    } catch (err) {
+      console.error('SSO cookie sync failed:', err);
+    }
 
     router.replace(result.url ?? callbackUrl);
   }
