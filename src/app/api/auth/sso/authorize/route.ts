@@ -7,12 +7,34 @@ import { clearSSOCookie, getSSOToken, setSSOCookie } from '@/lib/auth/sso-cookie
 
 import { getServerSession } from 'next-auth';
 
+// Heroku's router proxies to a dyno listening on an ephemeral $PORT and
+// rewrites the inbound Host header, so request.nextUrl.origin resolves to
+// something like https://localhost:41669 inside the route handler. Redirects
+// built from that origin send the browser to an unreachable address. Use the
+// configured public origin (NEXTAUTH_URL) and fall back to X-Forwarded-Host /
+// request origin only when it's missing.
+function getPublicOrigin(request: NextRequest): string {
+  if (process.env.NEXTAUTH_URL) return new URL(process.env.NEXTAUTH_URL).origin;
+
+  const forwardedHost = request.headers.get('x-forwarded-host');
+  const forwardedProto = request.headers.get('x-forwarded-proto') ?? 'https';
+  if (forwardedHost) return `${forwardedProto}://${forwardedHost}`;
+
+  return request.nextUrl.origin;
+}
+
 export async function GET(request: NextRequest) {
   const redirectUri = request.nextUrl.searchParams.get('redirect_uri');
 
   if (!redirectUri || !isAllowedRedirectUri(redirectUri)) {
     return NextResponse.json({ error: 'Invalid redirect_uri' }, { status: 400 });
   }
+
+  const publicOrigin = getPublicOrigin(request);
+  const publicRequestUrl = new URL(
+    `${request.nextUrl.pathname}${request.nextUrl.search}`,
+    publicOrigin
+  ).toString();
 
   let token = getSSOToken(request);
   let shouldPersistCookie = false;
@@ -29,9 +51,8 @@ export async function GET(request: NextRequest) {
   }
 
   if (!token) {
-    const loginUrl = new URL('/auth/signin', request.nextUrl.origin);
-    const returnUrl = new URL(request.url);
-    loginUrl.searchParams.set('callbackUrl', returnUrl.toString());
+    const loginUrl = new URL('/auth/signin', publicOrigin);
+    loginUrl.searchParams.set('callbackUrl', publicRequestUrl);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -41,7 +62,7 @@ export async function GET(request: NextRequest) {
 
   if (!userRes.ok) {
     const response = NextResponse.redirect(
-      new URL(`/auth/signin?callbackUrl=${encodeURIComponent(request.url)}`, request.nextUrl.origin)
+      new URL(`/auth/signin?callbackUrl=${encodeURIComponent(publicRequestUrl)}`, publicOrigin)
     );
     clearSSOCookie(response);
     return response;
