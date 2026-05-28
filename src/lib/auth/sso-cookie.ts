@@ -34,3 +34,26 @@ export function clearSSOCookie(response: NextResponse): void {
     maxAge: 0,
   });
 }
+
+// Next-auth cookie names mirror the `cookies` block in auth.ts. Clearing
+// requires the same Domain + Path attributes the cookie was set with,
+// otherwise browsers leave the original (subdomain-scoped) cookie in place.
+const NEXT_AUTH_COOKIE_NAMES = isProd
+  ? [
+      '__Secure-next-auth.session-token',
+      '__Secure-next-auth.csrf-token',
+      '__Secure-next-auth.callback-url',
+    ]
+  : ['next-auth.session-token', 'next-auth.csrf-token', 'next-auth.callback-url'];
+
+export function clearNextAuthCookies(response: NextResponse): void {
+  for (const name of NEXT_AUTH_COOKIE_NAMES) {
+    response.cookies.set(name, '', {
+      path: '/',
+      secure: isProd,
+      sameSite: 'lax',
+      maxAge: 0,
+      ...(COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
+    });
+  }
+}
