@@ -18,7 +18,7 @@ const Tooltip: FC = ({ active, payload: data }: TooltipProps) => {
     <div className="space-y-2 rounded-2xl bg-white px-6 py-2 font-sans text-sm shadow-lg">
       <div key={label} className="flex flex-col">
         {title && <p className="flex justify-center">{title}</p>}
-        <p className={cn({ 'flex space-x-4': true })}>
+        <div className={cn({ 'flex space-x-4': true })}>
           <span className="flex items-center space-x-2">
             {color && (
               <div
@@ -31,7 +31,7 @@ const Tooltip: FC = ({ active, payload: data }: TooltipProps) => {
             {<span className="font-bold">{label}</span>}
           </span>
           <span> {valueFormatted}</span>
-        </p>
+        </div>
       </div>
     </div>
   );

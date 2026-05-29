@@ -47,6 +47,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-brand-400 print:bg-white">
+        <a
+          href="#main-content"
+          className="focus:bg-brand-800 sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded focus:px-3 focus:py-2 focus:text-white"
+        >
+          Skip to main content
+        </a>
         {/* Global Site Tag (gtag.js) - Google Analytics */}
         <Script
           strategy="afterInteractive"

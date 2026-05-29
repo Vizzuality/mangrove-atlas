@@ -33,11 +33,11 @@ const DesktopLayout = () => {
         onClick={handleReset}
       />
 
-      <div className="relative h-screen w-screen">
+      <main id="main-content" className="relative h-screen w-screen">
         <WidgetsContainer />
 
         <WelcomeIntroMessage />
-      </div>
+      </main>
     </div>
   );
 };

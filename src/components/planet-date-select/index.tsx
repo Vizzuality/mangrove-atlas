@@ -88,7 +88,7 @@ const DateSelect = ({
           Period: <span className="text-sm font-bold">{labelToDisplay}</span>
         </p>
         <SelectIcon>
-          <CHEVRON_SVG role="img" />
+          <CHEVRON_SVG aria-hidden="true" />
         </SelectIcon>
       </SelectTrigger>
 

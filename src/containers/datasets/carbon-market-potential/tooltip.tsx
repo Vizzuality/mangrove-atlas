@@ -19,7 +19,7 @@ const Tooltip: React.FC = ({ active, settings }: TooltipProps) => {
       {settings?.map(({ label, title, valueFormatted, value, unit, color }) => (
         <div key={label} className="flex flex-col items-center">
           {title && <p className="flex justify-center">{title}</p>}
-          <p className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4">
             <span className="flex space-x-2">
               {color && <div className="h-4 w-2 rounded-full" style={{ backgroundColor: color }} />}
               {<span className="text-xs font-bold">{label}</span>}
@@ -28,7 +28,7 @@ const Tooltip: React.FC = ({ active, settings }: TooltipProps) => {
               {' '}
               {valueFormatted || value} {unit}
             </span>
-          </p>
+          </div>
         </div>
       ))}
     </div>

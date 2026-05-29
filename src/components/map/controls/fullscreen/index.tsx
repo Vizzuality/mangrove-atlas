@@ -22,10 +22,13 @@ const FullScreen = () => {
 
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <div
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          aria-label={isFullScreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+          aria-pressed={isFullScreen}
           className={cn({
-            'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+            'group shadow-control inline-flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
               true,
             'border-brand-800 bg-brand-800': isFullScreen,
             'hover:bg-gray-100': !isFullScreen,
@@ -38,10 +41,9 @@ const FullScreen = () => {
               'bg-brand-800': isFullScreen,
               'group-hover:bg-gray-100': !isFullScreen,
             })}
-            role="img"
             aria-hidden={true}
           />
-        </div>
+        </button>
       </TooltipTrigger>
       <TooltipContent className="bg-gray-600 px-2 text-white">Fullscreen</TooltipContent>
     </Tooltip>

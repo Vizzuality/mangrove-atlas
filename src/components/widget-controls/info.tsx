@@ -48,9 +48,10 @@ const Info = ({ id, content }) => {
       >
         <DialogTrigger
           disabled={isHelpGuideActive}
+          aria-label="Widget info"
           className="border-brand-800/20 text-brand-800 flex h-7.5 w-7.5 cursor-pointer items-center justify-center rounded-full border-2 fill-current text-sm"
         >
-          <INFO_SVG className="text-brand-800 fill-current" role="img" title="Info" />
+          <INFO_SVG className="text-brand-800 fill-current" aria-hidden="true" />
         </DialogTrigger>
       </Helper>
       <DialogContent className="w-screen md:mb-20 md:w-auto">

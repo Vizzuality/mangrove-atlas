@@ -92,7 +92,7 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
         aria-label={`Reorder source ${name}`}
         className="flex shrink-0 cursor-grab items-center justify-center text-black/42"
       >
-        <DRAG_SVG role="img" aria-hidden={true} />
+        <DRAG_SVG aria-hidden={true} />
       </button>
       <div className="flex min-w-0 flex-1 items-start">
         <div
@@ -161,7 +161,7 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
               aria-label="Remove layer"
               className={iconBtn}
             >
-              <CLOSE_SVG role="img" aria-hidden={true} />
+              <CLOSE_SVG aria-hidden={true} />
             </button>
           </TooltipTrigger>
           <TooltipPortal>
