@@ -637,7 +637,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                       setPosition(null);
                     }}
                   >
-                    <Image src="/images/MapMarker.png" alt="Map Marker" width={30} height={10} />
+                    <Image src="/images/MapMarker.png" alt="Map Marker" width={24} height={40} />
                   </button>
                 </Marker>
               )}
@@ -648,7 +648,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
         {!hideControls && (
           <>
             {isMobile && mapView && (
-              <div className="absolute top-5 z-20 w-full">
+              <div className="absolute top-20 z-20 w-full">
                 <MobileLegend />
               </div>
             )}

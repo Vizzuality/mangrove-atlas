@@ -110,8 +110,13 @@ const AnalysisAlert = () => {
                   sure that you want to reset the page?
                 </p>
                 <div className="flex items-center space-x-2">
-                  <input type="checkbox" name="do-not-ask" onChange={handleCheckbox} />
-                  <label htmlFor="modal">Don&apos;t ask me again.</label>
+                  <input
+                    id="reset-do-not-ask"
+                    type="checkbox"
+                    name="do-not-ask"
+                    onChange={handleCheckbox}
+                  />
+                  <label htmlFor="reset-do-not-ask">Don&apos;t ask me again.</label>
                 </div>
               </div>
 

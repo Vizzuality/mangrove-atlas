@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactElement, ReactNode, cloneElement, isValidElement } from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -36,8 +36,6 @@ const SwitchRoot = ({
   size?: 'sm' | 'md';
 }) => (
   <SwitchRadix.Root
-    role="button"
-    aria-label="Toggle component"
     className={cn(className, {
       'border-brand-800/20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-transparent outline-none':
         true,
@@ -67,19 +65,24 @@ const SwitchThumb = ({
   </SwitchRadix.Thumb>
 );
 
-const SwitchWrapper = ({ id, label, children, className }: WrapperProps) => (
-  <div className="flex items-center">
-    <label
-      className={cn(className, {
-        'sr-only pr-[15px] text-[15px] leading-none text-white': true,
-      })}
-      htmlFor={id}
-    >
-      {label}
-    </label>
-    {children}
-  </div>
-);
+const SwitchWrapper = ({ id, label, children, className }: WrapperProps) => {
+  const childWithId = isValidElement(children)
+    ? cloneElement(children as ReactElement<{ id?: string }>, { id })
+    : children;
+  return (
+    <div className="flex items-center">
+      <label
+        className={cn(className, {
+          'sr-only pr-[15px] text-[15px] leading-none text-white': true,
+        })}
+        htmlFor={id}
+      >
+        {label}
+      </label>
+      {childWithId}
+    </div>
+  );
+};
 
 SwitchRoot.displayName = SwitchRadix.Root.displayName;
 SwitchThumb.displayName = SwitchRadix.Thumb.displayName;

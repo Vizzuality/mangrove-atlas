@@ -4,7 +4,7 @@ import { trackEvent } from '@/lib/analytics/ga';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
-import { INFO } from '@/containers/datasets';
+import { INFO } from '@/containers/datasets/registries';
 
 import {
   Dialog,
@@ -52,8 +52,11 @@ const Controls = ({ id, origin }: ControlTypes) => {
   return (
     <div className="flex items-start space-x-2">
       <Dialog>
-        <DialogTrigger className="border-brand-800/20 flex h-7.5 w-7.5 items-center justify-center rounded-full border-2">
-          <INFO_SVG className="text-brand-800 fill-current" role="img" title="Info" />
+        <DialogTrigger
+          aria-label="Layer info"
+          className="border-brand-800/20 flex h-7.5 w-7.5 items-center justify-center rounded-full border-2"
+        >
+          <INFO_SVG className="text-brand-800 fill-current" aria-hidden="true" />
         </DialogTrigger>
         <DialogContent className="w-screen md:mb-20 md:w-auto">
           <DialogTitle className="sr-only">Info</DialogTitle>

@@ -9,7 +9,14 @@ const TooltipProvider = TooltipPrimitive.Provider;
 const Tooltip = ({ ...props }) => <TooltipPrimitive.Root {...props} />;
 Tooltip.displayName = TooltipPrimitive.Tooltip.displayName;
 
-const TooltipTrigger = TooltipPrimitive.Trigger;
+const TooltipTrigger = forwardRef<
+  ElementRef<typeof TooltipPrimitive.Trigger>,
+  ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TooltipPrimitive.Trigger ref={ref} className={cn('cursor-pointer', className)} {...props} />
+));
+TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName;
+
 const TooltipPortal = TooltipPrimitive.Portal;
 
 const TooltipContent = forwardRef<

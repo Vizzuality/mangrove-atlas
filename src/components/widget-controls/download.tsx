@@ -1,6 +1,6 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { DOWNLOAD } from '@/containers/datasets';
+import { DOWNLOAD } from '@/containers/datasets/registries';
 import Helper from '@/containers/help/helper';
 
 import {
@@ -66,8 +66,11 @@ const Download = ({ id, content }) => {
         tooltipPosition={{ top: -35, left: 0 }}
         message="Use this function to download spatial data associated with this widget and map layer. Links may point to external sources. Not all data layers are available for download. "
       >
-        <DialogTrigger className="border-brand-800/20 flex h-7.5 w-7.5 cursor-pointer items-center rounded-full border-2 text-transparent">
-          <DOWNLOAD_SVG className="fill-current" role="img" title="Download" />
+        <DialogTrigger
+          aria-label="Download data"
+          className="border-brand-800/20 flex h-7.5 w-7.5 cursor-pointer items-center justify-center rounded-full border-2 text-transparent"
+        >
+          <DOWNLOAD_SVG className="fill-current" aria-hidden="true" />
         </DialogTrigger>
       </Helper>
       <DialogContent>

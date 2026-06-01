@@ -55,7 +55,7 @@ const TimelineSlider = ({
                 style={{
                   left: `calc(12px + (100% - 24px) * ${i / Math.max(1, years.length - 1)})`,
                 }}
-                className="absolute top-1/2 flex h-4 w-4 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center focus-visible:outline-none"
+                className="absolute top-1/2 flex min-h-6 min-w-6 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center focus-visible:outline-none"
               >
                 <span
                   aria-hidden="true"
@@ -100,7 +100,7 @@ const TimelineSlider = ({
                   transform: 'translateX(-50%)',
                 }}
                 className={cn(
-                  'cursor-pointer text-[12px] leading-5 whitespace-nowrap focus-visible:outline-none',
+                  'inline-flex min-h-6 cursor-pointer items-center px-1 text-[12px] leading-5 whitespace-nowrap focus-visible:outline-none',
                   isCurrent
                     ? 'text-brand-800 font-bold'
                     : 'font-normal text-black/56 hover:text-black/80'

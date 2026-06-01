@@ -144,18 +144,18 @@ const LegendControls = ({
   if (l.id === 'custom-area') return null;
 
   const iconBtn = compact
-    ? 'inline-flex h-5 w-5 cursor-pointer items-center justify-center rounded-full text-black/42 hover:bg-black/5'
+    ? 'inline-flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full text-black/42 hover:bg-black/5'
     : 'inline-flex h-7.5 w-7.5 cursor-pointer items-center justify-center rounded-full text-black/42 hover:bg-black/5';
   const opacityIconCls = compact ? 'h-4 w-4' : 'h-6.5 w-6.5';
   const showHideIconCls = compact ? 'h-5 w-5' : 'h-7 w-7';
   const closeIconCls = compact ? 'h-3 w-3' : '';
   const infoBtnCls = compact
-    ? 'mr-1 flex h-4 w-4 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42'
-    : 'mr-1 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42';
+    ? 'mr-1 flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42'
+    : 'mr-1 flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42';
   const infoIconCls = compact ? 'h-2 w-2 fill-current' : 'h-3 w-3 fill-current';
 
   return (
-    <div className="ml-auto flex items-center justify-end gap-x-0.5">
+    <div className="ml-auto flex items-center justify-end gap-x-1">
       {!hideInfo && WidgetInfo && (
         <Dialog open={infoDialogVisibility} onOpenChange={setInfoDialogVisibility}>
           <DialogTrigger asChild>
@@ -260,7 +260,7 @@ const LegendControls = ({
             aria-label="Remove layer"
             className={iconBtn}
           >
-            <CLOSE_SVG role="img" aria-hidden={true} className={closeIconCls} />
+            <CLOSE_SVG aria-hidden={true} className={closeIconCls} />
           </button>
         </TooltipTrigger>
         <TooltipPortal>

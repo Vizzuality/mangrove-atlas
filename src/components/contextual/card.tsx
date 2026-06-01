@@ -5,8 +5,8 @@ import cn from '@/lib/classnames';
 import { useSyncBasemap } from '@/store/map';
 import { useSyncBasemapContextual } from '@/store/map-settings';
 
-import { INFO } from '@/containers/datasets';
 import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
+import { INFO } from '@/containers/datasets/registries';
 
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
 import Info from '@/components/widget-controls/info';

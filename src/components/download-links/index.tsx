@@ -26,18 +26,23 @@ const Download = ({ info }: { info: Record<string, string | number>[] }) => {
         {info.map(({ id, title, href, description, license }) => (
           <div key={id} className="text-xs font-bold tracking-widest uppercase">
             <div className="flex w-full items-center justify-between">
-              <div className="flex" onClick={() => handleClick(id as string)}>
+              <button
+                type="button"
+                onClick={() => handleClick(id as string)}
+                aria-expanded={!!isCollapsed[id]}
+                disabled={!description}
+                className="flex items-center text-left"
+              >
                 <ARROW_SVG
                   className={cn({
                     'h-3 w-3 fill-current font-bold': true,
                     'rotate-180 transform': isCollapsed[id],
                     hidden: !description,
                   })}
-                  role="img"
-                  title="Download"
+                  aria-hidden="true"
                 />
                 <h3 className={cn({ 'ml-6': description })}>{title}</h3>
-              </div>
+              </button>
               {href && (
                 <a
                   href={href as string}

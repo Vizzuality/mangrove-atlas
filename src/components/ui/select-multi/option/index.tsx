@@ -43,8 +43,7 @@ export const Option = ({ opt, theme }: OptionProps) => {
             <CheckboxIndicator>
               <CHECK_SVG
                 className="fill-brand-800/70 h-2.5 w-2.5 fill-current"
-                role="img"
-                title="Checkmark"
+                aria-hidden="true"
               />
             </CheckboxIndicator>
           </Checkbox>

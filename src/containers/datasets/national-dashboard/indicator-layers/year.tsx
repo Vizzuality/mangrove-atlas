@@ -29,27 +29,25 @@ const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearPr
           </PopoverTrigger>
 
           <PopoverContent className="shadow-border rounded-2xl px-2">
-            <ul role="listbox" className="max-h-32 space-y-0.5">
+            <div role="listbox" aria-label="Year" className="max-h-32 space-y-0.5">
               {years?.map((u) => (
-                <li key={u}>
-                  <button
-                    key={u}
-                    role="option"
-                    aria-selected={yearSelected === u}
-                    className={cn({
-                      'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
-                      'hover:text-brand-800': yearSelected !== u,
-                      'pointer-events-none opacity-50': yearSelected === u,
-                    })}
-                    type="button"
-                    onClick={() => setYearSelected(u)}
-                    disabled={yearSelected === u}
-                  >
-                    {u}
-                  </button>
-                </li>
+                <button
+                  key={u}
+                  role="option"
+                  aria-selected={yearSelected === u}
+                  className={cn({
+                    'hover:bg-brand-800/20 block w-full rounded-lg px-2 py-1 text-left': true,
+                    'hover:text-brand-800': yearSelected !== u,
+                    'pointer-events-none opacity-50': yearSelected === u,
+                  })}
+                  type="button"
+                  onClick={() => setYearSelected(u)}
+                  disabled={yearSelected === u}
+                >
+                  {u}
+                </button>
               ))}
-            </ul>
+            </div>
           </PopoverContent>
         </Popover>
       )}

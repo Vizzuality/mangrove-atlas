@@ -37,10 +37,10 @@ test.describe('National Dashboard multi-source', () => {
   });
 
   test('each switch has a unique aria-label', async ({ page }) => {
-    const conabioSwitch = page.getByRole('button', {
+    const conabioSwitch = page.getByRole('switch', {
       name: /Toggle CONABIO Habitat extent area layer/,
     });
-    const testSwitch = page.getByRole('button', {
+    const testSwitch = page.getByRole('switch', {
       name: /Toggle TEST Habitat extent area layer/,
     });
     await expect(conabioSwitch).toBeVisible();
@@ -48,10 +48,10 @@ test.describe('National Dashboard multi-source', () => {
   });
 
   test('both layers can be active at once on the map', async ({ page }) => {
-    const conabioSwitch = page.getByRole('button', {
+    const conabioSwitch = page.getByRole('switch', {
       name: /Toggle CONABIO Habitat extent area layer/,
     });
-    const testSwitch = page.getByRole('button', {
+    const testSwitch = page.getByRole('switch', {
       name: /Toggle TEST Habitat extent area layer/,
     });
 
