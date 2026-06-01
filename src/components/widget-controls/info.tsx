@@ -4,7 +4,7 @@ import { activeGuideAtom } from '@/store/guide';
 
 import { useAtomValue } from 'jotai';
 
-import { INFO } from '@/containers/datasets';
+import { INFO } from '@/containers/datasets/registries';
 import Helper from '@/containers/help/helper';
 
 import {

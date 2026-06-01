@@ -1,6 +1,6 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { DOWNLOAD } from '@/containers/datasets';
+import { DOWNLOAD } from '@/containers/datasets/registries';
 import Helper from '@/containers/help/helper';
 
 import {

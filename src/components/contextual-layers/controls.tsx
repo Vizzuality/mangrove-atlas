@@ -4,7 +4,7 @@ import { trackEvent } from '@/lib/analytics/ga';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
-import { INFO } from '@/containers/datasets';
+import { INFO } from '@/containers/datasets/registries';
 
 import {
   Dialog,
