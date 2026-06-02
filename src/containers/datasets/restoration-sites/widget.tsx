@@ -108,7 +108,14 @@ const RestorationSitesWidget = () => {
                 </button>
               )}
             </div>
-            <DialogContent>
+            {/* Let the card grow with content and the outer wrapper scroll, so an
+                expanded filter dropdown overlays instead of being clipped by the card's
+                overflow (see dialog default scroll box). */}
+            <DialogContent
+              className="max-h-none overflow-y-visible sm:max-h-none"
+              classNameContent="overflow-y-auto"
+              hideScrollFade
+            >
               <DialogTitle className="sr-only">Filter sites</DialogTitle>
               <FilterSites
                 open={open}
