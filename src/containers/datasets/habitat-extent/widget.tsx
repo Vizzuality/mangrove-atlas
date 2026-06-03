@@ -302,7 +302,39 @@ const HabitatExtent = () => {
                   </PopoverContent>
                 </Popover>
               </span>{' '}
-              in <span className="font-bold">{currentYear}</span>.
+              in{' '}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <span className={`${WIDGET_SELECT_STYLES}`}>
+                    {currentYear}
+                    <ARROW_SVG
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
+                      role="img"
+                      title="Arrow"
+                    />
+                  </span>
+                </PopoverTrigger>
+                <PopoverContent className="shadow-border rounded-2xl px-2">
+                  <ul className="z-20 max-h-56 space-y-0.5">
+                    {sortedYears?.map((y) => (
+                      <li key={y} className="last-of-type:pb-4">
+                        <button
+                          aria-label="select year"
+                          className={cn({
+                            'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
+                            'text-brand-800 font-semibold': y === currentYear,
+                          })}
+                          type="button"
+                          onClick={() => handleYearChange(y)}
+                        >
+                          {y}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </PopoverContent>
+              </Popover>
+              .
             </p>
             <div className="py-4">
               {sortedYears.length > 1 && (
