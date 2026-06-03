@@ -11,15 +11,31 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
     const geometry = feature.geometry();
     const coastline = this.coastalAsset.getEEAsset();
 
-    const habitatExtent =  this._getHabitatExtent(geometry);
-
-    const coastalExtent = this._getCoastalExtent(coastline, geometry);
-
+    // Adaptive scale: 30 m for small areas, capped at 120 m for large areas.
+    // Reaches 60 m at ~1 000 km², 90 m at ~4 000 km², 120 m at ~9 000 km².
+    const scale = ee.Number(geometry.area(1000))
+      .divide(1e9).sqrt().multiply(30).add(30).max(30).min(120);
 
     const totalCoastline = ee.Number(ee.FeatureCollection(coastline.filterBounds(geometry))
                             .map((f: ee.Feature) => f.set({distance: f.length(10)}))
                             .aggregate_sum('distance'))
                             .divide(1000);
+
+    // Combine extent (all years) and coastline into one image, single reduceRegion.
+    // Extent bands carry km² values; the 'coastline' band carries km values.
+    const reduced: ee.Dictionary = this._buildExtentImage()
+      .addBands(this._buildCoastlineImage(coastline))
+      .reduceRegion({
+        reducer: ee.Reducer.sum(),
+        geometry,
+        scale,
+        maxPixels: 1e12,
+        bestEffort: true,
+        tileScale: 4,
+      });
+
+    const habitatExtent = this._extractHabitatExtent(reduced);
+    const coastalExtent = this._extractCoastalExtent(reduced);
 
     return ee.Dictionary({
       "location_id": "custom-area",
@@ -34,53 +50,11 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
       });
   }
 
-  // Computes coastal coverage with a single reduceRegion. The maskedCoastline
-  // image is constant across years, so the reduction is done once and the
-  // value is replicated per year rather than firing N concurrent aggregations.
-  _getCoastalExtent(coast: ee.FeatureCollection, geo: ee.Geometry): ee.List {
-    const coastlineImage = ee.Image().toByte().paint(coast, 1, 1).rename('value');
-
-    const extentSample = ee.Image(this.extentAsset.getEEAsset().first());
-    const mask = extentSample.unmask()
-      .distance(ee.Kernel.euclidean(200, 'meters'), true)
-      .add(extentSample.unmask());
-
-    const maskedCoastline = coastlineImage.updateMask(mask)
-      .multiply(ee.Image.pixelArea()).sqrt().divide(1000);
-
-    // Single reduction — coastline geometry does not change by year
-    const coastlineLength: ee.Dictionary = maskedCoastline.reduceRegion({
-      reducer: ee.Reducer.sum(),
-      geometry: geo,
-      scale: 30,
-      bestEffort: true,
-      tileScale: 4,
-    });
-
-    // Replicate across years using the extent collection as the year source
-    const years = this.extentAsset.getEEAsset().sort('system:index').toList(10000)
-      .map((img: ee.ComputedObject) => {
-        // system:index format: "mangrove_extent-v3_YYYY" → year is last segment
-        return ee.String(ee.Image(img).get('system:index')).split('_').get(-1);
-      });
-
-    return years.map((yr: ee.ComputedObject) => {
-      return ee.Dictionary({
-        'value':     coastlineLength.get('value'),
-        'year':      ee.Number.parse(ee.String(yr)),
-        'indicator': 'linear_coverage',
-      });
-    });
-  }
-
-  // Stacks all extent images into a single multi-band image using toBands() (faster than iterate())
-  // and performs a single reduceRegion instead of one per year.
-  // Band names from toBands() are "{system:index}_extent_{year}"; year is the trailing 4 chars.
-  _getHabitatExtent(geo: ee.Geometry): ee.List {
-    const collection: ee.ImageCollection = this.extentAsset.getEEAsset();
-
+  // Stacks all extent images into a multi-band image.
+  // Bands are named "{system:index}_extent_{year}"; pixel area applied so sum() → km².
+  _buildExtentImage(): ee.Image {
     // system:index format: "mangrove_extent-v3_YYYY" → year is last segment
-    const stacked = collection.sort('system:index')
+    return this.extentAsset.getEEAsset().sort('system:index')
       .map((img: ee.ComputedObject) => {
         const image = ee.Image(img);
         const year = ee.String(image.get('system:index')).split('_').get(-1) as ee.String;
@@ -89,23 +63,46 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
       .toBands()
       .multiply(ee.Image.pixelArea())
       .divide(1000 * 1000);
+  }
 
-    const reduced: ee.Dictionary = stacked.reduceRegion({
-      reducer: ee.Reducer.sum(),
-      geometry: geo,
-      scale: 30,
-      maxPixels: 1e12,
-      bestEffort: true,
-      tileScale: 4,
-    });
+  // Paints the coastline FC, masks to within 200 m of mangroves, converts to km per pixel.
+  // Produces a single band 'coastline'; sum() over the geometry yields linear coverage in km.
+  _buildCoastlineImage(coast: ee.FeatureCollection): ee.Image {
+    const coastlineImage = ee.Image().toByte().paint(coast, 1, 1).rename('value');
+    const extentSample = ee.Image(this.extentAsset.getEEAsset().first());
+    const mask = extentSample.unmask()
+      .distance(ee.Kernel.euclidean(200, 'meters'), true)
+      .add(extentSample.unmask());
+    return coastlineImage.updateMask(mask)
+      .multiply(ee.Image.pixelArea()).sqrt().divide(1000)
+      .rename('coastline');
+  }
 
-    // Band names are "{system:index}_extent_{year}" → year is the trailing 4 chars.
-    return reduced.keys().sort().map((key: ee.ComputedObject) => {
+  // Extracts per-year habitat extent rows from the combined reduced dictionary.
+  // All keys except 'coastline' are extent bands; year is the trailing 4 chars.
+  _extractHabitatExtent(reduced: ee.Dictionary): ee.List {
+    const extentKeys = reduced.keys()
+      .filter(ee.Filter.neq('item', 'coastline')).sort();
+    return extentKeys.map((key: ee.ComputedObject) => {
       const k = ee.String(key);
       return ee.Dictionary({
         'value':     reduced.get(k),
         'year':      ee.Number.parse(k.slice(-4)),
         'indicator': 'habitat_extent_area',
+      });
+    });
+  }
+
+  // Replicates the single coastline length value across all extent years.
+  _extractCoastalExtent(reduced: ee.Dictionary): ee.List {
+    const coastlineLength = reduced.get('coastline');
+    const extentKeys = reduced.keys()
+      .filter(ee.Filter.neq('item', 'coastline')).sort();
+    return extentKeys.map((key: ee.ComputedObject) => {
+      return ee.Dictionary({
+        'value':     coastlineLength,
+        'year':      ee.Number.parse(ee.String(key).slice(-4)),
+        'indicator': 'linear_coverage',
       });
     });
   }

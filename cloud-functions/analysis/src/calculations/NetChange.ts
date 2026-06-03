@@ -10,12 +10,29 @@ class NetChangeCalculationsClass extends BaseCalculation {
   Loss = LossDataAsset;
 
   calculate(feature: ee.Feature): ee.Dictionary {
-
     const geometry = feature.geometry();
 
-    const gain = this._getGainLoss(this.Gain, geometry);
-    const loss = this._getGainLoss(this.Loss, geometry);
-    const netChange = this._netChange(gain, loss);
+    // Adaptive scale: 30 m for small areas, capped at 120 m for large areas.
+    // Reaches 60 m at ~1 000 km², 90 m at ~4 000 km², 120 m at ~9 000 km².
+    const scale = ee.Number(geometry.area(1000))
+      .divide(1e9).sqrt().multiply(30).add(30).max(30).min(120);
+
+    // Stack gain and loss into one image, then a single reduceRegion call.
+    const stacked = this._stackCollection(this.Gain)
+      .addBands(this._stackCollection(this.Loss))
+      .multiply(ee.Image.pixelArea())
+      .divide(1000 * 1000);
+
+    const reduced = stacked.reduceRegion({
+      reducer: ee.Reducer.sum(),
+      geometry,
+      scale,
+      maxPixels: 1e12,
+      bestEffort: true,
+      tileScale: 4,
+    });
+
+    const netChange = this._netChange(reduced);
 
     return ee.Dictionary({
       'data': netChange,
@@ -29,45 +46,35 @@ class NetChangeCalculationsClass extends BaseCalculation {
   }});
   }
 
-  // Stacks all images into a single multi-band image using toBands() (faster than iterate()).
-  // Band names from toBands() are "{system:index}_{name}_{year}"; year is always the last 4 chars.
-  _getGainLoss(IC: IGainLossAsset, geom: ee.Geometry): ee.Dictionary {
-    const collection: ee.ImageCollection = IC.getEEAsset();
-
+  // Returns a stacked image with one band per year, named "{system:index}_{name}_{year}".
+  // Pixel area is applied in calculate() after gain and loss are combined.
+  _stackCollection(IC: IGainLossAsset): ee.Image {
     // system:index format: "gl_{start}_{end}_{type}" → year at slice(8, 12)
-    const stacked = collection.sort('system:index')
+    return IC.getEEAsset().sort('system:index')
       .map((img: ee.ComputedObject) => {
         const image = ee.Image(img);
         const year = ee.String(image.get('system:index')).slice(8, 12);
         return image.rename(ee.String(IC.name).cat('_').cat(year));
       })
-      .toBands()
-      .multiply(ee.Image.pixelArea())
-      .divide(1000 * 1000);
-
-    return stacked.reduceRegion({
-      reducer: ee.Reducer.sum(),
-      geometry: geom,
-      scale: 30,
-      maxPixels: 1e12,
-      bestEffort: true,
-      tileScale: 4,
-    });
+      .toBands();
   }
 
-  // Reconstructs per-year rows from the flat gain/loss dictionaries.
-  // Keys from toBands() are "{system:index}_{name}_{year}"; year is the trailing 4 chars.
-  // Zip sorted gain/loss key lists — both collections share the same year sequence.
-  _netChange(gainDict: ee.Dictionary, lossDict: ee.Dictionary): ee.List {
-    const pairs = gainDict.keys().sort().zip(lossDict.keys().sort());
+  // Reconstructs per-year rows from the combined gain+loss reduced dictionary.
+  // Keys from toBands() are "{system:index}_{name}_{year}"; gain/loss separated by key content.
+  // Year is the trailing 4 chars of each key.
+  _netChange(reduced: ee.Dictionary): ee.List {
+    const gainKeys = reduced.keys()
+      .filter(ee.Filter.stringContains('item', '_gain_')).sort();
+    const lossKeys = reduced.keys()
+      .filter(ee.Filter.stringContains('item', '_loss_')).sort();
 
-    const rows = pairs.map((pair: ee.ComputedObject) => {
+    const rows = gainKeys.zip(lossKeys).map((pair: ee.ComputedObject) => {
       const p = ee.List(pair);
       const gainKey = ee.String(p.get(0));
       const lossKey = ee.String(p.get(1));
       const year = gainKey.slice(-4);
-      const gainVal = ee.Number(gainDict.get(gainKey));
-      const lossVal = ee.Number(lossDict.get(lossKey));
+      const gainVal = ee.Number(reduced.get(gainKey));
+      const lossVal = ee.Number(reduced.get(lossKey));
       return ee.Dictionary({
         'year':       ee.Number.parse(year),
         'gain':       gainVal,
