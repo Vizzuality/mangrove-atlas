@@ -323,8 +323,10 @@ const HabitatExtent = () => {
                           className={cn({
                             'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
                             'text-brand-800 font-semibold': y === currentYear,
+                            'pointer-events-none opacity-50': isPlaying,
                           })}
                           type="button"
+                          disabled={isPlaying}
                           onClick={() => handleYearChange(y)}
                         >
                           {y}
