@@ -29,27 +29,21 @@ class NetChangeCalculationsClass extends BaseCalculation {
   }});
   }
 
-  // Returns a flat ee.Dictionary with keys "{name}_{year}" and values in km².
-  // A single reduceRegion covers all years to avoid concurrent aggregation limits.
+  // Stacks all images into a single multi-band image using toBands() (faster than iterate()).
+  // Band names from toBands() are "{system:index}_{name}_{year}"; year is always the last 4 chars.
   _getGainLoss(IC: IGainLossAsset, geom: ee.Geometry): ee.Dictionary {
     const collection: ee.ImageCollection = IC.getEEAsset();
-    const images = collection.sort('system:index').toList(100);
 
     // system:index format: "gl_{start}_{end}_{type}" → year at slice(8, 12)
-    const first = ee.Image(images.get(0));
-    const firstYear = ee.String(first.get('system:index')).slice(8, 12);
-    const init = first.rename(ee.String(IC.name).cat('_').cat(firstYear));
-
-    const stacked = ee.Image(
-      images.slice(1).iterate(
-        (img: ee.ComputedObject, acc: ee.ComputedObject): ee.ComputedObject => {
-          const image = ee.Image(img);
-          const year = ee.String(image.get('system:index')).slice(8, 12);
-          return ee.Image(acc).addBands(image.rename(ee.String(IC.name).cat('_').cat(year)));
-        },
-        init
-      )
-    ).multiply(ee.Image.pixelArea()).divide(1000 * 1000);
+    const stacked = collection.sort('system:index')
+      .map((img: ee.ComputedObject) => {
+        const image = ee.Image(img);
+        const year = ee.String(image.get('system:index')).slice(8, 12);
+        return image.rename(ee.String(IC.name).cat('_').cat(year));
+      })
+      .toBands()
+      .multiply(ee.Image.pixelArea())
+      .divide(1000 * 1000);
 
     return stacked.reduceRegion({
       reducer: ee.Reducer.sum(),
@@ -62,16 +56,18 @@ class NetChangeCalculationsClass extends BaseCalculation {
   }
 
   // Reconstructs per-year rows from the flat gain/loss dictionaries.
-  // Band names are "{name}_{year}" so slice(5) strips the "gain_"/"loss_" prefix.
+  // Keys from toBands() are "{system:index}_{name}_{year}"; year is the trailing 4 chars.
+  // Zip sorted gain/loss key lists — both collections share the same year sequence.
   _netChange(gainDict: ee.Dictionary, lossDict: ee.Dictionary): ee.List {
-    const years = gainDict.keys().sort().map(
-      (key: ee.ComputedObject) => ee.String(key).slice(5) // remove "gain_" prefix
-    );
+    const pairs = gainDict.keys().sort().zip(lossDict.keys().sort());
 
-    const rows = years.map((yr: ee.ComputedObject) => {
-      const year = ee.String(yr);
-      const gainVal = ee.Number(gainDict.get(ee.String('gain_').cat(year)));
-      const lossVal = ee.Number(lossDict.get(ee.String('loss_').cat(year)));
+    const rows = pairs.map((pair: ee.ComputedObject) => {
+      const p = ee.List(pair);
+      const gainKey = ee.String(p.get(0));
+      const lossKey = ee.String(p.get(1));
+      const year = gainKey.slice(-4);
+      const gainVal = ee.Number(gainDict.get(gainKey));
+      const lossVal = ee.Number(lossDict.get(lossKey));
       return ee.Dictionary({
         'year':       ee.Number.parse(year),
         'gain':       gainVal,

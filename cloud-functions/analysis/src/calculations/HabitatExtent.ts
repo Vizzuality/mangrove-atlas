@@ -73,27 +73,22 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
     });
   }
 
-  // Stacks all extent images into a single multi-band image (one band per year)
+  // Stacks all extent images into a single multi-band image using toBands() (faster than iterate())
   // and performs a single reduceRegion instead of one per year.
+  // Band names from toBands() are "{system:index}_extent_{year}"; year is the trailing 4 chars.
   _getHabitatExtent(geo: ee.Geometry): ee.List {
     const collection: ee.ImageCollection = this.extentAsset.getEEAsset();
-    const images = collection.sort('system:index').toList(10000);
 
     // system:index format: "mangrove_extent-v3_YYYY" → year is last segment
-    const first = ee.Image(images.get(0));
-    const firstYear = ee.String(first.get('system:index')).split('_').get(-1) as ee.String;
-    const init = first.rename(ee.String('extent_').cat(firstYear));
-
-    const stacked = ee.Image(
-      images.slice(1).iterate(
-        (img: ee.ComputedObject, acc: ee.ComputedObject): ee.ComputedObject => {
-          const image = ee.Image(img);
-          const year = ee.String(image.get('system:index')).split('_').get(-1) as ee.String;
-          return ee.Image(acc).addBands(image.rename(ee.String('extent_').cat(year)));
-        },
-        init
-      )
-    ).multiply(ee.Image.pixelArea()).divide(1000 * 1000);
+    const stacked = collection.sort('system:index')
+      .map((img: ee.ComputedObject) => {
+        const image = ee.Image(img);
+        const year = ee.String(image.get('system:index')).split('_').get(-1) as ee.String;
+        return image.rename(ee.String('extent_').cat(year));
+      })
+      .toBands()
+      .multiply(ee.Image.pixelArea())
+      .divide(1000 * 1000);
 
     const reduced: ee.Dictionary = stacked.reduceRegion({
       reducer: ee.Reducer.sum(),
@@ -104,14 +99,12 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
       tileScale: 4,
     });
 
-    // Reconstruct per-year rows from flat dictionary.
-    // Band names are "extent_{year}" → slice(7) strips the "extent_" prefix.
+    // Band names are "{system:index}_extent_{year}" → year is the trailing 4 chars.
     return reduced.keys().sort().map((key: ee.ComputedObject) => {
       const k = ee.String(key);
-      const year = k.slice(7);
       return ee.Dictionary({
         'value':     reduced.get(k),
-        'year':      ee.Number.parse(year),
+        'year':      ee.Number.parse(k.slice(-4)),
         'indicator': 'habitat_extent_area',
       });
     });
