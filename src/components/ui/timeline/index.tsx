@@ -21,7 +21,9 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
 
   const trackRef = useRef<HTMLDivElement>(null);
   const tickRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const draggingRef = useRef(false);
   const [trackWidth, setTrackWidth] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     const el = trackRef.current;
@@ -76,6 +78,45 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
     [years, currentYear, isPlaying, onTogglePlay, onYearChange]
   );
 
+  const indexFromClientX = useCallback(
+    (clientX: number) => {
+      const el = trackRef.current;
+      if (!el || years.length <= 1) return 0;
+      const rect = el.getBoundingClientRect();
+      const usable = rect.width - 24;
+      const x = clientX - rect.left - 12;
+      const t = usable > 0 ? x / usable : 0;
+      return Math.round(t * (years.length - 1));
+    },
+    [years.length]
+  );
+
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      draggingRef.current = true;
+      setIsDragging(true);
+      e.currentTarget.setPointerCapture(e.pointerId);
+      goToIndex(indexFromClientX(e.clientX));
+    },
+    [goToIndex, indexFromClientX]
+  );
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (!draggingRef.current) return;
+      goToIndex(indexFromClientX(e.clientX));
+    },
+    [goToIndex, indexFromClientX]
+  );
+
+  const handlePointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    draggingRef.current = false;
+    setIsDragging(false);
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+  }, []);
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLButtonElement>, i: number) => {
       let nextIdx = i;
@@ -120,7 +161,13 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
       </button>
 
       <div ref={trackRef} className="relative flex-1">
-        <div className="relative mt-2 h-10">
+        <div
+          className="relative mt-2 h-10 cursor-pointer touch-none"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+        >
           {years.map((y, i) => {
             const isCurrent = y === currentYear;
             const showLabel = labelIndices.has(i);
@@ -169,7 +216,11 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
             viewBox="0 0 12 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="pointer-events-none absolute -top-1.75 -translate-x-1/2 motion-safe:transition-[left] motion-safe:duration-150 motion-safe:ease-out"
+            className={cn(
+              'pointer-events-none absolute -top-1.75 -translate-x-1/2',
+              !isDragging &&
+                'motion-safe:transition-[left] motion-safe:duration-150 motion-safe:ease-out'
+            )}
             style={{ left: `calc(12px + (100% - 24px) * ${dotPct / 100})` }}
           >
             <path d="M0 0H12V6L6 12L0 6V0Z" fill="#00857F" />
