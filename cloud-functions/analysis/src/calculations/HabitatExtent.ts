@@ -7,7 +7,7 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
   extentAsset = ExtentDataAsset;
   coastalAsset = CoastalExtentDataAsset
 
-  calculate(feature: ee.Feature): ee.List {
+  calculate(feature: ee.Feature): ee.Dictionary {
     const geometry = feature.geometry();
     const coastline = this.coastalAsset.getEEAsset();
 
@@ -29,15 +29,17 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
           "habitat_extent_area": "km2",
           "linear_coverage": "km"
         },
-        'year':ee.List(habitatExtent.map((f: ee.Dictionary) => ee.Dictionary(f).get('year'))),
+        'year': ee.List(habitatExtent.map((f: ee.ComputedObject) => ee.Dictionary(f).get('year'))),
         'total_lenght': totalCoastline}
       });
   }
 
+  // Computes coastal coverage with a single reduceRegion. The maskedCoastline
+  // image is constant across years, so the reduction is done once and the
+  // value is replicated per year rather than firing N concurrent aggregations.
   _getCoastalExtent(coast: ee.FeatureCollection, geo: ee.Geometry): ee.List {
     const coastlineImage = ee.Image().toByte().paint(coast, 1, 1).rename('value');
 
-    // Build the distance mask once outside the per-year map()
     const extentSample = ee.Image(this.extentAsset.getEEAsset().first());
     const mask = extentSample.unmask()
       .distance(ee.Kernel.euclidean(200, 'meters'), true)
@@ -46,57 +48,73 @@ class HabitatExtentCalculationsClass extends BaseCalculation {
     const maskedCoastline = coastlineImage.updateMask(mask)
       .multiply(ee.Image.pixelArea()).sqrt().divide(1000);
 
-    const regionReducer = {
+    // Single reduction — coastline geometry does not change by year
+    const coastlineLength: ee.Dictionary = maskedCoastline.reduceRegion({
       reducer: ee.Reducer.sum(),
       geometry: geo,
       scale: 30,
       bestEffort: true,
-      tileScale: 4, // subdivide tiles to reduce memory pressure on large geometries
-    };
+      tileScale: 4,
+    });
 
-    return this.extentAsset.getEEAsset().map((image: ee.Image) => {
-      const year = ee.Number.parse(ee.String(image.id()).split('_').get(-1));
+    // Replicate across years using the extent collection as the year source
+    const years = this.extentAsset.getEEAsset().sort('system:index').toList(10000)
+      .map((img: ee.ComputedObject) => {
+        // system:index format: "mangrove_extent-v3_YYYY" → year is last segment
+        return ee.String(ee.Image(img).get('system:index')).split('_').get(-1);
+      });
 
-      return ee.Feature(null, ee.Dictionary(
-        maskedCoastline.reduceRegion(regionReducer)).combine(
-          {
-          'year': year,
-          'indicator': 'linear_coverage'}
-          )
-        );
-    }).toList(10000).map((i: ee.Feature) => {
-        const feature = ee.Feature(i);
-        return feature.toDictionary();
-      }
-    );
+    return years.map((yr: ee.ComputedObject) => {
+      return ee.Dictionary({
+        'value':     coastlineLength.get('value'),
+        'year':      ee.Number.parse(ee.String(yr)),
+        'indicator': 'linear_coverage',
+      });
+    });
   }
 
+  // Stacks all extent images into a single multi-band image (one band per year)
+  // and performs a single reduceRegion instead of one per year.
   _getHabitatExtent(geo: ee.Geometry): ee.List {
+    const collection: ee.ImageCollection = this.extentAsset.getEEAsset();
+    const images = collection.sort('system:index').toList(10000);
 
-    const reducers = ee.Reducer.sum();
+    // system:index format: "mangrove_extent-v3_YYYY" → year is last segment
+    const first = ee.Image(images.get(0));
+    const firstYear = ee.String(first.get('system:index')).split('_').get(-1) as ee.String;
+    const init = first.rename(ee.String('extent_').cat(firstYear));
 
-    return this.extentAsset.getEEAsset().map(
-      (image: ee.Image) => ee.Feature(null, ee.Dictionary(image.rename('value'
-      ).multiply(ee.Image.pixelArea())
-      .divide(1000 * 1000) // convert from m2 to km2
-      .reduceRegion(
-        {
-        reducer: reducers,
-        geometry: geo,
-        scale: 30,
-        maxPixels: 1e12,
-        bestEffort: true,
-        tileScale: 4, // subdivide tiles to reduce memory pressure on large geometries
-      }
-      )).combine({
-        'year': ee.Number.parse(ee.String(image.id()).split('_').get(-1)),
-        'indicator': 'habitat_extent_area'}))
-        ).toList(10000).map(
-        (i: ee.Feature) => {
-          const feature = ee.Feature(i);
-          return feature.toDictionary();
-        }
-      );
+    const stacked = ee.Image(
+      images.slice(1).iterate(
+        (img: ee.ComputedObject, acc: ee.ComputedObject): ee.ComputedObject => {
+          const image = ee.Image(img);
+          const year = ee.String(image.get('system:index')).split('_').get(-1) as ee.String;
+          return ee.Image(acc).addBands(image.rename(ee.String('extent_').cat(year)));
+        },
+        init
+      )
+    ).multiply(ee.Image.pixelArea()).divide(1000 * 1000);
+
+    const reduced: ee.Dictionary = stacked.reduceRegion({
+      reducer: ee.Reducer.sum(),
+      geometry: geo,
+      scale: 30,
+      maxPixels: 1e12,
+      bestEffort: true,
+      tileScale: 4,
+    });
+
+    // Reconstruct per-year rows from flat dictionary.
+    // Band names are "extent_{year}" → slice(7) strips the "extent_" prefix.
+    return reduced.keys().sort().map((key: ee.ComputedObject) => {
+      const k = ee.String(key);
+      const year = k.slice(7);
+      return ee.Dictionary({
+        'value':     reduced.get(k),
+        'year':      ee.Number.parse(year),
+        'indicator': 'habitat_extent_area',
+      });
+    });
   }
 }
 
