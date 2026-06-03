@@ -21,7 +21,9 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
 
   const trackRef = useRef<HTMLDivElement>(null);
   const tickRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const draggingRef = useRef(false);
   const [trackWidth, setTrackWidth] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     const el = trackRef.current;
@@ -88,9 +90,6 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
     },
     [years.length]
   );
-
-  const draggingRef = useRef(false);
-  const [isDragging, setIsDragging] = useState(false);
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
