@@ -90,10 +90,12 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
   );
 
   const draggingRef = useRef(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
       draggingRef.current = true;
+      setIsDragging(true);
       e.currentTarget.setPointerCapture(e.pointerId);
       goToIndex(indexFromClientX(e.clientX));
     },
@@ -110,6 +112,7 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
 
   const handlePointerUp = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     draggingRef.current = false;
+    setIsDragging(false);
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
       e.currentTarget.releasePointerCapture(e.pointerId);
     }
@@ -214,7 +217,11 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
             viewBox="0 0 12 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="pointer-events-none absolute -top-1.75 -translate-x-1/2 motion-safe:transition-[left] motion-safe:duration-150 motion-safe:ease-out"
+            className={cn(
+              'pointer-events-none absolute -top-1.75 -translate-x-1/2',
+              !isDragging &&
+                'motion-safe:transition-[left] motion-safe:duration-150 motion-safe:ease-out'
+            )}
             style={{ left: `calc(12px + (100% - 24px) * ${dotPct / 100})` }}
           >
             <path d="M0 0H12V6L6 12L0 6V0Z" fill="#00857F" />
