@@ -14,6 +14,14 @@ import { useMangroveHabitatExtent } from './hooks';
 
 const DEFAULT_transitionMs = 600;
 
+// Prod uses the legacy single multi-tileset source (source-layer `mng_mjr_${year}`).
+// Staging uses the per-year GMW v4 tilesets, gated by the timeline_slider feature flag.
+const LEGACY_EXTENT_SOURCE_URL =
+  'mapbox://globalmangrovewatch.20cshxs9,globalmangrovewatch.b1wlg2x7,globalmangrovewatch.2cws6y26,globalmangrovewatch.bgrhiwte,globalmangrovewatch.aokkuxu7,globalmangrovewatch.0l7s8iga,globalmangrovewatch.a08vpx09,globalmangrovewatch.7kyxxf0e,globalmangrovewatch.1cu4rmy9,globalmangrovewatch.6st408jz,globalmangrovewatch.1clkx4nk';
+
+const isTimelineSliderEnabled = () =>
+  JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}').timeline_slider === true;
+
 const usePrefersReducedMotion = () => {
   const [reduced, setReduced] = useState(() =>
     typeof window !== 'undefined' && window.matchMedia
@@ -49,6 +57,50 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
 
   if (!years.length || !currentYear) return null;
 
+  // Prod: legacy single multi-tileset source, only the current year is rendered.
+  if (!isTimelineSliderEnabled()) {
+    const fillOpacityActive: ExpressionSpecification = [
+      'interpolate',
+      ['linear'],
+      ['zoom'],
+      0,
+      baseOpacity * 1.2,
+      12,
+      baseOpacity,
+    ];
+    return (
+      <Source id="habitat_extent" type="vector" url={LEGACY_EXTENT_SOURCE_URL}>
+        <Layer
+          id={`${id}_${currentYear}_fill`}
+          type="fill"
+          source="habitat_extent"
+          source-layer={`mng_mjr_${currentYear}`}
+          paint={{
+            'fill-color': '#06C4BD',
+            'fill-opacity': fillOpacityActive,
+          }}
+          layout={{ visibility }}
+          beforeId={beforeId}
+        />
+        <Layer
+          id={`${id}_${currentYear}_line`}
+          type="line"
+          source="habitat_extent"
+          source-layer={`mng_mjr_${currentYear}`}
+          paint={{
+            'line-color': '#06C4BD',
+            'line-opacity': baseOpacity,
+            'line-width': ['interpolate', ['linear'], ['zoom'], 0, 8, 12, 1],
+            'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 50, 12, 0],
+          }}
+          layout={{ visibility }}
+          beforeId={beforeId}
+        />
+      </Source>
+    );
+  }
+
+  // Staging: per-year GMW v4 tilesets with cross-fade between years.
   return (
     <>
       {years.map((y) => {
