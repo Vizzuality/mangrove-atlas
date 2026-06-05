@@ -71,6 +71,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
     return (
       <Source id="habitat_extent" type="vector" url={LEGACY_EXTENT_SOURCE_URL}>
         <Layer
+          key={`${id}_${currentYear}_fill`}
           id={`${id}_${currentYear}_fill`}
           type="fill"
           source="habitat_extent"
@@ -83,6 +84,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
           beforeId={beforeId}
         />
         <Layer
+          key={`${id}_${currentYear}_line`}
           id={`${id}_${currentYear}_line`}
           type="line"
           source="habitat_extent"
