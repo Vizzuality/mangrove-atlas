@@ -12,18 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v6
-        with:
-          version: 10.33.0
       - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-      # node-linker=hoisted so rolldown (vite 8) can resolve its platform-specific
-      # native binding (@rolldown/binding-linux-x64-gnu) on the CI runner — the
-      # default isolated layout leaves it unresolvable and vitest fails at startup.
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        env:
-          NPM_CONFIG_NODE_LINKER: hoisted
       - name: Run unit tests with coverage
         run: pnpm test:unit:coverage

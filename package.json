@@ -146,11 +146,6 @@
       "fsevents",
       "sharp",
       "unrs-resolver"
-    ],
-    "supportedArchitectures": {
-      "os": ["current", "linux", "darwin"],
-      "cpu": ["current", "x64", "arm64"],
-      "libc": ["current", "glibc", "musl"]
-    }
+    ]
   }
 }
