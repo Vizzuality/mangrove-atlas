@@ -1,6 +1,5 @@
 import { getFormat, getWidgetData } from '@/containers/datasets/net-change/hooks';
-
-import type { Data } from './types';
+import type { Data } from '@/containers/datasets/net-change/types';
 
 const rows = [
   { year: 2000, net_change: 0, gain: 0, loss: 0 },

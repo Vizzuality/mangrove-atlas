@@ -9,10 +9,15 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
-    // Unit / integration tests live next to source as *.test.ts(x).
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
-    // Playwright e2e (tests/) and cloud functions are out of scope for Vitest.
-    exclude: ['tests/**', 'cloud-functions/**', 'node_modules/**', '.next/**'],
+    // Vitest owns the unit/component/integration suites under tests/. Playwright
+    // e2e + a11y specs (tests/*.spec.ts, tests/a11y) use *.spec.ts and are not
+    // matched here.
+    include: [
+      'tests/unit/**/*.{test,spec}.{ts,tsx}',
+      'tests/component/**/*.{test,spec}.{ts,tsx}',
+      'tests/integration/**/*.{test,spec}.{ts,tsx}',
+    ],
+    exclude: ['cloud-functions/**', 'node_modules/**', '.next/**'],
     coverage: {
       provider: 'v8',
       reportsDirectory: 'coverage',

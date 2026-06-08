@@ -1,6 +1,5 @@
 import { getBlueCarbonData } from '@/containers/datasets/blue-carbon/get-data';
-
-import type { DataResponse } from './types';
+import type { DataResponse } from '@/containers/datasets/blue-carbon/types';
 
 const response = {
   data: [

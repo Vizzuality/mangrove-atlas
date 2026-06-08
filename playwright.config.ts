@@ -40,6 +40,9 @@ const webServerCommand = [
 
 export default defineConfig({
   testDir: 'tests',
+  // Only e2e/a11y specs use *.spec.ts. Vitest unit/component/integration suites
+  // under tests/ use *.test.ts and must not be picked up by Playwright.
+  testMatch: '**/*.spec.ts',
   outputDir: 'test-results',
   globalSetup: require.resolve('./tests/fixtures/global-setup'),
   timeout: 120000,

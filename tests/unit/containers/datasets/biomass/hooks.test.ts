@@ -1,6 +1,5 @@
 import { getColorKeys } from '@/containers/datasets/biomass/hooks';
-
-import type { Data } from './types';
+import type { Data } from '@/containers/datasets/biomass/types';
 
 describe('biomass getColorKeys', () => {
   it('maps each indicator to a color by position', () => {

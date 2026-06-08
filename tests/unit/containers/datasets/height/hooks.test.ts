@@ -1,6 +1,5 @@
 import { getBars, getColorKeys, getData } from '@/containers/datasets/height/hooks';
-
-import type { Data } from './types';
+import type { Data } from '@/containers/datasets/height/types';
 
 const rows = [
   { indicator: '0-5', value: 25, year: 2020 },
