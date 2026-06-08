@@ -17,7 +17,7 @@ type NavTarget =
   | { type: 'wdpa'; locationId: string | number }
   | { type: 'custom-area' };
 
-const buildPath = (target: NavTarget): string => {
+export const buildPath = (target: NavTarget): string => {
   switch (target.type) {
     case 'worldwide':
       return '/';

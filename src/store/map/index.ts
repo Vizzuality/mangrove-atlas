@@ -8,7 +8,7 @@ export function useSyncBasemap() {
   return useQueryState('basemap', parseAsString.withDefault('light'));
 }
 
-const parseAsBounds = createParser({
+export const parseAsBounds = createParser({
   parse: (value: string) => {
     try {
       return JSON.parse(value) as number[][];

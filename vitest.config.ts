@@ -16,7 +16,26 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reportsDirectory: 'coverage',
-      include: ['src/**'],
+      reporter: ['text', 'text-summary', 'html'],
+      // Unit-test coverage targets the LOGIC layer: pure utilities, state
+      // parsers/atoms, hooks, and the extracted dataset data-transforms. The
+      // view layer (React components, widget cards, charts, Mapbox layer
+      // configs) is covered by Playwright e2e in a real browser, not duplicated
+      // here — so it is intentionally outside the coverage denominator.
+      include: [
+        'src/lib/**/*.{ts,tsx}',
+        'src/store/**/*.{ts,tsx}',
+        'src/hooks/**/*.{ts,tsx}',
+        'src/utils/**/*.{ts,tsx}',
+        'src/containers/widgets/utils.tsx',
+        'src/containers/datasets/*/get-data.tsx',
+      ],
+      exclude: [
+        'src/**/*.{test,spec}.{ts,tsx}',
+        'src/**/*.d.ts',
+        'src/**/constants.{ts,tsx}',
+        'src/**/types.{ts,tsx}',
+      ],
     },
   },
 });

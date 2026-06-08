@@ -18,7 +18,7 @@ type SyncedLocation = {
   id: string | null;
 };
 
-const parse = (pathname: string): SyncedLocation => {
+export const parse = (pathname: string): SyncedLocation => {
   let path = pathname;
   if (path.startsWith('/embedded')) {
     path = path.slice('/embedded'.length) || '/';

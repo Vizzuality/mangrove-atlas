@@ -42,7 +42,7 @@ const getColor = (data, selectedPeriod, indicator, metadata) => {
   return colorScale(value);
 };
 
-const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId) => {
+export const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId) => {
   if (indicator === 'population') {
     const roundedValue = Math.round(value);
     return roundedValue > 1000000 ? formatMillion(roundedValue) : formatAxis(roundedValue);
