@@ -29,13 +29,13 @@ export const widgetSlug = 'net-change';
 
 const unitOptions = ['km²', 'ha'];
 
-const getFormat = (v) => {
+export const getFormat = (v) => {
   const decimalCount = -Math.floor(Math.log10(v) + 1) + 1;
   const formatByDecimals = format(`.${decimalCount === Infinity ? 1 : Math.abs(decimalCount)}~f`);
   return formatByDecimals(v);
 };
 
-const getWidgetData = (data: Data[], unit = '') => {
+export const getWidgetData = (data: Data[], unit = '') => {
   if (!data?.length) return null;
   const firstYear = Math.min(...data.map((d) => d.year));
   const netChangeValues = data.map((d) => d.net_change);

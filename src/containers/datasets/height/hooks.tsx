@@ -28,7 +28,7 @@ export const widgetSlug = 'tree-height';
 
 const COLORS = ['#C9BB42', '#8BA205', '#428710', '#0A6624', '#103C1F'];
 
-const getColorKeys = (data: Data[]) =>
+export const getColorKeys = (data: Data[]) =>
   data?.reduce((acc, d, i) => {
     return {
       ...acc,
@@ -36,7 +36,7 @@ const getColorKeys = (data: Data[]) =>
     };
   }, {} satisfies ColorKeysTypes);
 
-const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
+export const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
   if (!data || !data?.length) return null;
   const barsValues = data?.map(({ value }) => value);
   const total = barsValues.reduce((previous, current) => current + previous);
@@ -54,7 +54,7 @@ const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
   ];
 };
 
-const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
+export const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
   data?.reduce(
     (acc, d) => ({
       ...acc,

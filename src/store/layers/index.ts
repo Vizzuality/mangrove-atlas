@@ -25,7 +25,7 @@ const defaultLayers: LayerState[] = [
   { id: 'mangrove_habitat_extent', opacity: '1', visibility: 'visible' },
 ];
 
-const parseAsLayers = createParser({
+export const parseAsLayers = createParser({
   parse: (value: string) => {
     try {
       return JSON.parse(value) as LayerState[];

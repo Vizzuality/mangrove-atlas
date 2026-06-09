@@ -25,7 +25,7 @@ type DataResponse = {
   };
 };
 
-const widgetData = (data: DataResponse) =>
+export const widgetData = (data: DataResponse) =>
   data?.data?.map((d) => ({
     name: d.name,
     iso: d.iso,
