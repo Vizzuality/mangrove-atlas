@@ -46,7 +46,9 @@ const MobileLayout = () => {
       </Link>
       <NavigationBar />
       <WelcomeIntroMessage />
-      <main id="main-content">{!mapView && <WidgetsContainer />}</main>
+      <main id="main-content" className="h-full">
+        {!mapView && <WidgetsContainer />}
+      </main>
     </div>
   );
 };
