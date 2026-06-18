@@ -95,7 +95,7 @@ const Download = ({ id, content }) => {
             </div>
           )}
         </div>
-        <DialogClose className="top-6" />
+        <DialogClose />
       </DialogContent>
     </Dialog>
   );

@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -51,10 +51,14 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
     },
   };
 
-  if (Boolean(children?.type() === null)) return null;
-
   const isCollapsed: boolean =
     isDrawingToolEnabled || isDrawingUploadToolEnabled ? false : widgetsCollapsed[id];
+
+  // Keep content overflow visible while expanded so Popovers / chart tooltips aren't clipped;
+  // hide it during the collapse animation so the card shrinks cleanly.
+  const [isContentOverflowVisible, setIsContentOverflowVisible] = useState(!isCollapsed);
+
+  if (Boolean(children?.type() === null)) return null;
 
   return (
     <AnimatePresence>
@@ -64,7 +68,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         exit="expanded"
-        transition={{ type: 'tween', duration: 0.6 }}
+        transition={{ type: 'tween', duration: 0.3 }}
         className={cn({
           'bg-blur group shadow-card isolate w-full rounded-4xl bg-white md:ml-0': true,
           'w-full! border-none p-0! shadow-none!': info,
@@ -100,15 +104,21 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                   {!info && <WidgetControls id={id} />}
                 </WidgetHeader>
               </Helper>
-              <div
+              <motion.div
                 data-testid={`widget-${id}-content`}
-                className={cn({
-                  hidden: isCollapsed,
-                  block: !isCollapsed,
-                })}
+                initial={false}
+                animate={isCollapsed ? 'collapsed' : 'expanded'}
+                variants={{
+                  collapsed: { height: 0, opacity: 0 },
+                  expanded: { height: 'auto', opacity: 1 },
+                }}
+                transition={{ type: 'tween', duration: 0.3 }}
+                onAnimationStart={() => isCollapsed && setIsContentOverflowVisible(false)}
+                onAnimationComplete={() => !isCollapsed && setIsContentOverflowVisible(true)}
+                style={{ overflow: isContentOverflowVisible ? 'visible' : 'hidden' }}
               >
-                {children}
-              </div>
+                <div className="mt-4">{children}</div>
+              </motion.div>
               {applicability && <WidgetApplicability id={id} applicability={applicability} />}
             </div>
           </div>
