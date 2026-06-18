@@ -275,7 +275,16 @@ export function useMangroveNetChange(
       },
     },
     xKey: 'year',
-    xAxis: { tick: DefaultTick, ticks: years, interval: 0, type: 'category', dataKey: 'year' },
+    xAxis: {
+      tick: DefaultTick,
+      ticks: years,
+      interval: 0,
+      type: 'category',
+      dataKey: 'year',
+      axisLine: false,
+      tickLine: { stroke: 'rgba(0,0,0,0.3)' },
+      tickSize: 6,
+    },
     // Hidden, padded y-domain so the bars/line stay inset rather than filling
     // the full height.
     yAxis: { hide: true, domain: [(min: number) => min * 1.4, (max: number) => max * 1.4] },
