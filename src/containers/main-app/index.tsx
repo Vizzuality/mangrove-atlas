@@ -12,8 +12,8 @@ export default function MainApp() {
 
   return (
     <>
-      {screenWidth >= breakpoints.xl && <DesktopLayout />}
-      {screenWidth < breakpoints.xl && <MobileLayout />}
+      {screenWidth >= breakpoints.lg && <DesktopLayout />}
+      {screenWidth < breakpoints.lg && <MobileLayout />}
     </>
   );
 }

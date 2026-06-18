@@ -45,7 +45,7 @@ const WidgetsContainer: FC = () => {
   }, [activeWidgets, currentLocation, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   const isCustomArea = !!(customGeojson || uploadedGeojson);
-  const isMobile = screenWidth > 0 && screenWidth < breakpoints.xl;
+  const isMobile = screenWidth > 0 && screenWidth < breakpoints.lg;
   const showList = screenWidth > 0;
 
   return (
@@ -57,7 +57,7 @@ const WidgetsContainer: FC = () => {
       {showList && (
         <div
           data-testid="widgets-wrapper"
-          className={isMobile ? 'mt-5 pb-16 xl:mt-0 xl:pb-0' : undefined}
+          className={isMobile ? 'mt-5 pb-16 lg:mt-0 lg:pb-0' : undefined}
         >
           {widgetsAvailable.map((widget) => (
             <WidgetCard key={widget.slug} widget={widget} />

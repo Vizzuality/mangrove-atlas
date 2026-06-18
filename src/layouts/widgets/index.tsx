@@ -26,7 +26,7 @@ const WidgetsLayout = (props: PropsWithChildren) => {
           transition={{
             duration: 0.4,
           }}
-          className="scrollbar-hide pointer-events-auto mx-auto h-full w-screen max-w-155 overflow-y-auto px-2 py-14 xl:absolute xl:top-0 xl:left-0 xl:mx-0 xl:w-143 xl:max-w-none xl:bg-transparent xl:px-5"
+          className="scrollbar-hide pointer-events-auto mx-auto h-full w-screen max-w-155 overflow-y-auto px-2 py-14 lg:absolute lg:top-0 lg:left-0 lg:mx-0 lg:w-143 lg:max-w-none lg:bg-transparent lg:px-5"
         >
           <LocationWidget />
           {children}
