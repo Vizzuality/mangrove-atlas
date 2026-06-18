@@ -19,7 +19,16 @@ const config = {
   ],
   chartBase: { bars: { Gain: {}, Loss: {} }, lines: { 'Net result': {} } },
   cartesianGrid: {},
-  brush: { startIndex: 0, endIndex: 2, onBrushEnd: () => {} },
+  brush: {
+    data: [
+      { year: 2010, 'Net result': 0, Gain: 0, Loss: 0 },
+      { year: 2011, 'Net result': 5, Gain: 8, Loss: -3 },
+      { year: 2012, 'Net result': 3, Gain: 4, Loss: -6 },
+    ],
+    startIndex: 0,
+    endIndex: 2,
+    onBrushEnd: () => {},
+  },
 };
 
 describe('NetChangeChart brush', () => {

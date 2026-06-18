@@ -173,18 +173,18 @@ export function useMangroveNetChange(
   // Mocked gain/loss (flag-gated) applied once to the full series.
   const allData = applyMockGainLoss(data?.data);
 
-  // The chart shows the full series; the sentence/net-result number is computed
-  // from the selected [startYear, endYear] window.
+  // Main chart shows the selected [startYear, endYear] window; the brush below
+  // shows the full series and drives the selection (same as the alerts widget).
   const dataFiltered = allData?.filter(
     (d) => d.year >= currentStartYear && d.year <= currentEndYear
   );
-  const DATA = getWidgetData(allData, unit) || [];
-  const DATA_SELECTED = getWidgetData(dataFiltered, unit) || [];
+  const DATA = getWidgetData(dataFiltered, unit) || [];
+  const DATA_FULL = getWidgetData(allData, unit) || [];
   const TooltipData = {
     content: (properties) => <CustomTooltip {...properties} />,
   };
 
-  const change = DATA_SELECTED[DATA_SELECTED.length - 1]?.['Net result'];
+  const change = DATA[DATA.length - 1]?.['Net result'];
 
   // Brush selection mirrors the year dropdowns — both write the same atoms.
   const startIndex = Math.max(years?.indexOf(currentStartYear) ?? 0, 0);
@@ -244,6 +244,7 @@ export function useMangroveNetChange(
       },
     },
     brush: {
+      data: DATA_FULL,
       startIndex,
       endIndex,
       onBrushEnd,
