@@ -112,7 +112,7 @@ const NetChangeWidget = () => {
         </div>
       )}
       {!!data?.data?.length && !isFetching && !isError && (
-        <div>
+        <div className="space-y-4">
           <p className={WIDGET_SENTENCE_STYLE}>
             The extent of mangroves in <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold"> {direction}</span> by{' '}
