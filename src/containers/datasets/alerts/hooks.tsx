@@ -195,7 +195,7 @@ const DefaultTick = ({ x, y, payload, index = 0, visibleTicksCount = 1 }) => {
   return (
     <g transform={`translate(${x},${y})`}>
       {showLabel && (
-        <text x={0} y={5} textAnchor="middle" fill="#3A3F59" opacity={0.5} fontSize="12px">
+        <text x={0} y={16} textAnchor="middle" fill="#3A3F59" opacity={0.5} fontSize="12px">
           {value}
         </text>
       )}
