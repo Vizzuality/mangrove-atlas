@@ -9,7 +9,7 @@ import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
 import { format } from 'd3-format';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 import { useSyncLocation } from 'hooks/use-sync-location';
@@ -162,9 +162,6 @@ export function useMangroveNetChange(
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0
       : isFetched && !data?.data?.length;
 
-  const setStartYear = useSetAtom(netChangeStartYear);
-  const setEndYear = useSetAtom(netChangeEndYear);
-
   const years = data?.metadata?.year.sort();
   const unit = selectedUnit || data.metadata?.units.net_change;
   const currentStartYear = startYear || years?.[0];
@@ -186,12 +183,21 @@ export function useMangroveNetChange(
 
   const change = DATA[DATA.length - 1]?.['Net result'];
 
-  // Brush selection mirrors the year dropdowns — both write the same atoms.
+  // Brush selection indices (positions of the selected years in the full series).
   const startIndex = Math.max(years?.indexOf(currentStartYear) ?? 0, 0);
   const endIndex = years?.indexOf(currentEndYear) ?? Math.max((years?.length ?? 1) - 1, 0);
-  const onBrushEnd = ({ startIndex: s, endIndex: e }: { startIndex: number; endIndex: number }) => {
-    if (years?.[s] != null) setStartYear(years[s]);
-    if (years?.[e] != null) setEndYear(years[e]);
+
+  // Shared by the main chart and the brush track. Same stackId stacks gain/loss
+  // per year at the same x; gain is always positive and loss negative, so
+  // recharts splits them across the zero baseline (gain above, loss below).
+  const chartBase = {
+    bars: {
+      Gain: { fill: '#A6CB10', stackId: 'net-change', isAnimationActive: false },
+      Loss: { fill: '#EB6240', stackId: 'net-change', isAnimationActive: false },
+    },
+    lines: {
+      'Net result': { stroke: 'rgba(0,0,0,0.7)', isAnimationActive: false },
+    },
   };
 
   const chartConfig = {
@@ -228,31 +234,40 @@ export function useMangroveNetChange(
       strokeDasharray: '5 15',
     },
     tooltip: TooltipData,
-    chartBase: {
-      // Same stackId stacks gain/loss per year at the same x. Gain is always
-      // positive and Loss negative, so recharts splits them across the zero
-      // baseline — gain above, loss below.
-      bars: {
-        Gain: { fill: '#A6CB10', stackId: 'net-change', isAnimationActive: false },
-        Loss: { fill: '#EB6240', stackId: 'net-change', isAnimationActive: false },
-      },
-      lines: {
-        'Net result': {
-          stroke: 'rgba(0,0,0,0.7)',
-          isAnimationActive: false,
-        },
-      },
-    },
-    brush: {
-      data: DATA_FULL,
-      startIndex,
-      endIndex,
-      onBrushEnd,
-    },
+    chartBase,
   };
+
+  // Separate config for the brush track below the chart (full series). The
+  // widget supplies onBrushEnd so the drag can also fire analytics, mirroring
+  // the alerts widget.
+  const configBrush = {
+    type: 'composed',
+    data: DATA_FULL,
+    barCategoryGap: 0,
+    barGap: 0,
+    height: 104,
+    margin: { top: 4, right: 20, bottom: 32, left: 15 },
+    // Deeper bottom margin so the brush pattern ends above the axis ticks.
+    overlayMargin: { top: 4, right: 20, bottom: 42, left: 15 },
+    xKey: 'year',
+    xAxis: {
+      type: 'category',
+      dataKey: 'year',
+      axisLine: false,
+      tickLine: { stroke: 'rgba(0,0,0,0.3)' },
+      tickSize: 6,
+      interval: 0,
+      tick: { fontSize: 11, fill: 'rgba(0,0,0,0.54)' },
+    },
+    chartBase,
+    startIndex,
+    endIndex,
+  };
+
   const direction = change > 0 ? 'increased' : 'decreased';
   return {
     config: chartConfig,
+    configBrush,
     location,
     years,
     currentStartYear,

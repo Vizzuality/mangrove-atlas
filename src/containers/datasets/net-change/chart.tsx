@@ -3,65 +3,50 @@ import Brush from '@/components/chart/brush';
 
 import NetChangeLegend from './legend';
 
-const BRUSH_HEIGHT = 104;
-// Left/right room so the brush handles (and their triangles, which extend past
-// the handle by ~5px) stay visible at the first/last index instead of being
-// clipped at the SVG edge. Track margin matches so bars align with the brush.
-// Bottom room holds the year axis (ticks + labels); the brush band sits above
-// it so the axis renders outside the brush, same as the alerts widget.
-const BRUSH_MARGIN = { top: 4, right: 20, bottom: 32, left: 15 };
-// The brush band gets a deeper bottom margin than the track so the diagonal
-// pattern ends above the axis instead of running over the ticks/labels.
-const BRUSH_OVERLAY_MARGIN = { ...BRUSH_MARGIN, bottom: 42 };
-
-const NetChangeChart = ({ config }) => {
+const NetChangeChart = ({
+  config,
+  configBrush,
+  onBrushEnd,
+}: {
+  config: any;
+  configBrush?: any;
+  onBrushEnd?: (payload: { startIndex: number; endIndex: number }) => void;
+}) => {
   // The brush spans the full series and drives the selection; the chart above
   // shows only the selected window (config.data).
-  const brushData = config.brush?.data;
-  const showBrush = !!config.brush && !!brushData?.length;
+  const showBrush = !!configBrush && !!configBrush.data?.length;
 
   return (
     <div>
       <NetChangeLegend />
       <Chart config={config} />
       {showBrush && (
-        <div className="relative mt-4 w-full" style={{ height: BRUSH_HEIGHT }}>
-          {/* Mini histogram track (full series) behind the brush overlay. */}
+        <div className="relative mt-4 w-full" style={{ height: configBrush.height }}>
+          {/* Mini histogram track (full series) + year axis behind the brush. */}
           <Chart
             className="pointer-events-none absolute inset-0"
             config={{
-              type: 'composed',
-              data: brushData,
-              barCategoryGap: 0,
-              barGap: 0,
-              height: BRUSH_HEIGHT,
-              margin: BRUSH_MARGIN,
-              xKey: 'year',
-              xAxis: {
-                type: 'category',
-                dataKey: 'year',
-                axisLine: false,
-                tickLine: { stroke: 'rgba(0,0,0,0.3)' },
-                tickSize: 6,
-                interval: 0,
-                tick: { fontSize: 11, fill: 'rgba(0,0,0,0.54)' },
-              },
-              chartBase: {
-                bars: config.chartBase.bars,
-                lines: config.chartBase.lines,
-              },
+              type: configBrush.type,
+              data: configBrush.data,
+              barCategoryGap: configBrush.barCategoryGap,
+              barGap: configBrush.barGap,
+              height: configBrush.height,
+              margin: configBrush.margin,
+              xKey: configBrush.xKey,
+              xAxis: configBrush.xAxis,
+              chartBase: configBrush.chartBase,
             }}
           />
           {/* Brush selection overlay — styles untouched. */}
           <div className="absolute inset-0">
             <Brush
-              data={brushData}
+              data={configBrush.data}
               width="100%"
-              height={BRUSH_HEIGHT}
-              margin={BRUSH_OVERLAY_MARGIN}
-              startIndex={config.brush.startIndex}
-              endIndex={config.brush.endIndex}
-              onBrushEnd={config.brush.onBrushEnd}
+              height={configBrush.height}
+              margin={configBrush.overlayMargin}
+              startIndex={configBrush.startIndex}
+              endIndex={configBrush.endIndex}
+              onBrushEnd={onBrushEnd}
             />
           </div>
         </div>

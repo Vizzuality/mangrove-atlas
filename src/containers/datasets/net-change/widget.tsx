@@ -51,6 +51,7 @@ const NetChangeWidget = () => {
     netChange,
     direction,
     config,
+    configBrush,
     location,
     unitOptions,
     years,
@@ -75,6 +76,35 @@ const NetChangeWidget = () => {
     setIsCanceled(false);
     await refetch();
   }, [refetch]);
+
+  // Brush drag sets the selected year range (shared with the dropdowns) and
+  // fires analytics, mirroring the alerts widget.
+  const handleBrushEnd = useCallback(
+    ({ startIndex, endIndex }: { startIndex: number; endIndex: number }) => {
+      const newStartYear = years?.[startIndex];
+      const newEndYear = years?.[endIndex];
+
+      if (newStartYear != null) {
+        trackEvent('Widget iteration - net change - change start year', {
+          category: 'Widget iteration',
+          action: 'Brush - drag',
+          label: `Widget iteration - net change start year ${newStartYear}`,
+          value: newStartYear,
+        });
+        setStartYear(newStartYear);
+      }
+      if (newEndYear != null) {
+        trackEvent('Widget iteration - net change - change end year', {
+          category: 'Widget iteration',
+          action: 'Brush - drag',
+          label: `Widget iteration - net change end year ${newEndYear}`,
+          value: newEndYear,
+        });
+        setEndYear(newEndYear);
+      }
+    },
+    [years, setStartYear, setEndYear]
+  );
 
   const contextualLayers = useMemo(
     () => widgets.find((widget) => widget.slug === 'mangrove_net_change')?.contextualLayers || [],
@@ -246,7 +276,7 @@ const NetChangeWidget = () => {
             </div>
           )}
 
-          <NetChangeChart config={config} />
+          <NetChangeChart config={config} configBrush={configBrush} onBrushEnd={handleBrushEnd} />
         </div>
       )}
     </div>
