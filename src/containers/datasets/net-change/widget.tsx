@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
@@ -9,6 +9,8 @@ import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom, useAtomValue } from 'jotai';
 
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
+import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
 import Loading from '@/components/ui/loading';
@@ -73,6 +75,11 @@ const NetChangeWidget = () => {
     setIsCanceled(false);
     await refetch();
   }, [refetch]);
+
+  const contextualLayers = useMemo(
+    () => widgets.find((widget) => widget.slug === 'mangrove_net_change')?.contextualLayers || [],
+    []
+  );
 
   if (noData) return <NoData />;
 
@@ -228,6 +235,16 @@ const NetChangeWidget = () => {
             </Popover>
             .
           </p>
+
+          {contextualLayers.length > 0 && (
+            <div className="-mx-2">
+              <ContextualLayersWrapper
+                origin="mangrove_net_change"
+                id={contextualLayers[0].id}
+                description={contextualLayers[0].description}
+              />
+            </div>
+          )}
 
           <NetChangeChart config={config} />
         </div>

@@ -1,4 +1,4 @@
-import { getFormat, getWidgetData } from '@/containers/datasets/net-change/hooks';
+import { getFormat, getWidgetData, mockGainLoss } from '@/containers/datasets/net-change/hooks';
 import type { Data } from '@/containers/datasets/net-change/types';
 
 const rows = [
@@ -40,10 +40,35 @@ describe('getWidgetData', () => {
     expect(ha[1].Loss).toBe(km[1].Loss * 100);
   });
 
-  it('attaches a Net change settings entry carrying the unit', () => {
+  it('attaches a Net result settings entry carrying the unit', () => {
     const result = getWidgetData(rows, 'ha')!;
-    expect(result[1].settings[0].label).toBe('Net change');
+    expect(result[1].settings[0].label).toBe('Net result');
     expect(result[1].settings[0].unit).toBe('ha');
     expect(result[1].direction).toBe('vertical');
+  });
+
+  it('exposes the cumulative net result under the Net result key', () => {
+    const result = getWidgetData(rows)!;
+    // cumulative: [0, 0+5, 5+(-2)] = [0, 5, 3]
+    expect(result[0]['Net result']).toBe(0);
+    expect(result[1]['Net result']).toBe(5);
+    expect(result[2]['Net result']).toBe(3);
+  });
+});
+
+describe('mockGainLoss', () => {
+  it('produces gain/loss whose difference equals net_change', () => {
+    for (const net of [-2631.47, -1.5, 0, 51.08, 293.95]) {
+      const { gain, loss } = mockGainLoss(net);
+      expect(gain - loss).toBeCloseTo(net, 6);
+    }
+  });
+
+  it('returns non-negative, deterministic values', () => {
+    const a = mockGainLoss(-433.07);
+    const b = mockGainLoss(-433.07);
+    expect(a).toEqual(b);
+    expect(a.gain).toBeGreaterThanOrEqual(0);
+    expect(a.loss).toBeGreaterThanOrEqual(0);
   });
 });

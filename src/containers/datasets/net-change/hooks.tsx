@@ -9,7 +9,7 @@ import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
 import { format } from 'd3-format';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 import { useSyncLocation } from 'hooks/use-sync-location';
@@ -28,6 +28,27 @@ const numberFormat = format(',.2~f');
 export const widgetSlug = 'net-change';
 
 const unitOptions = ['km²', 'ha'];
+
+// The API currently returns `gain`/`loss` as null. When the `mockNetChange`
+// feature flag is on, derive display-only gain/loss values from `net_change`.
+// Deterministic (no Math.random) so SSR and tests stay stable.
+export const mockNetChangeEnabled =
+  JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}').mockNetChange === true;
+
+export const mockGainLoss = (net_change: number) => {
+  // baseline churn proportional to the magnitude, so bars are visible even when
+  // net change is small; gain - loss === net_change exactly.
+  const base = Math.abs(net_change) * 0.5 + 50;
+  return {
+    gain: base + Math.max(net_change, 0),
+    loss: base + Math.max(-net_change, 0),
+  };
+};
+
+export const applyMockGainLoss = (rows: Data[] = []): Data[] =>
+  mockNetChangeEnabled
+    ? rows.map((row) => (row.gain == null ? { ...row, ...mockGainLoss(row.net_change) } : row))
+    : rows;
 
 export const getFormat = (v) => {
   const decimalCount = -Math.floor(Math.log10(v) + 1) + 1;
@@ -55,7 +76,7 @@ export const getWidgetData = (data: Data[], unit = '') => {
         label: l.year,
         color: 'rgba(0,0,0,0.7)',
         year: l.year,
-        'Net change':
+        'Net result':
           unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i],
         Gain: l.year === firstYear ? 0 : unit === 'ha' ? l.gain * 100 : l.gain,
         Loss: l.year === firstYear ? 0 : unit === 'ha' ? -l.loss * 100 : -l.loss,
@@ -63,7 +84,7 @@ export const getWidgetData = (data: Data[], unit = '') => {
           {
             color: 'rgba(0,0,0,0.7)',
 
-            label: 'Net change',
+            label: 'Net result',
             value: numberFormat(
               unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i]
             ),
@@ -141,19 +162,37 @@ export function useMangroveNetChange(
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0
       : isFetched && !data?.data?.length;
 
+  const setStartYear = useSetAtom(netChangeStartYear);
+  const setEndYear = useSetAtom(netChangeEndYear);
+
   const years = data?.metadata?.year.sort();
   const unit = selectedUnit || data.metadata?.units.net_change;
   const currentStartYear = startYear || years?.[0];
   const currentEndYear = endYear || years?.[years?.length - 1];
-  const dataFiltered = data?.data?.filter(
+
+  // Mocked gain/loss (flag-gated) applied once to the full series.
+  const allData = applyMockGainLoss(data?.data);
+
+  // The chart shows the full series; the sentence/net-result number is computed
+  // from the selected [startYear, endYear] window.
+  const dataFiltered = allData?.filter(
     (d) => d.year >= currentStartYear && d.year <= currentEndYear
   );
-  const DATA = getWidgetData(dataFiltered, unit) || [];
+  const DATA = getWidgetData(allData, unit) || [];
+  const DATA_SELECTED = getWidgetData(dataFiltered, unit) || [];
   const TooltipData = {
     content: (properties) => <CustomTooltip {...properties} />,
   };
 
-  const change = DATA[DATA.length - 1]?.['Net change'];
+  const change = DATA_SELECTED[DATA_SELECTED.length - 1]?.['Net result'];
+
+  // Brush selection mirrors the year dropdowns — both write the same atoms.
+  const startIndex = Math.max(years?.indexOf(currentStartYear) ?? 0, 0);
+  const endIndex = years?.indexOf(currentEndYear) ?? Math.max((years?.length ?? 1) - 1, 0);
+  const onBrushEnd = ({ startIndex: s, endIndex: e }: { startIndex: number; endIndex: number }) => {
+    if (years?.[s] != null) setStartYear(years[s]);
+    if (years?.[e] != null) setEndYear(years[e]);
+  };
 
   const chartConfig = {
     type: 'composed',
@@ -187,12 +226,21 @@ export function useMangroveNetChange(
     },
     tooltip: TooltipData,
     chartBase: {
+      bars: {
+        Gain: { fill: '#A6CB10', stackId: 'change', isAnimationActive: false },
+        Loss: { fill: '#EB6240', stackId: 'change', isAnimationActive: false },
+      },
       lines: {
-        'Net change': {
+        'Net result': {
           stroke: 'rgba(0,0,0,0.7)',
           isAnimationActive: false,
         },
       },
+    },
+    brush: {
+      startIndex,
+      endIndex,
+      onBrushEnd,
     },
   };
   const direction = change > 0 ? 'increased' : 'decreased';
