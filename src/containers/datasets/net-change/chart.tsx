@@ -4,6 +4,10 @@ import Brush from '@/components/chart/brush';
 import NetChangeLegend from './legend';
 
 const BRUSH_HEIGHT = 72;
+// Left/right room so the brush handles (and their triangles, which extend past
+// the handle by ~5px) stay visible at the first/last index instead of being
+// clipped at the SVG edge. Track margin matches so bars align with the brush.
+const BRUSH_MARGIN = { top: 4, right: 20, bottom: 4, left: 15 };
 
 const NetChangeChart = ({ config }) => {
   // The brush spans the full series and drives the selection; the chart above
@@ -26,7 +30,7 @@ const NetChangeChart = ({ config }) => {
               barCategoryGap: 0,
               barGap: 0,
               height: BRUSH_HEIGHT,
-              margin: { top: 4, right: 20, bottom: 4, left: 0 },
+              margin: BRUSH_MARGIN,
               chartBase: {
                 bars: config.chartBase.bars,
                 lines: config.chartBase.lines,
@@ -39,6 +43,7 @@ const NetChangeChart = ({ config }) => {
               data={brushData}
               width="100%"
               height={BRUSH_HEIGHT}
+              margin={BRUSH_MARGIN}
               startIndex={config.brush.startIndex}
               endIndex={config.brush.endIndex}
               onBrushEnd={config.brush.onBrushEnd}
