@@ -138,7 +138,8 @@
       "minimatch@^10>brace-expansion": "5.0.6",
       "next-auth>uuid": "11.1.1",
       "axios>form-data": "4.0.6",
-      "@eslint/eslintrc>js-yaml": "4.2.0"
+      "@eslint/eslintrc>js-yaml": "4.2.0",
+      "eslint-plugin-react-hooks>@babel/core": "7.29.6"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
