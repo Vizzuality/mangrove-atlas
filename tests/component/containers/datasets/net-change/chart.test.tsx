@@ -26,14 +26,12 @@ const config = {
 const configBrush = {
   type: 'composed',
   data,
-  height: 104,
-  margin: { top: 4, right: 20, bottom: 32, left: 15 },
-  overlayMargin: { top: 4, right: 20, bottom: 42, left: 15 },
+  height: 100,
+  margin: { top: 20, right: 40, left: 10, bottom: 5 },
   xKey: 'year',
   xAxis: { type: 'category', dataKey: 'year' },
   chartBase: { bars: { Gain: {}, Loss: {} }, lines: { 'Net result': {} } },
-  startIndex: 0,
-  endIndex: 2,
+  customBrush: { margin: { top: 60, right: 20, left: 15, bottom: 80 }, startIndex: 0, endIndex: 2 },
 };
 
 describe('NetChangeChart brush', () => {

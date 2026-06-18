@@ -50,6 +50,16 @@ export const applyMockGainLoss = (rows: Data[] = []): Data[] =>
     ? rows.map((row) => (row.gain == null ? { ...row, ...mockGainLoss(row.net_change) } : row))
     : rows;
 
+// Axis tick used by the brush track — matches the alerts widget so both
+// brushes render identically.
+const DefaultTick = ({ x, y, payload }: { x: number; y: number; payload: { value: number } }) => (
+  <g transform={`translate(${x},${y})`}>
+    <text x={0} y={5} fill="#3A3F59" opacity={0.5} fontSize="12px">
+      {payload.value}
+    </text>
+  </g>
+);
+
 export const getFormat = (v) => {
   const decimalCount = -Math.floor(Math.log10(v) + 1) + 1;
   const formatByDecimals = format(`.${decimalCount === Infinity ? 1 : Math.abs(decimalCount)}~f`);
@@ -237,38 +247,41 @@ export function useMangroveNetChange(
     chartBase,
   };
 
-  // Separate config for the brush track below the chart (full series). The
-  // widget supplies onBrushEnd so the drag can also fire analytics, mirroring
-  // the alerts widget.
+  // Separate config for the brush below the chart, built to match the alerts
+  // widget exactly (same Chart `customBrush` path, margins, pattern and tick)
+  // so the two brushes are aligned. The widget supplies onBrushEnd so the drag
+  // can also fire analytics.
   const configBrush = {
     type: 'composed',
+    height: 100,
     data: DATA_FULL,
     barCategoryGap: 0,
     barGap: 0,
-    height: 104,
-    margin: { top: 4, right: 20, bottom: 32, left: 15 },
-    // Brush band stops just above the axis line: handles reach down to just
-    // above the ticks while the diagonal pattern still ends above the axis.
-    overlayMargin: { top: 4, right: 20, bottom: 34, left: 15 },
+    cartesianGrid: { vertical: false, horizontal: false },
+    margin: { top: 20, right: 40, left: 10, bottom: 5 },
+    patterns: {
+      diagonal: {
+        attributes: {
+          id: 'diagonal-stripe-1',
+          patternUnits: 'userSpaceOnUse',
+          patternTransform: 'rotate(-45)',
+          width: 4,
+          height: 6,
+        },
+        children: {
+          rect2: { tag: 'rect', x: 0, y: 0, width: 4, height: 6, fill: '#d2d2d2' },
+          rect: { tag: 'rect', x: 0, y: 0, width: 3, height: 6, fill: '#fff' },
+        },
+      },
+    },
     xKey: 'year',
-    xAxis: {
-      type: 'category',
-      dataKey: 'year',
-      axisLine: false,
-      tickLine: { stroke: 'rgba(0,0,0,0.3)' },
-      tickSize: 6,
-      interval: 0,
-      tick: { fontSize: 11, fill: 'rgba(0,0,0,0.54)' },
-    },
-    // Hidden, padded y-domain so the bars/line stay inset above the axis line
-    // instead of running down onto the ticks and year labels.
-    yAxis: {
-      hide: true,
-      domain: [(min: number) => min * 1.4, (max: number) => max * 1.4],
-    },
+    xAxis: { tick: DefaultTick, ticks: years, interval: 0, type: 'category', dataKey: 'year' },
+    // Hidden, padded y-domain so the bars/line stay inset rather than filling
+    // the full height.
+    yAxis: { hide: true, domain: [(min: number) => min * 1.4, (max: number) => max * 1.4] },
     chartBase,
-    startIndex,
-    endIndex,
+    tooltip: false,
+    customBrush: { margin: { top: 60, right: 20, left: 15, bottom: 80 }, startIndex, endIndex },
   };
 
   const direction = change > 0 ? 'increased' : 'decreased';
