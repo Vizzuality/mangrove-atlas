@@ -237,6 +237,10 @@ export function useMangroveNetChange(
   const chartConfig = {
     type: 'composed',
     data: DATA,
+    // Diverging stack: gain (positive) stacks up from zero, loss (negative) down.
+    // Without this, the default 'none' offset stacks them cumulatively and the
+    // orange loss bar paints over the green gain bar.
+    stackOffset: 'sign',
     // Bars sit flush — no gap between categories or between the gain/loss pair.
     barCategoryGap: 0,
     barGap: 0,
@@ -279,6 +283,7 @@ export function useMangroveNetChange(
     type: 'composed',
     height: 100,
     data: DATA_FULL,
+    stackOffset: 'sign',
     barCategoryGap: 0,
     barGap: 0,
     cartesianGrid: { vertical: false, horizontal: false },
