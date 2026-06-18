@@ -3,11 +3,12 @@ import Brush from '@/components/chart/brush';
 
 import NetChangeLegend from './legend';
 
-const BRUSH_HEIGHT = 72;
+const BRUSH_HEIGHT = 96;
 // Left/right room so the brush handles (and their triangles, which extend past
 // the handle by ~5px) stay visible at the first/last index instead of being
 // clipped at the SVG edge. Track margin matches so bars align with the brush.
-const BRUSH_MARGIN = { top: 4, right: 20, bottom: 4, left: 15 };
+// Bottom room holds the year axis; the brush band sits above it.
+const BRUSH_MARGIN = { top: 4, right: 20, bottom: 22, left: 15 };
 
 const NetChangeChart = ({ config }) => {
   // The brush spans the full series and drives the selection; the chart above
@@ -31,6 +32,15 @@ const NetChangeChart = ({ config }) => {
               barGap: 0,
               height: BRUSH_HEIGHT,
               margin: BRUSH_MARGIN,
+              xKey: 'year',
+              xAxis: {
+                type: 'category',
+                dataKey: 'year',
+                axisLine: false,
+                tickLine: false,
+                interval: 'equidistantPreserveStart',
+                tick: { fontSize: 11, fill: 'rgba(0,0,0,0.54)' },
+              },
               chartBase: {
                 bars: config.chartBase.bars,
                 lines: config.chartBase.lines,
