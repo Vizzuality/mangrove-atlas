@@ -259,6 +259,12 @@ export function useMangroveNetChange(
       interval: 0,
       tick: { fontSize: 11, fill: 'rgba(0,0,0,0.54)' },
     },
+    // Hidden, padded y-domain so the bars/line stay inset above the axis line
+    // instead of running down onto the ticks and year labels.
+    yAxis: {
+      hide: true,
+      domain: [(min: number) => min * 1.4, (max: number) => max * 1.4],
+    },
     chartBase,
     startIndex,
     endIndex,
