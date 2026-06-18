@@ -184,13 +184,21 @@ const TickSmall = ({ x, y, payload }) => {
   );
 };
 
-const DefaultTick = ({ x, y, payload }) => {
+// recharts draws the tick line for every tick; this only decides whether to
+// render the label, thinning labels when they would crowd (a tick stays at
+// every date, but not every date gets a label).
+const MAX_TICK_LABELS = 8;
+const DefaultTick = ({ x, y, payload, index = 0, visibleTicksCount = 1 }) => {
   const { value } = payload;
+  const step = Math.max(1, Math.ceil(visibleTicksCount / MAX_TICK_LABELS));
+  const showLabel = index % step === 0 || index === visibleTicksCount - 1;
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={5} fill="#3A3F59" opacity={0.5} fontSize="12px">
-        {value}
-      </text>
+      {showLabel && (
+        <text x={0} y={5} fill="#3A3F59" opacity={0.5} fontSize="12px">
+          {value}
+        </text>
+      )}
     </g>
   );
 };

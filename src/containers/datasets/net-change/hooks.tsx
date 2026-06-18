@@ -51,14 +51,35 @@ export const applyMockGainLoss = (rows: Data[] = []): Data[] =>
     : rows;
 
 // Axis tick used by the brush track — matches the alerts widget so both
-// brushes render identically.
-const DefaultTick = ({ x, y, payload }: { x: number; y: number; payload: { value: number } }) => (
-  <g transform={`translate(${x},${y})`}>
-    <text x={0} y={5} fill="#3A3F59" opacity={0.5} fontSize="12px">
-      {payload.value}
-    </text>
-  </g>
-);
+// brushes render identically. recharts draws the tick line for every tick;
+// this only decides whether to render the label, thinning labels when they
+// would crowd (a tick stays at every date, but not every date gets a label).
+const MAX_TICK_LABELS = 8;
+const DefaultTick = ({
+  x,
+  y,
+  payload,
+  index = 0,
+  visibleTicksCount = 1,
+}: {
+  x: number;
+  y: number;
+  payload: { value: number };
+  index?: number;
+  visibleTicksCount?: number;
+}) => {
+  const step = Math.max(1, Math.ceil(visibleTicksCount / MAX_TICK_LABELS));
+  const showLabel = index % step === 0 || index === visibleTicksCount - 1;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      {showLabel && (
+        <text x={0} y={5} fill="#3A3F59" opacity={0.5} fontSize="12px">
+          {payload.value}
+        </text>
+      )}
+    </g>
+  );
+};
 
 export const getFormat = (v) => {
   const decimalCount = -Math.floor(Math.log10(v) + 1) + 1;
