@@ -103,22 +103,25 @@ export const getWidgetData = (data: Data[], unit = '') => {
 
   return orderBy(
     data.map((l, i) => {
+      const netResult =
+        unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i];
+      const gain = l.year === firstYear ? 0 : unit === 'ha' ? l.gain * 100 : l.gain;
+      const loss = l.year === firstYear ? 0 : unit === 'ha' ? -l.loss * 100 : -l.loss;
+
       return {
         label: l.year,
         color: 'rgba(0,0,0,0.7)',
         year: l.year,
-        'Net result':
-          unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i],
-        Gain: l.year === firstYear ? 0 : unit === 'ha' ? l.gain * 100 : l.gain,
-        Loss: l.year === firstYear ? 0 : unit === 'ha' ? -l.loss * 100 : -l.loss,
+        'Net result': netResult,
+        Gain: gain,
+        Loss: loss,
         settings: [
+          { color: '#A6CB10', label: 'Gain', value: numberFormat(gain), variant: 'thick', unit },
+          { color: '#EB6240', label: 'Loss', value: numberFormat(loss), variant: 'thick', unit },
           {
             color: 'rgba(0,0,0,0.7)',
-
             label: 'Net result',
-            value: numberFormat(
-              unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i]
-            ),
+            value: numberFormat(netResult),
             variant: 'thin',
             unit,
           },

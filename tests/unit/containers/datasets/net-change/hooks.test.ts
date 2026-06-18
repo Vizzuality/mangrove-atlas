@@ -40,10 +40,10 @@ describe('getWidgetData', () => {
     expect(ha[1].Loss).toBe(km[1].Loss * 100);
   });
 
-  it('attaches a Net result settings entry carrying the unit', () => {
+  it('attaches Gain, Loss and Net result settings entries carrying the unit', () => {
     const result = getWidgetData(rows, 'ha')!;
-    expect(result[1].settings[0].label).toBe('Net result');
-    expect(result[1].settings[0].unit).toBe('ha');
+    expect(result[1].settings.map((s) => s.label)).toEqual(['Gain', 'Loss', 'Net result']);
+    expect(result[1].settings.every((s) => s.unit === 'ha')).toBe(true);
     expect(result[1].direction).toBe('vertical');
   });
 
