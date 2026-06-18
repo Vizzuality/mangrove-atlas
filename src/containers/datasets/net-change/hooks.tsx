@@ -197,6 +197,9 @@ export function useMangroveNetChange(
   const chartConfig = {
     type: 'composed',
     data: DATA,
+    // Bars sit flush — no gap between categories or between the gain/loss pair.
+    barCategoryGap: 0,
+    barGap: 0,
     margin: { top: 40, right: 20, bottom: 20, left: 0 },
     referenceLines: [{ y: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }],
     xAxis: {

@@ -52,6 +52,8 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
     width,
     layout = 'horizontal',
     stackOffset,
+    barCategoryGap,
+    barGap,
     tooltip,
     cartesianGrid,
     cartesianAxis,
@@ -86,6 +88,8 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
       >
         <ChartComponent
           stackOffset={stackOffset}
+          barCategoryGap={barCategoryGap}
+          barGap={barGap}
           height={height}
           width={width}
           // viewBox={viewBox}
