@@ -386,7 +386,7 @@ export function useAlerts<TRaw = AlertsApiResponse>(
             fillOpacity: 1,
           },
         ],
-        margin: { top: 20, right: 40, left: 10, bottom: 5 },
+        margin: { top: 20, right: 40, left: 24, bottom: 5 },
         patterns: {
           diagonal: {
             attributes: {

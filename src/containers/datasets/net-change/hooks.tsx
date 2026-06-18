@@ -279,7 +279,8 @@ export function useMangroveNetChange(
     barCategoryGap: 0,
     barGap: 0,
     cartesianGrid: { vertical: false, horizontal: false },
-    margin: { top: 20, right: 40, left: 10, bottom: 5 },
+    // Wider side margins so the centered first/last year labels aren't clipped.
+    margin: { top: 20, right: 40, left: 24, bottom: 5 },
     patterns: {
       diagonal: {
         attributes: {
