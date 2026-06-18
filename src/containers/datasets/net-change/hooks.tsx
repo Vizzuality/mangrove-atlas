@@ -116,8 +116,6 @@ export const getWidgetData = (data: Data[], unit = '') => {
         Gain: gain,
         Loss: loss,
         settings: [
-          { color: '#A6CB10', label: 'Gain', value: numberFormat(gain), variant: 'thick', unit },
-          { color: '#EB6240', label: 'Loss', value: numberFormat(loss), variant: 'thick', unit },
           {
             color: 'rgba(0,0,0,0.7)',
             label: 'Net result',
@@ -125,8 +123,10 @@ export const getWidgetData = (data: Data[], unit = '') => {
             variant: 'thin',
             unit,
           },
+          { color: '#EB6240', label: 'Loss', value: numberFormat(loss), variant: 'thick', unit },
+          { color: '#A6CB10', label: 'Gain', value: numberFormat(gain), variant: 'thick', unit },
         ],
-        direction: 'vertical',
+        direction: 'horizontal',
       };
     }),
     (l) => l.year

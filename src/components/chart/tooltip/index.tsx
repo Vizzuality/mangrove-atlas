@@ -28,8 +28,10 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
         <div key={label} className="flex flex-col">
           <div
             className={cn({
-              'flex items-center justify-center space-x-4': true,
-              'flex-col': direction === 'vertical',
+              'flex items-center space-x-4': true,
+              'flex-col justify-center': direction === 'vertical',
+              'w-full justify-between': direction === 'horizontal',
+              'justify-center': direction !== 'vertical' && direction !== 'horizontal',
             })}
           >
             <span className="flex items-center space-x-2">

@@ -42,9 +42,9 @@ describe('getWidgetData', () => {
 
   it('attaches Gain, Loss and Net result settings entries carrying the unit', () => {
     const result = getWidgetData(rows, 'ha')!;
-    expect(result[1].settings.map((s) => s.label)).toEqual(['Gain', 'Loss', 'Net result']);
+    expect(result[1].settings.map((s) => s.label)).toEqual(['Net result', 'Loss', 'Gain']);
     expect(result[1].settings.every((s) => s.unit === 'ha')).toBe(true);
-    expect(result[1].direction).toBe('vertical');
+    expect(result[1].direction).toBe('horizontal');
   });
 
   it('exposes the cumulative net result under the Net result key', () => {
