@@ -226,9 +226,12 @@ export function useMangroveNetChange(
     },
     tooltip: TooltipData,
     chartBase: {
+      // No stackId: each bar anchors at 0 so Gain renders above and Loss below
+      // zero. Sharing a stackId would cumulatively stack them (d3 stackOffsetNone),
+      // pushing Loss off the zero baseline.
       bars: {
-        Gain: { fill: '#A6CB10', stackId: 'change', isAnimationActive: false },
-        Loss: { fill: '#EB6240', stackId: 'change', isAnimationActive: false },
+        Gain: { fill: '#A6CB10', isAnimationActive: false },
+        Loss: { fill: '#EB6240', isAnimationActive: false },
       },
       lines: {
         'Net result': {
