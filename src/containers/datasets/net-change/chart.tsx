@@ -10,6 +10,9 @@ const BRUSH_HEIGHT = 104;
 // Bottom room holds the year axis (ticks + labels); the brush band sits above
 // it so the axis renders outside the brush, same as the alerts widget.
 const BRUSH_MARGIN = { top: 4, right: 20, bottom: 32, left: 15 };
+// The brush band gets a deeper bottom margin than the track so the diagonal
+// pattern ends above the axis instead of running over the ticks/labels.
+const BRUSH_OVERLAY_MARGIN = { ...BRUSH_MARGIN, bottom: 42 };
 
 const NetChangeChart = ({ config }) => {
   // The brush spans the full series and drives the selection; the chart above
@@ -55,7 +58,7 @@ const NetChangeChart = ({ config }) => {
               data={brushData}
               width="100%"
               height={BRUSH_HEIGHT}
-              margin={BRUSH_MARGIN}
+              margin={BRUSH_OVERLAY_MARGIN}
               startIndex={config.brush.startIndex}
               endIndex={config.brush.endIndex}
               onBrushEnd={config.brush.onBrushEnd}
