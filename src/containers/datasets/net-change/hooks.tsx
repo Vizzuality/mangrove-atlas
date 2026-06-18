@@ -247,8 +247,9 @@ export function useMangroveNetChange(
     barGap: 0,
     height: 104,
     margin: { top: 4, right: 20, bottom: 32, left: 15 },
-    // Deeper bottom margin so the brush pattern ends above the axis ticks.
-    overlayMargin: { top: 4, right: 20, bottom: 42, left: 15 },
+    // Brush band stops just above the axis line: handles reach down to just
+    // above the ticks while the diagonal pattern still ends above the axis.
+    overlayMargin: { top: 4, right: 20, bottom: 34, left: 15 },
     xKey: 'year',
     xAxis: {
       type: 'category',
