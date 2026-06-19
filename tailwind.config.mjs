@@ -14,6 +14,9 @@ const tailwindConfig = {
   plugins: [animate, forms, typography, scrollBar],
   theme: {
     extend: {
+      screens: {
+        xs: '480px',
+      },
       fontFamily: {
         inter: ['var(--font-inter)', 'sans-serif'],
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
@@ -41,6 +44,7 @@ const tailwindConfig = {
           400: '#00C5BD',
           600: '#00AFA7',
           800: '#00857F',
+          900: '#003C39',
         },
         blue: {
           400: '#7996F3',

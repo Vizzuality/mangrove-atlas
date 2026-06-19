@@ -2,11 +2,6 @@ import cn from '@/lib/classnames';
 
 const labelsForLayer = [
   {
-    color: 'rgba(0,0,0,0.7)',
-    label: 'Net change',
-    variant: 'thin',
-  },
-  {
     color: '#A6CB10',
     label: 'Gain',
     variant: 'thick',
@@ -15,6 +10,11 @@ const labelsForLayer = [
     color: '#EB6240',
     label: 'Loss',
     variant: 'thick',
+  },
+  {
+    color: 'rgba(0,0,0,0.7)',
+    label: 'Net result',
+    variant: 'thin',
   },
 ];
 

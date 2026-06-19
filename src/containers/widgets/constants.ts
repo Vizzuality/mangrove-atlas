@@ -32,6 +32,12 @@ const widgets_prod = [
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
     layersIds: ['mangrove_net_change'],
+    contextualLayers: [
+      {
+        id: 'hi-res-extent',
+        description: 'Show high-resolution mangrove extent layer',
+      },
+    ],
   },
   {
     name: 'Mangrove Habitat Change',

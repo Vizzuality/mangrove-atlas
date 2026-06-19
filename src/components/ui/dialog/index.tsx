@@ -19,7 +19,7 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal {...props}>
-    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-start sm:justify-center md:items-center xl:items-start xl:justify-start">
+    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-start sm:justify-center md:items-center lg:items-start lg:justify-start">
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -81,7 +81,7 @@ const DialogContent = forwardRef<
           })}
           {...props}
         >
-          <div className="pointer-events-auto relative mx-auto w-full sm:max-w-135 xl:mx-0 xl:mt-4 xl:ml-6">
+          <div className="pointer-events-auto relative mx-auto w-full sm:max-w-135 lg:mx-0 lg:mt-4 lg:ml-6">
             <div
               className={cn({
                 'sm:shadow-card flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-4rem)] sm:p-8 md:rounded-3xl':
@@ -128,7 +128,7 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'md:shadow-card absolute top-4 right-4 z-10 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-7 md:bg-white/70 md:backdrop-blur-sm':
+        'md:shadow-card absolute top-4 right-4 z-30 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-10 md:bg-white/70 md:backdrop-blur-sm':
           true,
         [className || '']: !!className,
       })}

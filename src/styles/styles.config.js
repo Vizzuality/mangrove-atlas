@@ -7,6 +7,7 @@
  */
 module.exports = {
   screens: {
+    xs: '480px',
     sm: '640px',
     md: '768px',
     lg: '1024px',
@@ -14,6 +15,7 @@ module.exports = {
     '2xl': '1536px',
   },
   breakpoints: {
+    xs: 480,
     sm: 640,
     md: 768,
     lg: 1024,

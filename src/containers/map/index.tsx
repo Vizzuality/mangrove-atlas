@@ -90,8 +90,8 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   const guideIsActive = useAtomValue(activeGuideAtom);
   const mapView = useAtomValue(mapViewAtom);
   const { width: screenWidth } = useWindowSize();
-  const isDesktop = screenWidth >= breakpoints.xl;
-  const isMobile = screenWidth > 0 && screenWidth < breakpoints.xl;
+  const isDesktop = screenWidth >= breakpoints.lg;
+  const isMobile = screenWidth > 0 && screenWidth < breakpoints.lg;
   const [locationPopUp, setLocationPopUp] = useState<{
     position: { x: number | null; y: number | null };
     info: LocationPopUp | null;
@@ -562,8 +562,8 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
               {!hideControls && (
                 <Controls
                   className={cn(
-                    'absolute right-5 bottom-40 z-20 items-center xl:bottom-9 xl:z-auto',
-                    !mapView && 'hidden xl:flex'
+                    'absolute right-5 bottom-40 z-20 items-center lg:bottom-9 lg:z-auto',
+                    !mapView && 'hidden lg:flex'
                   )}
                 >
                   <div className="flex flex-col space-y-2 pt-1">

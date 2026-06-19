@@ -47,9 +47,14 @@ const LocationTools = () => {
     'flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white flex-1';
 
   return (
-    <div className="m-4 flex w-full items-center justify-center gap-4 overflow-visible md:mx-auto">
+    <div className="xs:justify-center xs:gap-4 xs:px-4 mb-4 flex w-full items-center justify-between gap-2 overflow-visible px-6">
       {/* RESET PAGE */}
-      <Link href="/" onClick={handleReset} data-testid="worldwide-button">
+      <Link
+        href="/"
+        onClick={handleReset}
+        data-testid="worldwide-button"
+        className="xs:block hidden"
+      >
         <Helper
           className={{
             button: '-top-1 left-0 z-20',
@@ -66,8 +71,9 @@ const LocationTools = () => {
       </Link>
 
       {/* FIND LOCATIONS */}
-
-      <FindLocations menuItemStyle={CARD_MENU_ITEM} />
+      <div className="hidden lg:block">
+        <FindLocations menuItemStyle={CARD_MENU_ITEM} />
+      </div>
 
       {/* DRAW AREA */}
       <WidgetDrawingTool menuItemStyle={CARD_MENU_ITEM} />

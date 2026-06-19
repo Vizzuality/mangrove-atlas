@@ -8,7 +8,7 @@ import WidgetsMenu from '@/containers/widgets/widgets-menu';
 
 import { DialogContent, DialogClose, DialogTitle } from '@/components/ui/dialog';
 
-import ALERT_SVG from '@/svgs/ui/alert';
+import DisclaimerBanner from './disclaimer-banner';
 
 const HELPER_ID = 'menu-categories';
 
@@ -38,13 +38,7 @@ me or customize their own combination of widgets and map layers. Some layers and
         >
           <Category />
         </Helper>
-        <div className="shadow-control flex w-full items-center space-x-4 rounded-3xl bg-gray-50 p-2.5">
-          <ALERT_SVG className="h-16 w-16 fill-current text-white" role="img" title="alert" />
-          <p className="text-sm font-light text-black/85">
-            Disclaimer: Some layers and widgets are not available for certain locations. Select
-            applicable geography to enable layer.
-          </p>
-        </div>
+        <DisclaimerBanner />
         <Helper
           className={{
             button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',

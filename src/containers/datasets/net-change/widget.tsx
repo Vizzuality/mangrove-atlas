@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
@@ -9,6 +9,8 @@ import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom, useAtomValue } from 'jotai';
 
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
+import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
 import Loading from '@/components/ui/loading';
@@ -49,6 +51,7 @@ const NetChangeWidget = () => {
     netChange,
     direction,
     config,
+    configBrush,
     location,
     unitOptions,
     years,
@@ -73,6 +76,40 @@ const NetChangeWidget = () => {
     setIsCanceled(false);
     await refetch();
   }, [refetch]);
+
+  // Brush drag sets the selected year range (shared with the dropdowns) and
+  // fires analytics, mirroring the alerts widget.
+  const handleBrushEnd = useCallback(
+    ({ startIndex, endIndex }: { startIndex: number; endIndex: number }) => {
+      const newStartYear = years?.[startIndex];
+      const newEndYear = years?.[endIndex];
+
+      if (newStartYear != null) {
+        trackEvent('Widget iteration - net change - change start year', {
+          category: 'Widget iteration',
+          action: 'Brush - drag',
+          label: `Widget iteration - net change start year ${newStartYear}`,
+          value: newStartYear,
+        });
+        setStartYear(newStartYear);
+      }
+      if (newEndYear != null) {
+        trackEvent('Widget iteration - net change - change end year', {
+          category: 'Widget iteration',
+          action: 'Brush - drag',
+          label: `Widget iteration - net change end year ${newEndYear}`,
+          value: newEndYear,
+        });
+        setEndYear(newEndYear);
+      }
+    },
+    [years, setStartYear, setEndYear]
+  );
+
+  const contextualLayers = useMemo(
+    () => widgets.find((widget) => widget.slug === 'mangrove_net_change')?.contextualLayers || [],
+    []
+  );
 
   if (noData) return <NoData />;
 
@@ -105,7 +142,7 @@ const NetChangeWidget = () => {
         </div>
       )}
       {!!data?.data?.length && !isFetching && !isError && (
-        <div>
+        <div className="space-y-4">
           <p className={WIDGET_SENTENCE_STYLE}>
             The extent of mangroves in <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold"> {direction}</span> by{' '}
@@ -229,7 +266,17 @@ const NetChangeWidget = () => {
             .
           </p>
 
-          <NetChangeChart config={config} />
+          {contextualLayers.length > 0 && (
+            <div className="-mx-2">
+              <ContextualLayersWrapper
+                origin="mangrove_net_change"
+                id={contextualLayers[0].id}
+                description={contextualLayers[0].description}
+              />
+            </div>
+          )}
+
+          <NetChangeChart config={config} configBrush={configBrush} onBrushEnd={handleBrushEnd} />
         </div>
       )}
     </div>

@@ -37,13 +37,14 @@ type ChartData = {
 };
 
 type chartBaseTypes = {
-  lines: {
-    netChange: {
-      stroke: string;
-      legend: string;
-      isAnimationActive: boolean;
-    };
-  };
+  bars?: Record<string, Record<string, unknown>>;
+  lines?: Record<string, Record<string, unknown>>;
+};
+
+type BrushConfig = {
+  startIndex: number;
+  endIndex: number;
+  onBrushEnd: (payload: { startIndex: number; endIndex: number }) => void;
 };
 
 type ChartConfig = {
@@ -51,6 +52,7 @@ type ChartConfig = {
   data: ChartData[];
   cartesianGrid: CartesianGridProps;
   chartBase: chartBaseTypes;
+  brush?: BrushConfig;
 };
 
 type NetChangeData = {
