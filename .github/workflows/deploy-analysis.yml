@@ -9,6 +9,7 @@ on:
       - 'master'
     paths:
       - 'cloud-functions/analysis/**'
+      - '.github/workflows/deploy-analysis.yml'
   workflow_dispatch:
 jobs:
   run:
@@ -32,12 +33,21 @@ jobs:
       env:
         FILE_NAME: "cloud-functions/analysis/credentials.json"
         FILE_DATA: "${{ secrets.GEE_CREDENTIALS_JSON }}"
+    - name: Set function name
+      id: function-name
+      run: |
+        if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+          echo "name=analysis-production" >> "$GITHUB_OUTPUT"
+        else
+          echo "name=analysis-staging" >> "$GITHUB_OUTPUT"
+        fi
+
     - id: 'deploy'
       name: GC Functions deployment
       uses: 'google-github-actions/deploy-cloud-functions@v2'
       timeout-minutes: 10
       with:
-        name: 'analysis'
+        name: '${{ steps.function-name.outputs.name }}'
         runtime: 'nodejs22'
         entry_point: 'analyze'
         memory_mb: '256'
