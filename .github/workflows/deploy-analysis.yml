@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - 'develop'
-      - 'master'
+      - 'main'
     paths:
       - 'cloud-functions/analysis/**'
       - '.github/workflows/deploy-analysis.yml'
@@ -19,41 +19,41 @@ jobs:
       contents: 'read'
       id-token: 'write'
     steps:
-    - uses: actions/checkout@v6
-    - id: auth
-      name: Authenticate in google cloud services
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: '${{ secrets.gcp_credentials }}'
-    - id: build
-      name: Build cloud function
-      run: 'cd cloud-functions/analysis && node -v && npm -v && npm install && npm run build'
-      shell: bash
-    - uses: "finnp/create-file-action@master"
-      env:
-        FILE_NAME: "cloud-functions/analysis/credentials.json"
-        FILE_DATA: "${{ secrets.GEE_CREDENTIALS_JSON }}"
-    - name: Set function name
-      id: function-name
-      run: |
-        if [ "${{ github.ref }}" = "refs/heads/master" ]; then
-          echo "name=analysis-production" >> "$GITHUB_OUTPUT"
-        else
-          echo "name=analysis-staging" >> "$GITHUB_OUTPUT"
-        fi
+      - uses: actions/checkout@v6
+      - id: auth
+        name: Authenticate in google cloud services
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.gcp_credentials }}'
+      - id: build
+        name: Build cloud function
+        run: 'cd cloud-functions/analysis && node -v && npm -v && npm install && npm run build'
+        shell: bash
+      - name: Write GEE credentials
+        env:
+          GEE_CREDENTIALS_JSON: ${{ secrets.GEE_CREDENTIALS_JSON }}
+        run: printf '%s' "$GEE_CREDENTIALS_JSON" > cloud-functions/analysis/credentials.json
+      - name: Set function name
+        id: function-name
+        run: |
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            echo "name=analysis-production" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=analysis-staging" >> "$GITHUB_OUTPUT"
+          fi
 
-    - id: 'deploy'
-      name: GC Functions deployment
-      uses: 'google-github-actions/deploy-cloud-functions@v2'
-      timeout-minutes: 10
-      with:
-        name: '${{ steps.function-name.outputs.name }}'
-        runtime: 'nodejs22'
-        entry_point: 'analyze'
-        memory_mb: '256'
-        region: 'us-central1'
-        source_dir: 'cloud-functions/analysis'
-    # Example of using the output
-    - id: 'test'
-      name: GC Functions testing deployment
-      run: 'curl "${{ steps.deploy.outputs.url }}"'
+      - id: 'deploy'
+        name: GC Functions deployment
+        uses: 'google-github-actions/deploy-cloud-functions@v2'
+        timeout-minutes: 10
+        with:
+          name: '${{ steps.function-name.outputs.name }}'
+          runtime: 'nodejs22'
+          entry_point: 'analyze'
+          memory_mb: '256'
+          region: 'us-central1'
+          source_dir: 'cloud-functions/analysis'
+      # Example of using the output
+      - id: 'test'
+        name: GC Functions testing deployment
+        run: 'curl "${{ steps.deploy.outputs.url }}"'
