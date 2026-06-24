@@ -1,6 +1,32 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
+
+// Merge the .env files into an object passed to test.env so the Zod-validated
+// `env` from env.mjs (which runs createEnv at module load) resolves when hooks
+// import it. Hand-parsed to avoid depending on vite's loadEnv (transitive, no
+// types). Files are read in ascending priority — later overrides earlier — to
+// match Vite/Next precedence (mode and *.local files win over the base .env).
+function loadTestEnv(): Record<string, string> {
+  const env: Record<string, string> = {};
+  for (const name of ['.env', '.env.local', '.env.test', '.env.test.local']) {
+    try {
+      const file = readFileSync(resolve(process.cwd(), name), 'utf-8');
+      for (const line of file.split('\n')) {
+        const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*?)\s*$/);
+        if (match) env[match[1]] = match[2].replace(/^["']|["']$/g, '');
+      }
+    } catch {
+      // file absent — skip
+    }
+  }
+  return env;
+}
+
+const testEnv = loadTestEnv();
 
 export default defineConfig({
   // ignoreConfigErrors: skip the nested cloud-functions/* tsconfigs (out of scope).
@@ -8,6 +34,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    env: testEnv,
     setupFiles: ['./vitest.setup.ts'],
     // Vitest owns the unit/component/integration suites under tests/. Playwright
     // e2e + a11y specs (tests/*.spec.ts, tests/a11y) use *.spec.ts and are not
