@@ -5,13 +5,36 @@ import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
-// Merge the .env files into an object passed to test.env so the Zod-validated
-// `env` from env.mjs (which runs createEnv at module load) resolves when hooks
-// import it. Hand-parsed to avoid depending on vite's loadEnv (transitive, no
-// types). Files are read in ascending priority — later overrides earlier — to
-// match Vite/Next precedence (mode and *.local files win over the base .env).
+// Dataset hooks import the Zod-validated `env` from env.mjs, which runs
+// createEnv at module load and requires EVERY var in the schema. CI only has
+// the committed .env.test (which is partial), so provide complete dummy
+// defaults here to keep validation green. Real .env values overlay these.
+const ENV_DEFAULTS: Record<string, string> = {
+  NEXT_PUBLIC_API_URL: 'https://example.com',
+  NEXT_PUBLIC_MRTT_SITE: 'https://example.com',
+  NEXT_PUBLIC_AUTH_URL: 'https://example.com',
+  NEXT_PUBLIC_ANALYSIS_API_URL: 'https://example.com',
+  NEXT_PUBLIC_ANALYSIS_API_PATH: 'analysis-staging',
+  NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: 'test',
+  NEXT_PUBLIC_PLANET_API_KEY: 'test',
+  NEXT_PUBLIC_TRANSIFEX_API_KEY: 'test',
+  NEXT_PUBLIC_SMTP_ADDRESS: 'test',
+  NEXT_PUBLIC_SMTP_PASSWORD: 'test',
+  NEXT_PUBLIC_SMTP_PORT: '587',
+  NEXT_PUBLIC_SMTP_USER_NAME: 'test',
+  NEXT_PUBLIC_GA_ID: 'test',
+  NEXT_PUBLIC_VERCEL_ENV: 'development',
+  NEXT_PUBLIC_ENVIRONMENT: 'development',
+  NEXTAUTH_URL: 'https://example.com',
+  NEXTAUTH_SECRET: 'test',
+  AUTH_API_URL: 'https://example.com',
+};
+
+// Overlay real .env files (ascending priority — later overrides earlier) onto
+// the defaults so local runs use real values while CI falls back to defaults.
+// Hand-parsed to avoid depending on vite's loadEnv (transitive, no types).
 function loadTestEnv(): Record<string, string> {
-  const env: Record<string, string> = {};
+  const env: Record<string, string> = { ...ENV_DEFAULTS };
   for (const name of ['.env', '.env.local', '.env.test', '.env.test.local']) {
     try {
       const file = readFileSync(resolve(process.cwd(), name), 'utf-8');
