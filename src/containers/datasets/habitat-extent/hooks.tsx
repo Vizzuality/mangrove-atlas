@@ -15,6 +15,7 @@ import { useSyncLocation } from 'hooks/use-sync-location';
 import { useLocation } from '@/containers/datasets/locations/hooks';
 
 import { Visibility } from '@/types/layers';
+import { env } from 'env.mjs';
 import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';
@@ -45,7 +46,7 @@ export function useMangroveHabitatExtent(
       if (isAnalysisEnabled) {
         return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
           method: 'post',
-          url: '',
+          url: `/${env.NEXT_PUBLIC_ANALYSIS_API_PATH}`,
           data: {
             geometry: geojson,
           },
