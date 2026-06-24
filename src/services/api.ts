@@ -17,7 +17,7 @@ API.interceptors.request.use(async (config) => {
 });
 
 export const AnalysisAPI = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_ANALYSIS_API_URL,
+  baseURL: `${process.env.NEXT_PUBLIC_ANALYSIS_API_URL}/${process.env.NEXT_PUBLIC_ANALYSIS_API_PATH}`,
   headers: { 'Content-Type': 'application/json' },
 });
 

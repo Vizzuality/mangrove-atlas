@@ -110,7 +110,8 @@ Copy `.env.default` to `.env` for local development. Key variables:
 | `NEXT_PUBLIC_VERCEL_ENV`          | Controls API URL selection (`development` / `staging` / `production`) |
 | `NEXT_PUBLIC_API_URL`             | Backend API URL (staging)                                             |
 | `NEXT_PUBLIC_API_URL`             | Backend API URL (production)                                          |
-| `NEXT_PUBLIC_ANALYSIS_API_URL`    | Analysis cloud function URL                                           |
+| `NEXT_PUBLIC_ANALYSIS_API_URL`    | Analysis cloud function base URL (bare cloud-functions domain)        |
+| `NEXT_PUBLIC_ANALYSIS_API_PATH`   | Analysis function name per env (`analysis` / `analysis-staging` / `analysis-production`) |
 | `NEXT_PUBLIC_BLOG_API_URL`        | WordPress blog API URL                                                |
 | `NEXT_PUBLIC_PLANET_API_KEY`      | Planet satellite imagery API key                                      |
 | `NEXT_PUBLIC_TRANSIFEX_API_KEY`   | Transifex API key for i18n                                            |

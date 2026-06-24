@@ -7,17 +7,20 @@ For the full design rationale, see [SEPARATE-ENVIRONMENTS.md](./SEPARATE-ENVIRON
 
 ## Before merging the PR
 
-Update `NEXT_PUBLIC_ANALYSIS_API_URL` in the **Vercel project dashboard** for both environments.
-The hooks no longer append `/analysis` to the base URL — they now call the base URL verbatim —
-so the full function URL must be set here.
+Keep `NEXT_PUBLIC_ANALYSIS_API_URL` as the **bare base domain** in every Vercel environment.
+Add a new `NEXT_PUBLIC_ANALYSIS_API_PATH` variable holding the function name per environment.
+`AnalysisAPI`'s `baseURL` is composed as `${URL}/${PATH}` in `src/services/api.ts`.
 
-| Vercel environment | New value |
-|--------------------|-----------|
-| Preview (staging)  | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-staging` |
-| Production         | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-production` |
+In the **Vercel project dashboard**:
 
-> ⚠️ Do this **before** any Vercel deploy picks up the new hook code. If the env var still
-> points to the old base domain when the hooks go live, every analysis request will 404.
+| Vercel environment | Variable                        | Value |
+|--------------------|---------------------------------|-------|
+| All                | `NEXT_PUBLIC_ANALYSIS_API_URL`  | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net` (unchanged) |
+| Preview (staging)  | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-staging` |
+| Production         | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-production` |
+
+> ⚠️ Set `NEXT_PUBLIC_ANALYSIS_API_PATH` **before** any Vercel deploy picks up the new code.
+> If the path var is missing when the code goes live, env validation (`env.mjs`) fails the build.
 
 ---
 
@@ -87,6 +90,6 @@ gcloud functions delete analysis \
 
 If something goes wrong after the client code is live:
 
-1. Revert `NEXT_PUBLIC_ANALYSIS_API_URL` in Vercel back to `https://us-central1-mangrove-atlas-246414.cloudfunctions.net`.
-2. Revert the hooks change (restore `url: '/analysis'` in the five hook files).
+1. Set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Vercel back to `analysis` (the old shared function).
+2. `NEXT_PUBLIC_ANALYSIS_API_URL` stays the bare base — no URL or hook changes needed.
 3. The old `analysis` function still exists until the cleanup step above — no GCP changes needed.

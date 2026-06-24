@@ -10,6 +10,13 @@ Currently the `analysis` Cloud Function is deployed from **both** the `develop` 
 
 The client (`NEXT_PUBLIC_ANALYSIS_API_URL`) points to a single base URL with no per-environment differentiation.
 
+> **Approach note:** `NEXT_PUBLIC_ANALYSIS_API_URL` stays the **bare** cloud-functions base
+> (`https://us-central1-mangrove-atlas-246414.cloudfunctions.net`) — a shared, generic value. The
+> per-environment function name lives in a **separate** variable, `NEXT_PUBLIC_ANALYSIS_API_PATH`
+> (`analysis` / `analysis-staging` / `analysis-production`). `AnalysisAPI`'s `baseURL` is composed
+> as `${URL}/${PATH}` in `src/services/api.ts`. This keeps the base URL reusable and isolates the
+> per-env difference to one small variable.
+
 ---
 
 ## Proposed Solution
@@ -82,74 +89,95 @@ The `test` step at the end (line 47–49) uses `${{ steps.deploy.outputs.url }}`
 
 ### 2. Vercel Environment Variables
 
-`NEXT_PUBLIC_ANALYSIS_API_URL` must now include the **full function URL** (base domain + function name) instead of just the base domain. This is because the hooks (see §3) will no longer append a `/analysis` path suffix.
+Keep `NEXT_PUBLIC_ANALYSIS_API_URL` as the **bare base domain** in every environment. Add a new
+`NEXT_PUBLIC_ANALYSIS_API_PATH` variable holding the function name per environment. `AnalysisAPI`'s
+`baseURL` is composed from the two (see §3).
 
 Update in the Vercel project dashboard:
 
-| Vercel Environment | Variable                        | New Value                                                                                 |
-|--------------------|---------------------------------|-------------------------------------------------------------------------------------------|
-| Preview (staging)  | `NEXT_PUBLIC_ANALYSIS_API_URL`  | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-staging`           |
-| Production         | `NEXT_PUBLIC_ANALYSIS_API_URL`  | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-production`        |
+| Vercel Environment | Variable                        | Value                                                                |
+|--------------------|---------------------------------|----------------------------------------------------------------------|
+| All                | `NEXT_PUBLIC_ANALYSIS_API_URL`  | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net` (bare, unchanged) |
+| Preview (staging)  | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-staging`                                                   |
+| Production         | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-production`                                                |
 
 No other Vercel variables need to change.
 
 ---
 
-### 3. Client Hooks — Remove the `/analysis` path
+### 3. Axios baseURL composition — `src/services/api.ts`
 
-**Background on the URL change:**  
-Axios resolves a URL starting with `/` as an absolute path against the origin, discarding any path in `baseURL`. With the new `baseURL` of `https://…/analysis-staging`, calling `url: '/analysis'` would resolve to `https://…/analysis` — the *old* function — because the leading `/` strips the base path. Changing to `url: ''` (empty string) tells Axios to use `baseURL` verbatim.
-
-The 5 hook files that call `AnalysisAPI` all follow the same pattern:
+The `AnalysisAPI` instance composes its `baseURL` from the bare base URL and the per-environment
+function name:
 
 ```ts
-AnalysisAPI.request({
-  method: 'post',
-  url: '/analysis',   // ← this line in each file
-  ...
-})
+export const AnalysisAPI = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_ANALYSIS_API_URL}/${process.env.NEXT_PUBLIC_ANALYSIS_API_PATH}`,
+  headers: { 'Content-Type': 'application/json' },
+});
 ```
 
-Change `url: '/analysis'` → `url: ''` in each of the following files:
+The 5 hook files that call `AnalysisAPI` use `url: ''`, so Axios uses the composed `baseURL`
+verbatim. No hook edits are needed — the per-environment routing is entirely driven by
+`NEXT_PUBLIC_ANALYSIS_API_PATH`:
 
-| File                                                                   | Approximate Line |
-|------------------------------------------------------------------------|-----------------|
-| `src/containers/datasets/habitat-extent/hooks.tsx`                     | 48              |
-| `src/containers/datasets/net-change/hooks.tsx`                         | (search for `url: '/analysis'`) |
-| `src/containers/datasets/height/hooks.tsx`                             | (search for `url: '/analysis'`) |
-| `src/containers/datasets/biomass/hooks.tsx`                            | (search for `url: '/analysis'`) |
-| `src/containers/datasets/blue-carbon/hooks.tsx`                        | (search for `url: '/analysis'`) |
-
-Quick grep to find all occurrences before editing:
-```bash
-grep -rn "url: '/analysis'" src/containers/datasets/
-```
+| File                                               |
+|----------------------------------------------------|
+| `src/containers/datasets/habitat-extent/hooks.tsx` |
+| `src/containers/datasets/net-change/hooks.tsx`     |
+| `src/containers/datasets/height/hooks.tsx`         |
+| `src/containers/datasets/biomass/hooks.tsx`        |
+| `src/containers/datasets/blue-carbon/hooks.tsx`    |
 
 ---
 
 ### 4. Local Environment Files
 
-**`.env`** — Update the `NEXT_PUBLIC_ANALYSIS_API_URL` entry to clarify the per-environment values:
+Keep `NEXT_PUBLIC_ANALYSIS_API_URL` as the bare base; add `NEXT_PUBLIC_ANALYSIS_API_PATH`.
+
+**`.env`** / **`.env.local`**:
 
 ```dotenv
-# Analysis cloud function — set the full function URL per environment
-# Staging:
-NEXT_PUBLIC_ANALYSIS_API_URL=https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-staging
-# Production:
-# NEXT_PUBLIC_ANALYSIS_API_URL=https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-production
+# Analysis cloud function — bare base domain (shared, unchanged)
+NEXT_PUBLIC_ANALYSIS_API_URL=https://us-central1-mangrove-atlas-246414.cloudfunctions.net
+# Function name per environment: analysis | analysis-staging | analysis-production
+NEXT_PUBLIC_ANALYSIS_API_PATH=analysis-staging
 ```
 
-**`.env.test`** — Update to point at the staging function (line with `NEXT_PUBLIC_ANALYSIS_API_URL`):
+**`.env.test`** — bare base + staging path:
 
 ```dotenv
-NEXT_PUBLIC_ANALYSIS_API_URL=https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-staging
+NEXT_PUBLIC_ANALYSIS_API_URL=https://us-central1-mangrove-atlas-246414.cloudfunctions.net
+NEXT_PUBLIC_ANALYSIS_API_PATH=analysis-staging
+```
+
+**`.env.default`** — add the new key (empty placeholder):
+
+```dotenv
+NEXT_PUBLIC_ANALYSIS_API_URL=
+NEXT_PUBLIC_ANALYSIS_API_PATH=
+```
+
+**`.github/workflows/playwright.yml`** — pass the path var to the test job alongside the URL:
+
+```yaml
+NEXT_PUBLIC_ANALYSIS_API_PATH: ${{ secrets.NEXT_PUBLIC_ANALYSIS_API_PATH }}
 ```
 
 ---
 
-### 5. `env.mjs` — No changes required
+### 5. `env.mjs` — add the new variable
 
-`NEXT_PUBLIC_ANALYSIS_API_URL` is already defined as a `z.string().url()` — accepting any valid URL — so no schema change is needed.
+`NEXT_PUBLIC_ANALYSIS_API_PATH` must be registered in both `client` and `runtimeEnv`:
+
+```js
+// client schema
+NEXT_PUBLIC_ANALYSIS_API_PATH: z.enum(['analysis', 'analysis-staging', 'analysis-production']),
+// runtimeEnv
+NEXT_PUBLIC_ANALYSIS_API_PATH: process.env.NEXT_PUBLIC_ANALYSIS_API_PATH,
+```
+
+`NEXT_PUBLIC_ANALYSIS_API_URL` stays `z.string().url()` — unchanged.
 
 ---
 
@@ -182,8 +210,8 @@ The goal is to have `analysis-production` up and serving before cutting over, so
 
 ### Phase 3 — Update the client
 
-1. Merge the hooks change (§3) and env file updates (§4) to `develop`.
-2. Update Vercel env vars (§2) — do this **before** the Vercel preview deploy picks up the new code, so both the env var and the code change land together.
+1. Merge the `api.ts` baseURL change (§3), `env.mjs` change (§5), and env file updates (§4) to `develop`.
+2. Update Vercel env vars (§2) — set `NEXT_PUBLIC_ANALYSIS_API_PATH` (URL stays bare) **before** the Vercel preview deploy picks up the new code, so both the env var and the code change land together.
 3. Validate on the Vercel staging preview:
    - Open a staging deploy.
    - Draw a polygon on the map.
@@ -192,7 +220,7 @@ The goal is to have `analysis-production` up and serving before cutting over, so
 ### Phase 4 — Promote to production
 
 1. Merge `develop` → `master` (normal release).
-2. Confirm Vercel production deploy uses `NEXT_PUBLIC_ANALYSIS_API_URL` pointing to `analysis-production`.
+2. Confirm Vercel production deploy has `NEXT_PUBLIC_ANALYSIS_API_PATH=analysis-production`.
 3. Verify analysis on production.
 
 ### Phase 5 — Decommission the old shared function (optional)
@@ -209,7 +237,7 @@ gcloud functions delete analysis --region=us-central1 --project=mangrove-atlas-2
 
 Because the old `analysis` function still exists until Phase 5:
 
-- **Client rollback:** revert `NEXT_PUBLIC_ANALYSIS_API_URL` in Vercel to `https://us-central1-mangrove-atlas-246414.cloudfunctions.net` and revert the hooks change (restore `url: '/analysis'`). No GCP changes needed.
+- **Client rollback:** set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Vercel back to `analysis` (the old shared function). `NEXT_PUBLIC_ANALYSIS_API_URL` stays the bare base — no URL or hook changes needed. No GCP changes needed.
 - **Function rollback:** GCP retains previous revisions of a Cloud Function; you can redeploy from the previous source or trigger a prior workflow run.
 
 ---
@@ -269,9 +297,10 @@ This is deliberately out of scope now to keep the change set small and the risk 
 - [ ] Trigger manual workflow dispatch from `master` to create `analysis-production`
 - [ ] Verify `analysis-production` is live and responding
 - [ ] Verify `analysis-staging` is deployed from `develop`
-- [ ] Update Vercel env vars (staging + production) before the next client deploy
-- [ ] Update hooks (`url: '/analysis'` → `url: ''`) in all 5 files
-- [ ] Update `.env` and `.env.test`
+- [ ] Set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Vercel (staging + production) before the next client deploy; keep `NEXT_PUBLIC_ANALYSIS_API_URL` bare
+- [ ] Compose `AnalysisAPI` baseURL from URL + PATH in `src/services/api.ts`
+- [ ] Add `NEXT_PUBLIC_ANALYSIS_API_PATH` to `env.mjs` (client schema + runtimeEnv)
+- [ ] Update `.env`, `.env.test`, `.env.default`, and `playwright.yml`
 - [ ] Validate staging Vercel deploy calls `analysis-staging`
 - [ ] Validate production Vercel deploy calls `analysis-production`
 - [ ] Delete old `analysis` function (after stability confirmed)
