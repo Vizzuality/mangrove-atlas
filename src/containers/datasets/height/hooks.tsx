@@ -89,7 +89,7 @@ export function useMangroveHeight(
     if (isAnalysisEnabled) {
       return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
         method: 'post',
-        url: '/analysis',
+        url: '',
         data: {
           geometry: geojson,
         },
