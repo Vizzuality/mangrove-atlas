@@ -44,9 +44,9 @@ curl -X POST \
 
 ---
 
-## After merging `develop` → `master`
+## After merging `develop` → `main`
 
-The same workflow fires on merge to `master` and deploys `analysis-production`.
+The same workflow fires on merge to `main` and deploys `analysis-production`.
 
 **Verify it's live:**
 ```bash
@@ -61,13 +61,45 @@ Same as above — draw a polygon, confirm network requests go to `…/analysis-p
 
 ---
 
+## Troubleshooting — CORS / 403 on a newly deployed function
+
+A freshly deployed `analysis-staging` / `analysis-production` will return **403 Forbidden** (which
+the browser surfaces as a **CORS error**) until it is granted public invoke permission. The old
+shared `analysis` function already has it; new functions created by the deploy action do **not**
+inherit it.
+
+Grant `allUsers` the invoker role once per function:
+
+```bash
+# Gen2 (Cloud Run backed)
+gcloud run services add-iam-policy-binding analysis-staging \
+  --region=us-central1 --project=mangrove-atlas-246414 \
+  --member=allUsers --role=roles/run.invoker
+
+# Gen1
+gcloud functions add-invoker-policy-binding analysis-staging \
+  --region=us-central1 --project=mangrove-atlas-246414 --member=allUsers
+```
+
+Repeat for `analysis-production`. To check which generation a function is:
+
+```bash
+gcloud functions describe analysis-staging --region=us-central1 \
+  --project=mangrove-atlas-246414 --gen2 2>/dev/null && echo gen2 || echo gen1
+```
+
+> While `analysis-staging` is not yet public, point local dev at the working shared function:
+> `NEXT_PUBLIC_ANALYSIS_API_PATH=analysis`.
+
+---
+
 ## Future function changes
 
 Edit `cloud-functions/analysis/` on a feature branch as usual:
 
 ```
 feature branch  →  merge to develop  →  analysis-staging updated
-                →  merge to master   →  analysis-production updated
+                →  merge to main   →  analysis-production updated
 ```
 
 There is only one source directory. The branch determines which GCP function is deployed.

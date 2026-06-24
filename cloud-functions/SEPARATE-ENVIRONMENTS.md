@@ -2,7 +2,7 @@
 
 ## Problem
 
-Currently the `analysis` Cloud Function is deployed from **both** the `develop` and `master` branches to the **same function name** in the same GCP project. This means:
+Currently the `analysis` Cloud Function is deployed from **both** the `develop` and `main` branches to the **same function name** in the same GCP project. This means:
 
 - A change merged to `develop` immediately overwrites the function that production users are hitting.
 - There is no safe way to test new calculation logic on staging before it reaches production.
@@ -26,7 +26,7 @@ Deploy two independently named functions in the **same GCP project** (`mangrove-
 | Environment | Branch  | GCP Function Name    | URL                                                                              |
 |-------------|---------|----------------------|----------------------------------------------------------------------------------|
 | Staging     | develop | `analysis-staging`   | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-staging`  |
-| Production  | master  | `analysis-production`| `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-production`|
+| Production  | main  | `analysis-production`| `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-production`|
 
 - GCP project, region, runtime, and GEE credentials remain shared (no new GCP project needed).
 - Vercel already manages separate environments — only the env var value needs updating.
@@ -62,7 +62,7 @@ The `deploy` step (line 35–45) always deploys `name: 'analysis'` regardless of
 - name: Set function name
   id: function-name
   run: |
-    if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+    if [ "$GITHUB_REF" = "refs/heads/main" ]; then
       echo "name=analysis-production" >> "$GITHUB_OUTPUT"
     else
       echo "name=analysis-staging" >> "$GITHUB_OUTPUT"
@@ -83,7 +83,7 @@ The `deploy` step (line 35–45) always deploys `name: 'analysis'` regardless of
 
 The `test` step at the end (line 47–49) uses `${{ steps.deploy.outputs.url }}` and will automatically point to the correct function — no change needed there.
 
-> **`workflow_dispatch` behaviour:** when triggered manually it will deploy to `analysis-staging` unless the workflow is dispatched from the `master` branch. This is intentional — manual deploys from `master` should go to production.
+> **`workflow_dispatch` behaviour:** when triggered manually it will deploy to `analysis-staging` unless the workflow is dispatched from the `main` branch. This is intentional — manual deploys from `main` should go to production.
 
 ---
 
@@ -185,13 +185,13 @@ NEXT_PUBLIC_ANALYSIS_API_PATH: process.env.NEXT_PUBLIC_ANALYSIS_API_PATH,
 
 The goal is to have `analysis-production` up and serving before cutting over, so production users never hit a cold or missing function.
 
-### Phase 1 — Deploy the production function (from current master, before any code changes)
+### Phase 1 — Deploy the production function (from current main, before any code changes)
 
 1. Go to **Actions → Deploy analysis cloud functions to google** on GitHub.
-2. Click **Run workflow**, select the `master` branch.
-3. The workflow currently deploys `analysis` — but after merging the workflow change (§1 above) from a `master`-targeting dispatch, it will deploy `analysis-production`.
+2. Click **Run workflow**, select the `main` branch.
+3. The workflow currently deploys `analysis` — but after merging the workflow change (§1 above) from a `main`-targeting dispatch, it will deploy `analysis-production`.
 
-   > Because the workflow change must land before this step, the ordering is: **merge the workflow PR into `develop` first, then cherry-pick / merge to `master`, then trigger the deploy from `master`.**
+   > Because the workflow change must land before this step, the ordering is: **merge the workflow PR into `develop` first, then cherry-pick / merge to `main`, then trigger the deploy from `main`.**
 
    Alternative: temporarily set `name` to `analysis-production` in the workflow, push directly to a branch, dispatch manually.
 
@@ -219,7 +219,7 @@ The goal is to have `analysis-production` up and serving before cutting over, so
 
 ### Phase 4 — Promote to production
 
-1. Merge `develop` → `master` (normal release).
+1. Merge `develop` → `main` (normal release).
 2. Confirm Vercel production deploy has `NEXT_PUBLIC_ANALYSIS_API_PATH=analysis-production`.
 3. Verify analysis on production.
 
@@ -294,7 +294,7 @@ This is deliberately out of scope now to keep the change set small and the risk 
 ## Checklist
 
 - [ ] Merge workflow change (`deploy-analysis.yml`) to `develop`
-- [ ] Trigger manual workflow dispatch from `master` to create `analysis-production`
+- [ ] Trigger manual workflow dispatch from `main` to create `analysis-production`
 - [ ] Verify `analysis-production` is live and responding
 - [ ] Verify `analysis-staging` is deployed from `develop`
 - [ ] Set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Vercel (staging + production) before the next client deploy; keep `NEXT_PUBLIC_ANALYSIS_API_URL` bare
