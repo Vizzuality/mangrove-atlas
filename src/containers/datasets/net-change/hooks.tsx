@@ -18,6 +18,7 @@ import { useLocation } from '@/containers/datasets/locations/hooks';
 
 import CustomTooltip from '@/components/chart/tooltip';
 import { Visibility } from '@/types/layers';
+import { env } from 'env.mjs';
 
 import API, { AnalysisAPI } from 'services/api';
 
@@ -153,7 +154,7 @@ export function useMangroveNetChange(
     if (isAnalysisEnabled) {
       return AnalysisAPI.request<AnalysisResponse<DataResponse | AxiosError>>({
         method: 'post',
-        url: '',
+        url: `/${env.NEXT_PUBLIC_ANALYSIS_API_PATH}`,
         data: {
           geometry: geojson,
         },
