@@ -51,6 +51,12 @@ export const env = createEnv({
     // render from this cacheable {z}/{x}/{y} MVT endpoint instead of the Mapbox
     // tileset, so they work offline. When unset, falls back to Mapbox.
     NEXT_PUBLIC_ALERTS_TILER_URL: z.string().url().optional(),
+    // Optional self-hosted habitat-extent vector tiles. A template with {year}
+    // and {z}/{x}/{y}, e.g.
+    // https://mangrove_atlas.storage.googleapis.com/tilesets/gmw_extent/{year}/{z}/{x}/{y}.pbf
+    // When set, extent renders from these cacheable tiles (offline-capable);
+    // otherwise falls back to the Mapbox tilesets. Plain string (URL has braces).
+    NEXT_PUBLIC_EXTENT_TILES_URL: z.string().optional(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -80,6 +86,7 @@ export const env = createEnv({
     NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
     NEXT_PUBLIC_OFFLINE_BASEMAP_URL: process.env.NEXT_PUBLIC_OFFLINE_BASEMAP_URL,
     NEXT_PUBLIC_ALERTS_TILER_URL: process.env.NEXT_PUBLIC_ALERTS_TILER_URL,
+    NEXT_PUBLIC_EXTENT_TILES_URL: process.env.NEXT_PUBLIC_EXTENT_TILES_URL,
   },
 });
 

@@ -40,8 +40,7 @@ const TILER_ORIGIN = originOf(params.get('tiler'));
 
 const isGCSTile = (url) =>
   /(^|\.)storage\.googleapis\.com$/.test(url.hostname) &&
-  url.pathname.includes('mangrove') &&
-  /\/\d+\/\d+\/\d+(\.\w+)?$/.test(url.pathname);
+  /\/\d+\/\d+\/\d+(\.\w+)?$/.test(url.pathname); // .../{z}/{x}/{y}[.ext]
 
 const isOfflineBaseTile = (url) => BASE_ORIGIN && url.origin === BASE_ORIGIN;
 

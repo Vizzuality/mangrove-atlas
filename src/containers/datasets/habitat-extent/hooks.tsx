@@ -19,6 +19,8 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';
 
+import { env } from '../../../../env.mjs';
+
 import { getHabitatExtentData } from './get-data';
 import type { DataResponse, ExtentData } from './types';
 
@@ -111,6 +113,19 @@ export function useMangroveHabitatExtent(
 }
 
 export function useSource({ year }: { year: number }): SourceProps {
+  // Self-hosted vector tiles when configured (cacheable → offline-capable),
+  // else the Mapbox tilesets. Both expose `source-layer` gmw_v4_extent_<year>
+  // with the same properties, so layer.tsx is unchanged either way.
+  if (env.NEXT_PUBLIC_EXTENT_TILES_URL) {
+    const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(year));
+    return {
+      id: `habitat_extent_${year}`,
+      type: 'vector',
+      tiles: [tiles],
+      minzoom: 0,
+      maxzoom: 12,
+    };
+  }
   return {
     id: `habitat_extent_${year}`,
     type: 'vector',
