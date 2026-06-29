@@ -4,6 +4,10 @@ import { useEffect, useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
 
+import { registerServiceWorker } from '@/lib/offline/register-sw';
+
+import { useSyncOnlineStatus } from '@/store/offline';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';
@@ -38,6 +42,12 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         : {}),
     });
   }, []);
+
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
+  useSyncOnlineStatus();
 
   return (
     <TXProvider token={process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}>

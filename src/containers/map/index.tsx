@@ -8,6 +8,8 @@ import Image from 'next/image';
 
 import cn from '@/lib/classnames';
 import { flyMapTo, registerMapRef } from '@/lib/map-fly';
+import { OFFLINE_BASEMAP_STYLE } from '@/lib/offline/offline-style';
+import { useViewportPrefetch } from '@/lib/offline/use-viewport-prefetch';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -22,6 +24,7 @@ import {
   useSyncBasemap,
   useSyncURLBounds,
 } from '@/store/map';
+import { isOfflineAtom } from '@/store/offline';
 import { mapViewAtom } from '@/store/sidebar';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -45,6 +48,8 @@ import MobileLegend from '@/containers/map/legend/mobile';
 import Controls from '@/components/map/controls';
 import BasemapSettingsControl from '@/components/map/controls/basemap-settings';
 import FullScreenControl from '@/components/map/controls/fullscreen';
+import OfflineDownload from '@/components/map/controls/offline-download';
+import OfflineIndicator from '@/components/map/controls/offline-indicator';
 import PitchReset from '@/components/map/controls/pitch-reset';
 import ShareControl from '@/components/map/controls/share';
 import ZoomControl from '@/components/map/controls/zoom';
@@ -131,11 +136,21 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
 
   useOnClickOutside(mapRef, handleClickOutside);
 
-  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap)?.url, [basemap]);
+  const isOffline = useAtomValue(isOfflineAtom);
+
+  const selectedBasemap = useMemo(() => {
+    // Offline: swap Mapbox base (uncacheable, TOS) for the configured raster
+    // basemap. Falls back to the Mapbox style when none is configured.
+    if (isOffline && OFFLINE_BASEMAP_STYLE) return OFFLINE_BASEMAP_STYLE;
+    return BASEMAPS.find((b) => b.id === basemap)?.url;
+  }, [basemap, isOffline]);
 
   const { minZoom, maxZoom } = MAP_DEFAULT_PROPS;
 
   const { [mapId]: map } = useMap();
+
+  // B — warm tiles around the current view while online (accidental-offline).
+  useViewportPrefetch(mapId);
 
   const { id: locationId } = useSyncLocation();
   const queryClient = useQueryClient();
@@ -567,6 +582,8 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                   )}
                 >
                   <div className="flex flex-col space-y-2 pt-1">
+                    <OfflineIndicator />
+                    <OfflineDownload mapId={mapId} />
                     {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                     <Helper
                       className={{
