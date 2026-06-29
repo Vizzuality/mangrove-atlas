@@ -55,10 +55,21 @@ const nextConfig = {
       }
     })();
 
-    if (!mrttOrigin) return [];
-
-    return [
+    const rules = [
+      // Service worker (offline maps): must not be HTTP-cached so updates ship
+      // immediately, and needs root scope to intercept all tile/data requests.
       {
+        source: '/sw.js',
+        headers: [
+          { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
+          { key: 'Service-Worker-Allowed', value: '/' },
+        ],
+      },
+    ];
+
+    if (mrttOrigin) {
+      // Allow MRTT to load the silent-SSO authorize endpoint in an iframe.
+      rules.push({
         source: '/api/auth/sso/authorize',
         headers: [
           {
@@ -66,8 +77,10 @@ const nextConfig = {
             value: `frame-ancestors 'self' ${mrttOrigin};`,
           },
         ],
-      },
-    ];
+      });
+    }
+
+    return rules;
   },
   turbopack: {
     rules: {

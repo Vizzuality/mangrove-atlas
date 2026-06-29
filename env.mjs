@@ -44,6 +44,13 @@ export const env = createEnv({
       .pipe(z.record(z.string(), z.boolean()))
       .default('{}'),
     NEXT_PUBLIC_ENVIRONMENT: z.enum(['development', 'production', 'staging']),
+    // Optional TOS-safe raster XYZ basemap used in offline mode (Mapbox base can't
+    // be cached). When unset, offline mode shows data layers on a neutral backdrop.
+    NEXT_PUBLIC_OFFLINE_BASEMAP_URL: z.string().url().optional(),
+    // Optional self-hosted alerts vector tiler (cloud function). When set, alerts
+    // render from this cacheable {z}/{x}/{y} MVT endpoint instead of the Mapbox
+    // tileset, so they work offline. When unset, falls back to Mapbox.
+    NEXT_PUBLIC_ALERTS_TILER_URL: z.string().url().optional(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -71,6 +78,8 @@ export const env = createEnv({
     NEXT_PUBLIC_FEATURED_FLAGS: process.env.NEXT_PUBLIC_FEATURED_FLAGS,
     NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
     NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
+    NEXT_PUBLIC_OFFLINE_BASEMAP_URL: process.env.NEXT_PUBLIC_OFFLINE_BASEMAP_URL,
+    NEXT_PUBLIC_ALERTS_TILER_URL: process.env.NEXT_PUBLIC_ALERTS_TILER_URL,
   },
 });
 
