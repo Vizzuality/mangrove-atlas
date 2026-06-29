@@ -68,7 +68,7 @@ class NetChangeCalculationsClass extends BaseCalculation {
     const lossKeys = reduced.keys()
       .filter(ee.Filter.stringContains('item', '_loss_')).sort();
 
-    return gainKeys.zip(lossKeys).map((pair: ee.ComputedObject) => {
+    const rows = gainKeys.zip(lossKeys).map((pair: ee.ComputedObject) => {
       const p       = ee.List(pair);
       const gainKey = ee.String(p.get(0));
       const lossKey = ee.String(p.get(1));
@@ -82,6 +82,15 @@ class NetChangeCalculationsClass extends BaseCalculation {
         'net_change': gainVal.subtract(lossVal),
       });
     });
+
+    // 1985 is the base year of the v4 dataset; no change data exists for it.
+    // A zero row anchors the start of the timeline for the frontend.
+    return ee.List(rows).insert(0, ee.Dictionary({
+      'year':       1985,
+      'gain':       0,
+      'loss':       0,
+      'net_change': 0,
+    }));
   }
 }
 
