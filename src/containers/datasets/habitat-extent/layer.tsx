@@ -10,7 +10,19 @@ import type { ExpressionSpecification } from 'mapbox-gl';
 
 import type { LayerProps } from 'types/layers';
 
+import { env } from '../../../../env.mjs';
+
 import { useMangroveHabitatExtent } from './hooks';
+
+// Per-year vector source: self-hosted {z}/{x}/{y}.pbf on GCS when configured
+// (cacheable → offline-capable; mapbox-gl can't read .pmtiles, so tiles must be
+// exploded), otherwise the Mapbox tileset. Same `source-layer` either way.
+const extentSourceProps = (year: number) => {
+  const selfHosted = env.NEXT_PUBLIC_EXTENT_TILES_URL;
+  return selfHosted
+    ? { tiles: [selfHosted.replace(/\{year\}/g, String(year))], minzoom: 0, maxzoom: 12 }
+    : { url: `mapbox://globalmangrovewatch.gmw-v4-extent-${year}` };
+};
 
 const DEFAULT_transitionMs = 600;
 
@@ -121,7 +133,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
             key={`habitat_extent_${y}`}
             id={`habitat_extent_${y}`}
             type="vector"
-            url={`mapbox://globalmangrovewatch.gmw-v4-extent-${y}`}
+            {...extentSourceProps(y)}
           >
             <Layer
               id={`${id}_${y}_fill`}
