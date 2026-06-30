@@ -86,7 +86,7 @@ class NetChangeCalculationsClass extends BaseCalculation {
     // 1985 is the base year of the v4 dataset; no change data exists for it.
     // A zero row anchors the start of the timeline for the frontend.
     return ee.List(rows).insert(0, ee.Dictionary({
-      'year':       1985,
+      'year': 1985,
       'gain':       0,
       'loss':       0,
       'net_change': 0,
