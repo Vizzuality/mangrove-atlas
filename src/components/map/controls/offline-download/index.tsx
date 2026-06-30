@@ -18,9 +18,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 
 const MIN_Z = 0;
 const MAX_Z = 12; // native pyramid depth; higher zooms scale from these (overzoom)
-// Below this view zoom the bbox is basically continental/global — downloading it
-// would blow the tile cap and only save a coarse prefix. Block it.
-const MIN_DOWNLOAD_ZOOM = 4;
+// Below this view zoom the bbox is world/continental (the worldwide default is z2)
+// — downloading it would blow the tile cap and only save a coarse prefix. Block it.
+// Country/region views (z3+) are allowed; the tile-cap warning covers large areas.
+const MIN_DOWNLOAD_ZOOM = 3;
 
 type Props = { mapId: string };
 
