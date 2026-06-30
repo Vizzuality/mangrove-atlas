@@ -3,12 +3,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { Source, Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
+import { isOfflineAtom } from '@/store/offline';
 import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
 
 import { useAtomValue } from 'jotai';
 import type { ExpressionSpecification } from 'mapbox-gl';
 
 import type { LayerProps } from 'types/layers';
+
+import { env } from '../../../../env.mjs';
 
 import { useMangroveHabitatExtent } from './hooks';
 
@@ -41,6 +44,7 @@ const usePrefersReducedMotion = () => {
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
+  const isOffline = useAtomValue(isOfflineAtom);
   const year = useAtomValue(habitatExtentSettings) as number | null;
   const { data } = useMangroveHabitatExtent({ year });
   const years = useMemo(
@@ -56,6 +60,32 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const transitionMs = reducedMotion ? 0 : DEFAULT_transitionMs;
 
   if (!years.length || !currentYear) return null;
+
+  // OFFLINE: render the self-hosted raster {z}/{x}/{y} from GCS (cacheable, TOS-safe)
+  // instead of the Mapbox vector tilesets (which can't be cached). Raster = no vector
+  // interactivity, accepted offline. ONLINE keeps the interactive vector paths below.
+  if (isOffline && env.NEXT_PUBLIC_EXTENT_TILES_URL) {
+    const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(currentYear));
+    return (
+      <Source
+        id={`habitat_extent_${currentYear}`}
+        type="raster"
+        tiles={[tiles]}
+        tileSize={256}
+        minzoom={0}
+        maxzoom={12}
+      >
+        <Layer
+          id={`${id}_${currentYear}_raster`}
+          type="raster"
+          source={`habitat_extent_${currentYear}`}
+          paint={{ 'raster-opacity': baseOpacity }}
+          layout={{ visibility }}
+          beforeId={beforeId}
+        />
+      </Source>
+    );
+  }
 
   // Prod: legacy single multi-tileset source, only the current year is rendered.
   if (!isTimelineSliderEnabled()) {

@@ -464,10 +464,14 @@ export function useAlerts<TRaw = AlertsApiResponse>(
   return query;
 }
 
-// dataset layer
+// dataset layer — ONLINE source (interactive Mapbox vector). Offline swaps to a
+// self-hosted raster in layer.tsx (Mapbox tiles can't be cached, TOS).
+export const ALERTS_SOURCE_ID = 'alerts-heatmap-vector';
+export const ALERTS_SOURCE_LAYER = 'alerts';
+
 export function useSource(): SourceProps {
   return {
-    id: 'alerts-heatmap-vector',
+    id: ALERTS_SOURCE_ID,
     type: 'vector',
     url: 'mapbox://globalmangrovewatch.0vowa2i9',
   };
@@ -491,8 +495,8 @@ export function useLayers({
 
   const layerProps: Omit<CircleLayerSpecification, 'id' | 'filter' | 'paint'> = {
     type: 'circle',
-    source: 'alerts-heatmap-vector',
-    'source-layer': 'alerts',
+    source: ALERTS_SOURCE_ID,
+    'source-layer': ALERTS_SOURCE_LAYER,
     minzoom: 0,
     maxzoom: 18,
     layout: { visibility },

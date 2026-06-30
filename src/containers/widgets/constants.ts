@@ -272,6 +272,14 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
 
 export const MAP_SETTINGS_SLUGS: string[] = ['mangrove_contextual_basemaps'];
 
+// Widgets supported in offline mode (for now: extent + alerts). Every other
+// widget is rendered disabled while offline. Extend this list as more layers
+// gain offline support.
+export const OFFLINE_ENABLED_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
+  'mangrove_habitat_extent',
+  'mangrove_alerts',
+];
+
 export const WIDGETS_BY_CATEGORY = [
   {
     distribution_and_change: [
