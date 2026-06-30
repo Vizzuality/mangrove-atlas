@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -18,6 +18,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 
 const MIN_Z = 0;
 const MAX_Z = 12; // native pyramid depth; higher zooms scale from these (overzoom)
+// Below this view zoom the bbox is basically continental/global — downloading it
+// would blow the tile cap and only save a coarse prefix. Block it.
+const MIN_DOWNLOAD_ZOOM = 4;
 
 type Props = { mapId: string };
 
@@ -34,6 +37,23 @@ const OfflineDownload = ({ mapId }: Props) => {
   const [minZoom, setMinZoom] = useState(0);
   const [maxZoom, setMaxZoom] = useState(MAX_Z);
   const [name, setName] = useState('');
+  const [viewZoom, setViewZoom] = useState<number | null>(null);
+
+  // Track the live view zoom so we can block downloading at world/continental scale.
+  useEffect(() => {
+    const rawMap = map?.getMap?.() as
+      | {
+          getZoom?: () => number;
+          on?: (e: string, cb: () => void) => void;
+          off?: (e: string, cb: () => void) => void;
+        }
+      | undefined;
+    if (!rawMap?.on || !rawMap.getZoom) return;
+    const update = () => setViewZoom(rawMap.getZoom?.() ?? null);
+    update();
+    rawMap.on('moveend', update);
+    return () => rawMap.off?.('moveend', update);
+  }, [map]);
 
   const getBBox = useCallback((): BBox | null => {
     if (source === 'drawn' && drawn) {
@@ -53,6 +73,11 @@ const OfflineDownload = ({ mapId }: Props) => {
   }, [getBBox, estimateTiles, minZoom, maxZoom]);
 
   const isRunning = progress.status === 'running';
+  // Block / warn conditions.
+  const tooLowZoom = source === 'view' && viewZoom != null && viewZoom < MIN_DOWNLOAD_ZOOM;
+  const noLayers = !!estimate && estimate.templates === 0;
+  const capped = !!estimate?.capped;
+  const canDownload = !!estimate && !isRunning && !tooLowZoom && !noLayers;
 
   const handleDownload = useCallback(() => {
     const bbox = getBBox();
@@ -163,10 +188,28 @@ const OfflineDownload = ({ mapId }: Props) => {
           className="w-full rounded border border-black/15 px-2 py-1 text-xs"
         />
 
-        {estimate && (
+        {estimate && !tooLowZoom && !noLayers && (
           <p className="text-xs text-black/60">
             ~{estimate.tiles.toLocaleString()} tiles across {estimate.templates || 1} layer(s).
             Higher zooms scale from these automatically.
+          </p>
+        )}
+
+        {tooLowZoom && (
+          <p className="text-xs text-amber-600">
+            Zoom in to download — the current view is too large to save. Frame a specific area
+            first.
+          </p>
+        )}
+        {noLayers && (
+          <p className="text-xs text-amber-600">
+            No offline-ready layers in view. Turn on a layer (or enable Work offline) first.
+          </p>
+        )}
+        {!tooLowZoom && !noLayers && capped && (
+          <p className="text-xs text-amber-600">
+            Area too large — only part will be saved. Zoom in or pick a smaller area for full
+            coverage.
           </p>
         )}
 
@@ -175,7 +218,7 @@ const OfflineDownload = ({ mapId }: Props) => {
           variant="default"
           size="sm"
           className="w-full"
-          disabled={isRunning || !estimate}
+          disabled={!canDownload}
           onClick={handleDownload}
         >
           {isRunning ? `Downloading… ${progress.done}/${progress.total}` : 'Download area'}

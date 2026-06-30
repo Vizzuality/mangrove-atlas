@@ -28,8 +28,6 @@ import { Visibility } from '@/types/layers';
 
 import API_cloud_functions from 'services/cloud-functions';
 
-import { env } from '../../../../env.mjs';
-
 import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
@@ -466,31 +464,12 @@ export function useAlerts<TRaw = AlertsApiResponse>(
   return query;
 }
 
-// dataset layer
-// When the self-hosted tiler is configured, alerts render from its cacheable
-// {z}/{x}/{y} MVT (so they work offline); otherwise fall back to the Mapbox
-// tileset. The tiler serializes its layer as `geojsonLayer` (see
-// cloud-functions/alerts-tiler) and only serves z9-14.
-const ALERTS_TILER_URL = env.NEXT_PUBLIC_ALERTS_TILER_URL;
-export const ALERTS_SOURCE_ID = ALERTS_TILER_URL ? 'alerts-tiler' : 'alerts-heatmap-vector';
-export const ALERTS_SOURCE_LAYER = ALERTS_TILER_URL ? 'geojsonLayer' : 'alerts';
+// dataset layer — ONLINE source (interactive Mapbox vector). Offline swaps to a
+// self-hosted raster in layer.tsx (Mapbox tiles can't be cached, TOS).
+export const ALERTS_SOURCE_ID = 'alerts-heatmap-vector';
+export const ALERTS_SOURCE_LAYER = 'alerts';
 
 export function useSource(): SourceProps {
-  const startDate = useAtomValue(alertsStartDate) as { value?: string } | null;
-  const endDate = useAtomValue(alertsEndDate) as { value?: string } | null;
-
-  if (ALERTS_TILER_URL) {
-    const start = startDate?.value ?? '2019-01-01';
-    const end = endDate?.value ?? new Date().toISOString().split('T')[0];
-    return {
-      id: ALERTS_SOURCE_ID,
-      type: 'vector',
-      tiles: [`${ALERTS_TILER_URL}?z={z}&x={x}&y={y}&start_date=${start}&end_date=${end}`],
-      minzoom: 9,
-      maxzoom: 14,
-    };
-  }
-
   return {
     id: ALERTS_SOURCE_ID,
     type: 'vector',

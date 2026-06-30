@@ -29,6 +29,12 @@ export const OFFLINE_BASEMAP_STYLE: MapProps['mapStyle'] = env.NEXT_PUBLIC_OFFLI
           source: 'offline-basemap',
           minzoom: 0,
         },
+        // Anchor layers the app inserts data layers before (layer-manager uses
+        // beforeId 'custom-layers'; country-boundaries uses 'water'). The Mapbox
+        // styles ship these slots — replicate them here as invisible anchors so
+        // offline data layers land ABOVE the basemap instead of failing to place.
+        { id: 'water', type: 'background', layout: { visibility: 'none' }, paint: {} },
+        { id: 'custom-layers', type: 'background', layout: { visibility: 'none' }, paint: {} },
       ],
       // Mapbox GL requires glyphs for any symbol layers added later by the app.
       glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
