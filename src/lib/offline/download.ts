@@ -11,7 +11,9 @@ import { onSWMessage, sendToSW } from './sw-messages';
 import { collectCacheableTemplates, type StyleReader } from './templates';
 import { expandTemplate, tilesForBBox, OVERZOOM_MAX, type BBox, type Tile } from './tiles';
 
-export const MAX_REGION_TILES = 5000;
+// Max tiles enumerated for a region download (across zooms 0..12). z12 dominates,
+// so 5k was hit by even a few-degree view; 20k covers ~14°×14° before warning.
+export const MAX_REGION_TILES = 20000;
 
 const newId = () =>
   (typeof crypto !== 'undefined' && 'randomUUID' in crypto && crypto.randomUUID()) ||
