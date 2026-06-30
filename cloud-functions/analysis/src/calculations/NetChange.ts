@@ -69,7 +69,7 @@ class NetChangeCalculationsClass extends BaseCalculation {
       .filter(ee.Filter.stringContains('item', '_loss_')).sort();
 
     const rows = gainKeys.zip(lossKeys).map((pair: ee.ComputedObject) => {
-      const p       = ee.List(pair);
+      const p  = ee.List(pair);
       const gainKey = ee.String(p.get(0));
       const lossKey = ee.String(p.get(1));
       const year    = gainKey.slice(-4);
