@@ -11,7 +11,7 @@ import { onSWMessage, sendToSW } from './sw-messages';
 import { collectCacheableTemplates, type StyleReader } from './templates';
 import { expandTemplate, tilesForBBox, OVERZOOM_MAX, type BBox, type Tile } from './tiles';
 
-const MAX_REGION_TILES = 5000;
+export const MAX_REGION_TILES = 5000;
 
 const newId = () =>
   (typeof crypto !== 'undefined' && 'randomUUID' in crypto && crypto.randomUUID()) ||
@@ -75,7 +75,12 @@ export function useOfflineDownload(mapId = 'default') {
       const lo = Math.max(0, Math.min(minZoom, maxZoom));
       const hi = Math.min(Math.max(minZoom, maxZoom), OVERZOOM_MAX);
       const perLayer = tilesForBBox(bbox, lo, hi, MAX_REGION_TILES).length;
-      return { templates: templates.length, tiles: perLayer * Math.max(templates.length, 1) };
+      return {
+        templates: templates.length,
+        tiles: perLayer * Math.max(templates.length, 1),
+        // cap reached → the area/zoom is too big to fully cache (only a prefix saves).
+        capped: perLayer >= MAX_REGION_TILES,
+      };
     },
     [map]
   );

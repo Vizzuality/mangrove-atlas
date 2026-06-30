@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Source, Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
+import { isOfflineAtom } from '@/store/offline';
 import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
 
 import { useAtomValue } from 'jotai';
@@ -43,6 +44,7 @@ const usePrefersReducedMotion = () => {
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
+  const isOffline = useAtomValue(isOfflineAtom);
   const year = useAtomValue(habitatExtentSettings) as number | null;
   const { data } = useMangroveHabitatExtent({ year });
   const years = useMemo(
@@ -59,10 +61,10 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
 
   if (!years.length || !currentYear) return null;
 
-  // Self-hosted raster {z}/{x}/{y}.png on GCS when configured — cacheable, so
-  // extent works offline. Renders as a raster image (no vector interactivity).
-  // Takes precedence over the Mapbox vector paths below, regardless of flags.
-  if (env.NEXT_PUBLIC_EXTENT_TILES_URL) {
+  // OFFLINE: render the self-hosted raster {z}/{x}/{y} from GCS (cacheable, TOS-safe)
+  // instead of the Mapbox vector tilesets (which can't be cached). Raster = no vector
+  // interactivity, accepted offline. ONLINE keeps the interactive vector paths below.
+  if (isOffline && env.NEXT_PUBLIC_EXTENT_TILES_URL) {
     const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(currentYear));
     return (
       <Source
