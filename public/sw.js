@@ -8,7 +8,19 @@
 // Hand-rolled on the native Cache Storage API — no Workbox / next-pwa (not on the
 // Vizzuality Tech Radar). Mapbox tiles/styles are NEVER cached (TOS).
 
-const VERSION = 'v1';
+const params = (() => {
+  try {
+    return new URL(self.location).searchParams;
+  } catch {
+    return new URLSearchParams();
+  }
+})();
+
+// Per-build stamp injected at registration (?v=<commit-sha|local-ts>). Volatile
+// cache names are suffixed with it so a new build = new cache names = the
+// activate step purges the previous build's HTML/chunks/tiles (no stale-build
+// 500s). Falls back to 'v1' when unset (e.g. SW served without the query).
+const VERSION = params.get('v') || 'v1';
 const TILE_CACHE = `mangrove-tiles-${VERSION}`; // transparent, volatile
 const DATA_CACHE = `mangrove-data-${VERSION}`; // transparent, volatile
 const STATIC_CACHE = `mangrove-static-${VERSION}`; // app shell, volatile
@@ -19,13 +31,6 @@ const MAX_TILES = 1500;
 const MAX_DATA = 300;
 const TILE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
-const params = (() => {
-  try {
-    return new URL(self.location).searchParams;
-  } catch {
-    return new URLSearchParams();
-  }
-})();
 const originOf = (raw) => {
   try {
     return raw ? new URL(raw).origin : null;

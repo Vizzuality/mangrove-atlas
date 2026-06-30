@@ -6,12 +6,24 @@ const withMDX = require('@next/mdx')({
   },
 });
 
+// Per-build identifier. On Vercel the commit SHA is stable across all instances
+// of a deploy; locally it changes every `next build`. It stamps both the Next
+// build id and the service-worker registration URL (?v=) so the SW re-installs
+// and purges its volatile caches on every deploy — otherwise a fixed-named cache
+// would serve last build's HTML/chunks forever (stale-build 500s).
+const SW_VERSION = process.env.VERCEL_GIT_COMMIT_SHA || `local-${Date.now()}`;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: false,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   output: 'standalone',
   poweredByHeader: false,
+  generateBuildId: async () => SW_VERSION,
+  env: {
+    // Inlined into the client bundle so register-sw can version the SW per build.
+    NEXT_PUBLIC_SW_VERSION: SW_VERSION,
+  },
 
   images: {
     remotePatterns: [

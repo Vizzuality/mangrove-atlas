@@ -30,6 +30,12 @@ export function registerServiceWorker(): void {
   if (apiOrigin) qs.set('api', apiOrigin);
   if (baseOrigin) qs.set('base', baseOrigin);
   if (tilerOrigin) qs.set('tiler', tilerOrigin);
+  // Per-build stamp (next.config injects NEXT_PUBLIC_SW_VERSION). Changing the
+  // registration URL each build forces the browser to install a fresh worker,
+  // whose activate step purges the previous build's volatile caches — without
+  // this the SW serves the old HTML/chunks after a deploy (stale-build 500s).
+  const version = process.env.NEXT_PUBLIC_SW_VERSION || '';
+  if (version) qs.set('v', version);
 
   const swUrl = qs.toString() ? `/sw.js?${qs.toString()}` : '/sw.js';
 
