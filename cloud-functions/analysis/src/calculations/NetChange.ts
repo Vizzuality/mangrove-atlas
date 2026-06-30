@@ -87,8 +87,8 @@ class NetChangeCalculationsClass extends BaseCalculation {
     // A zero row anchors the start of the timeline for the frontend.
     return ee.List(rows).insert(0, ee.Dictionary({
       'year': 1985,
-      'gain':       0,
-      'loss':       0,
+      'gain': 0,
+      'loss': 0,
       'net_change': 0,
     }));
   }
