@@ -46,6 +46,29 @@ NEXT_PUBLIC_EXTENT_TILES_URL=https://<BUCKET>.storage.googleapis.com/<PREFIX>/{y
 - **Big data:** global extent is large — use tippecanoe's `--drop-densest-as-needed` /
   `--coalesce-densest-as-needed` so low zooms don't blow the per-tile feature limit.
 
+## Already have a `.mbtiles` or `.pmtiles`? Just explode it
+mapbox-gl 3.x has **no `addProtocol`**, so it cannot read `.pmtiles` directly (MapLibre-only).
+If you already have per-year tiles in a container, skip tippecanoe and just explode + upload:
+
+```bash
+# from MBTiles:
+tile-join -e ./gmw_v4_extent_<year> gmw_v4_extent_<year>.mbtiles
+
+# from PMTiles (convert first):
+pmtiles convert gmw_v4_extent_<year>.pmtiles gmw_v4_extent_<year>.mbtiles
+tile-join -e ./gmw_v4_extent_<year> gmw_v4_extent_<year>.mbtiles
+
+gsutil -m -h "Content-Type:application/x-protobuf" -h "Content-Encoding:gzip" \
+  -h "Cache-Control:public,max-age=2592000" \
+  rsync -r ./gmw_v4_extent_<year> gs://<BUCKET>/<PREFIX>/gmw_v4_extent_<year>
+```
+Then `NEXT_PUBLIC_EXTENT_TILES_URL=https://<BUCKET>.storage.googleapis.com/<PREFIX>/gmw_v4_extent_{year}/{z}/{x}/{y}.pbf`.
+
+## Alternative: serve the `.pmtiles` as-is (no exploding)
+Keep the single `.pmtiles` and either (a) **migrate the renderer to MapLibre** (has `addProtocol`,
+reads `pmtiles://` natively), or (b) run a tiny **tile-server cloud function** that reads the
+`.pmtiles` via range and serves `{z}/{x}/{y}.pbf` to mapbox-gl. Both are more work than exploding.
+
 ## Alternative: PMTiles (single file)
 Instead of exploding to `{z}/{x}/{y}.pbf`, keep one `gmw_extent_<year>.pmtiles` on GCS and read it via
 the OSS `pmtiles` protocol. Cleaner hosting, but the offline SW must handle HTTP range/`206` responses

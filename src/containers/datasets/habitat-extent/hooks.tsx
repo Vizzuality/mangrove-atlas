@@ -117,6 +117,8 @@ export function useSource({ year }: { year: number }): SourceProps {
   // else the Mapbox tilesets. Both expose `source-layer` gmw_v4_extent_<year>
   // with the same properties, so layer.tsx is unchanged either way.
   if (env.NEXT_PUBLIC_EXTENT_TILES_URL) {
+    // Self-hosted {z}/{x}/{y}.pbf on GCS (cacheable → offline-capable). mapbox-gl
+    // has no addProtocol, so .pmtiles must be exploded to {z}/{x}/{y} first.
     const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(year));
     return {
       id: `habitat_extent_${year}`,
