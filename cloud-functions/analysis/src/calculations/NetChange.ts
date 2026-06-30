@@ -72,7 +72,7 @@ class NetChangeCalculationsClass extends BaseCalculation {
       const p  = ee.List(pair);
       const gainKey = ee.String(p.get(0));
       const lossKey = ee.String(p.get(1));
-      const year    = gainKey.slice(-4);
+      const year = gainKey.slice(-4);
       const gainVal = ee.Number(reduced.get(gainKey));
       const lossVal = ee.Number(reduced.get(lossKey));
       return ee.Dictionary({
