@@ -14,16 +14,6 @@ import { env } from '../../../../env.mjs';
 
 import { useMangroveHabitatExtent } from './hooks';
 
-// Per-year vector source: self-hosted {z}/{x}/{y}.pbf on GCS when configured
-// (cacheable → offline-capable; mapbox-gl can't read .pmtiles, so tiles must be
-// exploded), otherwise the Mapbox tileset. Same `source-layer` either way.
-const extentSourceProps = (year: number) => {
-  const selfHosted = env.NEXT_PUBLIC_EXTENT_TILES_URL;
-  return selfHosted
-    ? { tiles: [selfHosted.replace(/\{year\}/g, String(year))], minzoom: 0, maxzoom: 12 }
-    : { url: `mapbox://globalmangrovewatch.gmw-v4-extent-${year}` };
-};
-
 const DEFAULT_transitionMs = 600;
 
 // Prod uses the legacy single multi-tileset source (source-layer `mng_mjr_${year}`).
@@ -68,6 +58,32 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const transitionMs = reducedMotion ? 0 : DEFAULT_transitionMs;
 
   if (!years.length || !currentYear) return null;
+
+  // Self-hosted raster {z}/{x}/{y}.png on GCS when configured — cacheable, so
+  // extent works offline. Renders as a raster image (no vector interactivity).
+  // Takes precedence over the Mapbox vector paths below, regardless of flags.
+  if (env.NEXT_PUBLIC_EXTENT_TILES_URL) {
+    const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(currentYear));
+    return (
+      <Source
+        id={`habitat_extent_${currentYear}`}
+        type="raster"
+        tiles={[tiles]}
+        tileSize={256}
+        minzoom={0}
+        maxzoom={12}
+      >
+        <Layer
+          id={`${id}_${currentYear}_raster`}
+          type="raster"
+          source={`habitat_extent_${currentYear}`}
+          paint={{ 'raster-opacity': baseOpacity }}
+          layout={{ visibility }}
+          beforeId={beforeId}
+        />
+      </Source>
+    );
+  }
 
   // Prod: legacy single multi-tileset source, only the current year is rendered.
   if (!isTimelineSliderEnabled()) {
@@ -133,7 +149,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
             key={`habitat_extent_${y}`}
             id={`habitat_extent_${y}`}
             type="vector"
-            {...extentSourceProps(y)}
+            url={`mapbox://globalmangrovewatch.gmw-v4-extent-${y}`}
           >
             <Layer
               id={`${id}_${y}_fill`}
