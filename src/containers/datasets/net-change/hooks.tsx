@@ -340,24 +340,36 @@ export function useMangroveNetChange(
   };
 }
 
-export function useSources(fluctuation): SourceProps[] {
+// Pure source-builder: one combined gain/loss v4 raster per year in the
+// (startYear, endYear] window. Exclusive lower bound — the start year is the
+// baseline, so change is only shown from the year after it onward.
+export function getNetChangeSources(
+  years: number[],
+  startYear: number,
+  endYear: number
+): SourceProps[] {
+  const filteredYears = years?.filter((year) => year <= endYear && year > startYear);
+
+  return filteredYears?.map((year) => ({
+    id: `net-change-${year}`,
+    type: 'raster',
+    tiles: [
+      `https://storage.googleapis.com/mangrove_atlas/staging/tilesets/gain-loss-v4/${year}/{z}/{x}/{y}.png`,
+    ],
+    minZoom: 0,
+    maxZoom: 12,
+  }));
+}
+
+export function useSources(): SourceProps[] {
   const startYear = useAtomValue(netChangeStartYear);
   const endYear = useAtomValue(netChangeEndYear);
   const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
     startYear,
     endYear,
   });
-  const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
 
-  return filteredYears?.map((year) => ({
-    id: `net-change-${year}-${fluctuation}`,
-    type: 'raster',
-    tiles: [
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/${fluctuation}/${year}/{z}/{x}/{y}.png`,
-    ],
-    minZoom: 0,
-    maxZoom: 12,
-  }));
+  return getNetChangeSources(years, currentStartYear, currentEndYear);
 }
 
 export function useLayer({
