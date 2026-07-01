@@ -24,6 +24,7 @@ import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 
+import ChartTick from '@/components/chart/chart-tick';
 import { Visibility } from '@/types/layers';
 
 import API_cloud_functions from 'services/cloud-functions';
@@ -173,36 +174,6 @@ const getData = (data) =>
     ['month']
   );
 
-const TickSmall = ({ x, y, payload }) => {
-  const { value } = payload;
-  return (
-    <g transform={`translate(${x},${y})`}>
-      <text x={0} y={5} textAnchor="end" fill="#3A3F59" opacity={0.7} fontSize="10px">
-        {value}
-      </text>
-    </g>
-  );
-};
-
-// recharts draws the tick line for every tick; this only decides whether to
-// render the label, thinning labels when they would crowd (a tick stays at
-// every date, but not every date gets a label).
-const MAX_TICK_LABELS = 8;
-const DefaultTick = ({ x, y, payload, index = 0, visibleTicksCount = 1 }) => {
-  const { value } = payload;
-  const step = Math.max(1, Math.ceil(visibleTicksCount / MAX_TICK_LABELS));
-  const showLabel = index % step === 0 || index === visibleTicksCount - 1;
-  return (
-    <g transform={`translate(${x},${y})`}>
-      {showLabel && (
-        <text x={0} y={16} textAnchor="middle" fill="#3A3F59" opacity={0.5} fontSize="12px">
-          {value}
-        </text>
-      )}
-    </g>
-  );
-};
-
 const getTotal = (data: { count: number }[]) =>
   data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
 
@@ -304,7 +275,7 @@ export function useAlerts<TRaw = AlertsApiResponse>(
         dataKey: 'alerts',
         height: 350,
         cartesianGrid: { vertical: false, horizontal: false },
-        margin: { top: 50, right: 10, left: 10, bottom: 35 },
+        margin: { top: 50, right: 10, left: 10, bottom: 55 },
         label: 'alerts',
         xKey: 'name',
         chartBase: {
@@ -341,7 +312,16 @@ export function useAlerts<TRaw = AlertsApiResponse>(
             },
           },
         },
-        xAxis: { tick: TickSmall, type: 'category' },
+        xAxis: {
+          // Vertical month labels with tick marks (no axis line), per design.
+          tick: <ChartTick fontSize={10} angle={-90} />,
+          type: 'category',
+          // A tick mark at every month; ChartTick thins the labels so they don't crowd.
+          interval: 0,
+          axisLine: false,
+          tickLine: { stroke: 'rgba(0,0,0,0.3)' },
+          tickSize: 6,
+        },
         yAxis: {
           tick: { fontSize: 10, fill: 'rgba(0,0,0,0.54)' },
           width: 40,
@@ -414,7 +394,7 @@ export function useAlerts<TRaw = AlertsApiResponse>(
           },
         },
         xAxis: {
-          tick: DefaultTick,
+          tick: <ChartTick />,
           ticks: Array.from(new Set(fixedXAxis)),
           interval: 0,
           type: 'category',

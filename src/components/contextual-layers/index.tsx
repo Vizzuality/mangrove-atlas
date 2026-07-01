@@ -34,7 +34,7 @@ const ContextualLayersComponent = ({
   if (isPrintReport && !isActive) return null;
 
   return (
-    <div className="bg-brand-800/10 relative flex flex-col space-y-5 rounded-3xl p-3">
+    <div className="bg-brand-800/10 relative flex flex-col space-y-5 rounded-2xl p-4">
       <div className="flex items-center justify-between space-x-8">
         <div className="flex items-center">
           <div className="flex items-center space-x-4">

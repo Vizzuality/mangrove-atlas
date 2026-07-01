@@ -70,6 +70,7 @@ export type SVGBrushProps = {
   brushType?: BrushType;
   scale: ScaleLinear<number, number>;
   shadowFilterId: string;
+  stripePatternId: string;
 };
 
 export type Margin = {
