@@ -10,21 +10,18 @@ const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
-  const sourceLoss = useSources('loss') satisfies SourceProps[];
-  const sourceGain = useSources('gain') satisfies SourceProps[];
+  const sources = useSources() satisfies SourceProps[];
   const LAYER = useLayer({
     id,
     opacity: parseFloat(activeLayer.opacity),
     visibility: activeLayer.visibility,
   });
 
-  if (!LAYER || !sourceLoss || !sourceGain) return null;
-
-  const SOURCES = [...sourceGain, ...sourceLoss];
+  if (!LAYER || !sources) return null;
 
   return (
     <>
-      {SOURCES.map((SOURCE) => (
+      {sources.map((SOURCE) => (
         <Source key={SOURCE.id} {...SOURCE}>
           <Layer key={`${SOURCE.id}-layer`} {...LAYER} id={SOURCE.id} beforeId={beforeId} />
         </Source>

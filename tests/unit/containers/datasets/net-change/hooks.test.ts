@@ -1,5 +1,14 @@
-import { getFormat, getWidgetData, mockGainLoss } from '@/containers/datasets/net-change/hooks';
+import {
+  getFormat,
+  getNetChangeSources,
+  getWidgetData,
+  mockGainLoss,
+} from '@/containers/datasets/net-change/hooks';
 import type { Data } from '@/containers/datasets/net-change/types';
+
+// The raster member of react-map-gl's SourceProps union — the only variant
+// getNetChangeSources emits. Narrow to it so `tiles` is accessible in asserts.
+type RasterSource = { id: string; type: 'raster'; tiles: string[] };
 
 const rows = [
   { year: 2000, net_change: 0, gain: 0, loss: 0 },
@@ -53,6 +62,44 @@ describe('getWidgetData', () => {
     expect(result[0]['Net result']).toBe(0);
     expect(result[1]['Net result']).toBe(5);
     expect(result[2]['Net result']).toBe(3);
+  });
+});
+
+describe('getNetChangeSources', () => {
+  const years = [1986, 1996, 2007, 2015, 2020, 2025];
+
+  it('builds one combined raster source per year in the (start, end] window', () => {
+    const sources = getNetChangeSources(years, 1996, 2020);
+    // exclusive lower bound (1996 dropped), inclusive upper bound (2020 kept)
+    expect(sources.map((s) => s.id)).toEqual([
+      'net-change-2007',
+      'net-change-2015',
+      'net-change-2020',
+    ]);
+  });
+
+  it('points each source at the gain-loss-v4 combined tileset for its year', () => {
+    const [source] = getNetChangeSources(years, 1996, 2020) as RasterSource[];
+    expect(source).toMatchObject({
+      id: 'net-change-2007',
+      type: 'raster',
+      minZoom: 0,
+      maxZoom: 12,
+    });
+    expect(source.tiles).toEqual([
+      'https://storage.googleapis.com/mangrove_atlas/staging/tilesets/gain-loss-v4/2007/{z}/{x}/{y}.png',
+    ]);
+  });
+
+  it('emits a single source per year (no separate gain/loss)', () => {
+    const sources = getNetChangeSources(years, 2015, 2025) as RasterSource[];
+    expect(sources).toHaveLength(2); // 2020, 2025
+    expect(sources.every((s) => s.tiles?.length === 1)).toBe(true);
+    expect(sources.every((s) => !/\/(gain|loss)\//.test(s.tiles[0]))).toBe(true);
+  });
+
+  it('excludes the start year and returns empty when the window is degenerate', () => {
+    expect(getNetChangeSources(years, 2025, 2025)).toEqual([]);
   });
 });
 
