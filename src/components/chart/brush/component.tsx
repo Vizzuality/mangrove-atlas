@@ -4,6 +4,8 @@ import { memo, useCallback, useRef, useState } from 'react';
 
 import { SVGBrushProps, Point, Box, SVGBrushEvent } from '@/components/chart/types';
 
+import DRAGGER_SVG from '@/svgs/ui/dragger';
+
 const defaultGetEventMouse = (event: React.PointerEvent<SVGElement>): Point => [
   event.clientX,
   event.clientY,
@@ -37,13 +39,14 @@ function SVGBrushComponent({
   brushType = '2d',
   scale,
   shadowFilterId,
+  stripePatternId,
 }: SVGBrushProps) {
   const [internalSelection, setInternalSelection] = useState<Box | null>(
     controlledSelection ?? null
   );
   const moveRef = useRef<Point | null>(null);
-  const handleERef = useRef<SVGRectElement | null>(null);
-  const handleWRef = useRef<SVGRectElement | null>(null);
+  const handleERef = useRef<SVGCircleElement | null>(null);
+  const handleWRef = useRef<SVGCircleElement | null>(null);
 
   const selection = controlledSelection === undefined ? internalSelection : controlledSelection;
 
@@ -120,9 +123,6 @@ function SVGBrushComponent({
   const w = Math.max(0, Number.isFinite(x1 - x0) ? x1 - x0 : 0);
   const h = Number.isFinite(y1 - y0) ? y1 - y0 : 0;
 
-  const hW = 1;
-  const hH = Math.max(0, h - 10);
-
   return (
     <g className="brush">
       <rect
@@ -136,8 +136,7 @@ function SVGBrushComponent({
       />
 
       <rect
-        fill="url(#diagonal-stripe-1)"
-        fillOpacity="0.75"
+        fill={`url(#${stripePatternId})`}
         shapeRendering="crispEdges"
         x={ex0}
         y={ey0}
@@ -147,14 +146,28 @@ function SVGBrushComponent({
       />
 
       <rect
-        fill="url(#diagonal-stripe-1)"
-        fillOpacity="0.75"
+        fill={`url(#${stripePatternId})`}
         shapeRendering="crispEdges"
         x={x1}
         y={ey0}
         width={Math.max(0, Number.isFinite(ex1 - x1) ? ex1 - x1 : 0)}
         height={Math.max(0, h - 2)}
         pointerEvents="all"
+      />
+
+      {/* Visible rounded border around the selected range. Non-interactive so
+          drags fall through to the hit rect below. */}
+      <rect
+        pointerEvents="none"
+        fill="none"
+        stroke="rgba(0, 0, 0, 0.85)"
+        strokeWidth={2}
+        x={x - 1}
+        y={y - 4}
+        width={w + 2}
+        // Bottom border lands on the middle of the x-axis tick marks (not their base).
+        height={Math.max(0, h + 5)}
+        rx={8}
       />
 
       <rect
@@ -209,17 +222,14 @@ function SVGBrushComponent({
         onPointerUp={handleBrushEnd}
       />
 
-      <g transform={`translate(${x + w - hW / 2}, ${y + 5})`}>
-        <rect
+      <g transform={`translate(${x + w}, ${y + h / 2})`}>
+        <circle
           ref={handleERef}
           className="handle handle--e"
           cursor="ew-resize"
-          width={hW}
-          height={hH}
-          fill="rgba(0, 0, 0, 0.85)"
-          stroke="rgba(0, 0, 0, 0.85)"
-          filter={`url(#${shadowFilterId})`}
-          pointerEvents="visible"
+          r={9}
+          fill="transparent"
+          pointerEvents="all"
           onPointerDown={handleBrushStart}
           onPointerMove={(event) => {
             const move = moveRef.current;
@@ -272,27 +282,24 @@ function SVGBrushComponent({
           }}
           onPointerUp={handleBrushEnd}
         />
-        <polygon
-          points="0.5,-5 0.5,5 6,-5"
-          style={{
-            fill: 'rgba(0,0,0,0.85)',
-            stroke: 'rgba(0,0,0,0.85)',
-            strokeWidth: 1,
-          }}
+        <DRAGGER_SVG
+          x={-8}
+          y={-8}
+          width={16}
+          height={16}
+          filter={`url(#${shadowFilterId})`}
+          pointerEvents="none"
         />
       </g>
 
-      <g transform={`translate(${x - hW / 2}, ${y + 5})`}>
-        <rect
+      <g transform={`translate(${x}, ${y + h / 2})`}>
+        <circle
           ref={handleWRef}
           className="handle handle--w"
           cursor="ew-resize"
-          width={hW}
-          height={hH}
-          fill="rgba(0, 0, 0, 0.85)"
-          stroke="rgba(0, 0, 0, 0.85)"
-          filter={`url(#${shadowFilterId})`}
-          pointerEvents="visible"
+          r={9}
+          fill="transparent"
+          pointerEvents="all"
           onPointerDown={handleBrushStart}
           onPointerMove={(event) => {
             const move = moveRef.current;
@@ -345,13 +352,13 @@ function SVGBrushComponent({
           }}
           onPointerUp={handleBrushEnd}
         />
-        <polygon
-          points="-5,-5 0.5,5 0.5,-5"
-          style={{
-            fill: 'rgba(0,0,0,0.85)',
-            stroke: 'rgba(0,0,0,0.85)',
-            strokeWidth: 1,
-          }}
+        <DRAGGER_SVG
+          x={-8}
+          y={-8}
+          width={16}
+          height={16}
+          filter={`url(#${shadowFilterId})`}
+          pointerEvents="none"
         />
       </g>
     </g>

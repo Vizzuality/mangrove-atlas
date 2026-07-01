@@ -16,6 +16,7 @@ import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 
+import ChartTick from '@/components/chart/chart-tick';
 import CustomTooltip from '@/components/chart/tooltip';
 import { Visibility } from '@/types/layers';
 import { env } from 'env.mjs';
@@ -51,35 +52,13 @@ export const applyMockGainLoss = (rows: Data[] = []): Data[] =>
     ? rows.map((row) => (row.gain == null ? { ...row, ...mockGainLoss(row.net_change) } : row))
     : rows;
 
-// Axis tick used by the brush track — matches the alerts widget so both
-// brushes render identically. recharts draws the tick line for every tick;
-// this only decides whether to render the label, thinning labels when they
-// would crowd (a tick stays at every date, but not every date gets a label).
-const MAX_TICK_LABELS = 8;
-const DefaultTick = ({
-  x,
-  y,
-  payload,
-  index = 0,
-  visibleTicksCount = 1,
-}: {
-  x: number;
-  y: number;
-  payload: { value: number };
-  index?: number;
-  visibleTicksCount?: number;
-}) => {
-  const step = Math.max(1, Math.ceil(visibleTicksCount / MAX_TICK_LABELS));
-  const showLabel = index % step === 0 || index === visibleTicksCount - 1;
-  return (
-    <g transform={`translate(${x},${y})`}>
-      {showLabel && (
-        <text x={0} y={16} textAnchor="middle" fill="#3A3F59" opacity={0.5} fontSize="12px">
-          {payload.value}
-        </text>
-      )}
-    </g>
-  );
+// Shared axis label style (design spec): Open Sans 12/20, weight 400, black 56%.
+// Used for recharts' built-in tick text (main chart); the brush uses <ChartTick />.
+const AXIS_TICK = {
+  fontSize: 12,
+  fontFamily: 'Open Sans',
+  fontWeight: 400,
+  fill: 'rgba(0, 0, 0, 0.56)',
 };
 
 export const getFormat = (v) => {
@@ -218,9 +197,14 @@ export function useMangroveNetChange(
 
   const change = DATA[DATA.length - 1]?.['Net result'];
 
-  // Brush selection indices (positions of the selected years in the full series).
-  const startIndex = Math.max(years?.indexOf(currentStartYear) ?? 0, 0);
-  const endIndex = years?.indexOf(currentEndYear) ?? Math.max((years?.length ?? 1) - 1, 0);
+  // Brush selection indices — positions within the FULL brush series (DATA_FULL),
+  // which is what the brush chart actually plots. The metadata `years` list can be
+  // shorter/different, which mislocates the selection box (e.g. only covering the
+  // first fraction of the track).
+  const fullYears = DATA_FULL.map((d) => d.year);
+  const startIndex = Math.max(fullYears.indexOf(currentStartYear), 0);
+  const endIndexRaw = fullYears.indexOf(currentEndYear);
+  const endIndex = endIndexRaw === -1 ? Math.max(fullYears.length - 1, 0) : endIndexRaw;
 
   // Shared by the main chart and the brush track. Same stackId stacks gain/loss
   // per year at the same x; gain is always positive and loss negative, so
@@ -235,6 +219,13 @@ export function useMangroveNetChange(
     },
   };
 
+  // Even, never-clipped year labels for the main chart: derived from the visible
+  // window so gaps stay uniform whatever the selected range.
+  const xTicks = getEvenlySpacedTicks(
+    DATA.map((d) => d.year),
+    5
+  );
+
   const chartConfig = {
     type: 'composed',
     data: DATA,
@@ -245,19 +236,30 @@ export function useMangroveNetChange(
     // Bars sit flush — no gap between categories or between the gain/loss pair.
     barCategoryGap: 0,
     barGap: 0,
-    margin: { top: 40, right: 20, bottom: 20, left: 0 },
-    referenceLines: [{ y: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }],
+    // Left/right room so the first and last year labels are never clipped.
+    margin: { top: 40, right: 24, bottom: 20, left: 16 },
     xAxis: {
       type: 'category',
-      tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
-      interval: 'equidistantPreserveStart',
+      tick: { ...AXIS_TICK },
+      // Explicit, evenly spaced ticks; no tick marks or baseline on the top chart.
+      ticks: xTicks,
+      interval: 0,
+      // Even-by-index spacing (point scale) so labels are equidistant regardless of
+      // gaps in the data years.
+      scale: 'point',
+      tickLine: false,
+      axisLine: false,
+      // Inset first/last ticks so their labels never overflow the axis edges.
+      padding: { left: 16, right: 16 },
     },
     yAxis: {
-      tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
+      tick: { ...AXIS_TICK },
       tickFormatter: (v) => {
         const parsedNumber = unit === 'ha' ? v * 100 : v;
         const result = Number(getFormat(Math.abs(parsedNumber)));
-        return result === 0 ? 0 : result;
+        if (result === 0) return 0;
+        // Loss sits below the zero baseline — keep the sign so negative levels read as "-N".
+        return v < 0 ? `-${result}` : result;
       },
       tickMargin: 10,
       orientation: 'right',
@@ -290,27 +292,19 @@ export function useMangroveNetChange(
     cartesianGrid: { vertical: false, horizontal: false },
     // Wider side margins so the centered first/last year labels aren't clipped.
     margin: { top: 20, right: 40, left: 24, bottom: 5 },
-    patterns: {
-      diagonal: {
-        attributes: {
-          id: 'diagonal-stripe-1',
-          patternUnits: 'userSpaceOnUse',
-          patternTransform: 'rotate(-45)',
-          width: 4,
-          height: 6,
-        },
-        children: {
-          rect2: { tag: 'rect', x: 0, y: 0, width: 4, height: 6, fill: '#d2d2d2' },
-          rect: { tag: 'rect', x: 0, y: 0, width: 3, height: 6, fill: '#fff' },
-        },
-      },
-    },
+    // Brush hatch for the unselected region is provided by the shared Brush
+    // component itself (see components/chart/brush), so no per-widget pattern here.
     xKey: 'year',
     xAxis: {
-      tick: DefaultTick,
-      ticks: years,
+      tick: <ChartTick />,
+      // Evenly spaced subset of the full brush series so year labels never crowd
+      // and always sit on real categories the chart plots.
+      ticks: getEvenlySpacedTicks(fullYears, 6),
       interval: 0,
       type: 'category',
+      // Even-by-index spacing so bars + labels align with the index-based brush
+      // overlay (otherwise a numeric year axis spaces them by value and misaligns).
+      scale: 'point',
       dataKey: 'year',
       axisLine: false,
       tickLine: { stroke: 'rgba(0,0,0,0.3)' },
@@ -318,10 +312,14 @@ export function useMangroveNetChange(
     },
     // Hidden, padded y-domain so the bars/line stay inset rather than filling
     // the full height.
-    yAxis: { hide: true, domain: [(min: number) => min * 1.4, (max: number) => max * 1.4] },
+    // Extra padding keeps the bars inset within the selection box (bars fill ~55%
+    // of the height, leaving even space above/below like the design).
+    yAxis: { hide: true, domain: [(min: number) => min * 1.9, (max: number) => max * 1.9] },
     chartBase,
     tooltip: false,
-    customBrush: { margin: { top: 60, right: 20, left: 15, bottom: 80 }, startIndex, endIndex },
+    // Horizontal margins match the composed chart above (left 24 / right 40) so the
+    // selection box and draggers line up with the bars and year labels.
+    customBrush: { margin: { top: 60, right: 40, left: 24, bottom: 80 }, startIndex, endIndex },
   };
 
   const direction = change > 0 ? 'increased' : 'decreased';
@@ -330,6 +328,9 @@ export function useMangroveNetChange(
     configBrush,
     location,
     years,
+    // Full series the brush plots (can differ from metadata `years`); the widget
+    // maps brush drag indices back to years through this so the window updates.
+    brushYears: fullYears,
     currentStartYear,
     currentEndYear,
     netChange: numberFormat(Math.abs(change)),
@@ -338,6 +339,19 @@ export function useMangroveNetChange(
     noData,
     ...query,
   };
+}
+
+// Evenly spaced x-axis year ticks: uniform pixel gaps (ticks picked at even
+// index steps) with the first and last year always included so edge labels are
+// never clipped. Falls back to the full list when it already fits.
+export function getEvenlySpacedTicks(values: number[], maxTicks = 5): number[] {
+  const n = values?.length ?? 0;
+  if (n <= maxTicks) return values ?? [];
+  const ticks: number[] = [];
+  for (let i = 0; i < maxTicks; i++) {
+    ticks.push(values[Math.round((i * (n - 1)) / (maxTicks - 1))]);
+  }
+  return Array.from(new Set(ticks));
 }
 
 // Pure source-builder: one combined gain/loss v4 raster per year in the

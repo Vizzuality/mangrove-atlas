@@ -37,7 +37,7 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
         block: !isCollapsed,
       })}
     >
-      <span className="font-normal">Data applicability:</span>{' '}
+      <span className="font-semibold">Data applicability:</span>{' '}
       <span className="font-light">{applicability}.</span>{' '}
       <Dialog>
         <DialogTrigger asChild>
