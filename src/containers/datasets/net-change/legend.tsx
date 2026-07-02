@@ -19,7 +19,7 @@ const labelsForLayer = [
 ];
 
 const NetChangeLegend = () => (
-  <ul className="flex space-x-4 py-4">
+  <ul className="flex flex-wrap gap-x-8 gap-y-1 py-4">
     {labelsForLayer?.map((d) => (
       <li key={`item-${d.label}`} className="inline-flex items-center space-x-2">
         <div

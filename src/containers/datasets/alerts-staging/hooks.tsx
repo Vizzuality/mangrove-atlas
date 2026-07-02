@@ -17,6 +17,7 @@ import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 
+import ChartTick from '@/components/chart/chart-tick';
 import { Visibility } from '@/types/layers';
 import type { DateOption } from 'types/widget';
 
@@ -75,28 +76,6 @@ const getData = (data) =>
     }),
     ['month']
   );
-
-const TickSmall = ({ x, y, payload }) => {
-  const { value } = payload;
-  return (
-    <g transform={`translate(${x},${y})`}>
-      <text x={0} y={5} textAnchor="end" fill="#3A3F59" opacity={0.7} fontSize="10px">
-        {value}
-      </text>
-    </g>
-  );
-};
-
-const DefaultTick = ({ x, y, payload }) => {
-  const { value } = payload;
-  return (
-    <g transform={`translate(${x},${y})`}>
-      <text x={0} y={5} fill="#3A3F59" opacity={0.5} fontSize="12px">
-        {value}
-      </text>
-    </g>
-  );
-};
 
 const getTotal = (data: { count: number }[]) =>
   data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
@@ -192,7 +171,7 @@ export function useAlerts<DataResponse>(
           vertical: false,
           horizontal: false,
         },
-        margin: { top: 50, right: 10, left: 10, bottom: 35 },
+        margin: { top: 50, right: 10, left: 10, bottom: 55 },
         label: 'alerts',
         xKey: 'name',
         chartBase: {
@@ -205,7 +184,12 @@ export function useAlerts<DataResponse>(
           },
         },
         xAxis: {
-          tick: TickSmall,
+          tick: <ChartTick fontSize={10} angle={-90} />,
+          // A tick mark at every month; ChartTick thins the labels so they don't crowd.
+          interval: 0,
+          axisLine: false,
+          tickLine: { stroke: 'rgba(0,0,0,0.3)' },
+          tickSize: 6,
           type: 'category',
         },
         yAxis: {
@@ -332,10 +316,13 @@ export function useAlerts<DataResponse>(
           },
         },
         xAxis: {
-          tick: DefaultTick,
+          tick: <ChartTick />,
           ticks: Array.from(new Set(fixedXAxis)),
           interval: 0,
           type: 'category',
+          axisLine: false,
+          tickLine: { stroke: 'rgba(0,0,0,0.3)' },
+          tickSize: 6,
         },
 
         tooltip: false,

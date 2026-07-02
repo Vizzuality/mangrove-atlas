@@ -1,4 +1,5 @@
 import {
+  getEvenlySpacedTicks,
   getFormat,
   getNetChangeSources,
   getWidgetData,
@@ -62,6 +63,35 @@ describe('getWidgetData', () => {
     expect(result[0]['Net result']).toBe(0);
     expect(result[1]['Net result']).toBe(5);
     expect(result[2]['Net result']).toBe(3);
+  });
+});
+
+describe('getEvenlySpacedTicks', () => {
+  it('returns the values unchanged when they already fit within maxTicks', () => {
+    expect(getEvenlySpacedTicks([1996, 2000, 2004], 5)).toEqual([1996, 2000, 2004]);
+  });
+
+  it('always includes the first and last value', () => {
+    const years = [1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025];
+    const ticks = getEvenlySpacedTicks(years, 5);
+    expect(ticks[0]).toBe(1985);
+    expect(ticks[ticks.length - 1]).toBe(2025);
+  });
+
+  it('returns at most maxTicks evenly spaced (by index) values', () => {
+    const years = Array.from({ length: 40 }, (_, i) => 1986 + i); // 1986..2025
+    const ticks = getEvenlySpacedTicks(years, 5);
+    expect(ticks).toEqual([1986, 1996, 2006, 2015, 2025]);
+  });
+
+  it('dedupes when rounding lands on the same index', () => {
+    const ticks = getEvenlySpacedTicks([2019, 2020, 2021, 2022], 6);
+    expect(ticks).toEqual([...new Set(ticks)]);
+  });
+
+  it('is safe for empty/nullish input', () => {
+    expect(getEvenlySpacedTicks([], 5)).toEqual([]);
+    expect(getEvenlySpacedTicks(undefined as unknown as number[], 5)).toEqual([]);
   });
 });
 

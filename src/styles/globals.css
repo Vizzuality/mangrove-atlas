@@ -135,3 +135,10 @@
   scrollbar-width: thin;
   scrollbar-color: var(--secondary) var(--primary);
 }
+
+/* Brush charts: don't clip axis labels that overflow the plot. The first/last year
+   labels are centered on edge ticks and would otherwise be cut by the svg surface
+   (e.g. the alerts brush). No-op for charts whose labels already sit within bounds. */
+.chart-overflow-visible .recharts-surface {
+  overflow: visible;
+}

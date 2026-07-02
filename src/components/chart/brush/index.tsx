@@ -81,6 +81,7 @@ function BrushComponent<T>({
   const [brushSelection, setBrushSelection] = useState<Box | null>(null);
 
   const shadowFilterId = useId().replace(/:/g, '');
+  const stripePatternId = `brush-stripe-${useId().replace(/:/g, '')}`;
 
   const ready = useMemo(() => {
     return !!(svgWidth && svgHeight && data.length > 1);
@@ -123,6 +124,19 @@ function BrushComponent<T>({
     <div className="c-brush">
       <svg ref={svgRef} className="brush--svg" width={width} height={height}>
         <defs>
+          {/* Dedicated brush hatch: thin diagonal lines on a transparent tile so the
+              underlying data (solid bars / lines) stays visible in the unselected
+              region. Kept separate from any widget's `diagonal-stripe-1` (e.g. the
+              alerts main-chart area fill) so all brushes render the same light hatch. */}
+          <pattern
+            id={stripePatternId}
+            patternUnits="userSpaceOnUse"
+            patternTransform="rotate(-45)"
+            width={6}
+            height={6}
+          >
+            <rect x={0} y={0} width={1} height={6} fill="rgba(0,0,0,0.85)" />
+          </pattern>
           <filter id={shadowFilterId} x="-20%" y="-20%" width="140%" height="140%">
             <feDropShadow
               stdDeviation="2"
@@ -153,6 +167,7 @@ function BrushComponent<T>({
             brushType="x"
             selection={brushSelection}
             shadowFilterId={shadowFilterId}
+            stripePatternId={stripePatternId}
             onBrush={({ selection }) => {
               setBrushSelection(selection);
             }}

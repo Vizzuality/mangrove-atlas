@@ -55,6 +55,7 @@ const NetChangeWidget = () => {
     location,
     unitOptions,
     years,
+    brushYears,
     data,
     isFetching,
     currentEndYear,
@@ -81,8 +82,9 @@ const NetChangeWidget = () => {
   // fires analytics, mirroring the alerts widget.
   const handleBrushEnd = useCallback(
     ({ startIndex, endIndex }: { startIndex: number; endIndex: number }) => {
-      const newStartYear = years?.[startIndex];
-      const newEndYear = years?.[endIndex];
+      // Map through the brush's own series (what the drag indices reference).
+      const newStartYear = brushYears?.[startIndex];
+      const newEndYear = brushYears?.[endIndex];
 
       if (newStartYear != null) {
         trackEvent('Widget iteration - net change - change start year', {
@@ -103,7 +105,7 @@ const NetChangeWidget = () => {
         setEndYear(newEndYear);
       }
     },
-    [years, setStartYear, setEndYear]
+    [brushYears, setStartYear, setEndYear]
   );
 
   const contextualLayers = useMemo(

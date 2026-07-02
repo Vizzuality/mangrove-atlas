@@ -77,7 +77,9 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
   return (
     <div
       className={cn({
-        'relative h-full w-full': true,
+        // `chart-overflow-visible` lets axis labels that overflow the plot stay
+        // visible (edge tick labels would otherwise be clipped by the svg surface).
+        'chart-overflow-visible relative h-full w-full': true,
         className,
       })}
     >
