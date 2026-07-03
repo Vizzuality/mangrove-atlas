@@ -35,6 +35,22 @@ export const downloadProgressAtom = atom<DownloadProgress>({
 // Downloaded regions, hydrated from IndexedDB (see useHydrateRegions).
 export const regionsAtom = atom<OfflineRegion[]>([]);
 
+export type StorageStatus = {
+  // true = persistent (safe from auto-eviction); false = best-effort (may be
+  // dropped by the browser); null = Storage API unavailable/unknown.
+  persisted: boolean | null;
+  usage: number; // bytes used
+  quota: number; // bytes available
+};
+
+// Reflects navigator.storage state so the download panel can warn when offline
+// downloads are eviction-prone and show how much of the quota is used.
+export const storageStatusAtom = atom<StorageStatus>({
+  persisted: null,
+  usage: 0,
+  quota: 0,
+});
+
 /**
  * Binds isOnlineAtom to the browser's connectivity events. Mount once near the
  * app root (it returns nothing and renders nothing).

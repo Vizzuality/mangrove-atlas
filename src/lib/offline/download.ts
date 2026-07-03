@@ -2,11 +2,12 @@ import { useCallback, useEffect } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { downloadProgressAtom, regionsAtom } from '@/store/offline';
+import { downloadProgressAtom, regionsAtom, storageStatusAtom } from '@/store/offline';
 
 import { useAtom, useSetAtom } from 'jotai';
 
 import { deleteRegion, listRegions, putRegion, type OfflineRegion } from './regions';
+import { getStorageStatus, requestPersistentStorage } from './storage';
 import { onSWMessage, sendToSW } from './sw-messages';
 import { collectCacheableTemplates, type StyleReader } from './templates';
 import { expandTemplate, tilesForBBox, OVERZOOM_MAX, type BBox, type Tile } from './tiles';
@@ -31,6 +32,7 @@ export function useOfflineDownload(mapId = 'default') {
   const map = (maps as Record<string, { getMap?: () => unknown } | undefined>)[mapId];
   const [regions, setRegions] = useAtom(regionsAtom);
   const setProgress = useSetAtom(downloadProgressAtom);
+  const setStorage = useSetAtom(storageStatusAtom);
 
   const refreshRegions = useCallback(() => {
     listRegions()
@@ -38,9 +40,16 @@ export function useOfflineDownload(mapId = 'default') {
       .catch(() => setRegions([]));
   }, [setRegions]);
 
+  const refreshStorage = useCallback(() => {
+    getStorageStatus()
+      .then(setStorage)
+      .catch(() => {});
+  }, [setStorage]);
+
   // Hydrate the regions list once and reflect SW progress messages into the atom.
   useEffect(() => {
     refreshRegions();
+    refreshStorage();
     const off = onSWMessage((data) => {
       const msg = data as {
         type?: string;
@@ -65,10 +74,12 @@ export function useOfflineDownload(mapId = 'default') {
           done: msg.done ?? p.done,
           failed: msg.failed ?? p.failed,
         }));
+        // Tiles just landed in the cache — refresh the usage estimate.
+        refreshStorage();
       }
     });
     return off;
-  }, [refreshRegions, setProgress]);
+  }, [refreshRegions, refreshStorage, setProgress]);
 
   const estimateTiles = useCallback(
     (bbox: BBox, minZoom: number, maxZoom: number) => {
@@ -89,6 +100,10 @@ export function useOfflineDownload(mapId = 'default') {
 
   const download = useCallback(
     async ({ name, bbox, minZoom, maxZoom }: DownloadOptions) => {
+      // Opt the origin out of automatic eviction before writing anything, so the
+      // download survives Safari/iOS's idle purge and disk-pressure eviction.
+      await requestPersistentStorage();
+
       const rawMap = (map?.getMap?.() ?? map) as StyleReader | undefined;
       const templates = collectCacheableTemplates(rawMap);
       // Never request above the native pyramid depth — Mapbox overzooms cached
@@ -118,9 +133,10 @@ export function useOfflineDownload(mapId = 'default') {
       };
       await putRegion(region).catch(() => {});
       refreshRegions();
+      refreshStorage();
       return region;
     },
-    [map, refreshRegions, setProgress]
+    [map, refreshRegions, refreshStorage, setProgress]
   );
 
   const removeRegion = useCallback(
@@ -129,8 +145,9 @@ export function useOfflineDownload(mapId = 'default') {
       if (region) sendToSW({ type: 'DELETE_REGION_URLS', urls: region.urls });
       await deleteRegion(id).catch(() => {});
       refreshRegions();
+      refreshStorage();
     },
-    [regions, refreshRegions]
+    [regions, refreshRegions, refreshStorage]
   );
 
   return { regions, download, removeRegion, refreshRegions, estimateTiles };

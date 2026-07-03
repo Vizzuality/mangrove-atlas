@@ -4,11 +4,12 @@ import { useMap } from 'react-map-gl';
 
 import cn from '@/lib/classnames';
 import { useOfflineDownload } from '@/lib/offline/download';
+import { formatBytes } from '@/lib/offline/storage';
 import type { BBox } from '@/lib/offline/tiles';
 
 import { drawingToolAtom } from '@/store/drawing-tool';
 import { tmpCameraAtom } from '@/store/map';
-import { downloadProgressAtom, offlineModeAtom } from '@/store/offline';
+import { downloadProgressAtom, offlineModeAtom, storageStatusAtom } from '@/store/offline';
 
 import turfBbox from '@turf/bbox';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -29,6 +30,7 @@ const OfflineDownload = ({ mapId }: Props) => {
   const { [mapId]: map } = useMap();
   const { regions, download, removeRegion, estimateTiles } = useOfflineDownload(mapId);
   const progress = useAtomValue(downloadProgressAtom);
+  const storage = useAtomValue(storageStatusAtom);
   const [offlineMode, setOfflineMode] = useAtom(offlineModeAtom);
   const setTmpCamera = useSetAtom(tmpCameraAtom);
   const { customGeojson, uploadedGeojson } = useAtomValue(drawingToolAtom);
@@ -264,6 +266,22 @@ const OfflineDownload = ({ mapId }: Props) => {
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {(storage.quota > 0 || (regions.length > 0 && storage.persisted === false)) && (
+          <div className="space-y-1 border-t border-black/10 pt-2">
+            {storage.quota > 0 && (
+              <p className="text-xs text-black/60">
+                Storage: {formatBytes(storage.usage)} of {formatBytes(storage.quota)} used
+              </p>
+            )}
+            {regions.length > 0 && storage.persisted === false && (
+              <p className="text-xs text-amber-600">
+                Downloads may be cleared by the browser when space runs low or the site is unused
+                for a while. Add this site to your home screen to keep them.
+              </p>
+            )}
           </div>
         )}
       </PopoverContent>
