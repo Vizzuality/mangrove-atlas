@@ -318,10 +318,10 @@ export function useMangroveNetChange(
     // component itself (see components/chart/brush), so no per-widget pattern here.
     xKey: 'year',
     xAxis: {
-      tick: <ChartTick />,
-      // Evenly spaced subset of the full brush series so year labels never crowd
-      // and always sit on real categories the chart plots.
-      ticks: getEvenlySpacedTicks(fullYears, 6),
+      // Draw a tick mark for every year, but only label an evenly spaced subset so
+      // labels never crowd (the subset always sits on real plotted categories).
+      tick: <ChartTick labelValues={getEvenlySpacedTicks(fullYears, 6)} />,
+      ticks: fullYears,
       interval: 0,
       type: 'category',
       // Even-by-index spacing so bars + labels align with the index-based brush
