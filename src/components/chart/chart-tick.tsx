@@ -27,6 +27,11 @@ export type ChartTickProps = {
   textAnchor?: 'start' | 'middle' | 'end';
   maxLabels?: number;
   angle?: number; // rotate the label (e.g. -90 for vertical month labels)
+  // Explicit set of values to label. When provided, every tick mark is still
+  // drawn but only ticks whose value is in this list show a label — use it to
+  // render all ticks with an evenly spaced subset of labels. Falls back to the
+  // maxLabels thinning when omitted.
+  labelValues?: (string | number)[];
 };
 
 // Shared axis tick used across widget charts/brushes so tick↔label padding and
@@ -42,8 +47,12 @@ const ChartTick: FC<ChartTickProps> = ({
   textAnchor = 'middle',
   maxLabels = MAX_TICK_LABELS,
   angle,
+  labelValues,
 }) => {
-  if (!shouldShowTickLabel(index, visibleTicksCount, maxLabels)) {
+  const showLabel = labelValues
+    ? payload?.value != null && labelValues.includes(payload.value)
+    : shouldShowTickLabel(index, visibleTicksCount, maxLabels);
+  if (!showLabel) {
     return <g transform={`translate(${x},${y})`} />;
   }
   const rotated = typeof angle === 'number';

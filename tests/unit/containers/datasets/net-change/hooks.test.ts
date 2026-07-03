@@ -78,10 +78,20 @@ describe('getEvenlySpacedTicks', () => {
     expect(ticks[ticks.length - 1]).toBe(2025);
   });
 
-  it('returns at most maxTicks evenly spaced (by index) values', () => {
+  it('picks a uniform index step so gaps are equal (may return fewer than maxTicks)', () => {
     const years = Array.from({ length: 40 }, (_, i) => 1986 + i); // 1986..2025
     const ticks = getEvenlySpacedTicks(years, 5);
-    expect(ticks).toEqual([1986, 1996, 2006, 2015, 2025]);
+    // n-1 = 39 = 3 * 13; the largest divisor <= maxTicks-1 (4) is 3, so 4 ticks
+    // at a constant step of 13 indices — perfectly even, endpoints included.
+    expect(ticks).toEqual([1986, 1999, 2012, 2025]);
+  });
+
+  it('falls back to rounded spacing when the span has no fitting divisor (prime)', () => {
+    const years = Array.from({ length: 24 }, (_, i) => 2002 + i); // n-1 = 23 (prime)
+    const ticks = getEvenlySpacedTicks(years, 5);
+    expect(ticks[0]).toBe(2002);
+    expect(ticks[ticks.length - 1]).toBe(2025);
+    expect(ticks.length).toBeLessThanOrEqual(5);
   });
 
   it('dedupes when rounding lands on the same index', () => {
