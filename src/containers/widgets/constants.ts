@@ -277,6 +277,7 @@ export const MAP_SETTINGS_SLUGS: string[] = ['mangrove_contextual_basemaps'];
 // gain offline support.
 export const OFFLINE_ENABLED_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_habitat_extent',
+  'mangrove_net_change',
   'mangrove_alerts',
 ];
 

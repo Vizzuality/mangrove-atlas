@@ -1,9 +1,10 @@
 import { FC, useMemo } from 'react';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { isOfflineAtom } from '@/store/offline';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
 
@@ -11,7 +12,12 @@ import WidgetsLayout from '@/layouts/widgets';
 
 import CloseHelpGuide from '@/containers/help/close';
 import AppTools from '@/containers/navigation';
-import { widgets, ANALYSIS_WIDGETS_SLUGS } from '@/containers/widgets/constants';
+import {
+  widgets,
+  ANALYSIS_WIDGETS_SLUGS,
+  OFFLINE_ENABLED_WIDGETS_SLUGS,
+} from '@/containers/widgets/constants';
+import { useActivateOfflineWidgets } from '@/containers/widgets/hooks';
 
 import { Dialog } from '@/components/ui/dialog';
 import { WidgetTypes } from 'types/widget';
@@ -29,17 +35,36 @@ const WidgetsContainer: FC = () => {
   const [activeWidgets] = useSyncActiveWidgets();
   const { type: locationType } = useSyncLocation();
   const currentLocation = locationType || 'worldwide';
+  const isOffline = useAtomValue(isOfflineAtom);
+
+  // Offline: force-activate the offline-supported widgets + their layers.
+  useActivateOfflineWidgets();
 
   const widgetsAvailable = useMemo(() => {
     if (customGeojson || uploadedGeojson) {
       return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));
     }
-    return widgets.filter(
+    const list = widgets.filter(
       ({ slug, locationType: widgetLocations }) =>
         widgetLocations.includes(currentLocation) &&
         (activeWidgets?.includes(slug) || slug === 'widgets_deck_tool')
     );
-  }, [activeWidgets, currentLocation, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
+    // Offline: surface the offline-ready widgets on top (stable within groups).
+    if (isOffline) {
+      return [...list].sort(
+        (a, b) =>
+          (OFFLINE_ENABLED_WIDGETS_SLUGS.includes(a.slug) ? 0 : 1) -
+          (OFFLINE_ENABLED_WIDGETS_SLUGS.includes(b.slug) ? 0 : 1)
+      );
+    }
+    return list;
+  }, [
+    activeWidgets,
+    currentLocation,
+    customGeojson,
+    uploadedGeojson,
+    isOffline,
+  ]) satisfies WidgetTypes[];
 
   const isCustomArea = !!(customGeojson || uploadedGeojson);
 
