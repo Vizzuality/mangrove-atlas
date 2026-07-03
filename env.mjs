@@ -57,6 +57,12 @@ export const env = createEnv({
     // When set, extent renders from these cacheable tiles (offline-capable);
     // otherwise falls back to the Mapbox tilesets. Plain string (URL has braces).
     NEXT_PUBLIC_EXTENT_TILES_URL: z.string().optional(),
+    // Optional self-hosted combined gain/loss raster for net change. Template with
+    // {year} and {z}/{x}/{y}, e.g.
+    // https://storage.googleapis.com/mangrove_atlas/staging/tilesets/gain-loss-v4/{year}/{z}/{x}/{y}.png
+    // When set, net change renders from these cacheable tiles (offline-capable);
+    // otherwise falls back to the legacy separate gain/loss tilesets. Plain string.
+    NEXT_PUBLIC_GAIN__LOSS_TILES_URL: z.string().optional(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -87,6 +93,7 @@ export const env = createEnv({
     NEXT_PUBLIC_OFFLINE_BASEMAP_URL: process.env.NEXT_PUBLIC_OFFLINE_BASEMAP_URL,
     NEXT_PUBLIC_ALERTS_TILER_URL: process.env.NEXT_PUBLIC_ALERTS_TILER_URL,
     NEXT_PUBLIC_EXTENT_TILES_URL: process.env.NEXT_PUBLIC_EXTENT_TILES_URL,
+    NEXT_PUBLIC_GAIN__LOSS_TILES_URL: process.env.NEXT_PUBLIC_GAIN__LOSS_TILES_URL,
   },
 });
 

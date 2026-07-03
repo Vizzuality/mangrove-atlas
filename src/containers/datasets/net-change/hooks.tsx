@@ -420,6 +420,30 @@ export function useSources(): SourceProps[] {
   return getNetChangeSources(years, currentStartYear, currentEndYear);
 }
 
+/**
+ * Self-hosted combined gain/loss raster (both baked into one tileset), driven by
+ * NEXT_PUBLIC_GAIN__LOSS_TILES_URL. Cacheable + TOS-safe, so net change works
+ * offline and covers later years than the legacy separate gain/loss tilesets.
+ * Returns null when the env var is unset — callers then fall back to useSources.
+ */
+export function useGainLossSources(): SourceProps[] | null {
+  const startYear = useAtomValue(netChangeStartYear);
+  const endYear = useAtomValue(netChangeEndYear);
+  const { years, currentEndYear, currentStartYear } = useMangroveNetChange({ startYear, endYear });
+
+  const tilesUrl = env.NEXT_PUBLIC_GAIN__LOSS_TILES_URL;
+  if (!tilesUrl) return null;
+
+  const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
+  return (filteredYears ?? []).map((year) => ({
+    id: `gain-loss-${year}`,
+    type: 'raster',
+    tiles: [tilesUrl.replace(/\{year\}/g, String(year))],
+    minZoom: 0,
+    maxZoom: 12,
+  }));
+}
+
 export function useLayer({
   id,
   opacity,
