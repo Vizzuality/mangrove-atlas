@@ -13,7 +13,25 @@ import { env } from '../../../env.mjs';
  */
 export function registerServiceWorker(): void {
   if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return;
-  if (process.env.NODE_ENV !== 'production') return;
+  if (process.env.NODE_ENV !== 'production') {
+    // A SW left over from a local prod build (`pnpm start`/`pnpm test`) keeps
+    // serving cached `_next/static` chunks in dev — dev never re-registers or
+    // purges it, so source edits silently never reach the browser. Proactively
+    // unregister and drop our caches so `next dev` always serves fresh code.
+    navigator.serviceWorker
+      .getRegistrations()
+      .then((regs) => regs.forEach((r) => r.unregister()))
+      .catch(() => {});
+    if ('caches' in window) {
+      caches
+        .keys()
+        .then((names) =>
+          names.filter((n) => n.startsWith('mangrove-')).forEach((n) => caches.delete(n))
+        )
+        .catch(() => {});
+    }
+    return;
+  }
 
   const originOf = (raw?: string) => {
     try {

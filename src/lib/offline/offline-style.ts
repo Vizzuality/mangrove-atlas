@@ -16,6 +16,9 @@ export const OFFLINE_BASEMAP_STYLE: MapProps['mapStyle'] = env.NEXT_PUBLIC_OFFLI
           type: 'raster',
           tiles: [env.NEXT_PUBLIC_OFFLINE_BASEMAP_URL],
           tileSize: 256,
+          // Required credit for the raster basemap (OSM/ODbL). Surfaced by the
+          // map's AttributionControl; without it the offline map credits nobody.
+          attribution: '© OpenStreetMap contributors',
           // Cap at the cached pyramid depth so Mapbox overzooms (scales) cached
           // tiles for higher zooms instead of requesting uncached children —
           // keeps the basemap visible at every zoom offline.
