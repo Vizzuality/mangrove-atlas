@@ -31,6 +31,18 @@ export const widgetSlug = 'net-change';
 
 const unitOptions = ['km²', 'ha'];
 
+// Brush y-domain padding multiplier. 1.0 = tallest bar/line reaches the axis line
+// exactly (hard limit, no overflow); >1.0 leaves a small inset gap.
+const BRUSH_Y_PAD = 1.1;
+
+// Horizontal geometry shared by the main chart and the brush so the two align
+// vertically. The main chart's right y-axis reserves Y_AXIS_WIDTH; the brush has
+// no visible axis, so it mirrors that width as extra right margin to keep its plot
+// box identical. X_INSET is the point-scale padding both charts apply so the first
+// and last year sit at the same x in both.
+const Y_AXIS_WIDTH = 60;
+const X_INSET = 16;
+
 // The API currently returns `gain`/`loss` as null. When the `mockNetChange`
 // feature flag is on, derive display-only gain/loss values from `net_change`.
 // Deterministic (no Math.random) so SSR and tests stay stable.
@@ -250,9 +262,12 @@ export function useMangroveNetChange(
       tickLine: false,
       axisLine: false,
       // Inset first/last ticks so their labels never overflow the axis edges.
-      padding: { left: 16, right: 16 },
+      padding: { left: X_INSET, right: X_INSET },
     },
     yAxis: {
+      // Fixed width (recharts' default, pinned) so the brush below can reserve the
+      // same right-side space and align its plot box with this chart's.
+      width: Y_AXIS_WIDTH,
       tick: { ...AXIS_TICK },
       tickFormatter: (v) => {
         const parsedNumber = unit === 'ha' ? v * 100 : v;
@@ -290,8 +305,15 @@ export function useMangroveNetChange(
     barCategoryGap: 0,
     barGap: 0,
     cartesianGrid: { vertical: false, horizontal: false },
-    // Wider side margins so the centered first/last year labels aren't clipped.
-    margin: { top: 20, right: 40, left: 24, bottom: 5 },
+    // Mirror the main chart's plot box so the brush bars + selection align
+    // vertically with the chart above. The brush point scale has no padding, so
+    // its endpoints must land on the main chart's first/last bar centres:
+    //   left  = main.margin.left(16) + X_INSET  → first bar
+    //   right = main.margin.right(24) + Y_AXIS_WIDTH + X_INSET → last bar,
+    //           reserving the same right-side space the main y-axis occupies.
+    // The Brush selection overlay reads this same margin (chart/index.tsx), so it
+    // tracks the bars automatically.
+    margin: { top: 20, right: 24 + Y_AXIS_WIDTH + X_INSET, left: 16 + X_INSET, bottom: 5 },
     // Brush hatch for the unselected region is provided by the shared Brush
     // component itself (see components/chart/brush), so no per-widget pattern here.
     xKey: 'year',
@@ -310,16 +332,24 @@ export function useMangroveNetChange(
       tickLine: { stroke: 'rgba(0,0,0,0.3)' },
       tickSize: 6,
     },
-    // Hidden, padded y-domain so the bars/line stay inset rather than filling
-    // the full height.
-    // Extra padding keeps the bars inset within the selection box (bars fill ~55%
-    // of the height, leaving even space above/below like the design).
-    yAxis: { hide: true, domain: [(min: number) => min * 1.9, (max: number) => max * 1.9] },
+    // Hidden y-domain, lightly padded so the bars/line sit close to the axis line
+    // (the y limit) without ever drawing past it. BRUSH_Y_PAD = 1.0 makes the
+    // tallest bar/line touch the axis exactly (hard limit, zero overflow); >1.0
+    // leaves a thin gap. Keep it >= 1.0 so content never overflows the axis.
+    yAxis: {
+      hide: true,
+      domain: [(min: number) => min * BRUSH_Y_PAD, (max: number) => max * BRUSH_Y_PAD],
+    },
     chartBase,
     tooltip: false,
-    // Horizontal margins match the composed chart above (left 24 / right 40) so the
-    // selection box and draggers line up with the bars and year labels.
-    customBrush: { margin: { top: 60, right: 40, left: 24, bottom: 80 }, startIndex, endIndex },
+    // Only startIndex/endIndex are read here — the Brush overlay derives its
+    // extent from the chart `margin` above (see chart/index.tsx), so the selection
+    // box and draggers line up with the bars automatically.
+    customBrush: {
+      margin: { top: 60, right: 24 + Y_AXIS_WIDTH + X_INSET, left: 16 + X_INSET, bottom: 80 },
+      startIndex,
+      endIndex,
+    },
   };
 
   const direction = change > 0 ? 'increased' : 'decreased';
@@ -341,12 +371,35 @@ export function useMangroveNetChange(
   };
 }
 
-// Evenly spaced x-axis year ticks: uniform pixel gaps (ticks picked at even
-// index steps) with the first and last year always included so edge labels are
-// never clipped. Falls back to the full list when it already fits.
+// Evenly spaced x-axis year ticks. On a point scale the pixel position is
+// proportional to the value's index, so truly even spacing needs a *constant*
+// index step. We pick the largest step that divides (n-1) into at most
+// `maxTicks - 1` equal intervals, which keeps the first and last year and makes
+// every gap identical. Only when (n-1) has no such divisor (e.g. it's prime) do
+// we fall back to rounded positions (best-effort even). Returns the full list
+// when it already fits.
 export function getEvenlySpacedTicks(values: number[], maxTicks = 5): number[] {
   const n = values?.length ?? 0;
   if (n <= maxTicks) return values ?? [];
+
+  const maxIntervals = maxTicks - 1;
+  // Largest number of equal intervals (>= 2, so at least 3 labels) that divides
+  // the axis evenly — gives a constant index step and includes both endpoints.
+  let step = 0;
+  for (let m = maxIntervals; m >= 2; m--) {
+    if ((n - 1) % m === 0) {
+      step = (n - 1) / m;
+      break;
+    }
+  }
+
+  if (step > 0) {
+    const ticks: number[] = [];
+    for (let i = 0; i <= n - 1; i += step) ticks.push(values[i]);
+    return ticks;
+  }
+
+  // Fallback: (n-1) is prime — no uniform step fits, so approximate with rounding.
   const ticks: number[] = [];
   for (let i = 0; i < maxTicks; i++) {
     ticks.push(values[Math.round((i * (n - 1)) / (maxTicks - 1))]);

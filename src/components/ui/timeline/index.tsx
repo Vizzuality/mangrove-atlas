@@ -50,8 +50,28 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
       for (let i = 0; i < years.length; i++) set.add(i);
       return set;
     }
-    const numGaps = maxLabels - 1;
     const totalDist = years.length - 1;
+    // Ticks are positioned by index, so labels are only truly evenly spaced when
+    // the gap between labelled indices is constant. Pick the largest number of
+    // equal intervals that (a) fits the width budget and (b) divides the axis
+    // exactly — this keeps a uniform step and always includes the first and last
+    // year.
+    const maxIntervals = Math.min(maxLabels - 1, totalDist);
+    let step = 0;
+    for (let m = maxIntervals; m >= 2; m--) {
+      if (totalDist % m === 0) {
+        step = totalDist / m;
+        break;
+      }
+    }
+    if (step > 0) {
+      for (let i = 0; i <= totalDist; i += step) set.add(i);
+      return set;
+    }
+
+    // Fallback: totalDist has no divisor that fits the budget (e.g. it's prime),
+    // so spread the remainder as evenly as possible and keep both endpoints.
+    const numGaps = maxLabels - 1;
     const baseStep = Math.floor(totalDist / numGaps);
     const remainder = totalDist - baseStep * numGaps;
     let pos = 0;
