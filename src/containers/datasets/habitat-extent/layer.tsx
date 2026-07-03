@@ -17,6 +17,11 @@ import { useMangroveHabitatExtent } from './hooks';
 
 const DEFAULT_transitionMs = 600;
 
+// Newest year the self-hosted extent raster (NEXT_PUBLIC_EXTENT_TILES_URL, v3)
+// publishes. Bump when the tileset gains newer years. Offline requests are
+// clamped to this so a later online-timeline year doesn't 404 into a blank layer.
+const OFFLINE_EXTENT_MAX_YEAR = 2020;
+
 // Prod uses the legacy single multi-tileset source (source-layer `mng_mjr_${year}`).
 // Staging uses the per-year GMW v4 tilesets, gated by the timeline_slider feature flag.
 const LEGACY_EXTENT_SOURCE_URL =
@@ -65,10 +70,14 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   // instead of the Mapbox vector tilesets (which can't be cached). Raster = no vector
   // interactivity, accepted offline. ONLINE keeps the interactive vector paths below.
   if (isOffline && env.NEXT_PUBLIC_EXTENT_TILES_URL) {
-    const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(currentYear));
+    // The self-hosted extent raster only publishes through OFFLINE_EXTENT_MAX_YEAR;
+    // later years (from the online GMW timeline) have no tiles and 404 → blank layer.
+    // Clamp so a recent selected year falls back to the newest available raster.
+    const offlineYear = Math.min(currentYear, OFFLINE_EXTENT_MAX_YEAR);
+    const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(offlineYear));
     return (
       <Source
-        id={`habitat_extent_${currentYear}`}
+        id={`habitat_extent_${offlineYear}`}
         type="raster"
         tiles={[tiles]}
         tileSize={256}
@@ -76,9 +85,9 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
         maxzoom={12}
       >
         <Layer
-          id={`${id}_${currentYear}_raster`}
+          id={`${id}_${offlineYear}_raster`}
           type="raster"
-          source={`habitat_extent_${currentYear}`}
+          source={`habitat_extent_${offlineYear}`}
           paint={{ 'raster-opacity': baseOpacity }}
           layout={{ visibility }}
           beforeId={beforeId}

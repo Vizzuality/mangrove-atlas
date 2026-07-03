@@ -35,10 +35,11 @@ const MangrovesAlertsLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => 
   // OFFLINE: self-hosted raster {z}/{x}/{y} from GCS (cacheable, TOS-safe) instead
   // of the Mapbox vector tileset. Raster = no per-point interactivity, accepted offline.
   if (isOffline && env.NEXT_PUBLIC_ALERTS_TILER_URL) {
-    const tiles = env.NEXT_PUBLIC_ALERTS_TILER_URL.replace(
-      /\{year\}/g,
-      String(new Date().getFullYear())
-    );
+    // The gain-loss tileset only publishes *completed* years — the in-progress
+    // calendar year has no tiles yet (requesting it 404s → blank layer). Use the
+    // last completed year so offline alerts render year-round.
+    const latestTilesetYear = new Date().getFullYear() - 1;
+    const tiles = env.NEXT_PUBLIC_ALERTS_TILER_URL.replace(/\{year\}/g, String(latestTilesetYear));
     return (
       <Source
         id="alerts-raster"
