@@ -3,7 +3,6 @@ import {
   getFormat,
   getNetChangeSources,
   getWidgetData,
-  mockGainLoss,
 } from '@/containers/datasets/net-change/hooks';
 import type { Data } from '@/containers/datasets/net-change/types';
 
@@ -140,22 +139,5 @@ describe('getNetChangeSources', () => {
 
   it('excludes the start year and returns empty when the window is degenerate', () => {
     expect(getNetChangeSources(years, 2025, 2025)).toEqual([]);
-  });
-});
-
-describe('mockGainLoss', () => {
-  it('produces gain/loss whose difference equals net_change', () => {
-    for (const net of [-2631.47, -1.5, 0, 51.08, 293.95]) {
-      const { gain, loss } = mockGainLoss(net);
-      expect(gain - loss).toBeCloseTo(net, 6);
-    }
-  });
-
-  it('returns non-negative, deterministic values', () => {
-    const a = mockGainLoss(-433.07);
-    const b = mockGainLoss(-433.07);
-    expect(a).toEqual(b);
-    expect(a.gain).toBeGreaterThanOrEqual(0);
-    expect(a.loss).toBeGreaterThanOrEqual(0);
   });
 });

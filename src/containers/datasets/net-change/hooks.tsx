@@ -43,27 +43,6 @@ const BRUSH_Y_PAD = 1.1;
 const Y_AXIS_WIDTH = 60;
 const X_INSET = 16;
 
-// The API currently returns `gain`/`loss` as null. When the `mockNetChange`
-// feature flag is on, derive display-only gain/loss values from `net_change`.
-// Deterministic (no Math.random) so SSR and tests stay stable.
-export const mockNetChangeEnabled =
-  JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}').mockNetChange === true;
-
-export const mockGainLoss = (net_change: number) => {
-  // baseline churn proportional to the magnitude, so bars are visible even when
-  // net change is small; gain - loss === net_change exactly.
-  const base = Math.abs(net_change) * 0.5 + 50;
-  return {
-    gain: base + Math.max(net_change, 0),
-    loss: base + Math.max(-net_change, 0),
-  };
-};
-
-export const applyMockGainLoss = (rows: Data[] = []): Data[] =>
-  mockNetChangeEnabled
-    ? rows.map((row) => (row.gain == null ? { ...row, ...mockGainLoss(row.net_change) } : row))
-    : rows;
-
 // Shared axis label style (design spec): Open Sans 12/20, weight 400, black 56%.
 // Used for recharts' built-in tick text (main chart); the brush uses <ChartTick />.
 const AXIS_TICK = {
@@ -182,27 +161,29 @@ export function useMangroveNetChange(
   });
 
   const { data, isFetched } = query;
-
   const noData =
     location_id === 'custom-area'
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0
       : isFetched && !data?.data?.length;
 
-  const years = data?.metadata?.year.sort();
+  // Derive years from the actual data series (source of truth) rather than
+  // metadata.year, which can lag the response. Keeps the dropdowns, default
+  // range, brush, and info panel in sync. Falls back to metadata if present.
+  const years = data?.data?.length
+    ? [...new Set(data.data.map((d) => d.year))].sort((a, b) => a - b)
+    : [...(data?.metadata?.year ?? [])].sort((a, b) => a - b);
   const unit = selectedUnit || data.metadata?.units.net_change;
   const currentStartYear = startYear || years?.[0];
   const currentEndYear = endYear || years?.[years?.length - 1];
 
   // Mocked gain/loss (flag-gated) applied once to the full series.
-  const allData = applyMockGainLoss(data?.data);
-
   // Main chart shows the selected [startYear, endYear] window; the brush below
   // shows the full series and drives the selection (same as the alerts widget).
-  const dataFiltered = allData?.filter(
+  const dataFiltered = data?.data?.filter(
     (d) => d.year >= currentStartYear && d.year <= currentEndYear
   );
   const DATA = getWidgetData(dataFiltered, unit) || [];
-  const DATA_FULL = getWidgetData(allData, unit) || [];
+  const DATA_FULL = getWidgetData(data?.data, unit) || [];
   const TooltipData = {
     content: (properties) => <CustomTooltip {...properties} />,
   };
