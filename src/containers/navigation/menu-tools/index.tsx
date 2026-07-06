@@ -36,8 +36,11 @@ const LocationTools = () => {
     resetDrawingState();
     resetAnalysisState();
     resetDrawingUploadState();
-    // See layouts/desktop: chain through the keyed ref, not just `map`.
-    map?.['default-desktop-no-print']?.flyTo({
+    // The main map registers with react-map-gl as id `default` (see
+    // containers/map MapContainer mapId="default"). Chain through that keyed
+    // ref — the old `default-desktop-no-print` key matched no mounted map, so
+    // flyTo silently no-oped and the map never returned to worldwide.
+    map?.['default']?.flyTo({
       center: [0, 20],
       zoom: 2,
     });
