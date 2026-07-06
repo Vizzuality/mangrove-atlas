@@ -1,0 +1,27 @@
+name: pr-jira-key
+
+# Warn-only guard: reminds contributors to reference a Jira issue key (GMW-###)
+# in the PR title or the head branch, so the GitHub for Jira app can link the
+# work to its issue (Development panel, Smart Commits). Never blocks merge.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  check-jira-key:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Warn if no GMW-### key in PR title or branch
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          if echo "$PR_TITLE $HEAD_REF" | grep -qiE 'GMW-[0-9]+'; then
+            echo "Jira key found — linked to GMW issue."
+          else
+            echo "::warning title=No Jira key::PR title or branch has no GMW-### key. Add one (e.g. GMW-123) so Jira can link this work. Not blocking merge."
+          fi
