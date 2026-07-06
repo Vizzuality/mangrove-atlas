@@ -1,0 +1,20 @@
+name: release-please (develop pre-release)
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          target-branch: develop
+          config-file: release-please-config.develop.json
+          manifest-file: .release-please-manifest.develop.json
