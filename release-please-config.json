@@ -5,7 +5,10 @@
     ".": {
       "release-type": "node",
       "changelog-path": "CHANGELOG.md",
-      "release-as": "2.0.0"
+      "prerelease": true,
+      "prerelease-type": "rc",
+      "versioning": "prerelease",
+      "release-as": "2.0.0-rc.0"
     }
   }
 }

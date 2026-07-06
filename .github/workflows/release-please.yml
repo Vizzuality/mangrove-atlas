@@ -1,9 +1,17 @@
-name: release-please (main)
+name: release-please
+
+# Releases are cut on develop only. main is a fast-forward mirror of develop
+# (git merge --ff-only develop) so it never carries a unique release commit and
+# the develop -> main fast-forward is always possible.
+#
+# Cadence: normal commits produce rc pre-releases (2.0.0-rc.0, 2.0.0-rc.1, ...).
+# To graduate to a stable release, merge a commit with a `Release-As: 2.0.0`
+# footer, which makes release-please cut the stable tag on the same line.
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 permissions:
   contents: write
@@ -15,6 +23,6 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@v4
         with:
-          target-branch: main
+          target-branch: develop
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
