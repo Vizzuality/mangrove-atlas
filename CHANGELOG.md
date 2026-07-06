@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Bug Fixes
 
 * data-driven year range in extent & net-change info + dropdowns (GMW-1039) ([e410f44](https://github.com/Vizzuality/mangrove-atlas/commit/e410f440313fda13bfce9c4199f4d82908c2692a))
-* fly map to worldwide on Reset page (GMW-1037) ([75888fc](https://github.com/Vizzuality/mangrove-atlas/commit/75888fcf534b8f96c311722a26282b7567103fab))
 * fly map to worldwide on Reset page (GMW-1037) ([eea5d64](https://github.com/Vizzuality/mangrove-atlas/commit/eea5d64b7ea9acc58bb059786f8e615f309bb558))
 
 ## [2.0.0](https://github.com/Vizzuality/mangrove-atlas/compare/v2.0.0-rc.0...v2.0.0) (2026-07-06)
