@@ -1,10 +1,10 @@
 import LayoutMdx from '@/layouts/mdx';
 
-# Global extent of mangroves for select years from 1996 to 2020.
+# Global extent of mangroves for select years from {props.minYear} to {props.maxYear}.
 
 ## Overview:
 
-This layer depicts the global extent and change of mangrove forests in the years 1996, 2007 - 2010 and 2015 - 2020. The data set was generated within the framework of the Global Mangrove Watch (GMW) , an initiative convened by Aberystwyth University, soloEO, The Nature Conservancy and Wetlands International.
+This layer depicts the global extent and change of mangrove forests from {props.minYear} to {props.maxYear}. The data set was generated within the framework of the Global Mangrove Watch (GMW) , an initiative convened by Aberystwyth University, soloEO, The Nature Conservancy and Wetlands International.
 
 The paper describing the mangrove extent and change dataset is available at:
 
@@ -20,7 +20,7 @@ describing the Global Coastline Vector dataset:
 <a target="_blank" rel="noopener noreferrer" href="https://doi.org/10.1080/1755876X.2018.1529714">
   https://doi.org/10.1080/1755876X.2018.1529714
 </a>
-## Date of content: 1996, 2007, 2008, 2009, 2010, 2015, 2016, 2017, 2018, 2019, 2020 ## License:
+## Date of content: {props.minYear} to {props.maxYear} ## License:
 <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by/4.0/">
   CC-BY 4.0
 </a>
