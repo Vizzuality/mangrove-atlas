@@ -7,7 +7,8 @@
       "changelog-path": "CHANGELOG.md",
       "prerelease": true,
       "prerelease-type": "rc",
-      "versioning": "prerelease"
+      "versioning": "prerelease",
+      "release-as": "8.0.0-rc.0"
     }
   }
 }
