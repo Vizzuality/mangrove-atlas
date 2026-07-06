@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2.0.0](https://github.com/Vizzuality/mangrove-atlas/compare/v2.0.0-rc.0...v2.0.0) (2026-07-06)
+
+
+### Miscellaneous Chores
+
+* drop release-as bootstrap now that v2.0.0-rc.0 is cut ([90741c1](https://github.com/Vizzuality/mangrove-atlas/commit/90741c10395821a219bac6207deb17e5a086e9c8))
+
 ## [2.0.0-rc.0](https://github.com/Vizzuality/mangrove-atlas/compare/v1.0.0...v2.0.0-rc.0) (2026-07-06)
 
 
