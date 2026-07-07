@@ -81,7 +81,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
               <button
                 type="button"
                 aria-label="Drag to reorder"
-                className="cursor-grab active:cursor-grabbing"
+                className="flex min-h-6 min-w-6 cursor-grab items-center justify-center active:cursor-grabbing"
               >
                 <DRAG_SVG role="img" title="Order layer" />
               </button>
@@ -91,7 +91,11 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
             <Tooltip>
               <DialogTrigger asChild>
                 <TooltipTrigger asChild>
-                  <button type="button" aria-label="Layer statistics">
+                  <button
+                    type="button"
+                    aria-label="Layer statistics"
+                    className="flex min-h-6 cursor-pointer items-center"
+                  >
                     <p className="pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
                       {title}
                     </p>
