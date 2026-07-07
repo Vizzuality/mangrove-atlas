@@ -2,23 +2,17 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { mapViewAtom } from '@/store/sidebar';
-
-import { useAtomValue } from 'jotai';
-
 import NavigationBar from '@/containers/navigation/mobile';
-import WidgetsContainer from '@/containers/widgets';
-
-const WelcomeIntroMessage = dynamic(() => import('@/containers/welcome-message'), { ssr: false });
 
 import LOGO_MOBILE_SVG from '@/svgs/logo-mobile';
 
+// Chrome only. The widgets list and welcome message are rendered once by
+// MainApp (which also owns the mobile map-view visibility toggle) so they are
+// not duplicated across the desktop/mobile layouts.
 const MobileLayout = () => {
-  const mapView = useAtomValue(mapViewAtom);
   const map = useMap();
 
   const handleReset = useCallback(() => {
@@ -45,10 +39,6 @@ const MobileLayout = () => {
         />
       </Link>
       <NavigationBar />
-      <WelcomeIntroMessage />
-      <main id="main-content" className="h-full">
-        {!mapView && <WidgetsContainer />}
-      </main>
     </div>
   );
 };

@@ -2,14 +2,11 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import dynamic from 'next/dynamic';
-
-import WidgetsContainer from '@/containers/widgets';
-
-const WelcomeIntroMessage = dynamic(() => import('@/containers/welcome-message'), { ssr: false });
-
 import Logo from 'components/logo';
 
+// Chrome only. The widgets list and welcome message are rendered once by
+// MainApp so they are not duplicated across the desktop/mobile layouts (which
+// are both present in the DOM under fresnel).
 const DesktopLayout = () => {
   const map = useMap();
 
@@ -32,12 +29,6 @@ const DesktopLayout = () => {
         height={216}
         onClick={handleReset}
       />
-
-      <main id="main-content" className="relative h-screen w-screen">
-        <WidgetsContainer />
-
-        <WelcomeIntroMessage />
-      </main>
     </div>
   );
 };
