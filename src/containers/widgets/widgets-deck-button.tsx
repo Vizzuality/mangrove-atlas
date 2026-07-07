@@ -42,13 +42,13 @@ export default function WidgetsDeckButton() {
       tooltipPosition={{ top: -50, left: 0 }}
       message={HELPER_MESSAGE}
     >
-      <DialogTrigger asChild>
-        <motion.div
-          initial="rest"
-          whileHover="hover"
-          animate="rest"
-          className="fixed bottom-3 left-1/2 z-20 -translate-x-1/2 lg:left-[calc((572px-48px)/2)] lg:translate-x-0"
-        >
+      <motion.div
+        initial="rest"
+        whileHover="hover"
+        animate="rest"
+        className="fixed bottom-3 left-1/2 z-20 -translate-x-1/2 lg:left-[calc((572px-48px)/2)] lg:translate-x-0"
+      >
+        <DialogTrigger asChild>
           <motion.button
             type="button"
             aria-label="Open widgets deck"
@@ -60,8 +60,8 @@ export default function WidgetsDeckButton() {
               Widgets deck
             </motion.span>
           </motion.button>
-        </motion.div>
-      </DialogTrigger>
+        </DialogTrigger>
+      </motion.div>
     </Helper>
   );
 }

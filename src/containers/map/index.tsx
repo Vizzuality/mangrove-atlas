@@ -17,6 +17,7 @@ import {
   mapCursorAtom,
   coordinatesAtom,
   mapDraggableTooltipDimensionsAtom,
+  mapDraggableTooltipPinnedAtom,
   mapDraggableTooltipPositionAtom,
   tmpCameraAtom,
   useSyncBasemap,
@@ -26,7 +27,7 @@ import { mapViewAtom } from '@/store/sidebar';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import type { GeoJSONFeature, LngLatBoundsLike } from 'mapbox-gl';
 import { useOnClickOutside, useWindowSize } from 'usehooks-ts';
 
@@ -72,6 +73,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   const mapPopUpDimensions = useAtomValue(mapDraggableTooltipDimensionsAtom);
 
   const [coordinates, setCoordinates] = useAtom(coordinatesAtom);
+  const setPin = useSetAtom(mapDraggableTooltipPinnedAtom);
   const mapRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -298,6 +300,9 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
     const y = Math.max(0, Math.min(e.point.y, window.innerHeight - h));
 
     setPosition({ x, y });
+    // A fresh map click opens a new (undocked) popup — clear any leftover
+    // pinned/docked state so the pin control docks on first click.
+    setPin(false);
     if (locationFeature) {
       const protectedAreas = protectedAreaFeature?.map((feature) => ({
         ...feature.properties,
@@ -635,6 +640,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                       e.stopPropagation();
                       setCoordinates(null);
                       setPosition(null);
+                      setPin(false);
                     }}
                   >
                     <Image src="/images/MapMarker.png" alt="Map Marker" width={24} height={40} />

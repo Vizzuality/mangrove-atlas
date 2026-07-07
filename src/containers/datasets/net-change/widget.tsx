@@ -151,14 +151,14 @@ const NetChangeWidget = () => {
             <span className="font-bold"> {netChange}</span>{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES}`}>
+                <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                   {selectedUnit}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     aria-hidden={true}
                   />
-                </span>
+                </button>
               </PopoverTrigger>
 
               <PopoverContent className="shadow-border rounded-2xl px-2">
@@ -194,14 +194,14 @@ const NetChangeWidget = () => {
             between{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES}`}>
+                <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                   {currentStartYear}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     aria-hidden={true}
                   />
-                </span>
+                </button>
               </PopoverTrigger>
 
               <PopoverContent className="shadow-border rounded-2xl px-2">
@@ -231,14 +231,14 @@ const NetChangeWidget = () => {
             and{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES}`}>
+                <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                   {currentEndYear}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     aria-hidden={true}
                   />
-                </span>
+                </button>
               </PopoverTrigger>
 
               <PopoverContent className="shadow-border rounded-2xl px-2">

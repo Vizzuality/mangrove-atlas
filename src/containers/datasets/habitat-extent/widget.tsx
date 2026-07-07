@@ -166,14 +166,14 @@ const HabitatExtent = () => {
                 {area}{' '}
                 <Popover>
                   <PopoverTrigger asChild>
-                    <span className={`${WIDGET_SELECT_STYLES}`}>
+                    <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                       {selectedUnitAreaExtent}
                       <ARROW_SVG
                         className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                         role="img"
                         title="Arrow"
                       />
-                    </span>
+                    </button>
                   </PopoverTrigger>
                   <PopoverContent className="shadow-border rounded-2xl px-2">
                     <ul className="z-20 max-h-32 space-y-0.5">
@@ -201,14 +201,14 @@ const HabitatExtent = () => {
               in{' '}
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES}`}>
+                  <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                     {year || defaultYear}
                     <ARROW_SVG
                       className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       title="Arrow"
                     />
-                  </span>
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent className="shadow-border rounded-2xl px-2">
                   <ul className="z-20 max-h-56 space-y-0.5">
@@ -270,14 +270,14 @@ const HabitatExtent = () => {
                 {area}{' '}
                 <Popover>
                   <PopoverTrigger asChild>
-                    <span className={`${WIDGET_SELECT_STYLES}`}>
+                    <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                       {selectedUnitAreaExtent}
                       <ARROW_SVG
                         className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                         role="img"
                         title="Arrow"
                       />
-                    </span>
+                    </button>
                   </PopoverTrigger>
                   <PopoverContent className="shadow-border rounded-2xl px-2">
                     <ul className="z-20 max-h-32 space-y-0.5">
@@ -305,14 +305,14 @@ const HabitatExtent = () => {
               in{' '}
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES}`}>
+                  <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                     {currentYear}
                     <ARROW_SVG
                       className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       title="Arrow"
                     />
-                  </span>
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent className="shadow-border rounded-2xl px-2">
                   <ul className="z-20 max-h-56 space-y-0.5">
