@@ -50,6 +50,7 @@ const LanguageSelector = ({
 
   useEffect(() => {
     const id = setTimeout(() => {
+      console.info('Transifex:', window.Transifex);
       if (typeof window !== 'undefined' && window.Transifex) {
         const tx = window.Transifex as Transifex;
         if (tx?.live) {
@@ -69,7 +70,7 @@ const LanguageSelector = ({
     <Helper
       className={{
         button: 'top-0 -right-4',
-        tooltip: 'w-fit-content max-w-[400px]',
+        tooltip: 'w-fit-content max-w-100',
       }}
       tooltipPosition={{ top: -50, left: 0 }}
       message="Select your preferred language here. There is a choice between English, French, and Spanish. More languages coming soon."
