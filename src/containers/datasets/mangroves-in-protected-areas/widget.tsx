@@ -46,14 +46,14 @@ const MangrovesInProtectedAreas = () => {
               {data.protectedArea}{' '}
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES}`}>
+                  <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                     {selectedUnit}
                     <ARROW_SVG
                       className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       aria-hidden={true}
                     />
-                  </span>
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <ul className="max-h-56 space-y-2">
@@ -89,14 +89,14 @@ const MangrovesInProtectedAreas = () => {
             out of a total <span className="font-bold">{data.totalArea}</span>{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES}`}>
+                <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                   {selectedUnit}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     aria-hidden={true}
                   />
-                </span>
+                </button>
               </PopoverTrigger>
               .
               <PopoverContent>

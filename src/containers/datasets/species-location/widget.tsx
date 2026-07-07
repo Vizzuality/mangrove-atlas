@@ -1,12 +1,14 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
+import cn from '@/lib/classnames';
 
 import { SpeciesLocationState } from '@/store/widgets/species-location';
 
-import * as RadioGroup from '@radix-ui/react-radio-group';
 import type { PrimitiveAtom } from 'jotai';
 import { useAtom } from 'jotai';
+import { CgRadioCheck } from 'react-icons/cg';
+import type { IconBaseProps } from 'react-icons/lib';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
 
@@ -23,12 +25,12 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import Loading from '@/components/ui/loading';
-import RadioGroupItem from '@/components/ui/radio-group/radio-group-item';
-import type { RadioOption } from '@/components/ui/radio-group/types';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from '@/styles/widgets';
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse, Specie } from './types';
+
+const RadioCheckIcon = CgRadioCheck as unknown as (p: IconBaseProps) => JSX.Element;
 
 const SpeciesLocation = () => {
   const { type: locationType, id } = useSyncLocation();
@@ -59,7 +61,7 @@ const SpeciesLocation = () => {
   );
 
   const onSelectSpecies = useCallback(
-    (specieName: RadioOption['value']) => {
+    (specieName: string) => {
       const specie = species.find(({ scientific_name }) => scientific_name === specieName);
       if (specie) setSpecie(specie);
       // Google Analytics tracking
@@ -74,6 +76,24 @@ const SpeciesLocation = () => {
   );
 
   const totalLocations = useMemo(() => specieSelected?.location_ids?.length || 0, [specieSelected]);
+
+  // Show the top/bottom fade overlays only when there is scrollable content in that direction.
+  const listRef = useRef<HTMLDivElement>(null);
+  const [fade, setFade] = useState({ top: false, bottom: false });
+
+  const updateFade = useCallback(() => {
+    const el = listRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    setFade({
+      top: scrollTop > 0,
+      bottom: Math.ceil(scrollTop + clientHeight) < scrollHeight,
+    });
+  }, []);
+
+  useEffect(() => {
+    updateFade();
+  }, [updateFade, specieOptions]);
 
   if (isFetched && !species.length) return <NoData />;
 
@@ -115,25 +135,49 @@ const SpeciesLocation = () => {
             <div className="w-full pt-6">
               <CommandInput
                 placeholder="Search species..."
+                onValueChange={() => requestAnimationFrame(updateFade)}
                 className="border-brand-400 w-full rounded-3xl text-sm placeholder:text-sm placeholder:text-black/85"
               />
             </div>
-            <CommandList className="relative mt-2">
+            <CommandList className="relative mt-2" aria-label="Species">
               <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup className="before:content after:content relative before:pointer-events-none before:absolute before:top-0 before:right-4 before:left-0 before:z-10 before:h-5 before:w-full before:bg-linear-to-b before:from-white after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-linear-to-t after:from-white">
-                <RadioGroup.Root
-                  aria-label="Species"
-                  className="space-y mb-2 flex h-full max-h-[170px] flex-col overflow-y-auto py-2"
-                  onValueChange={onSelectSpecies}
-                >
-                  {specieOptions.map((specie) => (
-                    <CommandItem key={specie.value}>
-                      <div className="flex items-center">
-                        <RadioGroupItem option={specie} />
-                      </div>
+              <CommandGroup
+                ref={listRef}
+                onScroll={updateFade}
+                className={cn(
+                  'space-y relative mb-2 flex h-full max-h-[170px] flex-col overflow-y-auto py-2',
+                  {
+                    'before:content before:pointer-events-none before:absolute before:top-0 before:right-4 before:left-0 before:z-10 before:h-5 before:w-full before:bg-linear-to-b before:from-white':
+                      fade.top,
+                    'after:content after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-linear-to-t after:from-white':
+                      fade.bottom,
+                  }
+                )}
+              >
+                {specieOptions.map((specie) => {
+                  const isSelected = specieSelected?.scientific_name === specie.value;
+                  return (
+                    <CommandItem
+                      key={specie.value}
+                      value={specie.value}
+                      onSelect={() => onSelectSpecies(specie.value)}
+                      className="flex cursor-pointer items-center space-x-4 py-1"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          'flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-black/85',
+                          { 'border-brand-800 border-4': isSelected }
+                        )}
+                      >
+                        {isSelected && <RadioCheckIcon className="text-brand-800 h-2.5 w-2.5" />}
+                      </span>
+                      <span className="text-brand-800 text-sm leading-none font-semibold">
+                        {specie.label}
+                      </span>
                     </CommandItem>
-                  ))}
-                </RadioGroup.Root>
+                  );
+                })}
               </CommandGroup>
             </CommandList>
           </Command>

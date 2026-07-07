@@ -184,14 +184,14 @@ const FloodProtection = ({
             during {selectedPeriod === 'annual' ? 'an' : 'a'}{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES}`}>
+                <button type="button" className={`${WIDGET_SELECT_STYLES}`}>
                   {LABELS[selectedPeriod].short}
                   <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current"
                     role="img"
                     title="Arrow"
                   />
-                </span>
+                </button>
               </PopoverTrigger>
 
               <PopoverContent>
