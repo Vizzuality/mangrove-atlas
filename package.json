@@ -50,8 +50,6 @@
     "@react-email/render": "2.0.9",
     "@t3-oss/env-nextjs": "0.13.11",
     "@tanstack/react-query": "5.101.2",
-    "@transifex/native": "7.1.5",
-    "@transifex/react": "7.1.5",
     "@turf/bbox": "6.5.0",
     "@types/mdx": "2.0.14",
     "axios": "1.18.1",
