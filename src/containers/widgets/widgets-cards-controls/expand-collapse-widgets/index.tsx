@@ -45,8 +45,7 @@ const ExpandCollapseWidgets: FC = () => {
         type="button"
         data-testid="expand-collapse-button"
         className={cn({
-          'text-brand-800 shadow-control disabled:text-opacity-60 h-8 w-full rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold transition-colors md:ml-0 md:w-[262px]':
-            true,
+          'text-brand-800 shadow-control hover:shadow-card focus-visible:shadow-control-focus disabled:bg-grey-400 disabled:text-brand-800/60 h-8 w-full cursor-pointer rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold transition-shadow focus-visible:outline-none disabled:cursor-default disabled:shadow-none md:ml-0 md:w-[262px]': true,
           'bg-white': widgetsCollapsedChecker,
         })}
         disabled={widgets.length <= 1}

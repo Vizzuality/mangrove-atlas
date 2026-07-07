@@ -43,8 +43,7 @@ const WidgetsDeck: FC = () => {
             type="button"
             data-testid="widgets-deck-trigger"
             className={cn({
-              'text-brand-800 shadow-control ml-1 flex h-8 w-full items-center justify-center rounded-4xl bg-white px-10 py-1 font-sans text-sm font-semibold transition-colors md:ml-0 md:w-[262px]':
-                true,
+              'text-brand-800 shadow-control hover:shadow-card focus-visible:shadow-control-focus ml-1 flex h-8 w-full cursor-pointer items-center justify-center rounded-4xl bg-white px-10 py-1 font-sans text-sm font-semibold transition-shadow focus-visible:outline-none md:ml-0 md:w-[262px]': true,
             })}
           >
             <p>

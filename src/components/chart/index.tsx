@@ -189,7 +189,11 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                   {...DEFAULTVALUES[type]}
                 >
                   {data.map((d, i) => (
-                    <Cell key={`cell-${i}`} fill={d.color} />
+                    <Cell
+                      key={`cell-${i}`}
+                      fill={d.color}
+                      aria-label={d.label ?? d.name ?? `${key}: ${d[key]}`}
+                    />
                   ))}
                   {pies[key].customLabel && (
                     <Label width={30} position="center" content={pies[key].customLabel} />
