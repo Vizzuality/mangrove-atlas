@@ -37,8 +37,7 @@ const SwitchRoot = ({
 }) => (
   <SwitchRadix.Root
     className={cn(className, {
-      'border-brand-800/20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-transparent outline-none':
-        true,
+      'border-brand-800/20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-transparent outline-none': true,
       [SIZE['root'][size]]: true,
     })}
     {...props}
@@ -54,8 +53,7 @@ const SwitchThumb = ({
 }: SwitchThumbProps & { size?: 'sm' | 'md' }) => (
   <SwitchRadix.Thumb
     className={cn(className, {
-      'bg-brand-800 data-[state=checked]:text-brand-800 block h-5 w-5 translate-x-[3px] rounded-full text-white transition-transform duration-400 will-change-transform data-[state=checked]:translate-x-6 data-[state=checked]:bg-white':
-        true,
+      'bg-brand-800 data-[state=checked]:text-brand-800 block h-5 w-5 translate-x-[3px] rounded-full text-white transition-transform duration-400 will-change-transform data-[state=checked]:translate-x-6 data-[state=checked]:bg-white': true,
       [SIZE['thumb'][size]]: true,
     })}
   >
@@ -66,12 +64,17 @@ const SwitchThumb = ({
 );
 
 const SwitchWrapper = ({ id, label, children, className }: WrapperProps) => {
+  const labelId = `${id}-label`;
   const childWithId = isValidElement(children)
-    ? cloneElement(children as ReactElement<{ id?: string }>, { id })
+    ? cloneElement(children as ReactElement<{ id?: string; 'aria-labelledby'?: string }>, {
+        id,
+        'aria-labelledby': labelId,
+      })
     : children;
   return (
     <div className="flex items-center">
       <label
+        id={labelId}
         className={cn(className, {
           'sr-only pr-[15px] text-[15px] leading-none text-white': true,
         })}
