@@ -1,12 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { tx, PseudoTranslationPolicy } from '@transifex/native';
-import { TXProvider } from '@transifex/react';
 import { SessionProvider } from 'next-auth/react';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
@@ -30,32 +28,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       })
   );
 
-  useEffect(() => {
-    tx.init({
-      token: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
-      ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
-        ? { missingPolicy: new PseudoTranslationPolicy() }
-        : {}),
-    });
-  }, []);
-
   return (
-    <TXProvider token={process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}>
-      <NuqsAdapter>
-        <QueryClientProvider client={queryClient}>
-          <MediaContextProvider disableDynamicMediaQueries>
-            <MapProvider>
-              <TooltipProvider delayDuration={200}>
-                <SessionProvider>
-                  <SessionSync />
-                  {children}
-                </SessionProvider>
-              </TooltipProvider>
-            </MapProvider>
-            <Toaster position="top-right" />
-          </MediaContextProvider>
-        </QueryClientProvider>
-      </NuqsAdapter>
-    </TXProvider>
+    <NuqsAdapter>
+      <QueryClientProvider client={queryClient}>
+        <MediaContextProvider disableDynamicMediaQueries>
+          <MapProvider>
+            <TooltipProvider delayDuration={200}>
+              <SessionProvider>
+                <SessionSync />
+                {children}
+              </SessionProvider>
+            </TooltipProvider>
+          </MapProvider>
+          <Toaster position="top-right" />
+        </MediaContextProvider>
+      </QueryClientProvider>
+    </NuqsAdapter>
   );
 }

@@ -46,6 +46,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `:root { --font-sans: ${OpenSansFont.style.fontFamily}; --font-inter: ${InterFont.style.fontFamily}; }`,
           }}
         />
+        {/*
+          Transifex Live snippet. Rendered as plain server-side <script> tags in
+          <head> (not next/script) so it lands in the raw SSR HTML — Transifex's
+          verification crawler doesn't run JS, and afterInteractive injection is
+          invisible to it, which blocks "Publish to production". Settings must be
+          defined before live.js loads.
+        */}
+        <script
+          id="transifex-live-settings"
+          dangerouslySetInnerHTML={{
+            __html: `window.liveSettings = { api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}', detectlang: true, autocollect: true, dynamic: true, manual_init: false, translate_urls: false };`,
+          }}
+        />
+        <script id="transifex-live" src="//cdn.transifex.com/live.js" async />
       </head>
       <body className="bg-brand-400 print:bg-white">
         <a
@@ -73,23 +87,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
-        <Script
-          id="transifex-live-settings"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.liveSettings = {
-                api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}',
-                detectlang: true,
-                autocollect: true,
-                dynamic: true,
-                manual_init: false,
-                translate_urls: false,
-              };
-            `,
-          }}
-        />
-        <Script id="transifex-live" src="//cdn.transifex.com/live.js" strategy="afterInteractive" />
         <Providers>{children}</Providers>
       </body>
     </html>
