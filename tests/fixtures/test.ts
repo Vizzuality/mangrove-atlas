@@ -1,4 +1,5 @@
 import { test as base, expect } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 
 /**
  * Custom test fixture providing two invariants for every test:
@@ -71,3 +72,14 @@ export const test = base.extend({
 });
 
 export { expect };
+
+/**
+ * Scope a test-id lookup to the visible element.
+ *
+ * Both layouts are rendered into the DOM (fresnel SSR-safe layout switch); the
+ * non-matching one is hidden with CSS, not unmounted. Nav chrome shared by both
+ * layouts (e.g. `news-button`) therefore appears twice, tripping Playwright's
+ * strict mode. Filtering to the visible node selects the active layout's copy.
+ */
+export const visibleByTestId = (page: Page, testId: string): Locator =>
+  page.getByTestId(testId).filter({ visible: true });
