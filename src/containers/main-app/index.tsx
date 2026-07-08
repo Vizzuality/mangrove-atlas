@@ -41,7 +41,10 @@ export default function MainApp() {
       </Media>
 
       <main id="main-content" className="pointer-events-none relative h-screen w-screen">
-        <div className={cn({ 'hidden lg:block': mapView })}>
+        {/* h-full is required: the widgets layout scrolls internally
+            (h-full + overflow-y-auto) and needs a definite-height parent —
+            without it the list grows to content height and mobile can't scroll. */}
+        <div className={cn('h-full', { 'hidden lg:block': mapView })}>
           <WidgetsContainer />
         </div>
       </main>
