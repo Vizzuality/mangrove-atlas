@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.1](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.0...v8.0.0-rc.1) (2026-07-08)
+
+
+### Features
+
+* Transifex Live only + server-rendered snippet ([#1578](https://github.com/Vizzuality/mangrove-atlas/issues/1578)) ([fdfad87](https://github.com/Vizzuality/mangrove-atlas/commit/fdfad87b85239dc4c16b666c9d767d5d6d6d3d4c))
+
+
+### Bug Fixes
+
+* log window.Transifex to debug Transifex Live init ([be5ceb1](https://github.com/Vizzuality/mangrove-atlas/commit/be5ceb1459bc5d52b3a06d1554f4893883113e2e))
+* popup and widget control accessibility amendments ([#1575](https://github.com/Vizzuality/mangrove-atlas/issues/1575)) ([207b923](https://github.com/Vizzuality/mangrove-atlas/commit/207b923017d9e5cb3b2d73a190405769eefadcc1))
+* popup docking behavior and widget accessibility improvements ([#1577](https://github.com/Vizzuality/mangrove-atlas/issues/1577)) ([2f21464](https://github.com/Vizzuality/mangrove-atlas/commit/2f21464a6730ffffa9e3a3089c6400ca84a17e44))
+
+
+### Performance Improvements
+
+* fix CLS from client-only layout switch (GMW) ([#1579](https://github.com/Vizzuality/mangrove-atlas/issues/1579)) ([62c8314](https://github.com/Vizzuality/mangrove-atlas/commit/62c8314d24c57d8e153b1adbc3239115fc6feba3))
+
 ## [8.0.0-rc.0](https://github.com/Vizzuality/mangrove-atlas/compare/v2.0.0...v8.0.0-rc.0) (2026-07-06)
 
 
