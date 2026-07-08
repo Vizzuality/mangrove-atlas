@@ -9,7 +9,7 @@ const SvgGlass = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRPr
     xmlns="http://www.w3.org/2000/svg"
     width="32"
     height="32"
-    viewBox="0 0 32 32"
+    viewBox="1.33 1.33 29.33 29.33"
     fill="none"
     {...props}
   >
