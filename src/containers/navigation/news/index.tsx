@@ -36,21 +36,25 @@ const NewsButton = ({
       data-testid="news-button"
       aria-label="Open news and updates"
       onClick={onClick}
-      className="relative flex h-full cursor-pointer items-center rounded px-2 transition outline-none"
+      className="relative flex h-full w-14 cursor-pointer items-center justify-center rounded transition outline-none lg:w-auto lg:px-2"
     >
       <Helper
         className={{ button: '-top-2.5 -right-4 z-20', tooltip: 'w-fit-content' }}
         tooltipPosition={{ top: -40, left: 0 }}
         message="Latest news from the Global Mangrove Alliance"
       >
-        <div className="flex flex-col items-center space-y-2 lg:flex-row lg:space-y-0 lg:space-x-2">
+        <div className="flex flex-col items-center space-y-1 lg:flex-row lg:space-y-0 lg:space-x-2">
           {hasSeenWelcome && (
-            <span className="relative inline-block h-6 w-6">
-              <NEWS_SVG className="h-6 w-6 fill-current text-white" role="img" title="News" />
+            <span className="relative inline-block h-8 w-8 lg:h-6 lg:w-6">
+              <NEWS_SVG
+                className="h-8 w-8 fill-current text-white lg:h-6 lg:w-6"
+                role="img"
+                title="News"
+              />
               {showIndicator && (
                 <span
                   aria-hidden
-                  className="border-brand-800 absolute -top-[2.5px] -right-0.5 h-3.5 w-3.5 rounded-full border-[2.5px] bg-white"
+                  className="border-brand-800 absolute top-[-2.5px] -right-0.5 h-3.5 w-3.5 rounded-full border-[2.5px] bg-white"
                 />
               )}
             </span>

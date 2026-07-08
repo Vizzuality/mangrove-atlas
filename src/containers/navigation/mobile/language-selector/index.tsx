@@ -1,7 +1,5 @@
 import { MouseEvent, useCallback, useEffect, useState } from 'react';
 
-import { LuLanguages } from 'react-icons/lu';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +8,7 @@ import {
 } from '@/components/ui/dropdown';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-const LuLanguagesIcon = LuLanguages as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+import LANGUAGE_SVG from '@/svgs/sidebar/language';
 
 interface Transifex {
   live: {
@@ -56,7 +54,7 @@ const LanguageSelector = () => {
             aria-label="Language"
             className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
           >
-            <LuLanguagesIcon className="h-8 w-8" />
+            <LANGUAGE_SVG className="h-8 w-8 fill-current text-white" role="img" title="Language" />
             <span className="text-xxs font-sans leading-none text-white">{currentLanguage}</span>
           </DropdownMenuTrigger>
         </TooltipTrigger>
