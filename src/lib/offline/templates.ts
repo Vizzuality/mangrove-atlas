@@ -1,8 +1,33 @@
 import { env } from '../../../env.mjs';
 
-export type StyleReader = {
-  getStyle?: () => { sources?: Record<string, unknown> } | undefined;
+type StyleLayer = {
+  source?: string;
+  layout?: { visibility?: 'visible' | 'none' };
+  paint?: Record<string, unknown>;
 };
+
+export type StyleReader = {
+  getStyle?: () => { sources?: Record<string, unknown>; layers?: StyleLayer[] } | undefined;
+};
+
+// A source counts as visible if at least one layer draws from it with
+// visibility !== 'none' and a non-zero *-opacity. Widgets keep per-year sources
+// mounted but paint the inactive years at opacity 0, so opacity is what tells the
+// on-screen layer apart from the dozens of dormant ones.
+function visibleSourceIds(layers: StyleLayer[]): Set<string> {
+  const visible = new Set<string>();
+  layers.forEach((l) => {
+    if (!l.source) return;
+    if (l.layout?.visibility === 'none') return;
+    const opacity = ['raster-opacity', 'fill-opacity', 'line-opacity', 'circle-opacity']
+      .map((k) => l.paint?.[k])
+      // only treat a *numeric* 0 as hidden; expressions/undefined mean "drawn"
+      .filter((v) => typeof v === 'number');
+    if (opacity.length && opacity.every((v) => v === 0)) return;
+    visible.add(l.source);
+  });
+  return visible;
+}
 
 const originOf = (raw?: string) => {
   try {
@@ -22,8 +47,13 @@ const alertsTilerOrigin = originOf(env.NEXT_PUBLIC_ALERTS_TILER_URL);
 export function collectCacheableTemplates(map: StyleReader | undefined): string[] {
   const templates = new Set<string>();
   try {
-    const sources = map?.getStyle?.()?.sources ?? {};
-    Object.values(sources).forEach((src) => {
+    const style = map?.getStyle?.();
+    const sources = style?.sources ?? {};
+    const visible = visibleSourceIds(style?.layers ?? []);
+    Object.entries(sources).forEach(([sourceId, src]) => {
+      // Skip sources no visible layer draws from — they're dormant per-year /
+      // toggled-off tilesets that shouldn't inflate the download.
+      if (!visible.has(sourceId)) return;
       const tiles = (src as { tiles?: string[] })?.tiles;
       if (!Array.isArray(tiles)) return;
       tiles.forEach((tpl) => {

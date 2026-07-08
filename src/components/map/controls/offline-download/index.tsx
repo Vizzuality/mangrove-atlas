@@ -41,6 +41,9 @@ const OfflineDownload = ({ mapId }: Props) => {
   const [maxZoom, setMaxZoom] = useState(MAX_Z);
   const [name, setName] = useState('');
   const [viewZoom, setViewZoom] = useState<number | null>(null);
+  // Bumped on every moveend so the bbox-derived estimate re-runs on pan too (not
+  // just zoom, where viewZoom already changes).
+  const [viewVersion, setViewVersion] = useState(0);
 
   // Track the live view zoom so we can block downloading at world/continental scale.
   useEffect(() => {
@@ -52,7 +55,10 @@ const OfflineDownload = ({ mapId }: Props) => {
         }
       | undefined;
     if (!rawMap?.on || !rawMap.getZoom) return;
-    const update = () => setViewZoom(rawMap.getZoom?.() ?? null);
+    const update = () => {
+      setViewZoom(rawMap.getZoom?.() ?? null);
+      setViewVersion((v) => v + 1);
+    };
     update();
     rawMap.on('moveend', update);
     return () => rawMap.off?.('moveend', update);
@@ -72,8 +78,10 @@ const OfflineDownload = ({ mapId }: Props) => {
     const bbox = getBBox();
     if (!bbox) return null;
     return estimateTiles(bbox, minZoom, maxZoom);
-    // re-run when inputs change
-  }, [getBBox, estimateTiles, minZoom, maxZoom]);
+    // Recompute on view change: viewVersion bumps on every moveend so the
+    // bbox-derived estimate (and the "area too large" warning) tracks the live map.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getBBox, estimateTiles, minZoom, maxZoom, viewVersion, source]);
 
   const isRunning = progress.status === 'running';
   // Block / warn conditions.
@@ -193,8 +201,8 @@ const OfflineDownload = ({ mapId }: Props) => {
 
         {estimate && !tooLowZoom && !noLayers && (
           <p className="text-xs text-black/60">
-            ~{estimate.tiles.toLocaleString()} tiles across {estimate.templates || 1} layer(s).
-            Higher zooms scale from these automatically.
+            ~{estimate.tiles.toLocaleString()} tiles across {estimate.templates || 1} visible map
+            source(s). Higher zooms scale from these automatically.
           </p>
         )}
 
