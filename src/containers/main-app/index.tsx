@@ -1,19 +1,51 @@
 'use client';
 
-import { useWindowSize } from 'usehooks-ts';
+import dynamic from 'next/dynamic';
+
+import cn from '@/lib/classnames';
+
+import { mapViewAtom } from '@/store/sidebar';
+
+import { useAtomValue } from 'jotai';
 
 import DesktopLayout from '@/layouts/desktop';
 import MobileLayout from '@/layouts/mobile';
 
-import { breakpoints } from '@/styles/styles.config';
+import WidgetsContainer from '@/containers/widgets';
+
+import { Media } from '@/components/media-query';
+
+const WelcomeIntroMessage = dynamic(() => import('@/containers/welcome-message'), { ssr: false });
 
 export default function MainApp() {
-  const { width: screenWidth } = useWindowSize();
+  // `mapView` toggles map-only vs widgets on mobile; desktop always shows the
+  // widgets. Default is `true`, so the visibility is expressed with responsive
+  // CSS (`hidden lg:block`) rather than a JS/viewport check.
+  const mapView = useAtomValue(mapViewAtom);
 
   return (
     <>
-      {screenWidth >= breakpoints.lg && <DesktopLayout />}
-      {screenWidth < breakpoints.lg && <MobileLayout />}
+      {/*
+        Both layouts are rendered server-side; fresnel's media-query CSS shows
+        the right one. Gating the layout on useWindowSize() previously left the
+        first paint with the wrong layout until hydration, causing a large
+        layout shift on desktop. The widgets list is rendered once here (not per
+        layout) so its test ids and data hooks are not duplicated in the DOM.
+      */}
+      <Media greaterThanOrEqual="lg">
+        <DesktopLayout />
+      </Media>
+      <Media lessThan="lg">
+        <MobileLayout />
+      </Media>
+
+      <main id="main-content" className="pointer-events-none relative h-screen w-screen">
+        <div className={cn({ 'hidden lg:block': mapView })}>
+          <WidgetsContainer />
+        </div>
+      </main>
+
+      <WelcomeIntroMessage />
     </>
   );
 }

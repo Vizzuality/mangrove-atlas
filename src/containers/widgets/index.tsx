@@ -4,7 +4,6 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
 import { useAtom } from 'jotai';
-import { useWindowSize } from 'usehooks-ts';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
 
@@ -15,7 +14,6 @@ import AppTools from '@/containers/navigation';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from '@/containers/widgets/constants';
 
 import { Dialog } from '@/components/ui/dialog';
-import { breakpoints } from '@/styles/styles.config';
 import { WidgetTypes } from 'types/widget';
 
 import PrintReportButton from './print-report-button';
@@ -28,7 +26,6 @@ const WidgetsContainer: FC = () => {
   const [{ customGeojson }] = useAtom(drawingToolAtom);
   const [{ uploadedGeojson }] = useAtom(drawingUploadToolAtom);
 
-  const { width: screenWidth } = useWindowSize();
   const [activeWidgets] = useSyncActiveWidgets();
   const { type: locationType } = useSyncLocation();
   const currentLocation = locationType || 'worldwide';
@@ -45,8 +42,6 @@ const WidgetsContainer: FC = () => {
   }, [activeWidgets, currentLocation, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   const isCustomArea = !!(customGeojson || uploadedGeojson);
-  const isMobile = screenWidth > 0 && screenWidth < breakpoints.lg;
-  const showList = screenWidth > 0;
 
   return (
     <WidgetsLayout>
@@ -54,16 +49,15 @@ const WidgetsContainer: FC = () => {
       <CloseHelpGuide />
       <WidgetsCardsControls />
 
-      {showList && (
-        <div
-          data-testid="widgets-wrapper"
-          className={isMobile ? 'mt-5 pb-16 lg:mt-0 lg:pb-0' : undefined}
-        >
-          {widgetsAvailable.map((widget) => (
-            <WidgetCard key={widget.slug} widget={widget} />
-          ))}
-        </div>
-      )}
+      {/* Always rendered so the list is in the SSR/first paint. The mobile
+          spacing is applied via Tailwind responsive utilities (reset at lg)
+          rather than a JS width check, which previously delayed the list until
+          hydration and caused a layout shift. */}
+      <div data-testid="widgets-wrapper" className="mt-5 pb-16 lg:mt-0 lg:pb-0">
+        {widgetsAvailable.map((widget) => (
+          <WidgetCard key={widget.slug} widget={widget} />
+        ))}
+      </div>
 
       <Dialog>
         <WidgetsDeckButton />

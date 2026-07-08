@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures/test';
+import { expect, test, visibleByTestId } from './fixtures/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -17,7 +17,7 @@ test('test menu links', async ({ page, browserName }) => {
 test.describe('Blog navigation', () => {
   test('Open blog dialog', async ({ page, browserName }) => {
     test.fixme(browserName === 'firefox', 'Firefox: Recoil/hydration instability');
-    const newsButton = page.getByTestId('news-button');
+    const newsButton = visibleByTestId(page, 'news-button');
     await newsButton.click();
     const postsList = page.getByTestId('posts-list');
     await expect(postsList).toBeVisible();
@@ -25,7 +25,7 @@ test.describe('Blog navigation', () => {
   test('Open first post', async ({ page, browserName }) => {
     test.fixme(browserName === 'firefox', 'Firefox: Recoil/hydration instability');
     // Click on the news button
-    const newsButton = page.getByTestId('news-button');
+    const newsButton = visibleByTestId(page, 'news-button');
     await newsButton.click();
 
     // Wait for posts list to be visible
