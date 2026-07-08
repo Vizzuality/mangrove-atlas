@@ -19,7 +19,8 @@ const WelcomeIntroMessage = dynamic(() => import('@/containers/welcome-message')
 
 export default function MainApp() {
   // `mapView` toggles map-only vs widgets on mobile; desktop always shows the
-  // widgets. Default is `true`, so the visibility is expressed with responsive
+  // widgets. Default is `false` (widgets-first on mobile); when the user opens
+  // the map it flips to `true` and the list is hidden below `lg` via responsive
   // CSS (`hidden lg:block`) rather than a JS/viewport check.
   const mapView = useAtomValue(mapViewAtom);
 
