@@ -40,7 +40,9 @@ const Slider = ({
 
   return (
     <SliderPrimitive.Root
-      className={cn('relative flex h-4 w-full touch-none items-center select-none', className)}
+      // touch-pan-y (not touch-none): the slider is horizontal, so vertical swipes
+      // must keep scrolling the mobile widget list; Radix handles horizontal drags.
+      className={cn('relative flex h-4 w-full touch-pan-y items-center select-none', className)}
       defaultValue={defaultValue}
       value={value}
       min={min}
