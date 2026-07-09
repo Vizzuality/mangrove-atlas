@@ -22,13 +22,7 @@ const DesktopLayout = () => {
 
   return (
     <div className="pointer-events-none">
-      <Logo
-        src="/images/logo-bg.png"
-        position="top-right"
-        width={186}
-        height={216}
-        onClick={handleReset}
-      />
+      <Logo src="/images/logo-bg.png" position="top-right" width={186} onClick={handleReset} />
     </div>
   );
 };

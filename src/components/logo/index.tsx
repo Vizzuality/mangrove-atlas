@@ -5,7 +5,6 @@ type LogoProps = {
   src?: string;
   onClick?: () => void;
   width?: number;
-  height?: number;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 };
 
@@ -16,11 +15,17 @@ const POSITION_CLASSES: Record<string, string> = {
   'bottom-right': 'bottom-0 right-0',
 };
 
+// Intrinsic dimensions of logo.webp — kept constant so next/image always has
+// the correct aspect ratio. Display size is driven by CSS (width prop + height
+// auto), which avoids the "width/height modified but not the other" warning
+// when responsive rules constrain one dimension.
+const INTRINSIC_WIDTH = 186;
+const INTRINSIC_HEIGHT = 216;
+
 const Logo = ({
   src = '/images/logo.webp',
   onClick,
-  width = 186,
-  height = 216,
+  width = INTRINSIC_WIDTH,
   position = 'top-right',
 }: LogoProps) => {
   return (
@@ -31,7 +36,14 @@ const Logo = ({
       data-testid="desktop-logo"
       {...(onClick && { onClick })}
     >
-      <Image src={src} alt="Global Mangrove Watch" width={width} height={height} priority={true} />
+      <Image
+        src={src}
+        alt="Global Mangrove Watch"
+        width={INTRINSIC_WIDTH}
+        height={INTRINSIC_HEIGHT}
+        priority={true}
+        style={{ width, height: 'auto' }}
+      />
     </Link>
   );
 };
