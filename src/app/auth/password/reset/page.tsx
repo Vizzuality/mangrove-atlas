@@ -107,7 +107,9 @@ function ResetPasswordForm() {
                     name="password"
                     render={({ field }) => (
                       <FormItem className="space-y-1.5">
-                        <FormLabel className="text-xs font-semibold">Password</FormLabel>
+                        <FormLabel className="text-xs font-semibold" required>
+                          Password
+                        </FormLabel>
                         <FormControl>
                           <Input
                             type="password"
@@ -125,7 +127,9 @@ function ResetPasswordForm() {
                     name="password_confirmation"
                     render={({ field }) => (
                       <FormItem className="space-y-1.5">
-                        <FormLabel className="text-xs font-semibold">Confirm Password</FormLabel>
+                        <FormLabel className="text-xs font-semibold" required>
+                          Confirm Password
+                        </FormLabel>
                         <FormControl>
                           <Input
                             type="password"
