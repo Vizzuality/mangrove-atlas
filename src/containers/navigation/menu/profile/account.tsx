@@ -99,8 +99,8 @@ const AccountContent = () => {
           name: username,
           current_password,
           organization,
-          roles: roles ?? [],
-          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { other_role: otherRole } : {}),
+          user_roles: roles ?? [],
+          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { user_role_other: otherRole } : {}),
         },
       },
       {

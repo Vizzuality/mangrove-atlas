@@ -12,8 +12,8 @@ export type SignupPayload = {
     password: string;
     name: string;
     organization?: string;
-    roles?: string[];
-    other_role?: string;
+    user_roles?: string[];
+    user_role_other?: string;
   };
 };
 export type SignupResponse =
@@ -25,8 +25,8 @@ export type UpdateUserPayload = {
     password?: string;
     name?: string;
     organization?: string;
-    roles?: string[];
-    other_role?: string;
+    user_roles?: string[];
+    user_role_other?: string;
     current_password: string;
   };
 };
