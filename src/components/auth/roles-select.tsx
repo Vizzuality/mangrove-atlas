@@ -29,7 +29,11 @@ const RolesSelect = ({ id, placeholder, options, values, onChange }: RolesSelect
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    // modal: this is used inside the modal menu Dialog on the profile page,
+    // which sets pointer-events:none on the body. A non-modal popover portals
+    // to the body and never re-enables them, so options open but can't be
+    // clicked. modal makes the popover manage pointer events for its own layer.
+    <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
         <button
           id={id}
