@@ -110,11 +110,17 @@ const addTileFeature = (tile, row) => {
   // geometry: transformPoint(row.longitude, row.latitude, tile.extent, tile.z, tile.x, tile.y),
   const x = proyectX(row.longitude);
   const y = proyectY(row.latitude);
+  // BigQuery DATE comes back as { value: 'YYYY-MM-DD' }; the frontend styles/filters
+  // alerts by this property, so it MUST travel in the tile (was previously dropped).
+  const obsDate =
+    row.scr5_obs_date && typeof row.scr5_obs_date === 'object'
+      ? row.scr5_obs_date.value
+      : row.scr5_obs_date;
   const tileFeature = {
     id: row.id,
     geometry: [transformPoint(x, y, tile.extent, tile.z, tile.x, tile.y)],
     type: 1,
-    tags: null,
+    tags: { scr5_obs_date: obsDate },
   };
   tile.features.push(tileFeature);
   tile.numPoints++;
@@ -190,6 +196,8 @@ exports.fetchAlertsTiler = (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('mime-type', 'application/vnd.mapbox-vector-tile');
   res.set('Content-Type', 'application/x-protobuf');
+  // Cache so the browser/SW/CDN reuse tiles instead of re-querying BigQuery per request.
+  res.set('Cache-Control', 'public, max-age=86400');
 
   if (req.method === 'OPTIONS') {
     // Send response to OPTIONS requests

@@ -1,8 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
+
+import { registerServiceWorker } from '@/lib/offline/register-sw';
+
+import { useSyncOnlineStatus } from '@/store/offline';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SessionProvider } from 'next-auth/react';
@@ -27,6 +31,12 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         },
       })
   );
+
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
+
+  useSyncOnlineStatus();
 
   return (
     <NuqsAdapter>

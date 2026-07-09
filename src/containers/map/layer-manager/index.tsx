@@ -4,13 +4,15 @@ import { Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
 import { interactiveLayerIdsAtom } from '@/store/map';
+import { isOfflineAtom } from '@/store/offline';
 
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { BASEMAPS, LAYERS } from '@/containers/datasets';
 import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
+import { OFFLINE_ENABLED_WIDGETS_SLUGS } from '@/containers/widgets/constants';
 
 import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
@@ -20,18 +22,28 @@ const CountryBoundariesLayer = LAYERS['country-boundaries'];
 const LayerManagerContainer = () => {
   const [layers] = useSyncActiveLayers();
   const [, setInteractiveLayerIds] = useAtom(interactiveLayerIdsAtom);
+  const isOffline = useAtomValue(isOfflineAtom);
 
   const activeLayersIds = useMemo(() => layers?.map((l) => l?.id), [layers]);
 
   const ACTIVE_LAYERS = useMemo(() => {
-    const filteredLayers = activeLayersIds?.filter(
+    let filteredLayers = activeLayersIds?.filter(
       (layer: WidgetSlugType | ContextualBasemapsId | 'custom-area') => {
         return Object.keys(LAYERS).some((k) => layer?.includes(k));
       }
     );
 
+    // Offline: only the offline-supported layers (extent, alerts) have cacheable
+    // tiles — drop the rest from the map so it matches the disabled sidebar widgets
+    // and doesn't render blank/uncacheable Mapbox layers.
+    if (isOffline) {
+      filteredLayers = filteredLayers?.filter((layer) =>
+        OFFLINE_ENABLED_WIDGETS_SLUGS.some((slug) => layer?.includes(slug))
+      );
+    }
+
     return filteredLayers;
-  }, [activeLayersIds]);
+  }, [activeLayersIds, isOffline]);
 
   const { id } = useSyncLocation();
 
@@ -67,12 +79,15 @@ const LayerManagerContainer = () => {
 
   return (
     <>
-      <CountryBoundariesLayer
-        id="country-boundaries-layer"
-        beforeId="water"
-        onAdd={handleAdd}
-        onRemove={handleRemove}
-      />
+      {/* Mapbox-hosted vector layer — can't be cached (TOS), so hide it offline. */}
+      {!isOffline && (
+        <CountryBoundariesLayer
+          id="country-boundaries-layer"
+          beforeId="water"
+          onAdd={handleAdd}
+          onRemove={handleRemove}
+        />
+      )}
 
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;

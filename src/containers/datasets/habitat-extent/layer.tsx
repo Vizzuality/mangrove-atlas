@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Source, Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
+import { isOfflineAtom } from '@/store/offline';
 import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
 
 import { useAtomValue } from 'jotai';
@@ -10,9 +11,16 @@ import type { ExpressionSpecification } from 'mapbox-gl';
 
 import type { LayerProps } from 'types/layers';
 
+import { env } from '../../../../env.mjs';
+
 import { useMangroveHabitatExtent } from './hooks';
 
 const DEFAULT_transitionMs = 600;
+
+// Newest year the self-hosted extent raster (NEXT_PUBLIC_EXTENT_TILES_URL, v3)
+// publishes. Bump when the tileset gains newer years. Offline requests are
+// clamped to this so a later online-timeline year doesn't 404 into a blank layer.
+const OFFLINE_EXTENT_MAX_YEAR = 2020;
 
 // Prod uses the legacy single multi-tileset source (source-layer `mng_mjr_${year}`).
 // Staging uses the per-year GMW v4 tilesets, gated by the timeline_slider feature flag.
@@ -41,6 +49,7 @@ const usePrefersReducedMotion = () => {
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
+  const isOffline = useAtomValue(isOfflineAtom);
   const year = useAtomValue(habitatExtentSettings) as number | null;
   const { data } = useMangroveHabitatExtent({ year });
   const years = useMemo(
@@ -56,6 +65,36 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const transitionMs = reducedMotion ? 0 : DEFAULT_transitionMs;
 
   if (!years.length || !currentYear) return null;
+
+  // OFFLINE: render the self-hosted raster {z}/{x}/{y} from GCS (cacheable, TOS-safe)
+  // instead of the Mapbox vector tilesets (which can't be cached). Raster = no vector
+  // interactivity, accepted offline. ONLINE keeps the interactive vector paths below.
+  if (isOffline && env.NEXT_PUBLIC_EXTENT_TILES_URL) {
+    // The self-hosted extent raster only publishes through OFFLINE_EXTENT_MAX_YEAR;
+    // later years (from the online GMW timeline) have no tiles and 404 → blank layer.
+    // Clamp so a recent selected year falls back to the newest available raster.
+    const offlineYear = Math.min(currentYear, OFFLINE_EXTENT_MAX_YEAR);
+    const tiles = env.NEXT_PUBLIC_EXTENT_TILES_URL.replace(/\{year\}/g, String(offlineYear));
+    return (
+      <Source
+        id={`habitat_extent_${offlineYear}`}
+        type="raster"
+        tiles={[tiles]}
+        tileSize={256}
+        minzoom={0}
+        maxzoom={12}
+      >
+        <Layer
+          id={`${id}_${offlineYear}_raster`}
+          type="raster"
+          source={`habitat_extent_${offlineYear}`}
+          paint={{ 'raster-opacity': baseOpacity }}
+          layout={{ visibility }}
+          beforeId={beforeId}
+        />
+      </Source>
+    );
+  }
 
   // Prod: legacy single multi-tileset source, only the current year is rendered.
   if (!isTimelineSliderEnabled()) {

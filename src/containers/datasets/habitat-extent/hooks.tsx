@@ -111,6 +111,8 @@ export function useMangroveHabitatExtent(
   }, [data, isFetching, isError, refetch, DATA]);
 }
 
+// NOTE: the habitat-extent layer defines its sources inline in layer.tsx, not
+// via this hook. Kept for parity with other datasets / potential reuse.
 export function useSource({ year }: { year: number }): SourceProps {
   return {
     id: `habitat_extent_${year}`,

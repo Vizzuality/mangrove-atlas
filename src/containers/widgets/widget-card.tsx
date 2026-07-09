@@ -1,5 +1,8 @@
+import cn from '@/lib/classnames';
+
 import { WIDGETS } from '@/containers/datasets';
 import WidgetWrapper from '@/containers/widget';
+import { useIsWidgetDisabledOffline } from '@/containers/widgets/hooks';
 
 import type { WidgetTypes } from 'types/widget';
 
@@ -10,16 +13,23 @@ type Props = {
 export default function WidgetCard({ widget }: Props) {
   const { slug, name, applicability, contextualLayers, index } = widget;
   const Widget = WIDGETS[slug];
+  const isDisabledOffline = useIsWidgetDisabledOffline(slug);
   if (!Widget) return null;
   return (
-    <WidgetWrapper
-      title={name}
-      id={slug}
-      applicability={applicability}
-      contextualLayers={contextualLayers}
-      index={index}
+    <div
+      className={cn(isDisabledOffline && 'pointer-events-none opacity-40')}
+      aria-disabled={isDisabledOffline || undefined}
+      title={isDisabledOffline ? 'Unavailable offline' : undefined}
     >
-      <Widget />
-    </WidgetWrapper>
+      <WidgetWrapper
+        title={name}
+        id={slug}
+        applicability={applicability}
+        contextualLayers={contextualLayers}
+        index={index}
+      >
+        <Widget />
+      </WidgetWrapper>
+    </div>
   );
 }
