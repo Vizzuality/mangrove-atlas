@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.2](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.1...v8.0.0-rc.2) (2026-07-09)
+
+
+### Features
+
+* user profile role field + required-field markers (GMW-1043) ([#1583](https://github.com/Vizzuality/mangrove-atlas/issues/1583)) ([627b8d7](https://github.com/Vizzuality/mangrove-atlas/commit/627b8d784353c90788d98c385a122febb12bbd79))
+
+
+### Bug Fixes
+
+* allow selecting roles in profile dropdown inside dialog (GMW-1043) ([#1586](https://github.com/Vizzuality/mangrove-atlas/issues/1586)) ([4ccc395](https://github.com/Vizzuality/mangrove-atlas/commit/4ccc395756481a322623f8449a3fbc3a5cde5136))
+* preserve logo aspect ratio to silence next/image warning ([#1585](https://github.com/Vizzuality/mangrove-atlas/issues/1585)) ([e3b9546](https://github.com/Vizzuality/mangrove-atlas/commit/e3b9546a8c1d0dea20f6c3752105b361df2014f0))
+* role dropdown hidden behind menu dialog on profile (GMW-1043) ([#1584](https://github.com/Vizzuality/mangrove-atlas/issues/1584)) ([d418539](https://github.com/Vizzuality/mangrove-atlas/commit/d418539f6c6c00d5ec3ba036d93174d35d5d33f3))
+* show widget list by default on mobile ([#1582](https://github.com/Vizzuality/mangrove-atlas/issues/1582)) ([b9e5747](https://github.com/Vizzuality/mangrove-atlas/commit/b9e57472fe09593ab87a22fdac6df057da135495))
+* unify mobile bottom-toolbar icons ([#1580](https://github.com/Vizzuality/mangrove-atlas/issues/1580)) ([5cb5cd9](https://github.com/Vizzuality/mangrove-atlas/commit/5cb5cd9850b2e42ff2a6e1296b9bdc53d1a52eb9))
+
 ## [8.0.0-rc.1](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.0...v8.0.0-rc.1) (2026-07-08)
 
 
