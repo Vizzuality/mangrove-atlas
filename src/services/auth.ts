@@ -6,7 +6,16 @@ export type ResetPasswordUpdatePayload = {
   user: { password: string; password_confirmation: string; reset_password_token: string };
 };
 type ResetPasswordResponse = { message?: string };
-export type SignupPayload = { user: { email: string; password: string; name: string } };
+export type SignupPayload = {
+  user: {
+    email: string;
+    password: string;
+    name: string;
+    organization?: string;
+    user_roles?: string[];
+    user_role_other?: string;
+  };
+};
 export type SignupResponse =
   | { ok: true; data?: any; message?: string }
   | { ok: false; error?: string; message?: string; errors?: Record<string, string[]> };
@@ -16,6 +25,8 @@ export type UpdateUserPayload = {
     password?: string;
     name?: string;
     organization?: string;
+    user_roles?: string[];
+    user_role_other?: string;
     current_password: string;
   };
 };
