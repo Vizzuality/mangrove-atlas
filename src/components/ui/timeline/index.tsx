@@ -182,7 +182,9 @@ const Timeline = ({ years, currentYear, isPlaying, onYearChange, onTogglePlay }:
 
       <div ref={trackRef} className="relative flex-1">
         <div
-          className="relative mt-2 h-10 cursor-pointer touch-none"
+          // touch-pan-y (not touch-none): vertical swipes must keep scrolling the
+          // mobile widget list; horizontal scrubbing still works via pointer events.
+          className="relative mt-2 h-10 cursor-pointer touch-pan-y"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}

@@ -19,7 +19,8 @@ const WelcomeIntroMessage = dynamic(() => import('@/containers/welcome-message')
 
 export default function MainApp() {
   // `mapView` toggles map-only vs widgets on mobile; desktop always shows the
-  // widgets. Default is `true`, so the visibility is expressed with responsive
+  // widgets. Default is `false` (widgets-first on mobile); when the user opens
+  // the map it flips to `true` and the list is hidden below `lg` via responsive
   // CSS (`hidden lg:block`) rather than a JS/viewport check.
   const mapView = useAtomValue(mapViewAtom);
 
@@ -40,7 +41,10 @@ export default function MainApp() {
       </Media>
 
       <main id="main-content" className="pointer-events-none relative h-screen w-screen">
-        <div className={cn({ 'hidden lg:block': mapView })}>
+        {/* h-full is required: the widgets layout scrolls internally
+            (h-full + overflow-y-auto) and needs a definite-height parent —
+            without it the list grows to content height and mobile can't scroll. */}
+        <div className={cn('h-full', { 'hidden lg:block': mapView })}>
           <WidgetsContainer />
         </div>
       </main>
