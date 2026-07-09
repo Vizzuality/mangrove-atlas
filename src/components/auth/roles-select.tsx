@@ -47,9 +47,12 @@ const RolesSelect = ({ id, placeholder, options, values, onChange }: RolesSelect
           />
         </button>
       </PopoverTrigger>
+      {/* z-[70] overrides the default popover z-50 so the dropdown renders
+          above the menu Dialog (portal wrapper z-60) on the profile page —
+          otherwise it paints behind the dialog panel and looks empty. */}
       <PopoverContent
         align="start"
-        className="max-h-60 w-[var(--radix-popover-trigger-width)] space-y-0 rounded-2xl p-2"
+        className="z-[70] max-h-60 w-[var(--radix-popover-trigger-width)] space-y-0 rounded-2xl p-2"
       >
         <div role="listbox" aria-multiselectable="true">
           {options.map((option) => {
