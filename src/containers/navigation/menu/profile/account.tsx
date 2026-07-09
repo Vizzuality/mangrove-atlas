@@ -6,8 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signOut, useSession } from 'next-auth/react';
 import { z } from 'zod';
 
+import { OTHER_ROLE_VALUE, ROLE_OPTIONS } from '@/containers/auth/constants';
 import { usePutUpdateUser } from '@/containers/auth/hooks';
 
+import RolesSelect from '@/components/auth/roles-select';
 import {
   Form,
   FormControl,
@@ -22,26 +24,43 @@ import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 
 import CHECK_SVG from '@/svgs/ui/check';
 
-const formSchema = z.object({
-  username: z.string().min(1, { message: 'Please enter your name' }).optional(),
-  email: z.string().email({ message: 'Please enter a valid email address' }).optional(),
-  organization: z.string().optional(),
-  password: z
-    .string()
-    .nonempty({ message: 'Please enter your password' })
-    .min(6, {
-      message: 'Please enter a password with at least 6 characters',
-    })
-    .optional(),
-  current_password: z
-    .string()
-    .nonempty({ message: 'Please enter your password' })
-    .min(6, { message: 'Please enter your password' }),
-  delete_account: z.boolean().optional(),
-});
+const ROLE_VALUES = ROLE_OPTIONS.map((o) => o.value);
+
+const formSchema = z
+  .object({
+    username: z.string().min(1, { message: 'Please enter your name' }).optional(),
+    email: z.string().email({ message: 'Please enter a valid email address' }).optional(),
+    organization: z.string().optional(),
+    roles: z
+      .array(z.string().refine((v) => ROLE_VALUES.includes(v)))
+      .optional()
+      .default([]),
+    'other-role': z.string().optional(),
+    password: z
+      .string()
+      .nonempty({ message: 'Please enter your password' })
+      .min(6, {
+        message: 'Please enter a password with at least 6 characters',
+      })
+      .optional(),
+    current_password: z
+      .string()
+      .nonempty({ message: 'Please enter your password' })
+      .min(6, { message: 'Please enter your password' }),
+    delete_account: z.boolean().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.roles?.includes(OTHER_ROLE_VALUE) && !data['other-role']?.trim()) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Please describe your role',
+        path: ['other-role'],
+      });
+    }
+  });
 
 const AccountContent = () => {
-  const { data: session } = useSession();
+  const { data: session, update: updateSession } = useSession();
 
   const user = session?.user;
   const updateUser = usePutUpdateUser(user?.accessToken || '');
@@ -57,13 +76,18 @@ const AccountContent = () => {
       username: user?.name || '',
       organization: user?.organization || '',
       email: user?.email || '',
+      roles: user?.roles ?? [],
+      'other-role': user?.other_role || '',
       password: undefined,
       current_password: '',
     },
   });
 
+  const showOtherRole = form.watch('roles')?.includes(OTHER_ROLE_VALUE);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { email, password, username, organization, current_password } = values;
+    const { email, password, username, organization, roles, current_password } = values;
+    const otherRole = values['other-role']?.trim();
 
     form.clearErrors();
 
@@ -75,9 +99,19 @@ const AccountContent = () => {
           name: username,
           current_password,
           organization,
+          roles: roles ?? [],
+          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { other_role: otherRole } : {}),
         },
       },
       {
+        onSuccess: () => {
+          void updateSession({
+            name: username,
+            organization,
+            roles: roles ?? [],
+            other_role: roles?.includes(OTHER_ROLE_VALUE) && otherRole ? otherRole : null,
+          });
+        },
         onError: (error: any) => {
           const apiErrors = error?.response?.data?.errors;
 
@@ -158,6 +192,54 @@ const AccountContent = () => {
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="roles"
+            render={({ field }) => (
+              <FormItem className="gap-0">
+                <FormLabel className="text-xs font-semibold">What is your role?</FormLabel>
+                {/* No FormControl: RolesSelect does not forward refs, and Slot
+                    would warn. FormMessage still picks up the field error. */}
+                <RolesSelect
+                  id="account-roles"
+                  placeholder="Select the roles that describe you"
+                  options={ROLE_OPTIONS}
+                  values={field.value ?? []}
+                  onChange={(selection) => {
+                    field.onChange(selection);
+                    if (!selection.includes(OTHER_ROLE_VALUE)) {
+                      form.setValue('other-role', '');
+                      form.clearErrors('other-role');
+                    }
+                  }}
+                />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {showOtherRole && (
+            <FormField
+              control={form.control}
+              name="other-role"
+              render={({ field }) => (
+                <FormItem className="gap-0">
+                  <FormLabel className="text-xs font-semibold" required>
+                    Other role
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                      placeholder="Tell us your role"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
           <div className="flex w-full items-center gap-6">
             <FormField

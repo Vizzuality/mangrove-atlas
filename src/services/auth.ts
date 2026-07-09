@@ -25,6 +25,8 @@ export type UpdateUserPayload = {
     password?: string;
     name?: string;
     organization?: string;
+    roles?: string[];
+    other_role?: string;
     current_password: string;
   };
 };
