@@ -10,6 +10,16 @@ const AlertsMapLegend = () => {
         />
         <p>Alerts</p>
       </div>
+      <div className="flex space-x-2">
+        <div className="flex">
+          <div className="flex flex-col">
+            <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
+            <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
+          </div>
+          <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
+        </div>
+        <p className="text-sm font-normal">Monitored area</p>
+      </div>
     </div>
   );
 };
