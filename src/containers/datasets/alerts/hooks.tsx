@@ -24,7 +24,7 @@ import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 
-import ChartTick from '@/components/chart/chart-tick';
+import ChartTick, { MAX_TICK_LABELS } from '@/components/chart/chart-tick';
 import { Visibility } from '@/types/layers';
 
 import API_cloud_functions from 'services/cloud-functions';
@@ -176,6 +176,30 @@ const getData = (data) =>
 
 const getTotal = (data: { count: number }[]) =>
   data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
+
+// Brush x-axis labelling for sparse monthly series. Year values repeat per data
+// point and months can be missing, so labelling each year at its first point
+// bunches labels wherever the data is dense. Instead pick evenly spaced slot
+// indices and keep a year only where it differs from the previously kept one:
+// an even label grid at the cost of some years being skipped or a label
+// sitting mid-year.
+export const getBrushYearLabelIndices = (
+  years: number[],
+  maxLabels = MAX_TICK_LABELS
+): number[] => {
+  const n = years.length;
+  if (n === 0) return [];
+  const m = Math.min(maxLabels, n);
+  const slots =
+    m === 1
+      ? [0]
+      : [...new Set(Array.from({ length: m }, (_, k) => Math.round((k * (n - 1)) / (m - 1))))];
+  const kept: number[] = [];
+  for (const i of slots) {
+    if (kept.length === 0 || years[i] !== years[kept[kept.length - 1]]) kept.push(i);
+  }
+  return kept;
+};
 
 type DateOption = { label: string; value: string };
 
@@ -394,8 +418,10 @@ export function useAlerts<TRaw = AlertsApiResponse>(
           },
         },
         xAxis: {
-          tick: <ChartTick />,
-          ticks: Array.from(new Set(fixedXAxis)),
+          // A tick mark per data point (like the main chart) with year labels at
+          // evenly spaced slots — year-per-first-occurrence ticks bunch up when
+          // months are missing from the series.
+          tick: <ChartTick labelIndices={getBrushYearLabelIndices(fixedXAxis)} />,
           interval: 0,
           type: 'category',
           axisLine: false,

@@ -25,6 +25,13 @@ describe('shouldShowTickLabel', () => {
     expect(shouldShowTickLabel(count - 1, count, 8)).toBe(true);
   });
 
+  it('skips step multiples that would crowd the always-shown last label', () => {
+    const count = 27; // step = ceil(27 / 8) = 4, last = 26
+    expect(shouldShowTickLabel(24, count, 8)).toBe(false); // 2 ticks from the end
+    expect(shouldShowTickLabel(20, count, 8)).toBe(true);
+    expect(shouldShowTickLabel(26, count, 8)).toBe(true);
+  });
+
   it('defaults maxLabels to MAX_TICK_LABELS', () => {
     const count = MAX_TICK_LABELS * 3;
     const withDefault = shouldShowTickLabel(MAX_TICK_LABELS, count);
