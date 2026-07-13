@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 import type { SourceProps } from 'react-map-gl';
 
@@ -422,24 +422,19 @@ export function useAlerts<TRaw = AlertsApiResponse>(
     ...queryOptions,
   });
 
-  // Keep refs current so the effect below can read latest values without being in its dep array
-  const startDateRef = useRef(startDate);
-  startDateRef.current = startDate;
-  const endDateRef = useRef(endDate);
-  endDateRef.current = endDate;
-
-  // Initialize atoms from API defaults — only when atom is null (user hasn't picked yet).
+  // Initialize atoms from API defaults — only when atom is unset (user hasn't picked yet).
   // Use primitive .value strings as deps to avoid re-firing when select() returns a new object
-  // reference on every render (which would cause an infinite loop).
+  // reference on every render (which would cause an infinite loop). Re-runs on user picks are
+  // harmless: the unset guards turn them into no-ops.
   const defaultStartValue = query.data?.defaultStartDate?.value;
   const defaultEndValue = query.data?.defaultEndDate?.value;
   useEffect(() => {
     if (!query.data) return;
     const { defaultStartDate, defaultEndDate } = query.data;
-    if (!startDateRef.current && defaultStartDate) setStartDate(defaultStartDate);
-    if (!endDateRef.current && defaultEndDate) setEndDate(defaultEndDate);
+    if (!startDate && defaultStartDate) setStartDate(defaultStartDate);
+    if (!endDate && defaultEndDate) setEndDate(defaultEndDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultStartValue, defaultEndValue, setStartDate, setEndDate]);
+  }, [defaultStartValue, defaultEndValue, startDate, endDate, setStartDate, setEndDate]);
 
   return query;
 }
@@ -462,10 +457,24 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): CircleLayerSpecification[] {
+  const startDate = useAtomValue(alertsStartDate);
+  const endDate = useAtomValue(alertsEndDate);
+
   const cutoff3 = monthsAgoYMD(3);
   const cutoff6 = monthsAgoYMD(6);
   const cutoff12 = monthsAgoYMD(12);
   const cutoff24 = monthsAgoYMD(24);
+
+  // Restrict alerts to the widget's selected date range; until the user (or the
+  // widget defaults) pick one, show everything.
+  const dateRangeFilter: ExpressionSpecification[] = [
+    ...(startDate?.value
+      ? [['>=', ['get', 'scr5_obs_date'], startDate.value] as ExpressionSpecification]
+      : []),
+    ...(endDate?.value
+      ? [['<=', ['get', 'scr5_obs_date'], endDate.value] as ExpressionSpecification]
+      : []),
+  ];
 
   const radius: ExpressionSpecification = ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 6, 14, 10];
 
@@ -491,6 +500,7 @@ export function useLayers({
         'all',
         ['has', 'scr5_obs_date'],
         ['<', ['get', 'scr5_obs_date'], cutoff24],
+        ...dateRangeFilter,
       ] as FilterSpecification,
       paint: { ...paintProps, 'circle-color': '#FFC201' },
     },
@@ -502,6 +512,7 @@ export function useLayers({
         ['has', 'scr5_obs_date'],
         ['>=', ['get', 'scr5_obs_date'], cutoff24],
         ['<', ['get', 'scr5_obs_date'], cutoff12],
+        ...dateRangeFilter,
       ] as FilterSpecification,
       paint: { ...paintProps, 'circle-color': '#F78E1C' },
     },
@@ -513,6 +524,7 @@ export function useLayers({
         ['has', 'scr5_obs_date'],
         ['>=', ['get', 'scr5_obs_date'], cutoff12],
         ['<', ['get', 'scr5_obs_date'], cutoff6],
+        ...dateRangeFilter,
       ] as FilterSpecification,
       paint: { ...paintProps, 'circle-color': '#ED4F3F' },
     },
@@ -524,6 +536,7 @@ export function useLayers({
         ['has', 'scr5_obs_date'],
         ['>=', ['get', 'scr5_obs_date'], cutoff6],
         ['<', ['get', 'scr5_obs_date'], cutoff3],
+        ...dateRangeFilter,
       ] as FilterSpecification,
       paint: { ...paintProps, 'circle-color': '#DC3982' },
     },
@@ -534,6 +547,7 @@ export function useLayers({
         'all',
         ['has', 'scr5_obs_date'],
         ['>=', ['get', 'scr5_obs_date'], cutoff3],
+        ...dateRangeFilter,
       ] as FilterSpecification,
       paint: { ...paintProps, 'circle-color': '#C62AD6' },
     },
