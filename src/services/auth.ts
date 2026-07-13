@@ -27,7 +27,8 @@ export type UpdateUserPayload = {
     organization?: string;
     user_roles?: string[];
     user_role_other?: string;
-    current_password: string;
+    // Only required by the API when changing the password.
+    current_password?: string;
   };
 };
 export type UpdateUserResponse =

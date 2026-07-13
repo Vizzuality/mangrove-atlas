@@ -17,10 +17,25 @@ type RolesSelectProps = {
   options: RoleOption[];
   values: string[];
   onChange: (values: string[]) => void;
+  // Notified when the dropdown opens/closes, e.g. to disable a submit button
+  // while the user is still picking.
+  onOpenChange?: (open: boolean) => void;
 };
 
-const RolesSelect = ({ id, placeholder, options, values, onChange }: RolesSelectProps) => {
+const RolesSelect = ({
+  id,
+  placeholder,
+  options,
+  values,
+  onChange,
+  onOpenChange,
+}: RolesSelectProps) => {
   const [open, setOpen] = useState(false);
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    onOpenChange?.(nextOpen);
+  };
 
   const selectedLabels = options.filter((o) => values.includes(o.value)).map((o) => o.label);
 
@@ -33,7 +48,7 @@ const RolesSelect = ({ id, placeholder, options, values, onChange }: RolesSelect
     // which sets pointer-events:none on the body. A non-modal popover portals
     // to the body and never re-enables them, so options open but can't be
     // clicked. modal makes the popover manage pointer events for its own layer.
-    <Popover open={open} onOpenChange={setOpen} modal>
+    <Popover open={open} onOpenChange={handleOpenChange} modal>
       <PopoverTrigger asChild>
         <button
           id={id}

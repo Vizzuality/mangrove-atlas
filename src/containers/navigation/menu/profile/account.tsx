@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,17 +38,15 @@ const formSchema = z
       .optional()
       .default([]),
     'other-role': z.string().optional(),
+    // Empty string means "not changing the password".
     password: z
       .string()
-      .nonempty({ message: 'Please enter your password' })
       .min(6, {
         message: 'Please enter a password with at least 6 characters',
       })
-      .optional(),
-    current_password: z
-      .string()
-      .nonempty({ message: 'Please enter your password' })
-      .min(6, { message: 'Please enter your password' }),
+      .optional()
+      .or(z.literal('')),
+    current_password: z.string().optional(),
     delete_account: z.boolean().optional(),
   })
   .superRefine((data, ctx) => {
@@ -57,10 +57,19 @@ const formSchema = z
         path: ['other-role'],
       });
     }
+    // Current password is only needed to change the password.
+    if (data.password && !data.current_password) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Please enter your current password',
+        path: ['current_password'],
+      });
+    }
   });
 
 const AccountContent = () => {
   const { data: session, update: updateSession } = useSession();
+  const [rolesOpen, setRolesOpen] = useState(false);
 
   const user = session?.user;
   const updateUser = usePutUpdateUser(user?.accessToken || '');
@@ -78,12 +87,19 @@ const AccountContent = () => {
       email: user?.email || '',
       roles: user?.roles ?? [],
       'other-role': user?.other_role || '',
-      password: undefined,
+      password: '',
       current_password: '',
     },
   });
 
   const showOtherRole = form.watch('roles')?.includes(OTHER_ROLE_VALUE);
+  const changingPassword = !!form.watch('password');
+
+  // current_password is a confirmation, not a profile change — typing it alone
+  // shouldn't enable saving.
+  const hasChanges = Object.keys(form.formState.dirtyFields).some(
+    (field) => field !== 'current_password'
+  );
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { email, password, username, organization, roles, current_password } = values;
@@ -95,11 +111,11 @@ const AccountContent = () => {
       {
         user: {
           email,
-          password: password || current_password,
           name: username,
-          current_password,
           organization,
           user_roles: roles ?? [],
+          // Only send password fields when the user is actually changing it.
+          ...(password ? { password, current_password } : {}),
           ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { user_role_other: otherRole } : {}),
         },
       },
@@ -206,6 +222,7 @@ const AccountContent = () => {
                   placeholder="Select the roles that describe you"
                   options={ROLE_OPTIONS}
                   values={field.value ?? []}
+                  onOpenChange={setRolesOpen}
                   onChange={(selection) => {
                     field.onChange(selection);
                     if (!selection.includes(OTHER_ROLE_VALUE)) {
@@ -252,30 +269,44 @@ const AccountContent = () => {
                     <Input
                       type="password"
                       {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        // Back to "not changing the password": drop the
+                        // confirmation field state along with the input.
+                        if (!e.target.value) {
+                          form.setValue('current_password', '');
+                          form.clearErrors('current_password');
+                        }
+                      }}
                       className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-                      placeholder="Enter your new password"
+                      // Masked dots so the (unknown) stored password reads as set.
+                      placeholder="••••••••"
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="current_password"
-              render={({ field }) => (
-                <FormItem className="flex-1 gap-0">
-                  <FormLabel className="text-xs font-semibold">Current Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      {...field}
-                      className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-                      placeholder="Enter your current password"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            {changingPassword && (
+              <FormField
+                control={form.control}
+                name="current_password"
+                render={({ field }) => (
+                  <FormItem className="flex-1 gap-0">
+                    <FormLabel className="text-xs font-semibold" required>
+                      Current Password
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        {...field}
+                        className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                        placeholder="Enter your current password"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            )}
           </div>
         </fieldset>
         <div className="flex w-full items-center gap-6 pb-9">
@@ -320,7 +351,11 @@ const AccountContent = () => {
         />
 
         <div className="flex items-center justify-between">
-          <Button type="submit" disabled={updateUser.isPending} className="h-9 font-semibold">
+          <Button
+            type="submit"
+            disabled={updateUser.isPending || !hasChanges || rolesOpen}
+            className="h-9 font-semibold"
+          >
             {updateUser.isPending ? 'Saving…' : 'Save changes'}
           </Button>
           <Button
