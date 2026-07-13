@@ -17,6 +17,7 @@ import type {
   CircleLayerSpecification,
   ExpressionSpecification,
   FilterSpecification,
+  LineLayerSpecification,
 } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 
@@ -466,12 +467,19 @@ export function useAlerts<TRaw = AlertsApiResponse>(
 }
 
 // dataset layer
-export function useSource(): SourceProps {
-  return {
-    id: 'alerts-heatmap-vector',
-    type: 'vector',
-    url: 'mapbox://globalmangrovewatch.0vowa2i9',
-  };
+export function useSources(): SourceProps[] {
+  return [
+    {
+      id: 'alerts-dots',
+      type: 'vector',
+      url: 'mapbox://globalmangrovewatch.0vowa2i9',
+    },
+    {
+      id: 'monitored-alerts',
+      type: 'vector',
+      url: 'mapbox://globalmangrovewatch.c5dgz6m3',
+    },
+  ];
 }
 
 export function useLayers({
@@ -482,7 +490,10 @@ export function useLayers({
   id: string;
   opacity?: number;
   visibility?: Visibility;
-}): CircleLayerSpecification[] {
+}): {
+  'alerts-dots': CircleLayerSpecification[];
+  'monitored-alerts': LineLayerSpecification[];
+} {
   const startDate = useAtomValue(alertsStartDate);
   const endDate = useAtomValue(alertsEndDate);
 
@@ -506,7 +517,7 @@ export function useLayers({
 
   const layerProps: Omit<CircleLayerSpecification, 'id' | 'filter' | 'paint'> = {
     type: 'circle',
-    source: 'alerts-heatmap-vector',
+    source: 'alerts-dots',
     'source-layer': 'alerts',
     minzoom: 0,
     maxzoom: 18,
@@ -518,64 +529,83 @@ export function useLayers({
     'circle-opacity': opacity ?? 1,
   };
 
-  return [
-    {
-      ...layerProps,
-      id: `${id}-gt24`,
-      filter: [
-        'all',
-        ['has', 'scr5_obs_date'],
-        ['<', ['get', 'scr5_obs_date'], cutoff24],
-        ...dateRangeFilter,
-      ] as FilterSpecification,
-      paint: { ...paintProps, 'circle-color': '#FFC201' },
-    },
-    {
-      ...layerProps,
-      id: `${id}-12-24`,
-      filter: [
-        'all',
-        ['has', 'scr5_obs_date'],
-        ['>=', ['get', 'scr5_obs_date'], cutoff24],
-        ['<', ['get', 'scr5_obs_date'], cutoff12],
-        ...dateRangeFilter,
-      ] as FilterSpecification,
-      paint: { ...paintProps, 'circle-color': '#F78E1C' },
-    },
-    {
-      ...layerProps,
-      id: `${id}-6-12`,
-      filter: [
-        'all',
-        ['has', 'scr5_obs_date'],
-        ['>=', ['get', 'scr5_obs_date'], cutoff12],
-        ['<', ['get', 'scr5_obs_date'], cutoff6],
-        ...dateRangeFilter,
-      ] as FilterSpecification,
-      paint: { ...paintProps, 'circle-color': '#ED4F3F' },
-    },
-    {
-      ...layerProps,
-      id: `${id}-3-6`,
-      filter: [
-        'all',
-        ['has', 'scr5_obs_date'],
-        ['>=', ['get', 'scr5_obs_date'], cutoff6],
-        ['<', ['get', 'scr5_obs_date'], cutoff3],
-        ...dateRangeFilter,
-      ] as FilterSpecification,
-      paint: { ...paintProps, 'circle-color': '#DC3982' },
-    },
-    {
-      ...layerProps,
-      id: `${id}-lt3`,
-      filter: [
-        'all',
-        ['has', 'scr5_obs_date'],
-        ['>=', ['get', 'scr5_obs_date'], cutoff3],
-        ...dateRangeFilter,
-      ] as FilterSpecification,
-      paint: { ...paintProps, 'circle-color': '#C62AD6' },
-    },
-  ];
+  return {
+    'monitored-alerts': [
+      {
+        id: `${id}-line`,
+        type: 'line',
+        source: 'monitored-alerts',
+        'source-layer': 'alert_region_tiles',
+        minzoom: 0,
+        paint: {
+          'line-color': '#00857F',
+          'line-opacity': opacity ?? 1,
+          'line-width': 1,
+        },
+        layout: {
+          visibility,
+        },
+      },
+    ],
+    'alerts-dots': [
+      {
+        ...layerProps,
+        id: `${id}-gt24`,
+        filter: [
+          'all',
+          ['has', 'scr5_obs_date'],
+          ['<', ['get', 'scr5_obs_date'], cutoff24],
+          ...dateRangeFilter,
+        ] as FilterSpecification,
+        paint: { ...paintProps, 'circle-color': '#FFC201' },
+      },
+      {
+        ...layerProps,
+        id: `${id}-12-24`,
+        filter: [
+          'all',
+          ['has', 'scr5_obs_date'],
+          ['>=', ['get', 'scr5_obs_date'], cutoff24],
+          ['<', ['get', 'scr5_obs_date'], cutoff12],
+          ...dateRangeFilter,
+        ] as FilterSpecification,
+        paint: { ...paintProps, 'circle-color': '#F78E1C' },
+      },
+      {
+        ...layerProps,
+        id: `${id}-6-12`,
+        filter: [
+          'all',
+          ['has', 'scr5_obs_date'],
+          ['>=', ['get', 'scr5_obs_date'], cutoff12],
+          ['<', ['get', 'scr5_obs_date'], cutoff6],
+          ...dateRangeFilter,
+        ] as FilterSpecification,
+        paint: { ...paintProps, 'circle-color': '#ED4F3F' },
+      },
+      {
+        ...layerProps,
+        id: `${id}-3-6`,
+        filter: [
+          'all',
+          ['has', 'scr5_obs_date'],
+          ['>=', ['get', 'scr5_obs_date'], cutoff6],
+          ['<', ['get', 'scr5_obs_date'], cutoff3],
+          ...dateRangeFilter,
+        ] as FilterSpecification,
+        paint: { ...paintProps, 'circle-color': '#DC3982' },
+      },
+      {
+        ...layerProps,
+        id: `${id}-lt3`,
+        filter: [
+          'all',
+          ['has', 'scr5_obs_date'],
+          ['>=', ['get', 'scr5_obs_date'], cutoff3],
+          ...dateRangeFilter,
+        ] as FilterSpecification,
+        paint: { ...paintProps, 'circle-color': '#C62AD6' },
+      },
+    ],
+  };
 }
