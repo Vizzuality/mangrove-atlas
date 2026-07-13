@@ -6,13 +6,13 @@ import { useSyncActiveLayers } from '@/store/layers';
 
 import type { LayerProps } from 'types/layers';
 
-import { useLayers, useSource } from './hooks';
+import { useLayers, useSources } from './hooks';
 
 const MangrovesAlertsLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
-  const source = useSource();
+  const SOURCES = useSources();
   const LAYERS = useLayers({
     id,
     opacity: parseFloat(activeLayer.opacity),
@@ -20,21 +20,24 @@ const MangrovesAlertsLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => 
   });
 
   useEffect(() => {
-    const ids = LAYERS.map((l) => l.id);
+    const ids = Object.values(LAYERS)
+      .flat()
+      .map((l) => l.id);
     onAdd(ids);
     return () => onRemove(ids);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onAdd, onRemove]);
 
-  if (!source || !LAYERS) return null;
+  if (!SOURCES || !LAYERS) return null;
 
-  return (
-    <Source key={source.id} {...source}>
-      {LAYERS.map((layer) => (
-        <Layer key={layer.id} {...layer} beforeId={beforeId} />
-      ))}
+  return SOURCES.map((SOURCE) => (
+    <Source key={SOURCE.id} {...SOURCE}>
+      {SOURCE.id &&
+        LAYERS[SOURCE.id as keyof typeof LAYERS]?.map((LAYER) => (
+          <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+        ))}
     </Source>
-  );
+  ));
 };
 
 export default MangrovesAlertsLayer;

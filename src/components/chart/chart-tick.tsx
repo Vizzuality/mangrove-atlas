@@ -4,14 +4,18 @@ import type { FC } from 'react';
 export const MAX_TICK_LABELS = 8;
 
 // Whether a tick at `index` should render its label: evenly spaced positions plus
-// the last tick, so a dense axis shows a readable, non-overlapping subset.
+// the last tick, so a dense axis shows a readable, non-overlapping subset. Step
+// multiples closer than half a step to the end are skipped so they don't crowd
+// the always-shown last label.
 export function shouldShowTickLabel(
   index: number,
   visibleTicksCount: number,
   maxLabels: number = MAX_TICK_LABELS
 ): boolean {
   const step = Math.max(1, Math.ceil(visibleTicksCount / maxLabels));
-  return index % step === 0 || index === visibleTicksCount - 1;
+  const last = visibleTicksCount - 1;
+  if (index === last) return true;
+  return index % step === 0 && last - index > step / 2;
 }
 
 export type ChartTickProps = {
@@ -32,6 +36,10 @@ export type ChartTickProps = {
   // render all ticks with an evenly spaced subset of labels. Falls back to the
   // maxLabels thinning when omitted.
   labelValues?: (string | number)[];
+  // Explicit set of tick indices to label. Takes precedence over labelValues —
+  // use it when tick values repeat across the axis (e.g. one point per month
+  // labelled by year), where matching by value would label every duplicate.
+  labelIndices?: number[];
 };
 
 // Shared axis tick used across widget charts/brushes so tick↔label padding and
@@ -48,10 +56,13 @@ const ChartTick: FC<ChartTickProps> = ({
   maxLabels = MAX_TICK_LABELS,
   angle,
   labelValues,
+  labelIndices,
 }) => {
-  const showLabel = labelValues
-    ? payload?.value != null && labelValues.includes(payload.value)
-    : shouldShowTickLabel(index, visibleTicksCount, maxLabels);
+  const showLabel = labelIndices
+    ? labelIndices.includes(index)
+    : labelValues
+      ? payload?.value != null && labelValues.includes(payload.value)
+      : shouldShowTickLabel(index, visibleTicksCount, maxLabels);
   if (!showLabel) {
     return <g transform={`translate(${x},${y})`} />;
   }
