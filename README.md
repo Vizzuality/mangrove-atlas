@@ -25,7 +25,7 @@
 
 ### Requirements
 
-- Node.js 22 (see `.nvmrc`)
+- Node.js 24 (see `.nvmrc`)
 - [pnpm](https://pnpm.io/) 10.x
 
 ### Setup
