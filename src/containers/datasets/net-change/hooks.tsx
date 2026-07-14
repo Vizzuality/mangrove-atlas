@@ -54,7 +54,7 @@ const AXIS_TICK = {
 
 export const getFormat = (v) => {
   const decimalCount = -Math.floor(Math.log10(v) + 1) + 1;
-  const formatByDecimals = format(`.${decimalCount === Infinity ? 1 : Math.abs(decimalCount)}~f`);
+  const formatByDecimals = format(`,.${decimalCount === Infinity ? 1 : Math.abs(decimalCount)}~f`);
   return formatByDecimals(v);
 };
 
@@ -252,8 +252,8 @@ export function useMangroveNetChange(
       tick: { ...AXIS_TICK },
       tickFormatter: (v) => {
         const parsedNumber = unit === 'ha' ? v * 100 : v;
-        const result = Number(getFormat(Math.abs(parsedNumber)));
-        if (result === 0) return 0;
+        const result = getFormat(Math.abs(parsedNumber)); // comma-grouped string, e.g. "5,000"
+        if (Number(result.replace(/,/g, '')) === 0) return 0;
         // Loss sits below the zero baseline — keep the sign so negative levels read as "-N".
         return v < 0 ? `-${result}` : result;
       },
