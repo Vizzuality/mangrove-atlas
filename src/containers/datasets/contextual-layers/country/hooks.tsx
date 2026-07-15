@@ -4,9 +4,9 @@ import type { LayerProps, SourceProps } from 'react-map-gl';
 
 export function useSource(): SourceProps {
   return {
-    id: 'country-boundaries',
+    id: 'countries_12miles_location_v4',
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.3v0yd8n1',
+    url: 'mapbox://globalmangrovewatch.j84w2y',
   };
 }
 
@@ -16,8 +16,8 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       {
         id: `${id}-line`,
         type: 'line',
-        source: 'country-boundaries',
-        'source-layer': 'gadm_eez_location_v3',
+        source: 'countries_12miles_location_v4',
+        'source-layer': 'countries_12miles_location_v4',
         paint: {
           'line-color': 'hsl(58, 66%, 47%)',
           'line-opacity': 0.7,
@@ -26,8 +26,8 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       {
         id,
         type: 'fill',
-        source: 'country-boundaries',
-        'source-layer': 'gadm_eez_location_v3',
+        source: 'countries_12miles_location_v4',
+        'source-layer': 'countries_12miles_location_v4',
         paint: {
           'fill-color': 'hsla(58, 78%, 58%, 0.08)',
           'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 0],
