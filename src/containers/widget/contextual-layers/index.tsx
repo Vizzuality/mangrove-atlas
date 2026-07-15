@@ -1,8 +1,10 @@
-import { ReactElement, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { usePathname } from 'next/navigation';
 
 import { useSyncActiveLayers } from '@/store/layers';
+
+import { useGetContextualLayerInfo } from '@/containers/layers/hooks';
 
 import type { WidgetSlugType } from 'types/widget';
 
@@ -14,22 +16,23 @@ type ContextualLayersComponentProps = {
   id: string;
   origin?: WidgetSlugType; // Optional prop to track the origin of the suggestion
   description: string;
-  thumbSource?: string;
-  children?: ReactElement;
-  name: string;
+  position?: 'top' | 'bottom'; // Where the layer lands in the active-layers stack when toggled on
 };
 
 const ContextualLayersComponent = ({
   id,
   origin,
   description,
-  thumbSource,
-  name,
+  position = 'bottom',
 }: ContextualLayersComponentProps) => {
   const pathname = usePathname();
   const isPrintReport = pathname?.startsWith('/print-report');
   const [activeLayers] = useSyncActiveLayers();
   const isActive = useMemo(() => activeLayers?.some((l) => l.id === id), [activeLayers, id]);
+
+  const info = useGetContextualLayerInfo(id);
+  const name = info?.name ?? '';
+  const thumbSource = info?.thumbSource;
 
   if (isPrintReport && !isActive) return null;
 
@@ -43,7 +46,7 @@ const ContextualLayersComponent = ({
             <Content id={id} description={description} />
           </div>
         </div>
-        {!isPrintReport && <Controls id={id} origin={origin} />}
+        {!isPrintReport && <Controls id={id} origin={origin} position={position} />}
       </div>
     </div>
   );

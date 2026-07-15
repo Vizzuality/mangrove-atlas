@@ -22,9 +22,10 @@ import INFO_SVG from '@/svgs/ui/info';
 type ControlTypes = {
   id: string;
   origin?: WidgetSlugType; // Optional prop to track the origin of the suggestion
+  position?: 'top' | 'bottom'; // Where the layer lands in the active-layers stack when toggled on
 };
 
-const Controls = ({ id, origin }: ControlTypes) => {
+const Controls = ({ id, origin, position = 'bottom' }: ControlTypes) => {
   const Info = INFO[id];
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const activeLayersIds = activeLayers?.map((l) => l.id);
@@ -34,9 +35,12 @@ const Controls = ({ id, origin }: ControlTypes) => {
   );
 
   const handleClick = useCallback(() => {
+    const newLayer = { id, opacity: '1', visibility: 'visible' } as Layer;
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as Layer[]);
+      : position === 'bottom'
+        ? ([...activeLayers, newLayer] as Layer[])
+        : ([newLayer, ...activeLayers] as Layer[]);
 
     if (!isActive) {
       trackEvent(`Suggested layer - ${id}`, {
@@ -47,7 +51,7 @@ const Controls = ({ id, origin }: ControlTypes) => {
     }
 
     setActiveLayers(layersUpdate);
-  }, [isActive, activeLayers, setActiveLayers, id, origin]);
+  }, [isActive, activeLayers, setActiveLayers, id, origin, position]);
 
   return (
     <div className="flex items-start space-x-2">
