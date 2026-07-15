@@ -4,9 +4,14 @@ import { useCallback, useMemo, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+
 import turfBbox from '@turf/bbox';
 import bbox from '@turf/bbox';
-import type { Feature, Polygon, MultiPolygon, Geometry } from 'geojson';
+import type { Feature, FeatureCollection, Polygon, MultiPolygon, Geometry } from 'geojson';
+import { useSetAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 import { LuPencil, LuCheck } from 'react-icons/lu';
 
 import { useLocationNavigation, locationToNavTarget } from 'hooks/location-navigation';
@@ -30,7 +35,7 @@ import CLOSE_SVG from '@/svgs/ui/close';
 
 type BBox = [number, number, number, number];
 
-function customGeometryToBBox(custom_geometry: { coordinates: any }): BBox | null {
+function customGeometryToFeature(custom_geometry: { coordinates: any }): Feature | null {
   const coords = custom_geometry?.coordinates;
   if (!coords) return null;
 
@@ -47,13 +52,25 @@ function customGeometryToBBox(custom_geometry: { coordinates: any }): BBox | nul
     ? ({ type: 'MultiPolygon', coordinates: coords } as MultiPolygon)
     : ({ type: 'Polygon', coordinates: coords } as Polygon);
 
-  const feature: Feature = {
+  return {
     type: 'Feature',
     properties: {},
     geometry,
   };
+}
 
+function customGeometryToBBox(custom_geometry: { coordinates: any }): BBox | null {
+  const feature = customGeometryToFeature(custom_geometry);
+  if (!feature) return null;
   return bbox(feature) as BBox;
+}
+
+function customGeometryToFeatureCollection(custom_geometry: {
+  coordinates: any;
+}): FeatureCollection | null {
+  const feature = customGeometryToFeature(custom_geometry);
+  if (!feature) return null;
+  return { type: 'FeatureCollection', features: [feature] };
 }
 
 const LuPencilIcon = LuPencil as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
@@ -71,6 +88,12 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
   const [isEditMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState(name);
   const { navigate } = useLocationNavigation();
+
+  const setDrawingUploadToolState = useSetAtom(drawingUploadToolAtom);
+  const resetDrawingUploadToolState = useResetAtom(drawingUploadToolAtom);
+  const resetDrawingToolState = useResetAtom(drawingToolAtom);
+  const setAnalysisState = useSetAtom(analysisAtom);
+  const resetAnalysisState = useResetAtom(analysisAtom);
 
   const deleteUserLocationArea = useDeleteUserLocation();
   const updateUserLocationMutation = useUpdateUserLocation();
@@ -146,18 +169,49 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
     return customGeometryToBBox(geometry);
   }, [geometry]);
 
+  const customFeatureCollection = useMemo(() => {
+    if (!geometry) return null;
+    return customGeometryToFeatureCollection(geometry);
+  }, [geometry]);
+
   const handleLocationClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
 
       if (locationType === 'system' && location) {
+        // Leaving any active custom-area analysis when jumping to a system area.
+        resetDrawingToolState();
+        resetDrawingUploadToolState();
+        resetAnalysisState();
         navigate(locationToNavTarget(location), bounds);
-      } else if (locationType === 'custom') {
+      } else if (locationType === 'custom' && customFeatureCollection) {
+        // Feed the saved geometry into the drawing-tool pipeline so it renders
+        // via mapbox-gl-draw and reroutes the widgets/data hooks to the
+        // analysis API — same state as a freshly drawn/uploaded area.
+        resetDrawingToolState();
+        setDrawingUploadToolState((prev) => ({
+          ...prev,
+          uploadedGeojson: customFeatureCollection,
+          customGeojson: null,
+        }));
+        setAnalysisState((prev) => ({ ...prev, enabled: true }));
         navigate({ type: 'custom-area' }, customBounds);
       }
     },
-    [navigate, bounds, customBounds, location, locationType]
+    [
+      navigate,
+      bounds,
+      customBounds,
+      customFeatureCollection,
+      location,
+      locationType,
+      resetDrawingToolState,
+      resetDrawingUploadToolState,
+      resetAnalysisState,
+      setDrawingUploadToolState,
+      setAnalysisState,
+    ]
   );
 
   return (
