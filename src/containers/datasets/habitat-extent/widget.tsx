@@ -253,6 +253,7 @@ const HabitatExtent = () => {
                 origin="mangrove_alerts"
                 id={contextualLayers[0].id}
                 description={contextualLayers[0].description}
+                position="top"
               />
               <HabitatExtentChart legend={legend} config={config} />
             </div>
@@ -353,6 +354,7 @@ const HabitatExtent = () => {
               origin="mangrove_alerts"
               id={contextualLayers[0].id}
               description={contextualLayers[0].description}
+              position="top"
             />
           </div>
         )}
