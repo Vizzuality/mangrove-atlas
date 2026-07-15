@@ -35,13 +35,9 @@ const LayerManagerContainer = () => {
 
   const { id } = useSyncLocation();
 
-  // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
-  const basemap_layers = ACTIVE_LAYERS?.filter(
-    (layer) => layer?.includes('planet') || layer === 'hi-res-extent'
-  );
-  const no_planet_layers = ACTIVE_LAYERS?.filter(
-    (layer) => !layer?.includes('planet') && layer !== 'hi-res-extent'
-  );
+  // layers that act as basemap (planet imagery) must always be at the bottom
+  const basemap_layers = ACTIVE_LAYERS?.filter((layer) => layer?.includes('planet'));
+  const no_planet_layers = ACTIVE_LAYERS?.filter((layer) => !layer?.includes('planet'));
 
   const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id)
     ? no_planet_layers?.filter((l) => !l?.includes('national_dashboard'))
