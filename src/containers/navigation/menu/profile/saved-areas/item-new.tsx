@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -19,6 +19,34 @@ import { Input } from '@/components/ui/input';
 
 const LuPlusIcon = LuPlus as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
+// Planar shoelace area of a linear ring — only used to compare relative polygon sizes,
+// so an unprojected approximation is fine.
+const ringArea = (ring: GeoJSON.Position[]): number => {
+  let area = 0;
+  for (let i = 0, n = ring.length - 1; i < n; i++) {
+    area += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
+  }
+  return Math.abs(area / 2);
+};
+
+// Reduce a geometry to Polygon coordinates the backend accepts. Polygon passes through;
+// MultiPolygon is unwrapped when single-part, otherwise the largest part is kept.
+const toPolygonCoordinates = (
+  geom: GeoJSON.Geometry | undefined
+): GeoJSON.Polygon['coordinates'] | null => {
+  if (!geom) return null;
+  if (geom.type === 'Polygon') return geom.coordinates?.length ? geom.coordinates : null;
+  if (geom.type === 'MultiPolygon') {
+    const polygons = geom.coordinates;
+    if (!polygons?.length) return null;
+    if (polygons.length === 1) return polygons[0];
+    return polygons.reduce((largest, polygon) =>
+      ringArea(polygon[0]) > ringArea(largest[0]) ? polygon : largest
+    );
+  }
+  return null;
+};
+
 type Props = {
   name: string;
   systemLocationId?: number; // only for system routes
@@ -29,10 +57,13 @@ type Props = {
 const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Props) => {
   const [newName, setNewName] = useState(name);
 
-  // If route changes name, resync
-  useEffect(() => {
+  // Resync the input when the route-provided name changes, without an effect
+  // (adjust state during render — see https://react.dev/learn/you-might-not-need-an-effect).
+  const [prevName, setPrevName] = useState(name);
+  if (name !== prevName) {
+    setPrevName(name);
     setNewName(name);
-  }, [name]);
+  }
 
   const createUserLocationMutation = useCreateUserLocation();
 
@@ -44,13 +75,17 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
     const uploaded = uploadedGeojson?.features?.[0]?.geometry;
 
     const geom = drawn ?? uploaded;
-    if (!geom || geom.type !== 'Polygon' || !('coordinates' in geom) || !geom.coordinates)
-      return null;
+    // Drawn areas are always a single Polygon. Uploaded shapefiles/geopackages commonly
+    // convert to MultiPolygon, which the create endpoint rejects (500). Reduce those to a
+    // single Polygon (unwrap when there is one part; otherwise keep the largest part) so
+    // uploaded areas can be saved.
+    const coordinates = toPolygonCoordinates(geom);
+    if (!coordinates) return null;
 
     return {
       description: drawn ? 'Custom drawn area' : 'Uploaded area',
       type: 'Polygon',
-      coordinates: (geom as GeoJSON.Polygon).coordinates,
+      coordinates,
     };
   }, [customGeojson, uploadedGeojson]);
 
