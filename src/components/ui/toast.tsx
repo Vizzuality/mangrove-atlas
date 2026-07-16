@@ -7,30 +7,33 @@ import {
   Cross1Icon,
   ReloadIcon,
 } from '@radix-ui/react-icons';
-import { useTheme } from 'next-themes';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 
 const Toaster = ({ icon = false, ...props }: ToasterProps & { icon?: boolean }) => {
-  const { theme = 'system' } = useTheme();
-
   return (
+    // App has no dark mode: force light so sonner's text color matches the
+    // hardcoded white --normal-bg below. Passing "system" here let dark-OS
+    // users get near-white text on white → an apparently empty toast (GMW-1043).
     <Sonner
-      theme={theme as ToasterProps['theme']}
+      theme="light"
       className="toaster group font-inter text-sm font-bold shadow-[0px_4px_12px_0px_#00000014]"
       icons={
         !icon
           ? undefined
           : {
-              success: <CheckCircledIcon className="size-4 fill-current text-brand-800" />,
-              info: <InfoCircledIcon className="size-4 bg-brand-800" />,
-              warning: <ExclamationTriangleIcon className="size-4 bg-brand-800" />,
-              error: <Cross1Icon className="size-4 bg-brand-800" />,
-              loading: <ReloadIcon className="size-4 animate-spin bg-brand-800" />,
+              success: <CheckCircledIcon className="text-brand-800 size-4 fill-current" />,
+              info: <InfoCircledIcon className="bg-brand-800 size-4" />,
+              warning: <ExclamationTriangleIcon className="bg-brand-800 size-4" />,
+              error: <Cross1Icon className="bg-brand-800 size-4" />,
+              loading: <ReloadIcon className="bg-brand-800 size-4 animate-spin" />,
             }
       }
       style={
         {
           '--normal-bg': '#fff',
+          // Pin the text color so it can never end up light-on-white, regardless
+          // of the resolved theme (brand-900). Defensive alongside theme="light".
+          '--normal-text': '#003C39',
           '--normal-border': 'var(--border)',
           '--border-radius': 'var(--radius)',
         } as React.CSSProperties
