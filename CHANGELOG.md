@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.3](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.2...v8.0.0-rc.3) (2026-07-16)
+
+
+### Features
+
+* add monitored area legend to alerts widget and map legends ([#1593](https://github.com/Vizzuality/mangrove-atlas/issues/1593)) ([be9df22](https://github.com/Vizzuality/mangrove-atlas/commit/be9df220b8d3360cb04108d5c93409a081880dac))
+* draw and analyse saved custom areas on map click ([#1599](https://github.com/Vizzuality/mangrove-atlas/issues/1599)) ([b108b20](https://github.com/Vizzuality/mangrove-atlas/commit/b108b20623604738b83911e96b3afd5be5a489e1))
+
+
+### Bug Fixes
+
+* add thousands separators to net change widget Y-axis (GMW-1054) ([#1600](https://github.com/Vizzuality/mangrove-atlas/issues/1600)) ([8ea451c](https://github.com/Vizzuality/mangrove-atlas/commit/8ea451c2257a58836907e37294476dba21fab84f))
+* alerts widget axis labels and monitored areas outline ([#1592](https://github.com/Vizzuality/mangrove-atlas/issues/1592)) ([46327c4](https://github.com/Vizzuality/mangrove-atlas/commit/46327c4c2f8a14d3caee371e9bd110971fa62540))
+* correct species widget no-data behaviour (GMW-1062) ([#1606](https://github.com/Vizzuality/mangrove-atlas/issues/1606)) ([666a8e7](https://github.com/Vizzuality/mangrove-atlas/commit/666a8e7168508cd08c9dd400c3f148656422a663))
+* filter alerts map layer by widget date range ([#1590](https://github.com/Vizzuality/mangrove-atlas/issues/1590)) ([7d9e506](https://github.com/Vizzuality/mangrove-atlas/commit/7d9e50628db312b247570ae43992061a9b9af537))
+* only require current password when changing password in account form (GMW-1046) ([#1594](https://github.com/Vizzuality/mangrove-atlas/issues/1594)) ([713ac67](https://github.com/Vizzuality/mangrove-atlas/commit/713ac677bc1c9885cb4ea7cea92fb0f728a71eca))
+* order map-tip contextual layers on the map (GMW-1057) ([#1603](https://github.com/Vizzuality/mangrove-atlas/issues/1603)) ([c5abe54](https://github.com/Vizzuality/mangrove-atlas/commit/c5abe549a4697b5e0e94d8985ec63b1915322df5))
+* prevent empty toast on dark-mode OS (GMW-1043) ([#1607](https://github.com/Vizzuality/mangrove-atlas/issues/1607)) ([2273db6](https://github.com/Vizzuality/mangrove-atlas/commit/2273db6d187203aaaaffffa710b792bdc97efc06))
+
 ## [8.0.0-rc.2](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.1...v8.0.0-rc.2) (2026-07-09)
 
 
