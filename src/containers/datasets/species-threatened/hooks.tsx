@@ -100,19 +100,22 @@ export function useMangroveSpeciesThreatened(
   const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   const DATA = useMemo(() => {
-    const { data: speciesData } = data;
+    const speciesData = data?.data;
     if (!speciesData) return null;
     const { categories, total, species, threatened } = speciesData;
 
     const threatenedLegend: number | string = getThreatened(threatened, total);
     const speciesByGroup = groupBy(species, (s) => s?.red_list_cat);
 
-    const chartData = Object.entries(categories)?.map((item) => ({
-      value: item[1],
-      color: COLORS[item[0]],
-      label: `${RED_LIST_CATEGORIES[item[0]]}`,
-      species: speciesByGroup[item[0]].sort(),
-    }));
+    const categoryEntries = Object.entries(categories ?? {});
+    const chartData = categoryEntries.length
+      ? categoryEntries.map((item) => ({
+          value: item[1],
+          color: COLORS[item[0]],
+          label: `${RED_LIST_CATEGORIES[item[0]]}`,
+          species: speciesByGroup[item[0]] ?? [],
+        }))
+      : null;
 
     return {
       threatenedLegend,
