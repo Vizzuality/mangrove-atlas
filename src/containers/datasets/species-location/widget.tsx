@@ -95,7 +95,7 @@ const SpeciesLocation = () => {
     updateFade();
   }, [updateFade, specieOptions]);
 
-  if (isFetched && !species.length) return <NoData />;
+  if (isFetched && !species?.length) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
