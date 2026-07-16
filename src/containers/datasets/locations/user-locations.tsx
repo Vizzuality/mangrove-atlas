@@ -75,6 +75,8 @@ type Bounds = {
 
 export type CustomGeometry = {
   description: string;
+  // The backend only accepts Polygon geometry on create; uploaded MultiPolygons are
+  // reduced to a single Polygon before saving (see buildCustomGeometry).
   type: 'Polygon';
   coordinates: GeoJSON.Polygon['coordinates'];
 };

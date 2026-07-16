@@ -89,6 +89,12 @@ export function useMangroveBlueCarbon(
       },
     },
     ...queryOptions,
+    // GMW-1067: skip fetching in the reset transition — analysis just disabled while the
+    // URL is still /custom-area (would GET ?location_id=custom-area → 400), or analysis
+    // enabled with no geometry yet (would POST a null geometry → 400).
+    enabled:
+      (isAnalysisEnabled ? !!geojson : location_id !== 'custom-area') &&
+      (queryOptions?.enabled ?? true),
   });
 }
 

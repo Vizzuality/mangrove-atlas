@@ -132,4 +132,23 @@ test.describe('Custom area has a polygon', () => {
     await expect(page.getByTestId('delete-custom-area-button').first()).not.toBeVisible();
     await expect(page.getByTestId('drawing-tool-button')).toContainText('Draw area');
   });
+
+  // GMW-1067: resetting a custom area used to fire a transient widgets request with the
+  // stale location_id=custom-area (and/or an analysis POST with a null geometry) that
+  // returned 400 in the network tab. The analysis widget hooks now guard `enabled`.
+  test('reset does not trigger a 400 request (GMW-1067)', async ({ page }) => {
+    const badRequests: string[] = [];
+    page.on('response', (res) => {
+      if (res.status() >= 400 && res.status() < 500 && /\/widgets\/|\/analysis/.test(res.url())) {
+        badRequests.push(`${res.status()} ${res.url()}`);
+      }
+    });
+
+    await page.getByTestId('delete-custom-area-button').first().click();
+    await expect(page.getByTestId('drawing-tool-button')).toContainText('Draw area');
+    // Let any transient refetch triggered by the reset settle.
+    await page.waitForTimeout(1500);
+
+    expect(badRequests).toEqual([]);
+  });
 });
