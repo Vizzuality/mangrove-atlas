@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 
 import { useDropzone } from 'react-dropzone';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { mapCursorAtom } from '@/store/map';
 
+import turfBbox from '@turf/bbox';
 import { useAtom, useSetAtom } from 'jotai';
 import { toast } from 'sonner';
 
 import { fetchUploadFile } from 'hooks/analysis';
+import { useLocationNavigation } from 'hooks/location-navigation';
 
 import Helper from '@/containers/help/helper';
 import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
@@ -79,10 +79,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
   const setAnalysisState = useSetAtom(analysisAtom);
   const setMapCursor = useSetAtom(mapCursorAtom);
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const queryParams = searchParams.toString();
+  const { navigate } = useLocationNavigation();
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -95,7 +92,6 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
         fetchUploadFile(files)
           .then((data) => {
             setFileUpload(false);
-            void router.push(`/custom-area${queryParams ? `?${queryParams}` : ''}`);
 
             setDrawingUploadToolState((drawingToolState) => ({
               ...drawingToolState,
@@ -113,6 +109,14 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               ...prevAnalysisState,
               enabled: true,
             }));
+
+            // Change location to custom-area using the same client-side navigation the
+            // draw flow uses (history.replaceState — no RSC refetch/page remount) and fly
+            // the map to the uploaded geometry's bounds.
+            const uploadedBbox = data?.data
+              ? (turfBbox(data.data) as [number, number, number, number])
+              : null;
+            navigate({ type: 'custom-area' }, uploadedBbox);
 
             toast.success('File uploaded successfully');
           })
