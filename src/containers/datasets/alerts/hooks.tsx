@@ -472,7 +472,7 @@ export function useSources(): SourceProps[] {
     {
       id: 'alerts-dots',
       type: 'vector',
-      url: 'mapbox://globalmangrovewatch.0vowa2i9',
+      url: 'mapbox://globalmangrovewatch.shglec',
     },
     {
       id: 'monitored-alerts',
