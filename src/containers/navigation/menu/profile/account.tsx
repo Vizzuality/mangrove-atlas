@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signOut, useSession } from 'next-auth/react';
@@ -30,8 +30,13 @@ const ROLE_VALUES = ROLE_OPTIONS.map((o) => o.value);
 
 const formSchema = z
   .object({
-    username: z.string().min(1, { message: 'Please enter your name' }).optional(),
-    email: z.string().email({ message: 'Please enter a valid email address' }).optional(),
+    // Empty string means "keep the current value" (the field shows it as a placeholder).
+    username: z.string().min(1, { message: 'Please enter your name' }).optional().or(z.literal('')),
+    email: z
+      .string()
+      .email({ message: 'Please enter a valid email address' })
+      .optional()
+      .or(z.literal('')),
     organization: z.string().optional(),
     roles: z
       .array(z.string().refine((v) => ROLE_VALUES.includes(v)))
@@ -74,6 +79,13 @@ const AccountContent = () => {
   const user = session?.user;
   const updateUser = usePutUpdateUser(user?.accessToken || '');
 
+  // Current user info shown as placeholders (blank fields fall back to these on submit).
+  // Name is only meaningful when it isn't just the email login fallback.
+  const displayName = user?.name && user?.name !== user?.email ? user.name : '';
+  const userRolesLabel = ROLE_OPTIONS.filter((o) => user?.roles?.includes(o.value))
+    .map((o) => o.label)
+    .join(', ');
+
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' });
     await signOut();
@@ -82,18 +94,22 @@ const AccountContent = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: user?.name || '',
-      organization: user?.organization || '',
-      email: user?.email || '',
-      roles: user?.roles ?? [],
-      'other-role': user?.other_role || '',
+      // Left empty so the user's current info shows as a placeholder; onSubmit falls
+      // back to these current values when a field is left blank.
+      username: '',
+      organization: '',
+      email: '',
+      roles: [],
+      'other-role': '',
       password: '',
       current_password: '',
     },
   });
 
-  const showOtherRole = form.watch('roles')?.includes(OTHER_ROLE_VALUE);
-  const changingPassword = !!form.watch('password');
+  const watchedRoles = useWatch({ control: form.control, name: 'roles' });
+  const watchedPassword = useWatch({ control: form.control, name: 'password' });
+  const showOtherRole = watchedRoles?.includes(OTHER_ROLE_VALUE);
+  const changingPassword = !!watchedPassword;
 
   // current_password is a confirmation, not a profile change — typing it alone
   // shouldn't enable saving.
@@ -102,8 +118,14 @@ const AccountContent = () => {
   );
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { email, password, username, organization, roles, current_password } = values;
-    const otherRole = values['other-role']?.trim();
+    const { password, current_password } = values;
+
+    // Fields left blank keep the user's current info (shown as the placeholder).
+    const username = values.username?.trim() || user?.name || '';
+    const email = values.email?.trim() || user?.email || '';
+    const organization = values.organization?.trim() || user?.organization || '';
+    const roles = values.roles?.length ? values.roles : (user?.roles ?? []);
+    const otherRole = values['other-role']?.trim() || user?.other_role || '';
 
     form.clearErrors();
 
@@ -165,7 +187,7 @@ const AccountContent = () => {
                   <Input
                     {...field}
                     className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-                    placeholder="Name"
+                    placeholder={displayName || 'Name'}
                   />
                 </FormControl>
                 <FormMessage />
@@ -183,7 +205,7 @@ const AccountContent = () => {
                   <Input
                     {...field}
                     className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-                    placeholder="Email"
+                    placeholder={user?.email || 'Email'}
                   />
                 </FormControl>
                 <FormMessage />
@@ -201,7 +223,7 @@ const AccountContent = () => {
                   <Input
                     {...field}
                     className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-                    placeholder="Organization"
+                    placeholder={user?.organization || 'Organization'}
                   />
                 </FormControl>
                 <FormMessage />
@@ -219,7 +241,7 @@ const AccountContent = () => {
                     would warn. FormMessage still picks up the field error. */}
                 <RolesSelect
                   id="account-roles"
-                  placeholder="Select the roles that describe you"
+                  placeholder={userRolesLabel || 'Select the roles that describe you'}
                   options={ROLE_OPTIONS}
                   values={field.value ?? []}
                   onOpenChange={setRolesOpen}
@@ -249,7 +271,7 @@ const AccountContent = () => {
                     <Input
                       {...field}
                       className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-                      placeholder="Tell us your role"
+                      placeholder={user?.other_role || 'Tell us your role'}
                     />
                   </FormControl>
                   <FormMessage />
