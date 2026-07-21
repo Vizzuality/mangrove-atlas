@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
           name: data?.username || credentials.email,
           organization: data?.organization || null,
           roles: data?.user_roles ?? [],
-          other_role: data?.user_role_other || null,
+          other_role: data?.user_other_role || null,
           accessToken: token,
         };
       },
@@ -110,7 +110,7 @@ export const authOptions: NextAuthOptions = {
           name: data.name || data.username,
           organization: data.organization || null,
           roles: data.user_roles ?? [],
-          other_role: data.user_role_other || null,
+          other_role: data.user_other_role || null,
           accessToken: credentials.token,
         };
       },

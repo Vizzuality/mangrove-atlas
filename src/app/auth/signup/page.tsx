@@ -88,7 +88,7 @@ export default function SignupPage() {
           name: username,
           ...(organization?.trim() ? { organization: organization.trim() } : {}),
           ...(roles?.length ? { user_roles: roles } : {}),
-          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { user_role_other: otherRole } : {}),
+          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { user_other_role: otherRole } : {}),
         },
       },
       {

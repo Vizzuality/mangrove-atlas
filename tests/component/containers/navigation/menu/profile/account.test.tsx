@@ -107,4 +107,23 @@ describe('AccountContent — profile update', () => {
     const payload = updateUserMock.mock.calls[0][0] as { user: { user_roles?: string[] } };
     expect(payload.user.user_roles).toEqual(expect.arrayContaining(['scientist', 'ngo']));
   });
+
+  it('sends the free-text role under user_other_role (the key the backend expects)', async () => {
+    const user = userEvent.setup();
+    renderAccount();
+
+    await user.click(screen.getByRole('button', { name: /scientist/i }));
+    await user.click(await screen.findByRole('option', { name: 'Other' }));
+    await user.keyboard('{Escape}');
+
+    await user.type(screen.getByPlaceholderText('Tell us your role'), 'Park Ranger');
+    await user.click(await screen.findByRole('button', { name: /save changes/i }));
+
+    await waitFor(() => expect(updateUserMock).toHaveBeenCalledTimes(1));
+
+    const payload = updateUserMock.mock.calls[0][0] as { user: Record<string, unknown> };
+    expect(payload.user.user_other_role).toBe('Park Ranger');
+    // Regression guard: the old (wrong) key must never be sent.
+    expect(payload.user).not.toHaveProperty('user_role_other');
+  });
 });
