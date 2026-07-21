@@ -13,7 +13,7 @@ export type SignupPayload = {
     name: string;
     organization?: string;
     user_roles?: string[];
-    user_role_other?: string;
+    user_other_role?: string;
   };
 };
 export type SignupResponse =
@@ -26,7 +26,7 @@ export type UpdateUserPayload = {
     name?: string;
     organization?: string;
     user_roles?: string[];
-    user_role_other?: string;
+    user_other_role?: string;
     // Only required by the API when changing the password.
     current_password?: string;
   };

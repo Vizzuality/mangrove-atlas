@@ -116,7 +116,7 @@ const AccountContent = () => {
           user_roles: roles ?? [],
           // Only send password fields when the user is actually changing it.
           ...(password ? { password, current_password } : {}),
-          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { user_role_other: otherRole } : {}),
+          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { user_other_role: otherRole } : {}),
         },
       },
       {
