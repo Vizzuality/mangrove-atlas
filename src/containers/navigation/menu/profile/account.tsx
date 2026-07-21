@@ -120,13 +120,28 @@ const AccountContent = () => {
         },
       },
       {
-        onSuccess: () => {
-          void updateSession({
+        onSuccess: async (data) => {
+          // DEBUG(profile-update): what the API returned vs what we push into the
+          // next-auth session. Remove before merge.
+          // eslint-disable-next-line no-console
+          console.debug(
+            '[profile-update] mutation success. api data =',
+            data,
+            '| session update =',
+            {
+              organization,
+              roles: roles ?? [],
+              other_role: roles?.includes(OTHER_ROLE_VALUE) && otherRole ? otherRole : null,
+            }
+          );
+          const updated = await updateSession({
             name: username,
             organization,
             roles: roles ?? [],
             other_role: roles?.includes(OTHER_ROLE_VALUE) && otherRole ? otherRole : null,
           });
+          // eslint-disable-next-line no-console
+          console.debug('[profile-update] session after updateSession =', updated?.user);
         },
         onError: (error: any) => {
           const apiErrors = error?.response?.data?.errors;

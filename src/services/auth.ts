@@ -49,5 +49,14 @@ export function signupUser(payload: SignupPayload) {
 }
 
 export function updateUser(payload: UpdateUserPayload, _token: string) {
-  return AuthAPI.patch<UpdateUserResponse>('/users', payload, {}).then((r) => r.data);
+  // DEBUG(profile-update): trace outgoing PATCH + backend echo to see whether
+  // organization / user_roles are persisted. Remove before merge.
+  const { password: _pw, current_password: _cpw, ...safeUser } = payload.user;
+  // eslint-disable-next-line no-console
+  console.debug('[profile-update] PATCH /users payload.user =', safeUser);
+  return AuthAPI.patch<UpdateUserResponse>('/users', payload, {}).then((r) => {
+    // eslint-disable-next-line no-console
+    console.debug('[profile-update] PATCH /users response =', r.status, r.data);
+    return r.data;
+  });
 }
