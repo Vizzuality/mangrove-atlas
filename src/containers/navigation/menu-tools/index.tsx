@@ -85,9 +85,7 @@ const LocationTools = () => {
       <WidgetDrawingUploadTool menuItemStyle={CARD_MENU_ITEM} />
 
       {/* SAVED AREAS */}
-      {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['login'] === true && (
-        <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
-      )}
+      <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
     </div>
   );
 };

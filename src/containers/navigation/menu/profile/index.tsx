@@ -19,11 +19,10 @@ const Profile = () => {
           <TabsTrigger value="subscriptions" className="flex-1">
             Subscriptions
           </TabsTrigger>
-          {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['login'] === true && (
-            <TabsTrigger value="saved-areas" className="flex-1">
-              Saved areas
-            </TabsTrigger>
-          )}
+
+          <TabsTrigger value="saved-areas" className="flex-1">
+            Saved areas
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="account">
           <AccountContent />
@@ -31,11 +30,9 @@ const Profile = () => {
         <TabsContent value="subscriptions">
           <SubscriptionsContent />
         </TabsContent>
-        {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['login'] === true && (
-          <TabsContent value="saved-areas">
-            <SavedAreasContent />
-          </TabsContent>
-        )}
+        <TabsContent value="saved-areas">
+          <SavedAreasContent />
+        </TabsContent>
       </Tabs>
     </div>
   );

@@ -80,21 +80,20 @@ const Menu = () => {
           )}
         </AnimatePresence>
         <AnimatePresence>
-          {section === 'profile' &&
-            JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['login'] === true && (
-              <motion.div
-                className="no-scrollbar overflow-y-auto pt-3 font-sans"
-                initial="hidden"
-                animate="displayed"
-                variants={{
-                  hidden: { opacity: 0 },
-                  displayed: { opacity: 1 },
-                }}
-                transition={{ duration: 0.4 }}
-              >
-                <Profile />
-              </motion.div>
-            )}
+          {section === 'profile' && (
+            <motion.div
+              className="no-scrollbar overflow-y-auto pt-3 font-sans"
+              initial="hidden"
+              animate="displayed"
+              variants={{
+                hidden: { opacity: 0 },
+                displayed: { opacity: 1 },
+              }}
+              transition={{ duration: 0.4 }}
+            >
+              <Profile />
+            </motion.div>
+          )}
         </AnimatePresence>
         <DialogClose />
       </DialogContent>

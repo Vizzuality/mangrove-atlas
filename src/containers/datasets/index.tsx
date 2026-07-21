@@ -1,5 +1,4 @@
 import AlertsWidget from '@/containers/datasets/alerts/widget';
-import AlertsWidgetStaging from '@/containers/datasets/alerts-staging/widget';
 import BiomassWidget from '@/containers/datasets/biomass/widget';
 import BlueCarbonWidget from '@/containers/datasets/blue-carbon/widget';
 import CarbonMarketPotentialWidget from '@/containers/datasets/carbon-market-potential/widget';
@@ -36,10 +35,7 @@ export const WIDGETS: WidgetsCollection = {
   mangrove_habitat_extent: HabitatExtentWidget,
   mangrove_habitat_change: HabitatChangeWidget,
   mangrove_net_change: NetChangeWidget,
-  mangrove_alerts:
-    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['mangrove_alerts'] === true
-      ? AlertsWidget
-      : AlertsWidgetStaging,
+  mangrove_alerts: AlertsWidget,
   mangrove_biomass: BiomassWidget,
   mangrove_drivers_change: DriversChangeWidget,
   mangrove_height: HeightWidget,
