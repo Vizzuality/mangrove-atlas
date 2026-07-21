@@ -2,10 +2,6 @@ import AlertsDownload from '@/containers/datasets/alerts/download';
 import AlertsInfo from '@/containers/datasets/alerts/info.mdx';
 import AlertsLayer from '@/containers/datasets/alerts/layer';
 import AlertsMapLegend from '@/containers/datasets/alerts/map-legend';
-import AlertsDownloadStaging from '@/containers/datasets/alerts-staging/download';
-import AlertsInfoStaging from '@/containers/datasets/alerts-staging/info.mdx';
-import AlertsLayerStaging from '@/containers/datasets/alerts-staging/layer';
-import AlertsMapLegendStaging from '@/containers/datasets/alerts-staging/map-legend';
 import BiomassDownload from '@/containers/datasets/biomass/download';
 import BiomassInfo from '@/containers/datasets/biomass/info.mdx';
 import BiomassLayer from '@/containers/datasets/biomass/layer';
@@ -88,16 +84,11 @@ import SpeciesLocationLayer from '@/containers/datasets/species-location/layer';
 import SpeciesLocationtMapLegend from '@/containers/datasets/species-location/map-legend';
 import SpeciesThreatenedInfo from '@/containers/datasets/species-threatened/info.mdx';
 
-const featuredFlags = JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}') as Record<
-  string,
-  boolean
->;
-
 export const LAYERS = {
   mangrove_habitat_extent: HabitatExtentLayer,
   'hi-res-extent': HiResExtentLayer,
   mangrove_net_change: NetChangeLayer,
-  mangrove_alerts: featuredFlags['mangrove_alerts'] === true ? AlertsLayer : AlertsLayerStaging,
+  mangrove_alerts: AlertsLayer,
   mangrove_biomass: BiomassLayer,
   mangrove_blue_carbon: BlueCarbonLayer,
   mangrove_drivers_change: DriversChangeLayer,
@@ -137,8 +128,7 @@ export const MAP_LEGENDS = {
   mangrove_blue_carbon: BlueCarbonMapLegend,
   mangrove_drivers_change: DriversChangeMapLegend,
   mangrove_fisheries: FisheriesMapLegend,
-  mangrove_alerts:
-    featuredFlags['mangrove_alerts'] === true ? AlertsMapLegend : AlertsMapLegendStaging,
+  mangrove_alerts: AlertsMapLegend,
   mangrove_allen_coral_reef: AllenCoralReefMapLegend,
   mangrove_salt_marsh: SaltMarshMapLegend,
   mangrove_tidal_flats: TidalFlatsMapLegend,
@@ -162,7 +152,7 @@ export const INFO = {
   mangrove_protected_areas: ProtectionInfo,
   mangrove_drivers_change: DriversChangeInfo,
   mangrove_net_change: NetChangeInfo,
-  mangrove_alerts: featuredFlags['mangrove_alerts'] === true ? AlertsInfo : AlertsInfoStaging,
+  mangrove_alerts: AlertsInfo,
   mangrove_restoration: RestorationInfo,
   mangrove_biomass: BiomassInfo,
   mangrove_height: HeightInfo,
@@ -189,8 +179,7 @@ export const INFO = {
 export const DOWNLOAD = {
   mangrove_habitat_extent: HabitatExtentDownload,
   // mangrove_net_change: NetChangeDownload,
-  mangrove_alerts:
-    featuredFlags['mangrove_alerts'] === true ? AlertsDownload : AlertsDownloadStaging,
+  mangrove_alerts: AlertsDownload,
   mangrove_biomass: BiomassDownload,
   // mangrove_height: HeightDownload,
   mangrove_blue_carbon: BlueCarbonDownload,
