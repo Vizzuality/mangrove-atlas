@@ -58,6 +58,15 @@ export const getFormat = (v) => {
   return formatByDecimals(v);
 };
 
+// Format a y-axis tick. `v` already reflects the selected unit — getWidgetData
+// converts km²→ha (×100) upstream, so this must NOT re-apply the factor or ha
+// labels gain 2 extra zeroes (GMW-1071). Keeps the sign for below-baseline loss.
+export const formatAxisTick = (v: number): string | number => {
+  const result = getFormat(Math.abs(v)); // comma-grouped string, e.g. "5,000"
+  if (Number(result.replace(/,/g, '')) === 0) return 0;
+  return v < 0 ? `-${result}` : result;
+};
+
 export const getWidgetData = (data: Data[], unit = '') => {
   if (!data?.length) return null;
   const firstYear = Math.min(...data.map((d) => d.year));
@@ -256,14 +265,7 @@ export function useMangroveNetChange(
       // same right-side space and align its plot box with this chart's.
       width: Y_AXIS_WIDTH,
       tick: { ...AXIS_TICK },
-      tickFormatter: (v) => {
-        // `v` already reflects the selected unit — getWidgetData converts km²→ha (×100)
-        // when unit === 'ha'. Do NOT re-apply it here or ha labels get 2 extra zeroes.
-        const result = getFormat(Math.abs(v)); // comma-grouped string, e.g. "5,000"
-        if (Number(result.replace(/,/g, '')) === 0) return 0;
-        // Loss sits below the zero baseline — keep the sign so negative levels read as "-N".
-        return v < 0 ? `-${result}` : result;
-      },
+      tickFormatter: formatAxisTick,
       tickMargin: 10,
       orientation: 'right',
       label: {
