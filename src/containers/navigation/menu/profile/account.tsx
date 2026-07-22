@@ -72,7 +72,7 @@ const AccountContent = () => {
   const [rolesOpen, setRolesOpen] = useState(false);
 
   const user = session?.user;
-  const updateUser = usePutUpdateUser(user?.accessToken || '');
+  const updateUser = usePutUpdateUser();
 
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' });

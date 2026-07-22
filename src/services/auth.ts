@@ -48,6 +48,8 @@ export function signupUser(payload: SignupPayload) {
   return NextAPI.post<SignupResponse>('/auth/signup', payload).then((r) => r.data);
 }
 
-export function updateUser(payload: UpdateUserPayload, _token: string) {
-  return AuthAPI.patch<UpdateUserResponse>('/users', payload, {}).then((r) => r.data);
+export function updateUser(payload: UpdateUserPayload) {
+  // Same-origin proxy → auth service (see src/app/api/auth/me/route.ts), so the browser
+  // never makes a cross-origin PATCH and the bearer token stays server-side.
+  return NextAPI.patch<UpdateUserResponse>('/auth/me', payload).then((r) => r.data);
 }

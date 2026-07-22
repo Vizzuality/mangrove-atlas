@@ -79,10 +79,10 @@ export function useSignup() {
   });
 }
 
-export function usePutUpdateUser(token: string) {
+export function usePutUpdateUser() {
   return useMutation<UpdateUserResponse, unknown, UpdateUserPayload>({
     mutationFn: (payload) => {
-      return updateUser(payload, token);
+      return updateUser(payload);
     },
 
     onSuccess: () => {
