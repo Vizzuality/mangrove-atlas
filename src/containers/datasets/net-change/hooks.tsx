@@ -257,8 +257,9 @@ export function useMangroveNetChange(
       width: Y_AXIS_WIDTH,
       tick: { ...AXIS_TICK },
       tickFormatter: (v) => {
-        const parsedNumber = unit === 'ha' ? v * 100 : v;
-        const result = getFormat(Math.abs(parsedNumber)); // comma-grouped string, e.g. "5,000"
+        // `v` already reflects the selected unit — getWidgetData converts km²→ha (×100)
+        // when unit === 'ha'. Do NOT re-apply it here or ha labels get 2 extra zeroes.
+        const result = getFormat(Math.abs(v)); // comma-grouped string, e.g. "5,000"
         if (Number(result.replace(/,/g, '')) === 0) return 0;
         // Loss sits below the zero baseline — keep the sign so negative levels read as "-N".
         return v < 0 ? `-${result}` : result;
