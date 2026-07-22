@@ -49,7 +49,9 @@ export function signupUser(payload: SignupPayload) {
 }
 
 export function updateUser(payload: UpdateUserPayload) {
-  // Same-origin proxy → auth service (see src/app/api/auth/me/route.ts), so the browser
-  // never makes a cross-origin PATCH and the bearer token stays server-side.
-  return NextAPI.patch<UpdateUserResponse>('/auth/me', payload).then((r) => r.data);
+  // Update goes straight to the auth service (Devise registrations#update on /users).
+  // The same-origin /auth/me proxy 401s in some envs, so we call the BE directly; the
+  // bearer token is attached client-side by the AuthAPI interceptor from the (SSO-kept)
+  // session. current_user is GET-only, so the PATCH target is /users.
+  return AuthAPI.patch<UpdateUserResponse>('/users', payload).then((r) => r.data);
 }
