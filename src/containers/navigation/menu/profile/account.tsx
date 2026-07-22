@@ -122,15 +122,32 @@ const AccountContent = () => {
         },
       },
       {
-        onSuccess: () => {
-          // NextAuth local-session contract uses `roles`/`other_role` (read by the
-          // jwt callback in auth.ts) — not the API's `user_roles`/`user_role_other`.
-          void updateSession({
-            name: username,
-            organization,
-            roles: user_roles ?? [],
-            other_role: user_roles?.includes(OTHER_ROLE_VALUE) && otherRole ? otherRole : null,
-          });
+        onSuccess: (res) => {
+          // Drive the local session from the persisted BE record (source of
+          // truth), not the submitted form, so it can't drift from what the API
+          // actually stored. NextAuth's local contract uses `roles`/`other_role`
+          // (read by the jwt callback in auth.ts) — map from the API's
+          // `user_roles`/`user_role_other`. Fall back to form values only if the
+          // response omits the user (keeps the UI responsive).
+          const persisted = (res as { data?: any })?.data;
+
+          void updateSession(
+            persisted
+              ? {
+                  name: persisted.name ?? persisted.username,
+                  email: persisted.email,
+                  organization: persisted.organization,
+                  roles: persisted.user_roles ?? [],
+                  other_role: persisted.user_role_other ?? null,
+                }
+              : {
+                  name: username,
+                  organization,
+                  roles: user_roles ?? [],
+                  other_role:
+                    user_roles?.includes(OTHER_ROLE_VALUE) && otherRole ? otherRole : null,
+                }
+          );
         },
         onError: (error: any) => {
           const apiErrors = error?.response?.data?.errors;

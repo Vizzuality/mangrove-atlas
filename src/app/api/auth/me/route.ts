@@ -2,12 +2,40 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { getToken } from 'next-auth/jwt';
 
-export function GET(request: NextRequest) {
-  const token = request.cookies.get('authToken')?.value;
+// Fetch the canonical current user from the auth service and normalize the
+// wrapper (the API sometimes nests the record under `user`). Returns null on a
+// non-2xx or unparseable response so callers can decide how to handle it.
+async function fetchCurrentUser(accessToken: string) {
+  const res = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-  if (!token) return NextResponse.json({ ok: false }, { status: 401 });
+  if (!res.ok) return null;
 
-  return NextResponse.json({ ok: true });
+  try {
+    const payload = await res.json();
+    return payload?.user ?? payload;
+  } catch {
+    return null;
+  }
+}
+
+// Read the current user. Proxies to the auth service server-side so the bearer
+// token stays off the client and the session can be re-hydrated from BE truth.
+export async function GET(request: NextRequest) {
+  const jwt = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const accessToken = (jwt as any)?.accessToken;
+
+  if (!accessToken) return NextResponse.json({ ok: false }, { status: 401 });
+
+  const data = await fetchCurrentUser(accessToken);
+
+  if (!data) return NextResponse.json({ ok: false }, { status: 502 });
+
+  return NextResponse.json({ ok: true, data });
 }
 
 // Update the current user. Proxies to the auth service server-side so the browser
@@ -20,7 +48,7 @@ export async function PATCH(request: NextRequest) {
 
   const body = await request.json();
 
-  const upstream = await fetch(`${process.env.AUTH_API_URL}/users`, {
+  const upstream = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -47,5 +75,13 @@ export async function PATCH(request: NextRequest) {
     );
   }
 
-  return NextResponse.json({ ok: true, data });
+  // Return the canonical persisted user so the client session is driven by BE
+  // truth, not the submitted form. Normalize the wrapper, and if the PATCH
+  // response doesn't echo the full record, read it back from current_user.
+  let user = data?.user ?? data;
+  if (!user || user.email === undefined || user.user_roles === undefined) {
+    user = (await fetchCurrentUser(accessToken)) ?? user;
+  }
+
+  return NextResponse.json({ ok: true, data: user });
 }

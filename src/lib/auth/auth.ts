@@ -133,6 +133,7 @@ export const authOptions: NextAuthOptions = {
       // re-login, so the account form shows saved values when reopened.
       if (trigger === 'update' && session) {
         if (session.name !== undefined) token.name = session.name;
+        if (session.email !== undefined) token.email = session.email;
         if (session.organization !== undefined) token.organization = session.organization;
         if (session.roles !== undefined) token.roles = session.roles;
         if (session.other_role !== undefined) token.otherRole = session.other_role;
