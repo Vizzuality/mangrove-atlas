@@ -29,6 +29,15 @@ declare module 'next-auth' {
 const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production';
 const cookieDomain = isProd ? '.globalmangrovewatch.org' : undefined;
 
+// Single source of truth for the session cookie so writers (authOptions.cookies)
+// and readers (getToken in the /api/auth/* route handlers) never drift. getToken
+// otherwise auto-detects the name from the request scheme, which mismatches on
+// https-but-not-production envs (staging/preview) and yields a spurious 401.
+export const useSecureCookies = isProd;
+export const SESSION_COOKIE_NAME = isProd
+  ? '__Secure-next-auth.session-token'
+  : 'next-auth.session-token';
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
@@ -158,7 +167,7 @@ export const authOptions: NextAuthOptions = {
 
   cookies: {
     sessionToken: {
-      name: isProd ? '__Secure-next-auth.session-token' : 'next-auth.session-token',
+      name: SESSION_COOKIE_NAME,
       options: {
         httpOnly: true,
         sameSite: 'lax',

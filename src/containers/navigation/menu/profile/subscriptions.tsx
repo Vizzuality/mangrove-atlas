@@ -25,8 +25,7 @@ const SubscriptionsContent = () => {
 
   const serverPrefs =
     (dataUserNotificationsPreferences?.data as
-      | DataUserNotificationPreferencesToggleLocationAlerts
-      | undefined) ?? undefined;
+      DataUserNotificationPreferencesToggleLocationAlerts | undefined) ?? undefined;
 
   const [basePrefs, setBasePrefs] = useState<
     DataUserNotificationPreferencesToggleLocationAlerts | undefined
@@ -114,7 +113,7 @@ const SubscriptionsContent = () => {
             {!hasLocations && (
               <TooltipContent
                 side="right"
-                className="shadow-soft max-w-[190px] rounded-3xl bg-white p-4 text-black/85 first-letter:uppercase"
+                className="shadow-soft max-w-47.5 rounded-3xl bg-white p-4 text-black/85 first-letter:uppercase"
               >
                 Save at least one area to activate notifications.
                 <TooltipArrow className="fill-white" width={10} height={5} />
@@ -126,7 +125,8 @@ const SubscriptionsContent = () => {
             <div className="flex max-w-sm flex-col justify-between gap-2">
               <span className="text-lg font-light">What&apos;s new</span>
               <p className="text-sm text-[#939393]">
-                Weekly updates on mangrove conservation news and the latest platform enhancements.
+                Occasional updates on mangrove conservation news and the latest platform
+                enhancements.
               </p>
             </div>
 
