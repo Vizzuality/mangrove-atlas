@@ -25,11 +25,11 @@ const formSchema = z
     username: z.string().min(1, { message: 'Please enter your name' }),
     email: z.string().email({ message: 'Please enter a valid email address' }),
     organization: z.string().optional(),
-    roles: z
+    user_roles: z
       .array(z.string().refine((v) => ROLE_VALUES.includes(v)))
       .optional()
       .default([]),
-    'other-role': z.string().optional(),
+    user_role_other: z.string().optional(),
     password: z.string().nonempty({ message: 'Please enter your password' }).min(6, {
       message: 'Please enter a password with at least 6 characters',
     }),
@@ -46,11 +46,11 @@ const formSchema = z
         path: ['confirm-password'],
       });
     }
-    if (data.roles?.includes(OTHER_ROLE_VALUE) && !data['other-role']?.trim()) {
+    if (data.user_roles?.includes(OTHER_ROLE_VALUE) && !data.user_role_other?.trim()) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'Please describe your role',
-        path: ['other-role'],
+        path: ['user_role_other'],
       });
     }
   });
@@ -67,16 +67,16 @@ export default function SignupPage() {
       password: '',
       'confirm-password': '',
       organization: '',
-      roles: [],
-      'other-role': '',
+      user_roles: [],
+      user_role_other: '',
     },
   });
 
-  const showOtherRole = form.watch('roles')?.includes(OTHER_ROLE_VALUE);
+  const showOtherRole = form.watch('user_roles')?.includes(OTHER_ROLE_VALUE);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { email, password, username, organization, roles } = values;
-    const otherRole = values['other-role']?.trim();
+    const { email, password, username, organization, user_roles } = values;
+    const otherRole = values.user_role_other?.trim();
 
     form.clearErrors();
 
@@ -87,8 +87,10 @@ export default function SignupPage() {
           password,
           name: username,
           ...(organization?.trim() ? { organization: organization.trim() } : {}),
-          ...(roles?.length ? { user_roles: roles } : {}),
-          ...(roles?.includes(OTHER_ROLE_VALUE) && otherRole ? { user_other_role: otherRole } : {}),
+          ...(user_roles?.length ? { user_roles } : {}),
+          ...(user_roles?.includes(OTHER_ROLE_VALUE) && otherRole
+            ? { user_role_other: otherRole }
+            : {}),
         },
       },
       {
@@ -195,7 +197,7 @@ export default function SignupPage() {
 
                   <FormField
                     control={form.control}
-                    name="roles"
+                    name="user_roles"
                     render={({ field }) => (
                       <FormItem className="space-y-1.5">
                         <FormLabel className="text-xs font-semibold">What is your role?</FormLabel>
@@ -209,8 +211,8 @@ export default function SignupPage() {
                           onChange={(selection) => {
                             field.onChange(selection);
                             if (!selection.includes(OTHER_ROLE_VALUE)) {
-                              form.setValue('other-role', '');
-                              form.clearErrors('other-role');
+                              form.setValue('user_role_other', '');
+                              form.clearErrors('user_role_other');
                             }
                           }}
                         />
@@ -222,7 +224,7 @@ export default function SignupPage() {
                   {showOtherRole && (
                     <FormField
                       control={form.control}
-                      name="other-role"
+                      name="user_role_other"
                       render={({ field }) => (
                         <FormItem className="space-y-1.5">
                           <FormLabel className="text-xs font-semibold" required>
