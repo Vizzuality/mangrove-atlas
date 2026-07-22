@@ -1,4 +1,5 @@
 import {
+  formatAxisTick,
   getEvenlySpacedTicks,
   getFormat,
   getNetChangeSources,
@@ -20,6 +21,30 @@ describe('getFormat', () => {
   it('formats with decimals derived from magnitude', () => {
     expect(getFormat(0.5)).toBe('0.5');
     expect(getFormat(0.123)).toBe('0.1');
+  });
+});
+
+describe('formatAxisTick', () => {
+  // Regression for GMW-1071: getWidgetData already converts km²→ha (×100), so the
+  // axis formatter must format the value as-is and never re-apply the factor.
+  it('formats the value as-is without re-scaling (no double km²→ha convert)', () => {
+    expect(formatAxisTick(5000)).toBe('5,000');
+    expect(formatAxisTick(5000)).not.toBe('500,000');
+  });
+
+  it('feeding it the ha-converted value yields 100× the km² label, not 10000×', () => {
+    const km2Value = 50;
+    const haValue = km2Value * 100; // what getWidgetData produces for unit 'ha'
+    expect(formatAxisTick(km2Value)).toBe('50');
+    expect(formatAxisTick(haValue)).toBe('5,000');
+  });
+
+  it('keeps the sign for below-baseline (loss) values', () => {
+    expect(formatAxisTick(-3000)).toBe('-3,000');
+  });
+
+  it('returns numeric 0 when the formatted value rounds to zero', () => {
+    expect(formatAxisTick(0)).toBe(0);
   });
 });
 
