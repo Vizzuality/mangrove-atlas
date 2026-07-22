@@ -48,7 +48,9 @@ export async function PATCH(request: NextRequest) {
 
   const body = await request.json();
 
-  const upstream = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
+  // Devise registrations#update — the BE update endpoint. current_user is GET-only,
+  // so PATCH must target /users (see mangrove-atlas-api config/routes.rb).
+  const upstream = await fetch(`${process.env.AUTH_API_URL}/users`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
