@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { SESSION_COOKIE_NAME, useSecureCookies } from '@/lib/auth/auth';
 import { setSSOCookie } from '@/lib/auth/sso-cookie';
 
 import { getToken } from 'next-auth/jwt';
 
 export async function POST(request: NextRequest) {
-  const jwt = await getToken({ req: request as any, secret: process.env.NEXTAUTH_SECRET });
+  const jwt = await getToken({
+    req: request as any,
+    secret: process.env.NEXTAUTH_SECRET,
+    cookieName: SESSION_COOKIE_NAME,
+    secureCookie: useSecureCookies,
+  });
 
   if (!jwt?.accessToken) {
     return NextResponse.json({ ok: false }, { status: 401 });

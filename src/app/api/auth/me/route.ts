@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { SESSION_COOKIE_NAME, useSecureCookies } from '@/lib/auth/auth';
+
 import { getToken } from 'next-auth/jwt';
 
 // Fetch the canonical current user from the auth service and normalize the
@@ -26,7 +28,12 @@ async function fetchCurrentUser(accessToken: string) {
 // Read the current user. Proxies to the auth service server-side so the bearer
 // token stays off the client and the session can be re-hydrated from BE truth.
 export async function GET(request: NextRequest) {
-  const jwt = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const jwt = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+    cookieName: SESSION_COOKIE_NAME,
+    secureCookie: useSecureCookies,
+  });
   const accessToken = (jwt as any)?.accessToken;
 
   if (!accessToken) return NextResponse.json({ ok: false }, { status: 401 });
@@ -41,7 +48,12 @@ export async function GET(request: NextRequest) {
 // Update the current user. Proxies to the auth service server-side so the browser
 // never makes a cross-origin call and the bearer token stays off the client.
 export async function PATCH(request: NextRequest) {
-  const jwt = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const jwt = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+    cookieName: SESSION_COOKIE_NAME,
+    secureCookie: useSecureCookies,
+  });
   const accessToken = (jwt as any)?.accessToken;
 
   if (!accessToken) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

@@ -1,12 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { SESSION_COOKIE_NAME, useSecureCookies } from '@/lib/auth/auth';
 import { clearSSOCookie } from '@/lib/auth/sso-cookie';
 
 import { getToken } from 'next-auth/jwt';
 
 export async function POST(request: NextRequest) {
   try {
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
+      cookieName: SESSION_COOKIE_NAME,
+      secureCookie: useSecureCookies,
+    });
     const accessToken = (token as any)?.accessToken;
 
     if (accessToken) {
