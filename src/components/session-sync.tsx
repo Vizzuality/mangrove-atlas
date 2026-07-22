@@ -23,8 +23,9 @@ const SSO_RESTORE_RELOADED_KEY = 'gmw-sso-restore-reloaded';
  * Prevents repeated /restore calls via a separate sessionStorage TTL flag.
  */
 export function SessionSync() {
-  const { status, update } = useSession();
+  const { data: session, status, update } = useSession();
   const attempted = useRef(false);
+  const hydrated = useRef(false);
 
   useEffect(() => {
     if (status !== 'unauthenticated' || attempted.current) return;
@@ -63,6 +64,41 @@ export function SessionSync() {
       sessionStorage.removeItem(SSO_RESTORE_RELOADED_KEY);
     }
   }, [status]);
+
+  // Read-back: on load, re-hydrate the session from the canonical BE user so
+  // reloads reflect server-side truth rather than the login-time JWT snapshot.
+  // Runs once per mount; only writes the session when a field actually differs
+  // to avoid a redundant JWT write / render churn. No reload (that path is
+  // reserved for SSO restore above).
+  useEffect(() => {
+    if (status !== 'authenticated' || hydrated.current) return;
+    hydrated.current = true;
+
+    fetch('/api/auth/me')
+      .then((res) => res.json())
+      .then((payload) => {
+        if (!payload?.ok || !payload.data) return;
+
+        const user = session?.user;
+        const next = {
+          name: payload.data.name ?? payload.data.username,
+          email: payload.data.email,
+          organization: payload.data.organization,
+          roles: payload.data.user_roles ?? [],
+          other_role: payload.data.user_role_other ?? null,
+        };
+
+        const differs =
+          next.name !== user?.name ||
+          next.email !== user?.email ||
+          next.organization !== (user?.organization ?? undefined) ||
+          next.other_role !== (user?.other_role ?? null) ||
+          JSON.stringify(next.roles) !== JSON.stringify(user?.roles ?? []);
+
+        if (differs) void update(next);
+      })
+      .catch(() => {});
+  }, [status, session, update]);
 
   return null;
 }
