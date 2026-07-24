@@ -285,7 +285,7 @@
 a.mapboxgl-ctrl-logo {
   width: 88px;
   height: 23px;
-  margin: 0 0 -4px -4px;
+  margin: 9px 9px -10px -4px;
   display: block;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -677,12 +677,38 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 /* Mobile (< lg): the bottom nav pill floats at bottom-4/left-4 and hides the
    default bottom-left Mapbox logo. Keep the logo visible by aligning it to the
    toolbar's left edge (16px), shrinking it, and dropping it below the pill. */
+/* Vendor mapbox-gl.css is imported after this file (see app/layout.tsx), so
+   overrides here need extra specificity + !important to win. */
 @media (max-width: 1023px) {
   .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
-    margin: 0 0 0 16px;
+    margin: 0 0 9px 16px !important;
   }
-  a.mapboxgl-ctrl-logo {
+  .mapboxgl-ctrl-bottom-left a.mapboxgl-ctrl-logo {
+    margin: 0 0 -8px 8px !important;
     transform: scale(0.65);
     transform-origin: bottom left;
+  }
+
+  /* Attribution: lay out inline (text + the (i) icon next to it as a trailing
+     subindex) instead of the collapsed toggle-only control. */
+  .mapboxgl-ctrl-attrib.mapboxgl-compact {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center;
+    min-height: 0 !important;
+    padding: 0 !important;
+    transform: translateY(-2px);
+  }
+  .mapboxgl-ctrl-attrib.mapboxgl-compact .mapboxgl-ctrl-attrib-inner {
+    display: block !important;
+    visibility: visible !important;
+  }
+  .mapboxgl-ctrl-attrib.mapboxgl-compact .mapboxgl-ctrl-attrib-button {
+    display: block !important;
+    position: static !important;
+    width: 14px !important;
+    height: 14px !important;
+    margin-left: 4px;
+    background-size: 14px 14px;
   }
 }
