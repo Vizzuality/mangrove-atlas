@@ -29,6 +29,7 @@ const tabsListVariants = cva(
       variant: {
         default: 'bg-muted',
         line: 'gap-1 bg-transparent',
+        pill: 'bg-brand-800 gap-2.5 rounded-[32px] p-1 shadow-[0px_4px_6px_rgba(0,60,57,0.15)] group-data-horizontal/tabs:h-[38px]',
       },
     },
     defaultVariants: {
@@ -52,14 +53,31 @@ function TabsList({
   );
 }
 
-const TAB_TRIGGER_STYLE =
-  'inline-flex items-center justify-center whitespace-nowrap rounded-[16px] border-2 border-black/15 text-sm font-semibold leading-[20px] text-black text-center p-[15px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Brand-color-dark,#00857F)] disabled:pointer-events-none disabled:opacity-5 data-[state=active]:border-brand-800 data-[state=active]:text-brand-800 hover:border-brand-800 hover:text-brand-800';
+const tabsTriggerVariants = cva(
+  'inline-flex items-center justify-center whitespace-nowrap text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Brand-color-dark,#00857F)] disabled:pointer-events-none disabled:opacity-5',
+  {
+    variants: {
+      variant: {
+        default:
+          'rounded-[16px] border-2 border-black/15 text-sm font-semibold leading-[20px] text-black p-[15px] data-[state=active]:border-brand-800 data-[state=active]:text-brand-800 hover:border-brand-800 hover:text-brand-800',
+        pill: 'h-[30px] w-[92px] gap-1 rounded-full py-2 text-[10px] font-bold leading-[20px] text-white data-[state=active]:bg-white data-[state=active]:text-brand-800',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
 
-function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+function TabsTrigger({
+  className,
+  variant = 'default',
+  ...props
+}: React.ComponentProps<typeof TabsPrimitive.Trigger> & VariantProps<typeof tabsTriggerVariants>) {
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
-      className={cn(TAB_TRIGGER_STYLE, className)}
+      className={cn(tabsTriggerVariants({ variant }), className)}
       {...props}
     />
   );

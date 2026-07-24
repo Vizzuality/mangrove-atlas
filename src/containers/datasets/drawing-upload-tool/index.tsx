@@ -171,12 +171,16 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               <UPLOAD_SVG role="img" title="Upload" />
               {!uploadingFile && (
                 <label id="label-file-upload" htmlFor="input-file-upload">
-                  <p className="font-sans text-sm whitespace-nowrap text-white">Shapefile</p>
+                  <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">
+                    Shapefile
+                  </p>
                 </label>
               )}
               {uploadingFile && (
                 <label id="label-file-upload" htmlFor="input-file-upload">
-                  <p className="font-sans text-sm whitespace-nowrap text-white">...uploading</p>
+                  <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">
+                    ...uploading
+                  </p>
                 </label>
               )}
             </div>

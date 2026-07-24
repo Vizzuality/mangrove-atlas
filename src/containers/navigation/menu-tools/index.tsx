@@ -47,17 +47,12 @@ const LocationTools = () => {
   }, [map, resetAnalysisState, resetDrawingState, resetDrawingUploadState]);
 
   const CARD_MENU_ITEM =
-    'flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white flex-1';
+    'flex min-w-0 flex-1 cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-1 text-white xs:p-2';
 
   return (
-    <div className="xs:justify-center xs:gap-4 xs:px-4 mb-4 flex w-full items-center justify-between gap-2 overflow-visible px-6">
+    <div className="xs:justify-center xs:gap-4 xs:px-4 mb-4 flex w-full items-center justify-between gap-1 overflow-hidden px-2">
       {/* RESET PAGE */}
-      <Link
-        href="/"
-        onClick={handleReset}
-        data-testid="worldwide-button"
-        className="xs:block hidden"
-      >
+      <Link href="/" onClick={handleReset} data-testid="worldwide-button">
         <Helper
           className={{
             button: '-top-1 left-0 z-20',
@@ -68,18 +63,22 @@ const LocationTools = () => {
         >
           <div className={CARD_MENU_ITEM}>
             <RESET_SVG role="img" title="Reset page" />
-            <span className="font-sans text-sm whitespace-nowrap">Reset page</span>
+            <span className="font-sans text-xs whitespace-nowrap lg:text-sm">
+              <span className="lg:hidden">Reset</span>
+              <span className="hidden lg:inline">Reset page</span>
+            </span>
           </div>
         </Helper>
       </Link>
 
       {/* FIND LOCATIONS */}
-      <div className="hidden lg:block">
-        <FindLocations menuItemStyle={CARD_MENU_ITEM} />
-      </div>
+      <FindLocations menuItemStyle={CARD_MENU_ITEM} />
 
-      {/* DRAW AREA */}
-      <WidgetDrawingTool menuItemStyle={CARD_MENU_ITEM} />
+      {/* DRAW AREA — shown on mobile but disabled (drawing is unsupported on
+          touch/small screens); fully interactive from lg up. */}
+      <div className="pointer-events-none opacity-40 lg:pointer-events-auto lg:opacity-100">
+        <WidgetDrawingTool menuItemStyle={CARD_MENU_ITEM} />
+      </div>
 
       {/* UPLOAD SHAPEFILE */}
       <WidgetDrawingUploadTool menuItemStyle={CARD_MENU_ITEM} />

@@ -89,8 +89,7 @@ const LocationWidget = () => {
           {!!locationName ? (
             <div
               className={cn({
-                'inline-block flex-1 grow cursor-pointer px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
-                  true,
+                'inline-block flex-1 grow cursor-pointer px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase': true,
                 'text-2.75xl': width >= 540,
 
                 'text-5xl': locationName.length > 10,
