@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.5](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.4...v8.0.0-rc.5) (2026-07-24)
+
+
+### Bug Fixes
+
+* **deps:** address 14 dependency vulnerabilities (audit 2026-07-24) ([#1635](https://github.com/Vizzuality/mangrove-atlas/issues/1635)) ([18fd2a2](https://github.com/Vizzuality/mangrove-atlas/commit/18fd2a2ee0af90e0f8cfd8e9770a94497728f47a))
+
 ## [8.0.0-rc.4](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.3...v8.0.0-rc.4) (2026-07-24)
 
 
