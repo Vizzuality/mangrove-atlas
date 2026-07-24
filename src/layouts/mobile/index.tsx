@@ -41,6 +41,7 @@ const MobileLayout = () => {
           alt="Global Mangrove Watch"
           width={330}
           height={72}
+          priority
           className="h-[72px] w-[330px] -scale-x-100"
         />
         <LOGO_MOBILE_SVG
