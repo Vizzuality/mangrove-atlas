@@ -107,6 +107,6 @@ export const Donors = [
     name: 'Dutch Postcode Lottery',
     url: 'https://www.postcodeloterij.nl/',
     image: '/images/partners/donors/NLP.webp',
-    size: [110, 40],
+    size: [92, 33],
   },
 ] satisfies ItemType[];
