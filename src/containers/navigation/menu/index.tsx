@@ -28,7 +28,7 @@ const Menu = ({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) => {
       {variant === 'mobile' ? (
         <DialogTrigger asChild>
           <button
-            data-testid="menu-button"
+            data-testid="menu-button-mobile"
             type="button"
             onClick={() => setSection('main')}
             aria-label="Menu"
