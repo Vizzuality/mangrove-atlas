@@ -79,8 +79,9 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         <span
           className={cn({
             // Minimum width is customized to prevent layout shifts in the menu when the text changes.
-            // It's based on the width of the longest possible label
-            'min-w-[75.05px] font-sans text-sm whitespace-nowrap text-white': true,
+            // It's based on the width of the longest possible label (lg only — on
+            // mobile the tool is disabled and the label never swaps).
+            'font-sans text-xs whitespace-nowrap text-white lg:min-w-[75.05px] lg:text-sm': true,
             'text-brand-800': isDrawingToolEnabled && !uploadedGeojson,
           })}
         >

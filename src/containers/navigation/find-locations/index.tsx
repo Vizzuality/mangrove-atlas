@@ -78,7 +78,7 @@ const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
             data-testid="search-button"
           >
             <GLASS_SVG role="img" title="Glass" />
-            <p className="font-sans text-sm text-white md:whitespace-nowrap">
+            <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">
               <span className="lg:hidden">Locations</span>
               <span className="hidden lg:inline">Find locations</span>
             </p>

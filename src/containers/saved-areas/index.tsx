@@ -40,7 +40,7 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
                 'h-8 w-8 stroke-1 text-white': true,
               })}
             />
-            <p className="font-sans text-sm text-white md:whitespace-nowrap">Saved areas</p>
+            <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">Saved areas</p>
           </div>
         </DialogTrigger>
       </Helper>
