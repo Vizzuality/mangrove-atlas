@@ -6,6 +6,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.4](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.3...v8.0.0-rc.4) (2026-07-24)
+
+
+### Features
+
+* **data:** add countries v4 vector tile pipeline notebook ([#1610](https://github.com/Vizzuality/mangrove-atlas/issues/1610)) ([a4836b4](https://github.com/Vizzuality/mangrove-atlas/commit/a4836b4f1bc09a11410eb4d5bba7f687b2c326e7))
+* **mobile:** frontend rework — view tabs, bottom nav, location tools, legend & map chrome (GMW-1070) ([#1627](https://github.com/Vizzuality/mangrove-atlas/issues/1627)) ([75a236a](https://github.com/Vizzuality/mangrove-atlas/commit/75a236a895ce33aa9ddd4293a5bf5872cf1ad108))
+* promote alerts widget + login out of feature flags, remove alerts-staging ([#1619](https://github.com/Vizzuality/mangrove-atlas/issues/1619)) ([6ed8023](https://github.com/Vizzuality/mangrove-atlas/commit/6ed8023f96e1ddf3d5e2041baf5969d72eb968fc))
+
+
+### Bug Fixes
+
+* correct user_role_other API key + revive signup role fields ([#1622](https://github.com/Vizzuality/mangrove-atlas/issues/1622)) ([70fd090](https://github.com/Vizzuality/mangrove-atlas/commit/70fd0901a4753c9cd0437a363b3eb9a4d3135058))
+* custom-area reset 400 + upload/save fixes (GMW-1067) ([#1612](https://github.com/Vizzuality/mangrove-atlas/issues/1612)) ([c553f09](https://github.com/Vizzuality/mangrove-atlas/commit/c553f0936a81f69788ed17310d9451d2814d9abe))
+* **deps:** address 20 dependency vulnerabilities ([#1616](https://github.com/Vizzuality/mangrove-atlas/issues/1616)) ([9a4bf39](https://github.com/Vizzuality/mangrove-atlas/commit/9a4bf3913b76dfca765b3ccdb27feb86fe8e41e8))
+* keep small widget values visible in number formatting ([#1608](https://github.com/Vizzuality/mangrove-atlas/issues/1608)) ([191b89a](https://github.com/Vizzuality/mangrove-atlas/commit/191b89aa7ee6abe608ddf15c2463a373d5dbc505))
+* net change y-axis double-converts km² to ha (GMW-1071) ([#1626](https://github.com/Vizzuality/mangrove-atlas/issues/1626)) ([ee1a68d](https://github.com/Vizzuality/mangrove-atlas/commit/ee1a68d45958ffa6ae35a9e9641c1a1e6dca4cf6))
+* PATCH /users for profile update (current_user is GET-only, was 404) ([#1624](https://github.com/Vizzuality/mangrove-atlas/issues/1624)) ([ba427f9](https://github.com/Vizzuality/mangrove-atlas/commit/ba427f9696499c0ea01a642e474be0ed992971dd))
+* persist free-text 'Other' role (user_other_role key) ([#1620](https://github.com/Vizzuality/mangrove-atlas/issues/1620)) ([10a6cd0](https://github.com/Vizzuality/mangrove-atlas/commit/10a6cd08f75f673403edf124bdd73197326e6cbb))
+* profile update goes direct to BE /users; align getToken cookie for /auth/me GET ([#1625](https://github.com/Vizzuality/mangrove-atlas/issues/1625)) ([c87901c](https://github.com/Vizzuality/mangrove-atlas/commit/c87901cced12b6df2e4519cc53fcee0de40614af))
+* profile update persists (correct key + same-origin PATCH proxy) ([#1621](https://github.com/Vizzuality/mangrove-atlas/issues/1621)) ([6991d40](https://github.com/Vizzuality/mangrove-atlas/commit/6991d401c040b0c03f8a52684c8635e5ef5204da))
+* resolve Node engine version mismatch (GMW-1055) ([#1617](https://github.com/Vizzuality/mangrove-atlas/issues/1617)) ([ae35fd7](https://github.com/Vizzuality/mangrove-atlas/commit/ae35fd7c4a4d52250ac500f927d39703b1ff8ed8))
+* sync user profile updates with BE (current_user source of truth) ([#1623](https://github.com/Vizzuality/mangrove-atlas/issues/1623)) ([9f737d0](https://github.com/Vizzuality/mangrove-atlas/commit/9f737d094dc4f4e8f8e6d7540722057294668ea5))
+* **test:** distinct testids for mobile Menu/Help triggers (GMW-1070) ([#1628](https://github.com/Vizzuality/mangrove-atlas/issues/1628)) ([9663864](https://github.com/Vizzuality/mangrove-atlas/commit/966386457f5edea188ea7e2a839c817d4215f98c))
+* use PATCH for user updates + stop logging password payloads ([#1618](https://github.com/Vizzuality/mangrove-atlas/issues/1618)) ([faa4c84](https://github.com/Vizzuality/mangrove-atlas/commit/faa4c843ed4eb7e02af06272685f5ff063f47f5d))
+
+
+### Performance Improvements
+
+* eager-load mobile header LCP image via priority (GMW-1075) ([#1630](https://github.com/Vizzuality/mangrove-atlas/issues/1630)) ([e8d7076](https://github.com/Vizzuality/mangrove-atlas/commit/e8d7076d75bfcca700d43fedf746460cb030ea23))
+
 ## [8.0.0-rc.3](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.2...v8.0.0-rc.3) (2026-07-16)
 
 
