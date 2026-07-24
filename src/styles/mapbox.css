@@ -545,8 +545,8 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   border-radius: 20px !important;
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-    var(--tw-shadow);
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .mapboxgl-popup-anchor-top-left .mapboxgl-popup-content {
@@ -671,5 +671,18 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   :nth-child(4),
   :nth-child(5) {
     visibility: visible;
+  }
+}
+
+/* Mobile (< lg): the bottom nav pill floats at bottom-4/left-4 and hides the
+   default bottom-left Mapbox logo. Keep the logo visible by aligning it to the
+   toolbar's left edge (16px), shrinking it, and dropping it below the pill. */
+@media (max-width: 1023px) {
+  .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl {
+    margin: 0 0 0 16px;
+  }
+  a.mapboxgl-ctrl-logo {
+    transform: scale(0.65);
+    transform-origin: bottom left;
   }
 }

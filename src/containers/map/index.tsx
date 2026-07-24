@@ -567,7 +567,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
               {!hideControls && (
                 <Controls
                   className={cn(
-                    'absolute right-5 bottom-40 z-20 items-center lg:bottom-9 lg:z-auto',
+                    'absolute right-5 bottom-[98px] z-20 items-center lg:bottom-9 lg:z-auto',
                     !mapView && 'hidden lg:flex'
                   )}
                 >
@@ -654,7 +654,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
         {!hideControls && (
           <>
             {isMobile && mapView && (
-              <div className="absolute right-[69px] bottom-40 z-20">
+              <div className="absolute right-[69px] bottom-[98px] left-4 z-20">
                 <MobileLegend />
               </div>
             )}
