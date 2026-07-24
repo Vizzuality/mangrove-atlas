@@ -52,12 +52,7 @@ const LocationTools = () => {
   return (
     <div className="xs:justify-center xs:gap-4 xs:px-4 mb-4 flex w-full items-center justify-between gap-2 overflow-visible px-6">
       {/* RESET PAGE */}
-      <Link
-        href="/"
-        onClick={handleReset}
-        data-testid="worldwide-button"
-        className="xs:block hidden"
-      >
+      <Link href="/" onClick={handleReset} data-testid="worldwide-button">
         <Helper
           className={{
             button: '-top-1 left-0 z-20',
@@ -74,12 +69,13 @@ const LocationTools = () => {
       </Link>
 
       {/* FIND LOCATIONS */}
-      <div className="hidden lg:block">
-        <FindLocations menuItemStyle={CARD_MENU_ITEM} />
-      </div>
+      <FindLocations menuItemStyle={CARD_MENU_ITEM} />
 
-      {/* DRAW AREA */}
-      <WidgetDrawingTool menuItemStyle={CARD_MENU_ITEM} />
+      {/* DRAW AREA — shown on mobile but disabled (drawing is unsupported on
+          touch/small screens); fully interactive from lg up. */}
+      <div className="pointer-events-none flex flex-1 opacity-40 lg:pointer-events-auto lg:opacity-100">
+        <WidgetDrawingTool menuItemStyle={CARD_MENU_ITEM} />
+      </div>
 
       {/* UPLOAD SHAPEFILE */}
       <WidgetDrawingUploadTool menuItemStyle={CARD_MENU_ITEM} />

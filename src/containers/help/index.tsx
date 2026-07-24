@@ -25,6 +25,7 @@ type HelpContainerProps = {
   theme?: 'light' | 'dark';
   hasArrow?: boolean;
   className?: string;
+  variant?: 'desktop' | 'mobile';
 };
 
 const THEME = {
@@ -32,7 +33,12 @@ const THEME = {
   dark: 'text-brand-800',
 };
 
-const HelpContainer = ({ theme = 'light', hasArrow = false, className }: HelpContainerProps) => {
+const HelpContainer = ({
+  theme = 'light',
+  hasArrow = false,
+  className,
+  variant = 'desktop',
+}: HelpContainerProps) => {
   const [guideLocalStorage] = useClientLocalStorage<boolean>('guideLocalStorage', false);
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useAtom(activeGuideAtom);
@@ -54,14 +60,29 @@ const HelpContainer = ({ theme = 'light', hasArrow = false, className }: HelpCon
   return (
     <div>
       <Popover>
-        <PopoverTrigger
-          data-testid="guide-button"
-          className={cn('flex cursor-pointer items-center space-x-2', THEME[theme], className)}
-        >
-          <HELP_ICON className="h-6 w-6" />
-          <p className="font-sans text-sm">Help</p>
-          {hasArrow && <CHEVRON_ICON role="img" className="h-4 w-4" />}
-        </PopoverTrigger>
+        {variant === 'mobile' ? (
+          <PopoverTrigger
+            data-testid="guide-button"
+            aria-label="Help"
+            className={cn(
+              'flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none',
+              THEME[theme],
+              className
+            )}
+          >
+            <HELP_ICON className="h-8 w-8" />
+            <span className="text-xxs font-sans leading-none">Help</span>
+          </PopoverTrigger>
+        ) : (
+          <PopoverTrigger
+            data-testid="guide-button"
+            className={cn('flex cursor-pointer items-center space-x-2', THEME[theme], className)}
+          >
+            <HELP_ICON className="h-6 w-6" />
+            <p className="font-sans text-sm">Help</p>
+            {hasArrow && <CHEVRON_ICON role="img" className="h-4 w-4" />}
+          </PopoverTrigger>
+        )}
 
         <PopoverContent className="shadow-border rounded-2xl p-6 text-sm font-semibold">
           <Contact />

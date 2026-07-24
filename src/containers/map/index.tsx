@@ -654,7 +654,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
         {!hideControls && (
           <>
             {isMobile && mapView && (
-              <div className="absolute bottom-24 z-20 w-full">
+              <div className="absolute right-[69px] bottom-40 z-20">
                 <MobileLegend />
               </div>
             )}

@@ -20,31 +20,46 @@ import MENU_SVG from '@/svgs/tools-bar/menu';
 import MainMenu from './main';
 import Profile from './profile';
 
-const Menu = () => {
+const Menu = ({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) => {
   const [section, setSection] = useState('main');
 
   return (
     <Dialog>
-      <Helper
-        className={{
-          button: '-top-2 -right-4',
-          tooltip: 'w-fit-content max-w-100',
-        }}
-        tooltipPosition={{ top: -40, left: 0 }}
-        message="Find more information about the Global Mangrove Watch, the Global Mangrove Alliance, and our associated resources, trainings, and guidance documents"
-      >
+      {variant === 'mobile' ? (
         <DialogTrigger asChild>
           <button
             data-testid="menu-button"
             type="button"
             onClick={() => setSection('main')}
-            className="flex h-full cursor-pointer items-center space-x-2"
+            aria-label="Menu"
+            className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
           >
-            <MENU_SVG className="h-6 w-6 fill-current" role="img" title="Menu" />
-            <span className="font-sans text-sm text-white">Menu</span>
+            <MENU_SVG className="h-8 w-8 fill-current text-white" role="img" title="Menu" />
+            <span className="text-xxs font-sans leading-none text-white">Menu</span>
           </button>
         </DialogTrigger>
-      </Helper>
+      ) : (
+        <Helper
+          className={{
+            button: '-top-2 -right-4',
+            tooltip: 'w-fit-content max-w-100',
+          }}
+          tooltipPosition={{ top: -40, left: 0 }}
+          message="Find more information about the Global Mangrove Watch, the Global Mangrove Alliance, and our associated resources, trainings, and guidance documents"
+        >
+          <DialogTrigger asChild>
+            <button
+              data-testid="menu-button"
+              type="button"
+              onClick={() => setSection('main')}
+              className="flex h-full cursor-pointer items-center space-x-2"
+            >
+              <MENU_SVG className="h-6 w-6 fill-current" role="img" title="Menu" />
+              <span className="font-sans text-sm text-white">Menu</span>
+            </button>
+          </DialogTrigger>
+        </Helper>
+      )}
 
       <DialogContent
         data-testid="menu-content"

@@ -18,7 +18,7 @@ const Legend = () => {
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className="flex w-screen flex-col-reverse items-center gap-2"
+      className="flex flex-col-reverse items-end gap-2"
     >
       <CollapsibleTrigger
         className={`${PANEL_STYLE} group hover:bg-grey-50 flex w-90 cursor-pointer items-center justify-between px-4 py-3 transition-colors`}
