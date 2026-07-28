@@ -1,0 +1,6 @@
+boto3
+geopandas
+google-cloud-storage
+pandas
+python-dotenv
+requests

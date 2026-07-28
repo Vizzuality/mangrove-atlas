@@ -62,5 +62,14 @@ tsconfig.tsbuildinfo
 # Temp
 .tmp/
 
+# Data pipeline artifacts
+data/pipelines/output/
+data/notebooks/Lab/data/
+
+# Local notebook environment (uv)
+data/notebooks/.python-version
+data/notebooks/pyproject.toml
+data/notebooks/uv.lock
+
 # Local planning notes / docs (untracked by design)
 /docs/
