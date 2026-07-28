@@ -1,0 +1,45 @@
+name: Update deforestation alerts tileset
+
+# Manual trigger only — run after the client uploads new data via `make upload`.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  update-tileset:
+    name: Build and upload alerts tileset
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v6
+
+      # Authenticate to GCP (needed to download edited.json from GCS)
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.gcp_credentials }}'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: pip install -r data/pipelines/requirements.txt
+
+      - name: Install tippecanoe
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libsqlite3-dev zlib1g-dev
+          git clone --depth 1 https://github.com/felt/tippecanoe.git /tmp/tippecanoe
+          cd /tmp/tippecanoe && make -j && sudo make install
+
+      - name: Run pipeline
+        env:
+          MAPBOX_USER: ${{ secrets.MAPBOX_USER }}
+          MAPBOX_SECRET_TOKEN: ${{ secrets.MAPBOX_SECRET_TOKEN }}
+        run: python data/pipelines/update_alerts_tileset.py
