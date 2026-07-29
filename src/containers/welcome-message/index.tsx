@@ -33,24 +33,32 @@ const WelcomeIntroMessage = () => {
       <DialogTrigger className="sr-only">Welcome message</DialogTrigger>
       <DialogContent
         classNameContent="animate-none duration-0"
-        className="fixed top-0 right-0 bottom-0 left-0 w-screen max-w-screen space-y-6 p-0 text-black/85 shadow-sm sm:max-h-none sm:p-0 md:top-1/2 md:right-auto md:bottom-auto md:left-1/2 md:max-h-[calc(100vh-4rem)] md:w-3xl md:max-w-[calc(100vw-7rem)] md:-translate-x-1/2 md:-translate-y-1/2 md:overflow-visible md:p-0"
+        // From `md` up the card gets a *definite* height (`h-[405px]`, clamped by
+        // `max-h` on short viewports). Without it the row height is content-driven,
+        // `h-full` on the columns can't resolve, and the image column ends up
+        // shorter than the text column. The fixed height also stops the content
+        // stretching on tall viewports.
+        className="fixed top-0 right-0 bottom-0 left-0 w-screen max-w-screen p-0 text-black/85 shadow-sm sm:max-h-none sm:p-0 md:top-1/2 md:right-auto md:bottom-auto md:left-1/2 md:h-[405px] md:max-h-[calc(100vh-4rem)] md:w-3xl md:max-w-[calc(100vw-7rem)] md:-translate-x-1/2 md:-translate-y-1/2 md:overflow-visible md:p-0"
         hideScrollFade
       >
-        <div className="relative m-0 flex h-full min-h-0 w-full flex-col md:static md:grid md:grid-cols-12">
-          <div className="relative min-h-30 w-full flex-1 overflow-hidden md:col-span-6 md:h-full md:rounded-tl-3xl md:rounded-bl-3xl">
-            <div className="absolute inset-0 h-full w-full">
-              <Image
-                src="/images/welcome-modal.webp"
-                alt="Mangrove"
-                fill
-                priority
-                className="absolute top-0 bottom-0 left-0 object-cover md:rounded-tl-3xl md:rounded-bl-3xl"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            </div>
+        {/* Stays `relative` at every breakpoint so the close button anchors to the
+            card itself — the wrapper above it is capped at `sm:max-w-135`, which
+            put the `md:-right-10` offset inside the card. */}
+        <div className="relative flex h-full min-h-0 w-full flex-col md:grid md:grid-cols-2">
+          <div className="relative min-h-30 w-full flex-1 overflow-hidden md:h-full md:min-h-0 md:rounded-l-3xl">
+            <Image
+              src="/images/welcome-modal.webp"
+              alt="Mangrove"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 384px"
+            />
           </div>
-          <div className="flex shrink-0 flex-col justify-between space-y-4 p-6 md:col-span-6 md:h-full md:overflow-y-auto">
-            <DialogHeader className="space-y-6">
+          {/* `shrink-0` keeps the copy at its natural height on mobile, where the
+              image column absorbs the leftover space instead. */}
+          <div className="flex shrink-0 flex-col gap-4 overflow-y-auto p-6 md:h-full md:min-h-0 md:p-8">
+            <DialogHeader>
               <DialogTitle className="text-3xl font-light">
                 Thriving mangroves are key to the health of nature and effective climate action
               </DialogTitle>
@@ -61,11 +69,9 @@ const WelcomeIntroMessage = () => {
               to near real-time information on where and what changes there are to mangroves across
               the world, and highlights why they are valuable...
             </DialogDescription>
-            <div className="flex items-center justify-between space-x-7">
-              <Button onClick={handleClose} className="text-sm font-bold">
-                Let’s explore the tool
-              </Button>
-            </div>
+            <Button onClick={handleClose} className="self-start text-sm font-bold">
+              Let’s explore the tool
+            </Button>
           </div>
           <DialogClose
             onClose={handleClose}
