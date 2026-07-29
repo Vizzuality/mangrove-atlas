@@ -32,24 +32,24 @@ const WelcomeIntroMessage = () => {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogTrigger className="sr-only">Welcome message</DialogTrigger>
       <DialogContent
-        classNameContent="animate-none duration-0 min-h-fit"
-        className="fixed top-0 right-0 bottom-0 left-0 min-h-fit w-screen max-w-screen space-y-6 p-0 text-black/85 shadow-sm sm:top-1/2 sm:left-1/2 sm:w-auto sm:max-w-xl sm:-translate-x-1/2 sm:-translate-y-1/2 sm:overflow-visible sm:p-8 md:max-w-3xl md:p-0"
+        classNameContent="animate-none duration-0"
+        className="fixed top-0 right-0 bottom-0 left-0 w-screen max-w-screen space-y-6 p-0 text-black/85 shadow-sm sm:max-h-none sm:p-0 md:top-1/2 md:right-auto md:bottom-auto md:left-1/2 md:max-h-[calc(100vh-4rem)] md:w-3xl md:max-w-[calc(100vw-7rem)] md:-translate-x-1/2 md:-translate-y-1/2 md:overflow-visible md:p-0"
         hideScrollFade
       >
-        <div className="relative m-0 flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
-          <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-tl-3xl sm:rounded-bl-3xl">
-            <div className="absolute inset-0 h-full w-full sm:h-full">
+        <div className="relative m-0 flex h-full min-h-0 w-full flex-col md:static md:grid md:grid-cols-12">
+          <div className="relative min-h-30 w-full flex-1 overflow-hidden md:col-span-6 md:h-full md:rounded-tl-3xl md:rounded-bl-3xl">
+            <div className="absolute inset-0 h-full w-full">
               <Image
                 src="/images/welcome-modal.webp"
                 alt="Mangrove"
                 fill
                 priority
-                className="absolute top-0 bottom-0 left-0 object-cover sm:rounded-tl-3xl sm:rounded-bl-3xl"
+                className="absolute top-0 bottom-0 left-0 object-cover md:rounded-tl-3xl md:rounded-bl-3xl"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
           </div>
-          <div className="flex h-[calc(100vh/2)] flex-col justify-between space-y-4 p-6 sm:col-span-6 sm:h-full">
+          <div className="flex shrink-0 flex-col justify-between space-y-4 p-6 md:col-span-6 md:h-full md:overflow-y-auto">
             <DialogHeader className="space-y-6">
               <DialogTitle className="text-3xl font-light">
                 Thriving mangroves are key to the health of nature and effective climate action
@@ -67,7 +67,10 @@ const WelcomeIntroMessage = () => {
               </Button>
             </div>
           </div>
-          <DialogClose onClose={handleClose} />
+          <DialogClose
+            onClose={handleClose}
+            className="sm:top-4 sm:right-4 sm:rounded-none md:-right-10 md:rounded-r-[20px]"
+          />
         </div>
       </DialogContent>
     </Dialog>
