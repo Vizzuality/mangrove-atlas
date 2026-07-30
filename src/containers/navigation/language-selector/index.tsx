@@ -1,6 +1,8 @@
-import { useCallback, useState, MouseEvent, useEffect } from 'react';
+import { useCallback, MouseEvent } from 'react';
 
 import cn from '@/lib/classnames';
+
+import { useTransifexLive } from 'hooks/use-transifex-live';
 
 import Helper from '@/containers/help/helper';
 
@@ -13,15 +15,6 @@ import {
 
 import LANGUAGES_ICON from '@/svgs/tools-bar/languages';
 import CHEVRON_ICON from '@/svgs/ui/chevron';
-
-interface Transifex {
-  live: {
-    detectLanguage: () => string;
-    getAllLanguages: () => { code: string; name: string }[];
-    translateTo: (string) => string;
-    init: () => void;
-  };
-}
 
 type LanguageSelectorProps = {
   theme?: 'light' | 'dark';
@@ -39,32 +32,12 @@ const LanguageSelector = ({
   hasArrow = false,
   className,
 }: LanguageSelectorProps) => {
-  const [languages, setLanguages] = useState([]);
-  const [currentLanguage, setCurrentLanguage] = useState('');
+  const { languages, currentLanguage, translateTo } = useTransifexLive();
 
-  const handleChange = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    const Transifex = window.Transifex as Transifex;
-    Transifex?.live.translateTo(e.currentTarget.value);
-    setCurrentLanguage(e.currentTarget.id);
-  }, []);
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      console.info('Transifex:', window.Transifex);
-      if (typeof window !== 'undefined' && window.Transifex) {
-        const tx = window.Transifex as Transifex;
-        if (tx?.live) {
-          tx.live?.init();
-          const locale = tx?.live.detectLanguage();
-          const langs = tx.live.getAllLanguages();
-          const defaultLanguage = langs?.find((lang) => lang.code === locale)?.name;
-          setCurrentLanguage(defaultLanguage);
-          setLanguages(langs);
-        }
-      }
-    }, 0);
-    return () => clearTimeout(id);
-  }, []);
+  const handleChange = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => translateTo(e.currentTarget.value),
+    [translateTo]
+  );
 
   return (
     <Helper
@@ -84,11 +57,11 @@ const LanguageSelector = ({
           )}
         >
           <LANGUAGES_ICON className="h-6 w-6 shrink-0" />
-          <span className="text-sm">{currentLanguage}</span>
+          <span className="text-sm">{currentLanguage?.name}</span>
           {hasArrow && <CHEVRON_ICON role="img" className="h-4 w-4" />}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white">
-          {languages?.map((lang: { code: string; name: string }) => (
+          {languages.map((lang) => (
             <DropdownMenuItem key={lang.code} asChild className="rounded-lg">
               <button
                 data-testid={`${lang.code}-button`}
@@ -101,7 +74,7 @@ const LanguageSelector = ({
                 <span
                   className={cn({
                     'font-sans text-sm text-black/85': true,
-                    'text-brand-800 font-semibold': currentLanguage === lang.name,
+                    'text-brand-800 font-semibold': currentLanguage?.code === lang.code,
                   })}
                 >
                   {lang.name}
