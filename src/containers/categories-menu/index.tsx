@@ -77,12 +77,13 @@ const Category = () => {
             >
               <div
                 className={cn({
-                  'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm':
-                    true,
+                  'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm': true,
                   'border-brand-800 text-brand-800 border-2 font-bold': isSelected,
                 })}
               >
-                <h4 className="flex min-h-10 items-center justify-center">{category.label}</h4>
+                {/* A span, not a heading — this is the button's own label, and a heading here
+                    would land in the page outline as a navigable section that doesn't exist. */}
+                <span className="flex min-h-10 items-center justify-center">{category.label}</span>
 
                 <span
                   aria-hidden="true"

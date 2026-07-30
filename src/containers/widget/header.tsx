@@ -9,11 +9,18 @@ import { WidgetSlugType } from 'types/widget';
 type HeaderProps = {
   id: WidgetSlugType;
   title: string;
+  /**
+   * Card-level collapse state. The wrapper passes it because it also factors in the drawing tools,
+   * which force a widget open; sub-section headers inside a card omit it and read the atom.
+   */
+  isCollapsed?: boolean;
 };
 
-const WidgetHeader = ({ title, id, children }: PropsWithChildren<HeaderProps>) => {
+const WidgetHeader = ({ title, id, isCollapsed, children }: PropsWithChildren<HeaderProps>) => {
   const [widgetsCollapsed, setWidgetsCollapsed] =
     useAtom<Record<string, boolean>>(widgetsCollapsedAtom);
+
+  const collapsed = isCollapsed ?? !!widgetsCollapsed[id];
 
   const handleWidgetCollapsed = useCallback(() => {
     const updatedWidgetsCollapsed = {
@@ -27,11 +34,16 @@ const WidgetHeader = ({ title, id, children }: PropsWithChildren<HeaderProps>) =
 
   return (
     <header className="flex items-center justify-between">
-      <h2
-        onClick={handleWidgetCollapsed}
-        className="flex-1 cursor-pointer text-xs font-bold -tracking-tighter text-black/85 uppercase"
-      >
-        {title}
+      <h2 className="flex min-w-0 flex-1">
+        <button
+          type="button"
+          onClick={handleWidgetCollapsed}
+          aria-expanded={!collapsed}
+          aria-controls={`widget-${id}-content`}
+          className="focus-visible:ring-brand-800 flex-1 cursor-pointer rounded text-left text-xs font-bold -tracking-tighter text-black/85 uppercase focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        >
+          {title}
+        </button>
       </h2>
 
       {children}

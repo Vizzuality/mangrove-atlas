@@ -100,12 +100,16 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 tooltipPosition={{ top: -50, left: 0 }}
                 message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
               >
-                <WidgetHeader title={title} id={id}>
+                <WidgetHeader title={title} id={id} isCollapsed={isCollapsed}>
                   {!info && <WidgetControls id={id} />}
                 </WidgetHeader>
               </Helper>
               <motion.div
+                id={`widget-${id}-content`}
                 data-testid={`widget-${id}-content`}
+                // Collapsed content stays in the DOM for the height animation, so `inert` is what
+                // keeps it out of the tab order and the accessibility tree.
+                inert={isCollapsed ? '' : undefined}
                 initial={false}
                 animate={isCollapsed ? 'collapsed' : 'expanded'}
                 variants={{

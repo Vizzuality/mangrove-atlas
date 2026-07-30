@@ -2,7 +2,7 @@ import type { AnchorHTMLAttributes, PropsWithChildren } from 'react';
 
 import { MDXProvider } from '@mdx-js/react';
 
-function A(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
+function A({ children, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {
   const isExternal = typeof props.href === 'string' && /^https?:\/\//.test(props.href);
 
   return (
@@ -10,7 +10,9 @@ function A(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
       {...props}
       target={isExternal ? '_blank' : props.target}
       rel={isExternal ? 'noopener noreferrer' : props.rel}
-    />
+    >
+      {children}
+    </a>
   );
 }
 

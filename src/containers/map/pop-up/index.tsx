@@ -124,6 +124,10 @@ const MapPopup = ({
   return (
     <Draggable position={position} id="draggable-map-popup" isPinned={isPinned}>
       {({ listeners, attributes }) => (
+        // The click/mousedown handlers below are propagation guards only — they keep clicks inside
+        // the popup from reaching the map underneath. There's no action here to give a keyboard
+        // equivalent to; the popup's own controls (close, pin, drag) are real buttons.
+        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           ref={popUpRef}
           className={cn(

@@ -1,5 +1,7 @@
 import { MouseEvent, useCallback, useEffect, useState } from 'react';
 
+import { syncDocumentLanguage } from '@/lib/transifex';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +29,7 @@ const LanguageSelector = () => {
     const Transifex = window.Transifex as Transifex;
     Transifex?.live.translateTo(e.currentTarget.value);
     setCurrentLanguage(e.currentTarget.id);
+    syncDocumentLanguage(e.currentTarget.value);
   }, []);
 
   useEffect(() => {
@@ -40,6 +43,7 @@ const LanguageSelector = () => {
           const defaultLanguage = langs?.find((lang) => lang.code === locale)?.name;
           setCurrentLanguage(defaultLanguage);
           setLanguages(langs);
+          syncDocumentLanguage(locale);
         }
       }
     }, 0);
