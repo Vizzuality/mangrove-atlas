@@ -11,6 +11,11 @@ export default defineConfig([
   prettierRecommended,
   globalIgnores([
     '.next/**',
+    // Build and tool output. Linting `.vercel` in particular took `eslint .` from 11s to over
+    // 55 minutes: it holds ~3.8MB of minified bundle chunks on single lines, which is worst-case
+    // input for the type-aware rules and for prettier.
+    '.vercel/**',
+    'coverage/**',
     'out/**',
     'build/**',
     'next-env.d.ts',
