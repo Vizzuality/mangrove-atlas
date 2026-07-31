@@ -9,6 +9,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MediaStylesTag } from './media-styles';
 import Providers from './providers';
+import TransifexLiveInit from './transifex-live-init';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '400', '600', '700'],
@@ -52,11 +53,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           verification crawler doesn't run JS, and afterInteractive injection is
           invisible to it, which blocks "Publish to production". Settings must be
           defined before live.js loads.
+
+          `manual_init: true` because Live translates by mutating the DOM: left to
+          auto-init it rewrites the server HTML while React is still hydrating,
+          which surfaces as a hydration text mismatch (React #418) and makes React
+          throw away and re-render the tree. <TransifexLiveInit /> calls
+          `Transifex.live.init()` from an effect instead, i.e. after hydration.
         */}
         <script
           id="transifex-live-settings"
           dangerouslySetInnerHTML={{
-            __html: `window.liveSettings = { api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}', detectlang: true, autocollect: true, dynamic: true, manual_init: false, translate_urls: false };`,
+            __html: `window.liveSettings = { api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}', detectlang: true, autocollect: true, dynamic: true, manual_init: true, translate_urls: false };`,
           }}
         />
         <script id="transifex-live" src="//cdn.transifex.com/live.js" async />
@@ -87,6 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
+        <TransifexLiveInit />
         <Providers>{children}</Providers>
       </body>
     </html>
