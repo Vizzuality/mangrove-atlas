@@ -59,6 +59,16 @@ const Helper = ({
     triggerRef.current?.focus();
   }, []);
 
+  // The message sits inside the backdrop, so a click on it bubbles up to the backdrop's own
+  // dismiss handler — closing the help the user is reading, and making its text unselectable.
+  // Only dismiss when the backdrop itself was hit.
+  const handleBackdropClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) closePopover();
+    },
+    [closePopover]
+  );
+
   // The overlay is dismissed by clicking it, so keyboard users need Escape to get out. Tab is
   // kept inside the message too — the overlay hides the rest of the page, so tabbing into it
   // would move focus somewhere the user can no longer see.
@@ -148,7 +158,7 @@ const Helper = ({
             // document level so this doesn't need to be reachable by keyboard.
             role="presentation"
             className="fixed inset-0 z-40 flex h-full w-full bg-black/50 backdrop-blur-sm"
-            onClick={closePopover}
+            onClick={handleBackdropClick}
           >
             {/*
               A visual echo of the highlighted control, rendered so it appears above the overlay.
