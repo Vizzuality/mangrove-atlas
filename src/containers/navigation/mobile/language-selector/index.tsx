@@ -1,6 +1,6 @@
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { MouseEvent, useCallback } from 'react';
 
-import { syncDocumentLanguage } from '@/lib/transifex';
+import { useTransifexLive } from 'hooks/use-transifex-live';
 
 import {
   DropdownMenu,
@@ -12,43 +12,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 import LANGUAGE_SVG from '@/svgs/sidebar/language';
 
-interface Transifex {
-  live: {
-    detectLanguage: () => string;
-    getAllLanguages: () => { code: string; name: string }[];
-    translateTo: (string) => string;
-    init: () => void;
-  };
-}
-
 const LanguageSelector = () => {
-  const [languages, setLanguages] = useState([]);
-  const [currentLanguage, setCurrentLanguage] = useState('');
+  const { languages, currentLanguage, translateTo } = useTransifexLive();
 
-  const handleChange = useCallback((e: MouseEvent<HTMLButtonElement>) => {
-    const Transifex = window.Transifex as Transifex;
-    Transifex?.live.translateTo(e.currentTarget.value);
-    setCurrentLanguage(e.currentTarget.id);
-    syncDocumentLanguage(e.currentTarget.value);
-  }, []);
-
-  useEffect(() => {
-    const id = setTimeout(() => {
-      if (typeof window !== 'undefined') {
-        const tx = window.Transifex as Transifex;
-        if (tx?.live) {
-          tx.live?.init();
-          const locale = tx?.live.detectLanguage();
-          const langs = tx.live.getAllLanguages();
-          const defaultLanguage = langs?.find((lang) => lang.code === locale)?.name;
-          setCurrentLanguage(defaultLanguage);
-          setLanguages(langs);
-          syncDocumentLanguage(locale);
-        }
-      }
-    }, 0);
-    return () => clearTimeout(id);
-  }, []);
+  const handleChange = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => translateTo(e.currentTarget.value),
+    [translateTo]
+  );
 
   return (
     <DropdownMenu>
@@ -59,13 +29,15 @@ const LanguageSelector = () => {
             className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
           >
             <LANGUAGE_SVG className="h-8 w-8 fill-current text-white" role="img" title="Language" />
-            <span className="text-xxs font-sans leading-none text-white">{currentLanguage}</span>
+            <span className="text-xxs font-sans leading-none text-white">
+              {currentLanguage?.name}
+            </span>
           </DropdownMenuTrigger>
         </TooltipTrigger>
         <TooltipContent side="top">Change language</TooltipContent>
       </Tooltip>
       <DropdownMenuContent>
-        {languages?.map((lang: { code: string; name: string }) => (
+        {languages.map((lang) => (
           <DropdownMenuItem key={lang.code} asChild>
             <button
               data-testid={`${lang.code}-button`}
