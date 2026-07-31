@@ -17,12 +17,10 @@ import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
 import { useIsLayerActive } from './selector';
 
-type ChildrenType = ReactElement & { type?: () => null };
-
 type WidgetLayoutProps = {
   id: WidgetSlugType;
   title: string;
-  children: ChildrenType | null;
+  children: ReactElement | null;
   className?: string;
   contextualLayersIds?: string[];
   contextualLayers?: {
@@ -57,8 +55,6 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   // Keep content overflow visible while expanded so Popovers / chart tooltips aren't clipped;
   // hide it during the collapse animation so the card shrinks cleanly.
   const [isContentOverflowVisible, setIsContentOverflowVisible] = useState(!isCollapsed);
-
-  if (Boolean(children?.type() === null)) return null;
 
   return (
     <AnimatePresence>

@@ -71,7 +71,12 @@ export const useDrawingTool = (page: Page) => ({
 
   uploadGeojson: async (file: string) => {
     const responsePromise = page.waitForResponse(
-      (res) => res.url().includes('/spatial_file/converter') && res.request().method() === 'POST'
+      (res) => res.url().includes('/spatial_file/converter') && res.request().method() === 'POST',
+      // Not the 10s `actionTimeout` this would otherwise inherit: the file is converted by the
+      // shared staging API, and a round trip there regularly costs more than that. Every test in
+      // `Upload shapefile` and `Custom area has a polygon` goes through here, so an under-budgeted
+      // wait fails eight tests at once for no reason but backend latency.
+      { timeout: 60000 }
     );
     await page.getByTestId('shapefile-upload').setInputFiles(file);
     const res = await responsePromise;
