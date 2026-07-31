@@ -11,7 +11,7 @@ const HixIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Elem
 const MapPopupClose = ({ handleClose }: MapPopupCloseProps) => {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <button
           type="button"
           aria-label="Close popup"

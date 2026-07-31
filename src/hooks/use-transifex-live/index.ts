@@ -5,8 +5,8 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   getTransifexLive,
   onTransifexLiveReady,
+  readCode,
   type TransifexLanguage,
-  type TransifexLive,
 } from '@/lib/transifex-live';
 
 type UseTransifexLive = {
@@ -15,14 +15,6 @@ type UseTransifexLive = {
   currentLanguage: TransifexLanguage | null;
   translateTo: (code: string) => void;
 };
-
-/**
- * `getSelectedLanguageCode()` is an empty string until Live commits a language,
- * so fall back to the one it detected — hence `||`, not `??`.
- */
-function readCode(live: TransifexLive): string {
-  return live.getSelectedLanguageCode() || live.detectLanguage();
-}
 
 /**
  * Read/write access to Transifex Live's language state for the language

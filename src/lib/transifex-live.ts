@@ -60,6 +60,26 @@ function pollUntil(attempt: () => boolean): () => void {
   return () => window.clearInterval(intervalId);
 }
 
+/**
+ * `getSelectedLanguageCode()` is an empty string until Live commits a language,
+ * so fall back to the one it detected — hence `||`, not `??`.
+ */
+export function readCode(live: TransifexLive): string {
+  return live.getSelectedLanguageCode() || live.detectLanguage();
+}
+
+/**
+ * Live translates the page client-side but never updates `<html lang>` — that stays at the `en`
+ * baked into the server-rendered layout. Screen readers pick their voice and pronunciation from
+ * that attribute, so translated content would otherwise be read with an English voice.
+ */
+function syncDocumentLanguage(code?: string) {
+  if (typeof document === 'undefined' || !code) return;
+
+  // Transifex uses locale codes like `pt_BR`; `lang` expects the BCP 47 form (`pt-BR`).
+  document.documentElement.lang = code.replace(/_/g, '-');
+}
+
 let initialized = false;
 
 /**
@@ -72,7 +92,14 @@ export function initTransifexLive(): () => void {
     if (!live) return false;
     if (!initialized) {
       initialized = true;
+      // Subscribed before `init()` so the language Live applies itself via `detectlang` is
+      // caught too. Done here rather than in the selectors because this runs from the root
+      // layout, so `lang` is right in the embedded and print views, which mount no selector.
+      live.onTranslatePage(() => syncDocumentLanguage(readCode(live)));
       live.init();
+      // `onTranslatePage` doesn't fire when the detected language is already the one the page
+      // was served in, so seed the attribute directly.
+      syncDocumentLanguage(readCode(live));
     }
     return true;
   });

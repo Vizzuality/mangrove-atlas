@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useRef, useState } from 'react';
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 
 import { createPortal } from 'react-dom';
 
@@ -32,6 +32,9 @@ const Helper = ({
   content?: React.ReactNode;
 }>) => {
   const childrenRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
   const isActive = useAtomValue(activeGuideAtom);
   const [popOver, setPopOver] = useState<boolean>(false);
   const [childrenPosition, setChildrenPosition] = useState<Record<string, number>>({
@@ -50,13 +53,74 @@ const Helper = ({
     setPopOver((prev) => !prev);
   }, []);
 
+  const closePopover = useCallback(() => {
+    setPopOver(false);
+    // The trigger is the only thing left to return focus to — the overlay is unmounting.
+    triggerRef.current?.focus();
+  }, []);
+
+  // The message sits inside the backdrop, so a click on it bubbles up to the backdrop's own
+  // dismiss handler — closing the help the user is reading, and making its text unselectable.
+  // Only dismiss when the backdrop itself was hit.
+  const handleBackdropClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) closePopover();
+    },
+    [closePopover]
+  );
+
+  // The overlay is dismissed by clicking it, so keyboard users need Escape to get out. Tab is
+  // kept inside the message too — the overlay hides the rest of the page, so tabbing into it
+  // would move focus somewhere the user can no longer see.
+  useEffect(() => {
+    if (!popOver) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        closePopover();
+        return;
+      }
+
+      if (e.key !== 'Tab' || !tooltipRef.current) return;
+
+      const focusable = tooltipRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [popOver, closePopover]);
+
+  // Move focus into the message so a keyboard user lands on the content they just opened.
+  useEffect(() => {
+    if (popOver) closeRef.current?.focus();
+  }, [popOver]);
+
   return (
     <div className={cn({ [className.container]: !!className.container })}>
       {isActive && (
         <div className="relative">
           <button
+            ref={triggerRef}
+            type="button"
+            aria-label="Show help for this control"
+            aria-expanded={popOver}
             className={cn({
-              'absolute flex h-5 w-5 items-center justify-center': true,
+              'focus-visible:ring-brand-800 absolute flex h-5 w-5 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none': true,
               [className.button]: !!className.button,
               'pointer-events-none': popOver,
             })}
@@ -66,8 +130,7 @@ const Helper = ({
             {!popOver && isActive && (
               <span
                 className={cn({
-                  'absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-yellow-400 opacity-20':
-                    true,
+                  'absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-yellow-400 opacity-20': true,
                 })}
               />
             )}
@@ -91,10 +154,20 @@ const Helper = ({
         popOver &&
         createPortal(
           <div
+            // Click-to-dismiss backdrop with no semantics of its own; Escape is handled at the
+            // document level so this doesn't need to be reachable by keyboard.
+            role="presentation"
             className="fixed inset-0 z-40 flex h-full w-full bg-black/50 backdrop-blur-sm"
-            onClick={() => setPopOver(false)}
+            onClick={handleBackdropClick}
           >
+            {/*
+              A visual echo of the highlighted control, rendered so it appears above the overlay.
+              It duplicates `children` — ids included — so it must stay out of the accessibility
+              tree and the tab order; the real control is still in the page behind the overlay.
+            */}
             <div
+              aria-hidden="true"
+              inert=""
               className={cn({
                 'pointer-events-none fixed cursor-default': true,
                 [className.button]: !!className.button,
@@ -109,6 +182,10 @@ const Helper = ({
             </div>
             {popOver && isActive && (
               <div
+                ref={tooltipRef}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Help"
                 style={{
                   top: childrenPosition?.top - tooltipPosition.top,
                   left: childrenPosition?.left - tooltipPosition.left || 'auto',
@@ -126,11 +203,18 @@ const Helper = ({
                   </p>
                 )}
                 {!!content && content}
-                <CLOSE_SVG
-                  className="absolute top-2 right-2 h-4 w-4 shrink-0 cursor-pointer fill-current text-black/85"
-                  role="img"
-                  title="Close"
-                />
+                <button
+                  ref={closeRef}
+                  type="button"
+                  aria-label="Close help"
+                  onClick={closePopover}
+                  className="focus-visible:ring-brand-800 absolute top-2 right-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded focus-visible:ring-2 focus-visible:outline-none"
+                >
+                  <CLOSE_SVG
+                    className="h-4 w-4 shrink-0 fill-current text-black/85"
+                    aria-hidden="true"
+                  />
+                </button>
               </div>
             )}
           </div>,

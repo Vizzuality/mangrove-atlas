@@ -14,16 +14,18 @@ type MapPopupPinProps = {
 
 const MapPopupPin = ({ handleClickToDocker = () => {}, isPinned }: MapPopupPinProps) => (
   <Tooltip>
-    <TooltipTrigger>
+    <TooltipTrigger asChild>
       <button
         type="button"
+        aria-label={isPinned ? 'Unpin popup' : 'Pin popup'}
+        aria-pressed={isPinned}
         className="inline-flex h-8 w-8 items-center justify-center rounded-md leading-none text-gray-500 hover:bg-gray-100 hover:text-gray-700"
         onClick={handleClickToDocker}
       >
         {isPinned ? (
-          <BsPinAngleFillIcon className="text-brand-800 h-5 w-5 font-bold" />
+          <BsPinAngleFillIcon className="text-brand-800 h-5 w-5 font-bold" aria-hidden="true" />
         ) : (
-          <BsPinAngleIcon className="text-brand-800 h-5 w-5 font-bold" />
+          <BsPinAngleIcon className="text-brand-800 h-5 w-5 font-bold" aria-hidden="true" />
         )}
       </button>
     </TooltipTrigger>

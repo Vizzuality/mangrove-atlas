@@ -139,10 +139,13 @@ const RestorationSitesWidget = () => {
           )}
           <div className="text-sm">
             <sup>*</sup>As entered into the Mangrove Restoration Tracker Tool. Enter your data{' '}
+            {/* "here" is meaningless out of context, and screen reader users often navigate by a
+                list of links alone — aria-label gives this one a name that stands on its own. */}
             <a
               href={process.env.NEXT_PUBLIC_MRTT_SITE}
               rel="noopener noreferrer"
               target="_blank"
+              aria-label="Enter your data in the Mangrove Restoration Tracker Tool"
               className="text-brand-800 font-semibold underline"
             >
               here

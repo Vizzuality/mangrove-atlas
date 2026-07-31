@@ -21,7 +21,7 @@ const MapPopupDragHandler = ({
 }: MapPopupDragProps) => {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <button
           type="button"
           aria-label="Drag to move or double-click to dock popup"

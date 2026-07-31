@@ -5,6 +5,23 @@ on:
     branches: [develop]
 
 jobs:
+  a11y-lint:
+    name: Accessibility lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      # The pre-commit hook runs the same check, but it can be skipped with --no-verify.
+      - name: Run accessibility lint
+        run: pnpm lint:a11y
+
   vitest:
     name: Vitest
     runs-on: ubuntu-24.04
