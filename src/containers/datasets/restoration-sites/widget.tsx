@@ -60,12 +60,16 @@ const RestorationSitesWidget = () => {
     setFilters(filterKeys);
   }, [setMapFilters, filterKeys]);
 
-  if (!filtersData) return null;
-
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
-      <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-20" />
-      {isFetched && data && (
+      {/* Covers the filters request too. This used to be `if (!filtersData) return null`, which
+          removed the entire widget from the page until `/widgets/sites_filters` answered — on a slow
+          response the card never appeared at all rather than showing a spinner. */}
+      <Loading
+        visible={isFetching || isFetchingFilters}
+        iconClassName="flex w-10 h-10 m-auto my-20"
+      />
+      {isFetched && data && filtersData && (
         <div className="relative space-y-8">
           {data.data?.length > 0 && (
             <p className={WIDGET_SENTENCE_STYLE}>

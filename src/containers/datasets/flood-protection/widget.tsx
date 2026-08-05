@@ -5,8 +5,6 @@ import cn from '@/lib/classnames';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
-import { isEmpty } from 'lodash-es';
-
 import type {
   FloodProtectionIndicatorId,
   FloodProtectionPeriodId,
@@ -107,26 +105,28 @@ const FloodProtection = ({
     }
   }, [ref]);
 
-  if (!data && isEmpty(data)) return null;
-
+  // Destructured defensively rather than bailing out with `return null` while the request is in
+  // flight: the card below already renders `<Loading>` and gates its content on `isFetched && data`,
+  // and returning nothing here meant the whole widget — card and all — disappeared until the
+  // response landed.
   const {
     periods,
     max,
     selectedValue,
     location,
     getFormattedValue,
-  }: {
+  }: Partial<{
     periods: FloodProtectionPeriodId[];
     max: number;
     selectedValue: number;
     location: string;
     getFormattedValue: (value: number, indicator: FloodProtectionIndicatorId) => string;
-  } = data;
+  }> = data ?? {};
 
   const isWorldwide = location === 'Worldwide';
   const trianglePositionPerc = (selectedValue * 100) / max;
   const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100 - 11; // substract icon size;
-  const value = getFormattedValue(selectedValue, indicator);
+  const value = getFormattedValue?.(selectedValue, indicator);
 
   const getBackground = (indicator: FloodProtectionIndicatorId): string => {
     let background: string;
