@@ -1,5 +1,6 @@
 import type { LayerProps } from 'react-map-gl';
 
+import type { Geometry } from 'geojson';
 import { atom } from 'jotai';
 import type { LngLat } from 'mapbox-gl';
 import { createParser, parseAsString, useQueryState } from 'nuqs';
@@ -34,6 +35,17 @@ export const locationBoundsAtom = atom(null as [number, number, number, number] 
 // is a separate shareable-state concern, synced by the map's own onMove handler.
 type TmpCamera = { bbox: [number, number, number, number] } | { worldwide: true };
 export const tmpCameraAtom = atom(null as TmpCamera | null);
+
+// The MRTT restoration site picked in the user's profile, drawn as a one-off
+// overlay on top of the widget layers. Independent of the `mangrove_rest_sites`
+// layer — that one is clustered, filtered by location, and may well be switched
+// off. Replaced on each pick, null when nothing is picked. `properties` are the
+// restoration-sites LABELS fields, so the overlay feeds the same map popup.
+type HighlightedSite = {
+  geometry: Geometry;
+  properties: Record<string, string | string[]>;
+};
+export const highlightedSiteAtom = atom(null as HighlightedSite | null);
 
 export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>([]);
 

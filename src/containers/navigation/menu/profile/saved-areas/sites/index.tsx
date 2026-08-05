@@ -3,12 +3,17 @@
 import { groupBy } from 'lodash-es';
 
 import { useGetUserSites } from '@/containers/datasets/locations/user-locations';
+import { useRestorationSitesById } from '@/containers/datasets/restoration-sites/hooks';
 
 import Loading from 'components/ui/loading';
 
 import SitesItem from './item';
 
 const UserMRTTSites = () => {
+  // `/sites` has no geometry or detail fields — joined by id against the
+  // restoration-sites widget data.
+  const { data: sitesById } = useRestorationSitesById();
+
   const { data: sitesData, isLoading: isLoadingSites } = useGetUserSites({
     select: (res) => {
       const grouped = groupBy(res, 'landscape_id');
@@ -38,7 +43,12 @@ const UserMRTTSites = () => {
               className="flex w-full flex-col"
             >
               {landscape.sites.map((site) => (
-                <SitesItem key={site.id} id={site.id} name={site.site_name} />
+                <SitesItem
+                  key={site.id}
+                  id={site.id}
+                  name={site.site_name}
+                  site={sitesById?.get(site.id)}
+                />
               ))}
             </ul>
           </div>

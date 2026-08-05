@@ -2,22 +2,16 @@
 
 import { useMemo } from 'react';
 
-import { groupBy } from 'lodash-es';
-
 import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import {
-  useGetUserLocations,
-  useGetUserSites,
-} from '@/containers/datasets/locations/user-locations';
+import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
 
 import Loading from 'components/ui/loading';
 
 import LocationItem from './item';
 import LocationItemNew from './item-new';
 import UserMRTTSites from './sites';
-import SitesItem from './sites/item';
 
 const SavedAreasContent = () => {
   const { type: locationType, id: routeId } = useSyncLocation();
@@ -38,17 +32,6 @@ const SavedAreasContent = () => {
 
   const shouldShowNew =
     locationType === 'custom-area' || (typeof routeLocationId === 'number' && !existsInSaved);
-
-  const { data: sitesData, isLoading: isLoadingSites } = useGetUserSites({
-    select: (res) => {
-      const grouped = groupBy(res, 'landscape_id');
-      return Object.entries(grouped).map(([id, sites]) => ({
-        landscape_id: Number(id),
-        landscape_name: sites[0].landscape_name,
-        sites: sites.map(({ landscape_id, landscape_name, ...site }) => site),
-      }));
-    },
-  });
 
   return (
     <div className="flex flex-col space-y-6 text-black/85">

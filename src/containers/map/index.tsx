@@ -53,6 +53,7 @@ import DrawControl from '@/components/map/drawing-tool';
 import { breakpoints } from '@/styles/styles.config';
 import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
+import HighlightedSite from './highlighted-site';
 import LayerManager from './layer-manager';
 import MapPopup from './pop-up';
 
@@ -556,6 +557,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
           {loaded && (
             <>
               <LayerManager />
+              <HighlightedSite />
               {(isDrawingToolEnabled || uploadedGeojson) && (
                 <DrawControl
                   onCreate={handleUserDrawing}

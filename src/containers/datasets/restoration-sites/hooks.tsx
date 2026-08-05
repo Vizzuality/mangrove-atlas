@@ -19,7 +19,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataFilters, DataResponse } from './types';
+import type { Data, DataDitesProperties, DataFilters, DataResponse } from './types';
 
 // widget data
 export function useMangroveRestorationSites(
@@ -54,6 +54,24 @@ export function useMangroveRestorationSites(
       };
     },
     ...queryOptions,
+  });
+}
+
+// `/sites` (the user's own MRTT sites) carries neither geometry nor the site
+// detail fields, so the profile list joins against this by site id. Unfiltered on
+// purpose — the sites a user owns are not necessarily inside the location
+// currently being viewed.
+export function useRestorationSitesById() {
+  const fetchAllRestorationSites = (): Promise<DataResponse> =>
+    API.request({
+      method: 'GET',
+      url: '/widgets/sites',
+    }).then((response) => response.data);
+
+  return useQuery<DataResponse, Error, Map<number, DataDitesProperties>>({
+    queryKey: ['restoration-sites-by-id'],
+    queryFn: fetchAllRestorationSites,
+    select: ({ data }) => new Map(data.map((site) => [site.id, site])),
   });
 }
 
