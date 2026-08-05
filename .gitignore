@@ -71,5 +71,6 @@ data/notebooks/.python-version
 data/notebooks/pyproject.toml
 data/notebooks/uv.lock
 
-# Local planning notes / docs (untracked by design)
-/docs/
+# Local planning notes / docs (untracked by design), except the ones we commit
+/docs/*
+!/docs/profile-restoration-sites-fly-to.md
