@@ -120,7 +120,7 @@
     "jsdom": "29.1.1",
     "lint-staged": "15.5.2",
     "oxlint": "1.76.0",
-    "postcss": "8.5.18",
+    "postcss": "8.5.23",
     "prettier": "3.9.4",
     "prettier-plugin-tailwindcss": "0.8.0",
     "tailwind-scrollbar-hide": "4.0.0",
