@@ -133,8 +133,9 @@
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
-      "next>postcss": "8.5.16",
+      "next>postcss": "8.5.23",
       "next>sharp": "0.35.0",
+      "jsdom>undici": "7.29.0",
       "minimatch@^10>brace-expansion": "5.0.7",
       "minimatch@3>brace-expansion": "1.1.16",
       "next-auth>uuid": "11.1.1",
