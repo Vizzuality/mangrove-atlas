@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.6](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.5...v8.0.0-rc.6) (2026-08-05)
+
+
+### Features
+
+* automate deforestation alerts tileset update ([#1639](https://github.com/Vizzuality/mangrove-atlas/issues/1639)) ([fc605b7](https://github.com/Vizzuality/mangrove-atlas/commit/fc605b76a5a2166dd266b68a16747cb121d47a86))
+
+
+### Bug Fixes
+
+* init Transifex Live after hydration to stop text mismatch ([#1643](https://github.com/Vizzuality/mangrove-atlas/issues/1643)) ([a614c01](https://github.com/Vizzuality/mangrove-atlas/commit/a614c01fcad292ca260554c9110a75bb227b46b3))
+* keyboard and screen reader access on core controls ([#1645](https://github.com/Vizzuality/mangrove-atlas/issues/1645)) ([8ae284a](https://github.com/Vizzuality/mangrove-atlas/commit/8ae284a03cb362396804e6173a6dd2d494a3aaa2))
+* mobile layout — welcome modal on small viewports and nav bar width ([#1641](https://github.com/Vizzuality/mangrove-atlas/issues/1641)) ([01a582d](https://github.com/Vizzuality/mangrove-atlas/commit/01a582d68cd6ba96c30fedffcf6668fe0c3d037f))
+* point alerts layer at automated deforestation-alerts tileset ([#1642](https://github.com/Vizzuality/mangrove-atlas/issues/1642)) ([c489e56](https://github.com/Vizzuality/mangrove-atlas/commit/c489e564b45684ccb78c0fb63d2397b04892dcec))
+* share the current view, not the one the dialog mounted with ([#1647](https://github.com/Vizzuality/mangrove-atlas/issues/1647)) ([aa0beca](https://github.com/Vizzuality/mangrove-atlas/commit/aa0beca55be52e66e9175fa5ff2fabf92c0847df))
+* stop widget cards vanishing while their data loads ([#1648](https://github.com/Vizzuality/mangrove-atlas/issues/1648)) ([cffb986](https://github.com/Vizzuality/mangrove-atlas/commit/cffb98682df5d96974fae250f02ab62e90aac1ec))
+
 ## [8.0.0-rc.5](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.4...v8.0.0-rc.5) (2026-07-24)
 
 
