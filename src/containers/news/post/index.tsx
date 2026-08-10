@@ -43,9 +43,9 @@ const Post = ({ post }: { post: PostProps }) => {
             );
           })}
         </div>
-        <h5 data-testid="post-title" className="text-2lg line-clamp-3 text-left font-light">
+        <h4 data-testid="post-title" className="text-2lg line-clamp-3 text-left font-light">
           {post.title.rendered}
-        </h5>
+        </h4>
       </div>
     </div>
   );

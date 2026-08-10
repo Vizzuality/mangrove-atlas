@@ -44,9 +44,12 @@ export default function LoginPage() {
         style={{ backgroundImage: 'url(/images/login/image.webp)' }}
       >
         <div className="mx-24 max-w-xl space-y-6 text-white">
-          <h2 id="mrt-hero-title" className="text-6xl font-light">
+          {/* Not a heading: this decorative hero precedes the page <h1> in
+              DOM order, so marking it up as one put an h2 before the h1. A
+              region's aria-labelledby can point at any text node. */}
+          <p id="mrt-hero-title" className="text-6xl font-light">
             Welcome to Global Mangrove Watch
-          </h2>
+          </p>
           <p className="text-sm leading-relaxed text-white">
             A coordinated effort across sectors and geographies will accomplish more, faster. Global
             Mangrove Watch is the evidence base informing the Global Mangrove Alliance, a

@@ -8,7 +8,6 @@ import { useSyncBasemapContextual } from '@/store/map-settings';
 import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 import { INFO } from '@/containers/datasets/registries';
 
-import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
 import Info from '@/components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
@@ -79,20 +78,25 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
         >
           <Image src={THUMBS[id]} alt={name} fill className="shadow-soft rounded-lg" />
 
-          <Checkbox
+          {/* A presentational tick, not a control: it has no change handler,
+              and a Radix Checkbox renders a <button>, which cannot legally
+              nest inside the button that wraps this card. */}
+          <span
+            aria-hidden="true"
             className={cn({
-              'absolute right-2 bottom-2 h-6 w-6 rounded-full border-none': true,
+              'absolute right-2 bottom-2 flex h-6 w-6 items-center justify-center rounded-full': true,
+              'bg-brand-800': isActive,
             })}
-            checked={isActive}
           >
-            <CheckboxIndicator className="text-white">
-              <CHECK_SVG className="h-full w-full fill-current text-white" aria-hidden="true" />
-            </CheckboxIndicator>
-          </Checkbox>
+            {isActive && <CHECK_SVG className="h-full w-full fill-current text-white" />}
+          </span>
         </button>
 
         <div>
-          <h4>{name}</h4>
+          {/* Was an <h4> under the <h2> above — a skipped level, and a repeat
+              of text the h2 already carries. Preflight renders headings at
+              inherited size, so this is visually identical. */}
+          <p>{name}</p>
           {description && <p>{description}</p>}
         </div>
       </div>

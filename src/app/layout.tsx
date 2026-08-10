@@ -29,7 +29,13 @@ const InterFont = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Global Mangrove Watch',
+  // `template` lets each route name itself while keeping the site name in the
+  // browser tab, history and screen-reader page title. Without it, every route
+  // — signup, password reset, 404, each country — announced the same string.
+  title: {
+    default: 'Global Mangrove Watch',
+    template: '%s | Global Mangrove Watch',
+  },
 };
 
 export const viewport: Viewport = {

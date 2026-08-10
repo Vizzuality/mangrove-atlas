@@ -34,7 +34,7 @@ const PrintLegend = () => {
 
   return (
     <div className="absolute right-4 bottom-4 z-50 max-w-72 rounded-2xl bg-white/90 p-4 shadow-md backdrop-blur-sm">
-      <h4 className="mb-2 text-xs font-bold tracking-wider text-black/85 uppercase">Legend</h4>
+      <h2 className="mb-2 text-xs font-bold tracking-wider text-black/85 uppercase">Legend</h2>
       <div className="space-y-3">
         {legendItems.map((item) => (
           <div key={item.id}>

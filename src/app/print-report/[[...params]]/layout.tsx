@@ -6,7 +6,8 @@ import PrintLegend from '@/containers/print-report/print-legend';
 
 export default function PrintReportLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="print-report relative min-h-screen w-full bg-white p-4">
+    // id="main-content" is the target of the root layout's skip link.
+    <main id="main-content" className="print-report relative min-h-screen w-full bg-white p-4">
       <Image
         src="/images/logo-bg.png"
         alt="Global Mangrove Watch"
@@ -20,6 +21,6 @@ export default function PrintReportLayout({ children }: { children: React.ReactN
         <PrintLegend />
       </div>
       {children}
-    </div>
+    </main>
   );
 }

@@ -81,33 +81,43 @@ const LocationWidget = () => {
   return (
     <>
       <div className="bg-brand-600 shadow-control relative flex h-52 flex-col justify-between rounded-3xl bg-[url(/images/location-bg.svg)] bg-cover bg-center text-center">
-        <button
-          type="button"
-          onClick={handleOnClickTitle}
-          disabled={isGuideActive || !locationName}
-        >
-          {!!locationName ? (
-            <div
-              className={cn({
-                'inline-block flex-1 grow cursor-pointer px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase': true,
-                'text-2.75xl': width >= 540,
+        {/* The <h1> sits outside the button: a heading inside an interactive
+            control is not exposed as a heading, and the page had no h1 at all
+            until the location query resolved (the fallback was a bare skeleton
+            div). It now always renders, with a placeholder while loading. */}
+        <h1 className="contents">
+          <button
+            type="button"
+            onClick={handleOnClickTitle}
+            disabled={isGuideActive || !locationName}
+          >
+            {!!locationName ? (
+              <div
+                className={cn({
+                  'inline-block flex-1 grow cursor-pointer px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase': true,
+                  'text-2.75xl': width >= 540,
 
-                'text-5xl': locationName.length > 10,
-                'text-3xl': locationName.length > 30 && locationName.length <= 55,
-                'text-2xl': locationName.length > 55 && locationName.length <= 120,
-                'text-base break-all': locationName.length > 120,
-              })}
-            >
-              <h1 className="cursor-pointer text-white" ref={titleRef}>
-                {locationName}
-              </h1>
-            </div>
-          ) : (
-            !locationName && (
-              <div className="bg-secondary-900 h-[20px] w-[100px] animate-pulse rounded-md" />
-            )
-          )}
-        </button>
+                  'text-5xl': locationName.length > 10,
+                  'text-3xl': locationName.length > 30 && locationName.length <= 55,
+                  'text-2xl': locationName.length > 55 && locationName.length <= 120,
+                  'text-base break-all': locationName.length > 120,
+                })}
+              >
+                <span className="cursor-pointer text-white" ref={titleRef}>
+                  {locationName}
+                </span>
+              </div>
+            ) : (
+              <>
+                <span className="sr-only">Loading location</span>
+                <div
+                  aria-hidden="true"
+                  className="bg-secondary-900 h-[20px] w-[100px] animate-pulse rounded-md"
+                />
+              </>
+            )}
+          </button>
+        </h1>
         <MenuTools />
       </div>
       <AnalysisAlert />

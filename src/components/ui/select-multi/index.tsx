@@ -152,8 +152,13 @@ const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   const groupOptions = options?.filter((o) => o.group === g.value);
 
                   return (
-                    <div key={g.value}>
-                      <h3 className="py-2 pl-3 text-xs font-bold">{g.label}</h3>
+                    // A listbox option group, not a document section: an <h3>
+                    // here injected a heading into the page outline and did not
+                    // group the options for assistive tech.
+                    <div key={g.value} role="group" aria-labelledby={`select-group-${g.value}`}>
+                      <p id={`select-group-${g.value}`} className="py-2 pl-3 text-xs font-bold">
+                        {g.label}
+                      </p>
                       {groupOptions?.map((opt) => (
                         <Option key={opt.value} opt={opt} theme={theme} />
                       ))}

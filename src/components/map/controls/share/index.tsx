@@ -103,7 +103,7 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
             <DialogTitle className="mb-2 text-3xl font-light">Share</DialogTitle>
             <div className="flex w-[480px] flex-col space-y-5">
               <div className="flex flex-col space-y-1">
-                <h4 className="ml-4 text-[13px] font-semibold">Public url to share</h4>
+                <h3 className="ml-4 text-[13px] font-semibold">Public url to share</h3>
                 <div className="bg-brand-600/10 flex h-12 items-center justify-between space-x-4 rounded-3xl p-4 text-sm">
                   <p className="truncate">{shareTargets?.url}</p>
                   <button
@@ -115,7 +115,7 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
                 </div>
               </div>
               <div>
-                <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
+                <h3 className="ml-4 text-[13px] font-semibold">Code to embed map</h3>
                 <div className="bg-brand-600/10 flex h-12 items-center space-x-4 rounded-3xl p-4 text-sm">
                   <p className="truncate">{shareTargets?.embedCode}</p>
                   <button

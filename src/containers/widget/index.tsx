@@ -60,6 +60,12 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
     <AnimatePresence>
       <motion.div
         id={`widget-${id}`}
+        // Each card is a labelled region, so screen-reader users can jump
+        // between widgets by landmark and hear which one they are in. The
+        // label is the card's own <h2>, which previously belonged to no
+        // container at all.
+        role="region"
+        aria-labelledby={`widget-${id}-title`}
         initial={false}
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}

@@ -11,7 +11,12 @@ type ErrorPageProps = {
 
 const ErrorPage = ({ code, title, message, children }: ErrorPageProps) => {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center bg-white px-4 text-center">
+    // id="main-content" is the target of the root layout's skip link, which is
+    // rendered on every route.
+    <main
+      id="main-content"
+      className="relative flex min-h-screen flex-col items-center justify-center bg-white px-4 text-center"
+    >
       <Logo position="top-left" width={360} />
 
       <p className="text-brand-800 font-sans text-[120px] leading-none font-light">{code}</p>
