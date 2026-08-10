@@ -12,7 +12,7 @@ import ZOOM_IN_SVG from '@/svgs/map/zoom-in';
 import ZOOM_OUT_SVG from '@/svgs/map/zoom-out';
 
 const COMMON_CLASSES =
-  'bg-white group w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
+  'bg-white group focus-visible:shadow-control-focus w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
 
 const SVG_COMMON_CLASSES = 'h-4 w-4 group-disabled:fill-grey-75';
 

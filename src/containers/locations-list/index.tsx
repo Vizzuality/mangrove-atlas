@@ -254,6 +254,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                 onFocus={() => {
                   if (focusedIndex < 0) setFocusedIndex(0);
                 }}
+                // The listbox holds DOM focus while `aria-activedescendant`
+                // moves the active option. Suppressing the container outline is
+                // correct here *because* the active option carries its own
+                // visible indicator (border-2 border-brand-800, see renderRow).
                 className="focus:outline-none"
                 style={{ width, height }}
               >

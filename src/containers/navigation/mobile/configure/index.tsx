@@ -13,7 +13,7 @@ const ConfigureWidgets = () => {
           <DialogTrigger asChild>
             <button
               type="button"
-              className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
+              className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               data-testid="widgets-deck-trigger-mobile"
               aria-label="Configure widgets"
             >

@@ -53,7 +53,7 @@ const RolesSelect = ({
         <button
           id={id}
           type="button"
-          className="focus:border-brand-800 flex w-full cursor-pointer items-center justify-between space-x-4 rounded-[100px] border border-black/10 py-2 pr-2 pl-3 text-left text-sm focus:outline-none"
+          className="focus:border-brand-800 flex w-full cursor-pointer items-center justify-between space-x-4 rounded-[100px] border border-black/10 py-2 pr-2 pl-3 text-left text-sm"
         >
           <span className={cn('truncate', { 'text-zinc-400': !selectedLabels.length })}>
             {selectedLabels.length ? selectedLabels.join(', ') : placeholder}

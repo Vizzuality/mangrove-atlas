@@ -89,7 +89,7 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
                   type="button"
                   aria-label="Share"
                   className={cn({
-                    'group shadow-control inline-flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white text-black hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none': true,
+                    'group shadow-control focus-visible:shadow-control-focus inline-flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white text-black hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none': true,
                   })}
                 >
                   <SHARE_SVG className="h-4 w-4 group-hover:bg-gray-100" aria-hidden="true" />
@@ -139,7 +139,7 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
               disabled
               aria-label="Share (unavailable for custom areas)"
               className={cn(className, {
-                'group shadow-control inline-flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none': true,
+                'group shadow-control focus-visible:shadow-control-focus inline-flex h-12 w-12 flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none': true,
               })}
             >
               <SHARE_SVG

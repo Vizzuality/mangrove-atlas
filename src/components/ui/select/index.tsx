@@ -89,7 +89,7 @@ function SelectItem({
   return (
     <SelectPrimitive.Item
       className={cn(
-        'focus:bg-brand-100 focus:text-brand-900 relative w-full cursor-pointer items-center justify-between outline-none',
+        'focus:bg-brand-100 focus:text-brand-900 relative w-full cursor-pointer items-center justify-between',
         className
       )}
       {...props}

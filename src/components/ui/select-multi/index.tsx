@@ -109,8 +109,7 @@ const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
             <Listbox.Options
               className={cn({
-                'pointer-events-auto absolute top-full left-0 z-50 mt-1 max-h-60 w-full overflow-y-auto text-base leading-6 focus:outline-none':
-                  true,
+                'pointer-events-auto absolute top-full left-0 z-50 mt-1 max-h-60 w-full overflow-y-auto text-base leading-6': true,
                 [THEME[theme].menu]: true,
               })}
             >

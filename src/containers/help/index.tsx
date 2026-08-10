@@ -65,7 +65,7 @@ const HelpContainer = ({
             data-testid="guide-button-mobile"
             aria-label="Help"
             className={cn(
-              'flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none',
+              'flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white',
               THEME[theme],
               className
             )}

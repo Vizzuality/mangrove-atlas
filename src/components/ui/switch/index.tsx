@@ -37,7 +37,7 @@ const SwitchRoot = ({
 }) => (
   <SwitchRadix.Root
     className={cn(className, {
-      'border-brand-800/20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-transparent outline-none': true,
+      'border-brand-800/20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-transparent': true,
       [SIZE['root'][size]]: true,
     })}
     {...props}

@@ -39,7 +39,7 @@ const DropdownMenuItem = forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(className, {
-      'focus:bg-brand-100 focus:text-brand-900 relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50': true,
+      'focus:bg-brand-100 focus:text-brand-900 relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm transition-colors select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50': true,
     })}
     {...props}
   />

@@ -23,8 +23,7 @@ const PitchReset = ({ className, mapId }: { className?: string; mapId: string })
     >
       <button
         className={cn({
-          'group active:outline-brand-400/40 -mt-2 rounded-b-full bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
-            true,
+          'group active:outline-brand-400/40 focus-visible:shadow-control-focus -mt-2 rounded-b-full bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] disabled:cursor-default disabled:bg-gray-50 disabled:outline-none': true,
         })}
         aria-label="Reset map pitch"
         type="button"

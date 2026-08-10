@@ -36,7 +36,7 @@ const CommandInput = forwardRef<
       ref={ref}
       {...props}
       className={cn(className, {
-        'placeholder:text-foreground-muted focus:border-brand-800 flex h-11 w-full rounded-md border-2 bg-transparent py-3 text-2xl outline-none placeholder:text-2xl focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50': true,
+        'focus:border-brand-800 flex h-11 w-full rounded-md border-2 bg-transparent py-3 text-2xl placeholder:text-2xl placeholder:text-black/60 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50': true,
       })}
     />
   </div>
@@ -84,7 +84,7 @@ const CommandItem = forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(className, {
-      'aria-selected:bg-brand-100 aria-selected:text-brand-900 relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50': true,
+      'aria-selected:bg-brand-100 aria-selected:text-brand-900 relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50': true,
     })}
     {...props}
   />
