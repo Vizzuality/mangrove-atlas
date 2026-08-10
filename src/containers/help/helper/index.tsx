@@ -120,7 +120,10 @@ const Helper = ({
             aria-label="Show help for this control"
             aria-expanded={popOver}
             className={cn({
-              'focus-visible:ring-brand-800 absolute flex h-5 w-5 items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none': true,
+              // 20x20 visually, but absolutely positioned, so it cannot rely on the
+              // spacing exemption in WCAG 2.2 2.5.8. The ::before pseudo-element
+              // extends the hit area to 24x24 without changing the visual size.
+              'focus-visible:ring-brand-800 absolute flex h-5 w-5 items-center justify-center rounded-full before:absolute before:-inset-[2px] before:content-[""] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none': true,
               [className.button]: !!className.button,
               'pointer-events-none': popOver,
             })}
