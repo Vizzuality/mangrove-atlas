@@ -159,6 +159,23 @@
   scrollbar-color: #cdd0d0 #f3f5f5;
 }
 
+/*
+ * CSS-driven motion (Tailwind `animate-*`, the collapsible keyframes, the help
+ * hotspot ping) is outside motion/react's control, so it needs its own opt-out.
+ * WCAG 2.3.3. Kept near-zero rather than `none` so animation/transition end
+ * events still fire and JS that waits on them does not hang.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Brush charts: don't clip axis labels that overflow the plot. The first/last year
    labels are centered on edge ticks and would otherwise be cut by the svg surface
    (e.g. the alerts brush). No-op for charts whose labels already sit within bounds. */
