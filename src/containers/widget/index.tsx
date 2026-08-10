@@ -14,6 +14,7 @@ import WidgetControls from '@/components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
 import WidgetApplicability from './applicability';
+import { WidgetIdContext } from './context';
 import WidgetHeader from './header';
 import { useIsLayerActive } from './selector';
 
@@ -57,80 +58,82 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const [isContentOverflowVisible, setIsContentOverflowVisible] = useState(!isCollapsed);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        id={`widget-${id}`}
-        // Each card is a labelled region, so screen-reader users can jump
-        // between widgets by landmark and hear which one they are in. The
-        // label is the card's own <h2>, which previously belonged to no
-        // container at all.
-        role="region"
-        aria-labelledby={`widget-${id}-title`}
-        initial={false}
-        variants={widgetVariants}
-        animate={isCollapsed ? 'collapsed' : 'expanded'}
-        exit="expanded"
-        transition={{ type: 'tween', duration: 0.3 }}
-        className={cn({
-          'bg-blur group shadow-card isolate w-full rounded-4xl bg-white md:ml-0': true,
-          'w-full! border-none p-0! shadow-none!': info,
-          [className]: !!className,
-          'border-none p-0': info,
-        })}
-        style={props.index !== undefined ? { zIndex: 1000 - props.index } : undefined}
-      >
-        <div className="relative overflow-hidden rounded-3xl">
-          {/* border layer */}
-          <div
-            aria-hidden
-            className={cn(
-              'pointer-events-none absolute inset-1 rounded-[inherit] border-2',
-              isLayerActive
-                ? 'border-brand-800/10 transition delay-150 ease-in-out'
-                : 'border-transparent'
-            )}
-          />
+    <WidgetIdContext.Provider value={id}>
+      <AnimatePresence>
+        <motion.div
+          id={`widget-${id}`}
+          // Each card is a labelled region, so screen-reader users can jump
+          // between widgets by landmark and hear which one they are in. The
+          // label is the card's own <h2>, which previously belonged to no
+          // container at all.
+          role="region"
+          aria-labelledby={`widget-${id}-title`}
+          initial={false}
+          variants={widgetVariants}
+          animate={isCollapsed ? 'collapsed' : 'expanded'}
+          exit="expanded"
+          transition={{ type: 'tween', duration: 0.3 }}
+          className={cn({
+            'bg-blur group shadow-card isolate w-full rounded-4xl bg-white md:ml-0': true,
+            'w-full! border-none p-0! shadow-none!': info,
+            [className]: !!className,
+            'border-none p-0': info,
+          })}
+          style={props.index !== undefined ? { zIndex: 1000 - props.index } : undefined}
+        >
+          <div className="relative overflow-hidden rounded-3xl">
+            {/* border layer */}
+            <div
+              aria-hidden
+              className={cn(
+                'pointer-events-none absolute inset-1 rounded-[inherit] border-2',
+                isLayerActive
+                  ? 'border-brand-800/10 transition delay-150 ease-in-out'
+                  : 'border-transparent'
+              )}
+            />
 
-          {/* content layer */}
-          <div className="relative z-10 min-w-0">
-            <div className="min-w-0 px-10 py-6" data-testid={`widget-${id}`}>
-              <Helper
-                className={{
-                  button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',
-                  tooltip: 'max-w-100',
-                }}
-                tooltipPosition={{ top: -50, left: 0 }}
-                message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
-              >
-                <WidgetHeader title={title} id={id} isCollapsed={isCollapsed}>
-                  {!info && <WidgetControls id={id} />}
-                </WidgetHeader>
-              </Helper>
-              <motion.div
-                id={`widget-${id}-content`}
-                data-testid={`widget-${id}-content`}
-                // Collapsed content stays in the DOM for the height animation, so `inert` is what
-                // keeps it out of the tab order and the accessibility tree.
-                inert={isCollapsed ? '' : undefined}
-                initial={false}
-                animate={isCollapsed ? 'collapsed' : 'expanded'}
-                variants={{
-                  collapsed: { height: 0, opacity: 0 },
-                  expanded: { height: 'auto', opacity: 1 },
-                }}
-                transition={{ type: 'tween', duration: 0.3 }}
-                onAnimationStart={() => isCollapsed && setIsContentOverflowVisible(false)}
-                onAnimationComplete={() => !isCollapsed && setIsContentOverflowVisible(true)}
-                style={{ overflow: isContentOverflowVisible ? 'visible' : 'hidden' }}
-              >
-                <div className="mt-4">{children}</div>
-              </motion.div>
-              {applicability && <WidgetApplicability id={id} applicability={applicability} />}
+            {/* content layer */}
+            <div className="relative z-10 min-w-0">
+              <div className="min-w-0 px-10 py-6" data-testid={`widget-${id}`}>
+                <Helper
+                  className={{
+                    button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',
+                    tooltip: 'max-w-100',
+                  }}
+                  tooltipPosition={{ top: -50, left: 0 }}
+                  message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
+                >
+                  <WidgetHeader title={title} id={id} isCollapsed={isCollapsed}>
+                    {!info && <WidgetControls id={id} />}
+                  </WidgetHeader>
+                </Helper>
+                <motion.div
+                  id={`widget-${id}-content`}
+                  data-testid={`widget-${id}-content`}
+                  // Collapsed content stays in the DOM for the height animation, so `inert` is what
+                  // keeps it out of the tab order and the accessibility tree.
+                  inert={isCollapsed ? '' : undefined}
+                  initial={false}
+                  animate={isCollapsed ? 'collapsed' : 'expanded'}
+                  variants={{
+                    collapsed: { height: 0, opacity: 0 },
+                    expanded: { height: 'auto', opacity: 1 },
+                  }}
+                  transition={{ type: 'tween', duration: 0.3 }}
+                  onAnimationStart={() => isCollapsed && setIsContentOverflowVisible(false)}
+                  onAnimationComplete={() => !isCollapsed && setIsContentOverflowVisible(true)}
+                  style={{ overflow: isContentOverflowVisible ? 'visible' : 'hidden' }}
+                >
+                  <div className="mt-4">{children}</div>
+                </motion.div>
+                {applicability && <WidgetApplicability id={id} applicability={applicability} />}
+              </div>
             </div>
           </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
+    </WidgetIdContext.Provider>
   );
 };
 

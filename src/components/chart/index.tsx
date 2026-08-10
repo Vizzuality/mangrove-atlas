@@ -21,7 +21,10 @@ import {
   ReferenceLine,
 } from 'recharts';
 
+import { useWidgetTitleId } from '@/containers/widget/context';
+
 import Brush from './brush';
+import ChartDataTable from './data-table';
 
 const DEFAULTVALUES = {
   pie: {
@@ -39,6 +42,7 @@ const ChartsMap = new Map([
 ]);
 
 const Chart = ({ config, className }: { config: any; className?: string }) => {
+  const widgetTitleId = useWidgetTitleId();
   const {
     data,
     margin = {
@@ -74,8 +78,30 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
   const { pies, bars, lines, bar } = chartBase;
   const ChartComponent = ChartsMap.get(type) as React.ElementType;
 
+  // Series in draw order, used to build the screen-reader table below.
+  const seriesKeys: string[] = [
+    ...(bar && dataKey ? [dataKey as string] : []),
+    ...(bars ? Object.keys(bars) : []),
+    ...(lines ? Object.keys(lines) : []),
+    ...(pies ? Object.keys(pies) : []),
+  ];
+
+  const label: string = config.a11y?.label ?? 'Chart';
+
   return (
-    <div
+    /*
+     * The SVG is decorative and the numbers are exposed as a table.
+     *
+     * Recharts conveys series identity through stroke/fill alone, so the plot
+     * is unusable both to a screen reader and to anyone who cannot tell the
+     * colours apart. Marking the drawing aria-hidden and shipping the same
+     * data as a real <table> is more useful than any amount of labelling on
+     * the individual marks.
+     *
+     * Pass `config.a11y.label` to name the chart; without it the table is
+     * still exposed, just generically named.
+     */
+    <figure
       className={cn({
         // `chart-overflow-visible` lets axis labels that overflow the plot stay
         // visible (edge tick labels would otherwise be clipped by the svg surface).
@@ -83,7 +109,15 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
         className,
       })}
     >
+      <ChartDataTable
+        data={data}
+        xKey={xKey}
+        seriesKeys={seriesKeys}
+        caption={label}
+        labelledBy={config.a11y?.label ? null : widgetTitleId}
+      />
       <ResponsiveContainer
+        aria-hidden="true"
         width={width || '100%'}
         height={height || 250}
         className="relative w-full flex-1"
@@ -226,7 +260,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
           endIndex={endIndex}
         />
       )}
-    </div>
+    </figure>
   );
 };
 

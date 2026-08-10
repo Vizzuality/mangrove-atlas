@@ -9,7 +9,7 @@ import type { IndicatorYearProps } from './types';
 
 const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearProps) => {
   return (
-    <div>
+    <div role="cell">
       {years?.length === 1 && <span>{years?.[0]}</span>}
       {years?.length > 1 && (
         <Popover>

@@ -5,7 +5,11 @@ const RestorationMapLegend = () => (
       <p>100%</p>
     </div>
 
+    {/* The bar carried no name: only the two end labels were exposed, with
+        nothing saying what the colour ramp between them means. */}
     <div
+      role="img"
+      aria-label="Restoration potential, from 0% (lightest) to 100% (darkest)"
       className="h-3 w-full border"
       style={{
         background:
