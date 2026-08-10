@@ -73,15 +73,17 @@ const SwitchWrapper = ({ id, label, children, className }: WrapperProps) => {
     : children;
   return (
     <div className="flex items-center">
-      <label
+      {/* Not a <label htmlFor>: Radix renders Switch.Root as a <button>, which
+          is not a labelable element, so htmlFor bound to nothing. The name is
+          carried by aria-labelledby on the switch itself (see childWithId). */}
+      <span
         id={labelId}
         className={cn(className, {
           'sr-only pr-[15px] text-[15px] leading-none text-white': true,
         })}
-        htmlFor={id}
       >
         {label}
-      </label>
+      </span>
       {childWithId}
     </div>
   );

@@ -23,7 +23,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -231,13 +230,19 @@ function ContactForm() {
               name="privacyPolicy"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormControl>
-                    <button type="button" className="flex items-center space-x-2.5 text-black/85">
+                  {/* The checkbox was previously wrapped in a <button> that also
+                      contained the Radix Checkbox (itself a <button role="checkbox">)
+                      and a <Link> — nested interactive content, invalid HTML, and a
+                      keyboard trap for the link. The <Label htmlFor> bound to nothing
+                      either, because Radix renders a button, so the checkbox had no
+                      accessible name. The name now comes from aria-labelledby. */}
+                  <div className="flex items-center space-x-2.5 text-black/85">
+                    <FormControl>
                       <Checkbox
-                        id="privacyPolicy"
+                        aria-labelledby="privacyPolicy-label"
                         onCheckedChange={(checked) => field.onChange(checked)}
                         className={cn({
-                          '[data=] h-5 w-5 cursor-pointer border border-black/15': true,
+                          'h-5 w-5 shrink-0 cursor-pointer border border-black/15': true,
                         })}
                         checked={field.value}
                       >
@@ -252,6 +257,7 @@ function ContactForm() {
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
+                            aria-hidden="true"
                             className="lucide lucide-circle-check-icon lucide-circle-check stroke-2 text-white"
                           >
                             <circle cx="12" cy="12" r="10" />
@@ -259,14 +265,14 @@ function ContactForm() {
                           </svg>
                         </CheckboxIndicator>
                       </Checkbox>
-                      <Label htmlFor="privacyPolicy" className="cursor-pointer">
-                        I agree with the 
-                        <Link href="/" className="underline">
-                          Privacy Policy.
-                        </Link>
-                      </Label>
-                    </button>
-                  </FormControl>
+                    </FormControl>
+                    <span id="privacyPolicy-label">
+                      I agree with the{' '}
+                      <Link href="/" className="underline">
+                        Privacy Policy.
+                      </Link>
+                    </span>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

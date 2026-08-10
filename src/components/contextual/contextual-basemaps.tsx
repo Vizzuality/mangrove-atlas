@@ -52,42 +52,28 @@ const ContextualBasemapsMapSettings = () => {
   return (
     <div className="relative flex flex-col text-sm leading-none text-black/85">
       <RadioGroup onValueChange={handleClick} defaultValue={defaultActive} className="space-y-2">
-        <div className="flex items-center space-x-4">
-          <RadioGroupItem
-            option={{ value: 'no-layer', label: 'No layer' }}
-            data-testid="no-layer"
-            label={false}
-          />
-          <label
-            className={cn({
-              'cursor-pointer': true,
-              'text-brand-800 font-semibold': isActive === 'no-layer',
-            })}
-            htmlFor="no-layer"
-          >
-            No layer
-          </label>
-        </div>
+        {/* The option text is rendered by RadioGroupItem, inside the radio
+            button itself — see hi-res-extent-basemap.tsx for the reasoning. */}
+        <RadioGroupItem
+          option={{ value: 'no-layer', label: 'No layer' }}
+          data-testid="no-layer"
+          labelClassName={cn({
+            'cursor-pointer': true,
+            'text-brand-800 font-semibold': isActive === 'no-layer',
+          })}
+        />
 
         {CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id, name, mosaic_id }) => {
           return (
             <div key={id} className="space-y-2">
-              <div className="flex items-center space-x-4">
-                <RadioGroupItem
-                  option={{ value: id, label: name }}
-                  data-testid={id}
-                  label={false}
-                />
-                <label
-                  className={cn({
-                    'cursor-pointer': true,
-                    'text-brand-800 font-semibold': isActive === id,
-                  })}
-                  htmlFor={id}
-                >
-                  {name}
-                </label>
-              </div>
+              <RadioGroupItem
+                option={{ value: id, label: name }}
+                data-testid={id}
+                labelClassName={cn({
+                  'cursor-pointer': true,
+                  'text-brand-800 font-semibold': isActive === id,
+                })}
+              />
               {isActive === id && (
                 <div className="ml-6">
                   <DateSelect key={id} mosaic_id={mosaic_id} id={id} />

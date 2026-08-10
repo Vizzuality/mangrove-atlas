@@ -139,8 +139,18 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
     setMapCursor(isDrawingUploadToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingUploadToolEnabled]);
 
+  // react-dropzone's root gets `tabIndex: 0` and `role: 'presentation'`, i.e. a
+  // focusable element with no role and no name — keyboard users land on it and
+  // hear nothing. The real <input type="file"> is `display: none`, so its label
+  // cannot name anything either. Naming the root as a button is what actually
+  // reaches assistive tech.
   const conditionalProps =
-    (!uploadedGeojson && !!customGeojson) || !isDrawingToolEnabled ? { ...getRootProps() } : {};
+    (!uploadedGeojson && !!customGeojson) || !isDrawingToolEnabled
+      ? getRootProps({
+          role: 'button',
+          'aria-label': uploadingFile ? 'Uploading shapefile' : 'Upload shapefile',
+        })
+      : {};
 
   return (
     <Helper
@@ -161,28 +171,24 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
             })}
           >
+            {/* The input carried no `id`, so both labels' `htmlFor` pointed at
+                nothing and the file input was unlabelled. They also shared one
+                `id`, duplicating it in the DOM. There is now a single label
+                bound to a real id, with the state in its text. */}
             <input
+              id="input-file-upload"
               data-testid="shapefile-upload"
               className="w-full"
               {...getInputProps()}
               disabled={isDrawingToolEnabled || !!customGeojson || !!uploadedGeojson}
             />
             <div className="flex flex-col items-center space-y-1">
-              <UPLOAD_SVG role="img" title="Upload" />
-              {!uploadingFile && (
-                <label id="label-file-upload" htmlFor="input-file-upload">
-                  <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">
-                    Shapefile
-                  </p>
-                </label>
-              )}
-              {uploadingFile && (
-                <label id="label-file-upload" htmlFor="input-file-upload">
-                  <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">
-                    ...uploading
-                  </p>
-                </label>
-              )}
+              <UPLOAD_SVG aria-hidden="true" />
+              <label id="label-file-upload" htmlFor="input-file-upload">
+                <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">
+                  {uploadingFile ? '...uploading' : 'Shapefile'}
+                </p>
+              </label>
             </div>
           </div>
         )}

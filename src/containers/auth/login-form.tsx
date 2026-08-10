@@ -118,7 +118,7 @@ function LoginForm() {
                     type="email"
                     autoComplete="email"
                     placeholder="Enter your email"
-                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                   />
                 </FormControl>
                 <FormMessage />
@@ -140,7 +140,7 @@ function LoginForm() {
                     type="password"
                     autoComplete="current-password"
                     placeholder="Enter your password"
-                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                   />
                 </FormControl>
                 <FormMessage />

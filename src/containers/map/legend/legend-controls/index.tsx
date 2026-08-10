@@ -219,6 +219,7 @@ const LegendControls = ({
           >
             <Slider
               className="w-[150px] pt-2"
+              thumbAriaLabel={`Opacity of ${layerNameToDisplay ?? 'layer'}`}
               defaultValue={[parseFloat(l.opacity)]}
               onValueChange={(op: number[]) => onChangeOpacity(op[0], l.id)}
             />

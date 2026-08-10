@@ -148,8 +148,9 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Name"
+                            autoComplete="name"
                           />
                         </FormControl>
                         <FormMessage />
@@ -168,8 +169,9 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Email"
+                            autoComplete="email"
                           />
                         </FormControl>
                         <FormMessage />
@@ -186,8 +188,9 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Organization"
+                            autoComplete="organization"
                           />
                         </FormControl>
                         <FormMessage />
@@ -233,8 +236,9 @@ export default function SignupPage() {
                           <FormControl>
                             <Input
                               {...field}
-                              className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                              className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                               placeholder="Tell us your role"
+                              autoComplete="organization-title"
                             />
                           </FormControl>
                           <FormMessage />
@@ -254,8 +258,9 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             type="password"
+                            autoComplete="new-password"
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Password"
                           />
                         </FormControl>
@@ -274,8 +279,9 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             type="password"
+                            autoComplete="new-password"
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Password"
                           />
                         </FormControl>

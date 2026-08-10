@@ -185,8 +185,9 @@ const AccountContent = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                     placeholder="Name"
+                    autoComplete="name"
                   />
                 </FormControl>
                 <FormMessage />
@@ -203,8 +204,9 @@ const AccountContent = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                     placeholder="Email"
+                    autoComplete="email"
                   />
                 </FormControl>
                 <FormMessage />
@@ -221,8 +223,9 @@ const AccountContent = () => {
                 <FormControl>
                   <Input
                     {...field}
-                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                     placeholder="Organization"
+                    autoComplete="organization"
                   />
                 </FormControl>
                 <FormMessage />
@@ -269,8 +272,9 @@ const AccountContent = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                      className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                       placeholder="Tell us your role"
+                      autoComplete="organization-title"
                     />
                   </FormControl>
                   <FormMessage />
@@ -299,9 +303,10 @@ const AccountContent = () => {
                           form.clearErrors('current_password');
                         }
                       }}
-                      className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                      className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                       // Masked dots so the (unknown) stored password reads as set.
                       placeholder="••••••••"
+                      autoComplete="new-password"
                     />
                   </FormControl>
                 </FormItem>
@@ -320,8 +325,9 @@ const AccountContent = () => {
                       <Input
                         type="password"
                         {...field}
-                        className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                        className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                         placeholder="Enter your current password"
+                        autoComplete="current-password"
                       />
                     </FormControl>
                   </FormItem>

@@ -113,8 +113,9 @@ function ResetPasswordForm() {
                         <FormControl>
                           <Input
                             type="password"
+                            autoComplete="new-password"
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Password"
                           />
                         </FormControl>
@@ -133,8 +134,9 @@ function ResetPasswordForm() {
                         <FormControl>
                           <Input
                             type="password"
+                            autoComplete="new-password"
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Password"
                           />
                         </FormControl>
