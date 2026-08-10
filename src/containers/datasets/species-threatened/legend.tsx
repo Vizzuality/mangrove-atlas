@@ -32,7 +32,7 @@ const Legend = ({ items }: Legend) => {
                   <span className="whitespace-nowrap text-black/85">{d.label}</span>
                   <ARROW_SVG
                     className={cn({
-                      'text-grey-400 w-3 fill-current': true,
+                      'text-grey-600 w-3 fill-current': true,
                       'rotate-180': !!collapse[d.label],
                     })}
                     role="img"
@@ -44,8 +44,7 @@ const Legend = ({ items }: Legend) => {
                   <ul
                     style={{ maxHeight: !!collapse[d.label] ? 85 : 0 }}
                     className={cn({
-                      'text-brand-800 w-fit overflow-y-auto px-4 py-1 font-bold italic underline':
-                        true,
+                      'text-brand-800 w-fit overflow-y-auto px-4 py-1 font-bold italic underline': true,
                       'py-0': !collapse[d.label],
                     })}
                   >

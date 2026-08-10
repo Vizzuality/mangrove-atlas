@@ -146,7 +146,7 @@ function ContactForm() {
                   open={isOpen}
                 >
                   <FormControl>
-                    <SelectTrigger className="focus-visible:ring-ring focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
+                    <SelectTrigger className="focus-visible:ring-brand-800 focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
                       <SelectValue placeholder="Select" />
                       {/* <LuChevronDown
                         className={cn({

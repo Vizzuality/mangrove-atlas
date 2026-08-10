@@ -143,8 +143,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               aria-disabled={locationId === locationsToDisplay[index].id || undefined}
               tabIndex={-1}
               className={cn({
-                'hover:bg-brand-800/10 flex h-full w-full flex-1 cursor-pointer items-center justify-between px-4 py-1 hover:rounded-2xl':
-                  true,
+                'hover:bg-brand-800/10 flex h-full w-full flex-1 cursor-pointer items-center justify-between px-4 py-1 hover:rounded-2xl': true,
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
                 'bg-brand-800/5 border-brand-800 rounded-2xl border-2': focusedIndex === index,
               })}
@@ -167,7 +166,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               >
                 {locationsToDisplay[index].name}
               </p>
-              <span className="text-grey-800 text-opacity-90 text-xs">
+              <span className="text-grey-600 text-xs">
                 {locationNames[locationsToDisplay[index].location_type]}
               </span>
             </button>

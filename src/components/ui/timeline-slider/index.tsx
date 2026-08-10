@@ -29,7 +29,7 @@ const TimelineSlider = ({
         aria-pressed={isPlaying}
         type="button"
         onClick={onTogglePlay}
-        className="border-brand-800 text-brand-800 hover:bg-brand-800/10 focus-visible:ring-ring flex h-[30px] w-[30px] shrink-0 cursor-pointer items-center justify-center rounded-full border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        className="border-brand-800 text-brand-800 hover:bg-brand-800/10 focus-visible:ring-brand-800 flex h-[30px] w-[30px] shrink-0 cursor-pointer items-center justify-center rounded-full border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
       >
         {isPlaying ? (
           <PauseIcon aria-hidden="true" className="h-3.5 w-3.5" />

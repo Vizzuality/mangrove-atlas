@@ -37,6 +37,10 @@ const tailwindConfig = {
           75: '#CDD0D0',
           100: '#D8D8D8',
           400: '#939393',
+          // Accessible body-text grey: 5.3:1 on white. `grey-800` (#808080) is
+          // only 3.9:1 and `grey-400` (#939393) only 3.0:1, so neither can
+          // carry text at WCAG AA. Both are kept for decorative use.
+          600: '#6B6B6B',
           800: '#808080',
         },
         brand: {

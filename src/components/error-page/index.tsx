@@ -16,7 +16,7 @@ const ErrorPage = ({ code, title, message, children }: ErrorPageProps) => {
 
       <p className="text-brand-800 font-sans text-[120px] leading-none font-light">{code}</p>
       <h1 className="text-brand-800 mt-2 font-sans text-3xl font-light">{title}</h1>
-      <p className="text-grey-800 mt-4 max-w-md text-sm leading-relaxed">{message}</p>
+      <p className="text-grey-600 mt-4 max-w-md text-sm leading-relaxed">{message}</p>
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-4">{children}</div>
     </main>

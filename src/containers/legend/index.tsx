@@ -32,8 +32,9 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
           {title}
         </h3>
       )}
+      {/* opacity-30 put this subtitle at ~1.9:1. black/60 is 5.7:1. */}
       {subtitle && (
-        <h2 className="flex max-w-[120px] flex-col justify-center text-sm font-bold opacity-30">
+        <h2 className="flex max-w-[120px] flex-col justify-center text-sm font-bold text-black/60">
           {subtitle}
         </h2>
       )}
