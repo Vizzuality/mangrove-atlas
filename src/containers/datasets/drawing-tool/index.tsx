@@ -71,11 +71,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         data-testid="drawing-tool-button"
         disabled={!!uploadedGeojson}
       >
-        {isDrawingToolEnabled ? (
-          <DeleteDrawingButton size="sm" />
-        ) : (
-          <DRAW_SVG role="img" title="Draw area" />
-        )}
+        {isDrawingToolEnabled ? <DeleteDrawingButton size="sm" /> : <DRAW_SVG aria-hidden="true" />}
         <span
           className={cn({
             // Minimum width is customized to prevent layout shifts in the menu when the text changes.

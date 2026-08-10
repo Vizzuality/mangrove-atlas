@@ -220,11 +220,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             className="absolute top-1/2 right-6 flex -translate-y-1/2 cursor-pointer items-center"
             onClick={() => setSearchValue('')}
           >
-            <CLOSE_SVG
-              className="h-5 w-5 transform fill-current opacity-50"
-              role="img"
-              aria-hidden={true}
-            />
+            <CLOSE_SVG className="h-5 w-5 transform fill-current opacity-50" aria-hidden={true} />
           </button>
         )}
       </div>

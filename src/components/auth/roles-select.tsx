@@ -95,7 +95,12 @@ const RolesSelect = ({
                     { 'border-4': checked }
                   )}
                 >
-                  {checked && <CHECK_SVG className="fill-brand-800/70 h-2.5 w-2.5 fill-current" />}
+                  {checked && (
+                    <CHECK_SVG
+                      className="fill-brand-800/70 h-2.5 w-2.5 fill-current"
+                      aria-hidden="true"
+                    />
+                  )}
                 </span>
                 <span>{option.label}</span>
               </button>

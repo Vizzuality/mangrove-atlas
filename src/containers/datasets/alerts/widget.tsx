@@ -126,8 +126,7 @@ const AlertsWidget = () => {
                   {selectedStartDate?.label}
                   <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current"
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </span>
               </PopoverTrigger>
@@ -170,8 +169,7 @@ const AlertsWidget = () => {
                   {selectedEndDate?.label}
                   <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current"
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </span>
               </PopoverTrigger>

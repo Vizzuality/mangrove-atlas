@@ -33,15 +33,19 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         tooltipPosition={{ top: -65, left: -5 }}
         message="Coming soon"
       >
-        <DialogTrigger>
-          <div className={menuItemStyle}>
-            <LuBookmarkIcon
-              className={cn({
-                'h-8 w-8 stroke-1 text-white': true,
-              })}
-            />
-            <p className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">Saved areas</p>
-          </div>
+        {/* DialogTrigger renders a <button>; a <div> and <p> inside it is flow
+            content in a button, which is invalid HTML. Inline elements keep the
+            same layout without the nesting violation. */}
+        <DialogTrigger className={menuItemStyle}>
+          <LuBookmarkIcon
+            aria-hidden="true"
+            className={cn({
+              'h-8 w-8 stroke-1 text-white': true,
+            })}
+          />
+          <span className="font-sans text-xs whitespace-nowrap text-white lg:text-sm">
+            Saved areas
+          </span>
         </DialogTrigger>
       </Helper>
       <DialogContent classNameContent="max-w-[calc(100vw-2rem)]">

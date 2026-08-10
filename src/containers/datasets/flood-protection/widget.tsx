@@ -188,8 +188,7 @@ const FloodProtection = ({
                   {LABELS[selectedPeriod].short}
                   <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current"
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </button>
               </PopoverTrigger>
@@ -243,8 +242,7 @@ const FloodProtection = ({
                 <TRIANGLE_SVG
                   className="absolute -top-7 h-5 w-5 fill-current"
                   style={{ left: trianglePosition }}
-                  role="img"
-                  title="Arrow"
+                  aria-hidden="true"
                 />
               )}
             </div>

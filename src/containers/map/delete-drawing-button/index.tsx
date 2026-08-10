@@ -43,12 +43,15 @@ const DeleteDrawingButton = ({
           [SIZE[size]]: true,
         })}
       >
-        <button onClick={handleResetPage} data-testid="delete-custom-area-button">
-          <REMOVE_SVG
-            className="h-3.5 w-3.5 fill-current text-white"
-            role="img"
-            aria-hidden={true}
-          />
+        {/* The only child is aria-hidden, so without an explicit label this
+            button had no accessible name at all. */}
+        <button
+          type="button"
+          onClick={handleResetPage}
+          aria-label="Delete custom area"
+          data-testid="delete-custom-area-button"
+        >
+          <REMOVE_SVG className="h-3.5 w-3.5 fill-current text-white" aria-hidden={true} />
         </button>
       </div>
     </div>

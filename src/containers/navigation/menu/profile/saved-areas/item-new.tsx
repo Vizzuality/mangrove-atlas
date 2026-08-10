@@ -163,7 +163,7 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
             isDisabled && 'cursor-not-allowed opacity-60'
           )}
         >
-          <LuPlusIcon className="h-5 w-5 stroke-2" />
+          <LuPlusIcon className="h-5 w-5 stroke-2" aria-hidden="true" />
         </button>
       </div>
     </li>

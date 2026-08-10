@@ -70,7 +70,6 @@ const SpeciesDistribution = () => {
             {!isWorldwide && (
               <TRIANGLE_SVG
                 className="absolute -top-7 h-5 w-5 fill-current"
-                role="img"
                 aria-hidden={true}
                 style={{ left: trianglePosition ? trianglePosition : 0 }}
               />

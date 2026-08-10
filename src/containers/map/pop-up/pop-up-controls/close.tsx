@@ -18,7 +18,7 @@ const MapPopupClose = ({ handleClose }: MapPopupCloseProps) => {
           className="inline-flex items-center justify-center rounded-md leading-none text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           onClick={handleClose}
         >
-          <HixIcon className="text-brand-800 block h-6 w-6" />
+          <HixIcon className="text-brand-800 block h-6 w-6" aria-hidden="true" />
         </button>
       </TooltipTrigger>
       <TooltipPortal>

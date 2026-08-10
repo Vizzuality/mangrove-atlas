@@ -83,7 +83,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
                 aria-label="Drag to reorder"
                 className="flex min-h-6 min-w-6 cursor-grab items-center justify-center active:cursor-grabbing"
               >
-                <DRAG_SVG role="img" title="Order layer" />
+                <DRAG_SVG aria-hidden="true" />
               </button>
             )}
           </Media>

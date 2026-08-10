@@ -35,7 +35,6 @@ const Legend = ({ items }: Legend) => {
                       'text-grey-600 w-3 fill-current': true,
                       'rotate-180': !!collapse[d.label],
                     })}
-                    role="img"
                     aria-hidden={true}
                   />
                 </button>

@@ -35,6 +35,7 @@ const MapSettings = () => {
             'bg-brand-800': mapSettings,
           })}
           onClick={handleMapSettingsView}
+          aria-label="Map settings"
           data-testid="map-settings-button"
         >
           <MAP_SETTINGS_SVG
@@ -42,8 +43,7 @@ const MapSettings = () => {
               'text-brand-800 h-9 w-9 fill-current p-1': true,
               'text-white': mapSettings,
             })}
-            role="img"
-            title="Map settings"
+            aria-hidden="true"
           />
         </button>
       </div>

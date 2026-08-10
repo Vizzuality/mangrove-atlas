@@ -62,7 +62,7 @@ const LocationTools = () => {
           message="Click this icon to return to default settings: Global statistics, zoomed out view, and default widget deck."
         >
           <div className={CARD_MENU_ITEM}>
-            <RESET_SVG role="img" title="Reset page" />
+            <RESET_SVG aria-hidden="true" />
             <span className="font-sans text-xs whitespace-nowrap lg:text-sm">
               <span className="lg:hidden">Reset</span>
               <span className="hidden lg:inline">Reset page</span>

@@ -25,6 +25,7 @@ const BasemapSettings = () => {
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger
+            aria-label="Basemap settings"
             data-testid="basemap-settings-button"
             className={cn({
               'group shadow-control focus-visible:shadow-control-focus inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none': true,
@@ -32,8 +33,7 @@ const BasemapSettings = () => {
           >
             <BASEMAP_SETTINGS_SVG
               className="group-disabled:fill-grey-75 h-4 w-4 group-hover:bg-gray-100"
-              role="img"
-              title="Basemap settings"
+              aria-hidden="true"
             />
           </DialogTrigger>
         </TooltipTrigger>

@@ -34,8 +34,14 @@ const Legend = () => {
           <span className="group-data-[state=open]:hidden">Show legend</span>
           <span className="group-data-[state=closed]:hidden">Hide legend</span>
         </p>
-        <FaArrowUpIcon className="shrink-0 text-black/85 group-data-[state=open]:hidden" />
-        <FaArrowDownIcon className="shrink-0 text-black/85 group-data-[state=closed]:hidden" />
+        <FaArrowUpIcon
+          className="shrink-0 text-black/85 group-data-[state=open]:hidden"
+          aria-hidden="true"
+        />
+        <FaArrowDownIcon
+          className="shrink-0 text-black/85 group-data-[state=closed]:hidden"
+          aria-hidden="true"
+        />
       </CollapsibleTrigger>
 
       <CollapsibleContent

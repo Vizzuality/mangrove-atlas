@@ -362,11 +362,7 @@ const AccountContent = () => {
                     disabled={true}
                   >
                     <CheckboxIndicator className="text-black/85">
-                      <CHECK_SVG
-                        className="h-full w-full fill-current"
-                        role="img"
-                        title="Checkmark"
-                      />
+                      <CHECK_SVG className="h-full w-full fill-current" aria-hidden="true" />
                     </CheckboxIndicator>
                   </Checkbox>
                   <FormLabel className="m-0 text-xs font-semibold">Delete account</FormLabel>

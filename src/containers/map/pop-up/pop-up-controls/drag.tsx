@@ -31,7 +31,10 @@ const MapPopupDragHandler = ({
           onMouseDown={(e) => e.stopPropagation()}
           onDoubleClick={handleClickToDocker}
         >
-          <MdOutlineDragHandleIcon className="text-brand-800 mt-3 ml-6 h-6 w-6" />
+          <MdOutlineDragHandleIcon
+            className="text-brand-800 mt-3 ml-6 h-6 w-6"
+            aria-hidden="true"
+          />
         </button>
       </TooltipTrigger>
       <TooltipContent className="bg-gray-600 px-2 text-white">

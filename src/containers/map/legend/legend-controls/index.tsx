@@ -165,12 +165,7 @@ const LegendControls = ({
                 onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
               >
                 <button type="button" aria-label="Layer info" className={infoBtnCls}>
-                  <INFO_SVG
-                    className={infoIconCls}
-                    role="img"
-                    aria-hidden={true}
-                    aria-label="Info layer"
-                  />
+                  <INFO_SVG className={infoIconCls} aria-hidden={true} />
                 </button>
               </TooltipTrigger>
               <TooltipPortal>

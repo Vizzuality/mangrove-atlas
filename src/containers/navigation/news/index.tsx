@@ -48,8 +48,7 @@ const NewsButton = ({
             <span className="relative inline-block h-8 w-8 lg:h-6 lg:w-6">
               <NEWS_SVG
                 className="h-8 w-8 fill-current text-white lg:h-6 lg:w-6"
-                role="img"
-                title="News"
+                aria-hidden="true"
               />
               {showIndicator && (
                 <span

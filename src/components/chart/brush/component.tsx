@@ -289,6 +289,7 @@ function SVGBrushComponent({
           height={16}
           filter={`url(#${shadowFilterId})`}
           pointerEvents="none"
+          aria-hidden="true"
         />
       </g>
 
@@ -359,6 +360,7 @@ function SVGBrushComponent({
           height={16}
           filter={`url(#${shadowFilterId})`}
           pointerEvents="none"
+          aria-hidden="true"
         />
       </g>
     </g>

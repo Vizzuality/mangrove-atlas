@@ -18,7 +18,7 @@ export default function SuccessAlert({
       ].join(' ')}
     >
       <div className="text-brand-800 mt-0.5 shrink-0">
-        <CheckCircledIcon strokeWidth={2} className="h-5 w-5" />
+        <CheckCircledIcon strokeWidth={2} className="h-5 w-5" aria-hidden="true" />
       </div>
 
       <div className="text-sm leading-5">{message}</div>

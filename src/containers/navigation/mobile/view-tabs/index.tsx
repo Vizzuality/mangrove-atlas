@@ -7,6 +7,8 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import DASHBOARD_SVG from '@/svgs/ui/dashboard';
 import MAP_VIEW_SVG from '@/svgs/ui/map-view';
 
+// The icons duplicate the adjacent visible text; naming them made the
+// tabs announce "Dashboard Dashboard".
 const ViewTabs = () => {
   const [mapView, setMapView] = useAtom(mapViewAtom);
 
@@ -17,11 +19,11 @@ const ViewTabs = () => {
     >
       <TabsList variant="pill" className="pointer-events-auto">
         <TabsTrigger variant="pill" value="dashboard">
-          <DASHBOARD_SVG className="h-3 w-3" role="img" title="Dashboard" />
+          <DASHBOARD_SVG className="h-3 w-3" aria-hidden="true" />
           Dashboard
         </TabsTrigger>
         <TabsTrigger variant="pill" value="map">
-          <MAP_VIEW_SVG className="h-3 w-3" role="img" title="Map" />
+          <MAP_VIEW_SVG className="h-3 w-3" aria-hidden="true" />
           Map
         </TabsTrigger>
       </TabsList>

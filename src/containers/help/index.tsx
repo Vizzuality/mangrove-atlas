@@ -70,7 +70,7 @@ const HelpContainer = ({
               className
             )}
           >
-            <HELP_ICON className="h-8 w-8" />
+            <HELP_ICON className="h-8 w-8" aria-hidden="true" />
             <span className="text-xxs font-sans leading-none">Help</span>
           </PopoverTrigger>
         ) : (
@@ -78,9 +78,9 @@ const HelpContainer = ({
             data-testid="guide-button"
             className={cn('flex cursor-pointer items-center space-x-2', THEME[theme], className)}
           >
-            <HELP_ICON className="h-6 w-6" />
+            <HELP_ICON className="h-6 w-6" aria-hidden="true" />
             <p className="font-sans text-sm">Help</p>
-            {hasArrow && <CHEVRON_ICON role="img" className="h-4 w-4" />}
+            {hasArrow && <CHEVRON_ICON aria-hidden="true" className="h-4 w-4" />}
           </PopoverTrigger>
         )}
 

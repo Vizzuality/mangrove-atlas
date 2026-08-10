@@ -36,8 +36,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
             onClick={openLegend}
             data-testid="show-legend-button"
             className={cn({
-              'shadow-control flex h-11 cursor-pointer items-center justify-center space-x-2 rounded-3xl bg-white px-5 py-2':
-                true,
+              'shadow-control flex h-11 cursor-pointer items-center justify-center space-x-2 rounded-3xl bg-white px-5 py-2': true,
               hidden: isOpen,
             })}
           >
@@ -45,7 +44,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
               Show legend
             </p>
 
-            <FaArrowUpIcon className="mb-1" />
+            <FaArrowUpIcon className="mb-1" aria-hidden="true" />
           </button>
 
           <AnimatePresence>
@@ -74,10 +73,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 </div>
 
                 <button
+                  type="button"
                   onClick={closeLegend}
+                  aria-label="Close legend"
                   className="absolute -top-8 right-5 -z-10 rounded-t-3xl bg-white p-2"
                 >
-                  <FaArrowDownIcon />
+                  <FaArrowDownIcon aria-hidden="true" />
                 </button>
               </motion.div>
             )}

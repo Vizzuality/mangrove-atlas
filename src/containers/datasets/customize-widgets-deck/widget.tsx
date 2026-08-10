@@ -64,8 +64,7 @@ const CustomizeWidgetsDeck = () => {
                   {filteredWidgetsToDisplay.length} of {widgets.length - 1}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </span>
               </DialogTrigger>

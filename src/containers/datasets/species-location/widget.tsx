@@ -170,7 +170,12 @@ const SpeciesLocation = () => {
                           { 'border-brand-800 border-4': isSelected }
                         )}
                       >
-                        {isSelected && <RadioCheckIcon className="text-brand-800 h-2.5 w-2.5" />}
+                        {isSelected && (
+                          <RadioCheckIcon
+                            className="text-brand-800 h-2.5 w-2.5"
+                            aria-hidden="true"
+                          />
+                        )}
                       </span>
                       <span className="text-brand-800 text-sm leading-none font-semibold">
                         {specie.label}

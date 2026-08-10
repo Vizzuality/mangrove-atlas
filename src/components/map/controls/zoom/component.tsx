@@ -55,11 +55,7 @@ const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }
             disabled={zoom >= maxZoom}
             onClick={increaseZoom}
           >
-            <ZOOM_IN_SVG
-              className={`fill-current ${SVG_COMMON_CLASSES}`}
-              role="img"
-              title="Zoom-in"
-            />
+            <ZOOM_IN_SVG className={`fill-current ${SVG_COMMON_CLASSES}`} aria-hidden="true" />
           </button>
         </TooltipTrigger>
         <TooltipContent className="bg-gray-600 px-2 text-white">Zoom in</TooltipContent>
@@ -75,11 +71,7 @@ const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }
             disabled={zoom <= minZoom}
             onClick={decreaseZoom}
           >
-            <ZOOM_OUT_SVG
-              className={`fill-current ${SVG_COMMON_CLASSES}`}
-              role="img"
-              title="Zoom-out"
-            />
+            <ZOOM_OUT_SVG className={`fill-current ${SVG_COMMON_CLASSES}`} aria-hidden="true" />
           </button>
         </TooltipTrigger>
         <TooltipContent className="bg-gray-600 px-2 text-white">Zoom out</TooltipContent>

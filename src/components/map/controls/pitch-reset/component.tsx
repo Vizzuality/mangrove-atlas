@@ -32,8 +32,7 @@ const PitchReset = ({ className, mapId }: { className?: string; mapId: string })
       >
         <NAVIGATION_SVG
           className="group-disabled:fill-grey-75 h-5 w-5 fill-current"
-          role="img"
-          title="Pitch reset"
+          aria-hidden="true"
         />
       </button>
     </div>

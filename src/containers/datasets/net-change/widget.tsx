@@ -155,7 +155,6 @@ const NetChangeWidget = () => {
                   {selectedUnit}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                    role="img"
                     aria-hidden={true}
                   />
                 </button>
@@ -198,7 +197,6 @@ const NetChangeWidget = () => {
                   {currentStartYear}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                    role="img"
                     aria-hidden={true}
                   />
                 </button>
@@ -235,7 +233,6 @@ const NetChangeWidget = () => {
                   {currentEndYear}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                    role="img"
                     aria-hidden={true}
                   />
                 </button>

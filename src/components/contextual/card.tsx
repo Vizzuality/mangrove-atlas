@@ -73,8 +73,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
           onClick={handleClick}
           data-testid={id}
           className={cn({
-            [`relative mr-10 h-24 w-24 shrink-0 rounded-xl border-4 border-transparent bg-cover bg-center`]:
-              true,
+            [`relative mr-10 h-24 w-24 shrink-0 rounded-xl border-4 border-transparent bg-cover bg-center`]: true,
             'border-brand-800': isActive,
           })}
         >
@@ -87,11 +86,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
             checked={isActive}
           >
             <CheckboxIndicator className="text-white">
-              <CHECK_SVG
-                className="h-full w-full fill-current text-white"
-                role="img"
-                title="Checkmark"
-              />
+              <CHECK_SVG className="h-full w-full fill-current text-white" aria-hidden="true" />
             </CheckboxIndicator>
           </Checkbox>
         </button>

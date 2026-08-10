@@ -150,7 +150,10 @@ const WidgetsMenu: FC = () => {
             })}
           >
             <CheckboxIndicator>
-              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon
+                className="h-2.5 w-2.5 fill-current font-bold text-white"
+                aria-hidden="true"
+              />
             </CheckboxIndicator>
           </Checkbox>
 
@@ -167,7 +170,10 @@ const WidgetsMenu: FC = () => {
             })}
           >
             <CheckboxIndicator>
-              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon
+                className="h-2.5 w-2.5 fill-current font-bold text-white"
+                aria-hidden="true"
+              />
             </CheckboxIndicator>
           </Checkbox>
           <p
@@ -209,6 +215,7 @@ const WidgetsMenu: FC = () => {
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeWidgets.includes(slug),
                       })}
+                      aria-hidden="true"
                     />
                   </CheckboxIndicator>
                 )}
@@ -234,6 +241,7 @@ const WidgetsMenu: FC = () => {
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeLayersIds?.includes(slug),
                       })}
+                      aria-hidden="true"
                     />
                   </CheckboxIndicator>
                 </Checkbox>
