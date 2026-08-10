@@ -101,7 +101,7 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
 
           <DialogContent className="top-[30%] text-black/85">
             <DialogTitle className="mb-2 text-3xl font-light">Share</DialogTitle>
-            <div className="flex w-[480px] flex-col space-y-5">
+            <div className="flex max-h-[80dvh] w-[min(480px,calc(100vw-3rem))] flex-col space-y-5 overflow-y-auto">
               <div className="flex flex-col space-y-1">
                 <h3 className="ml-4 text-[13px] font-semibold">Public url to share</h3>
                 <div className="bg-brand-600/10 flex h-12 items-center justify-between space-x-4 rounded-3xl p-4 text-sm">

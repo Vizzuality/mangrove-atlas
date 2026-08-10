@@ -53,7 +53,7 @@ const BasemapSettings = () => {
             tooltipPosition={{ top: -140, left: 0 }}
             message="use these buttons to switch between basemaps"
           >
-            <div className="flex w-[490px] flex-col space-y-2">
+            <div className="flex max-h-[80dvh] w-[min(490px,calc(100vw-3rem))] flex-col space-y-2 overflow-y-auto">
               <p className="text-xs font-bold tracking-[1px] uppercase">map style</p>
               <Basemaps />
             </div>

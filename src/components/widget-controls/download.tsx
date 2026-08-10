@@ -75,7 +75,7 @@ const Download = ({ id, content }) => {
       </Helper>
       <DialogContent>
         <DialogTitle className="sr-only">Download Data</DialogTitle>
-        <div className="no-scrollbar w-120 overflow-y-auto">
+        <div className="no-scrollbar max-h-[80dvh] w-[min(30rem,calc(100vw-3rem))] overflow-y-auto">
           {id && <DownloadInfo />}
           {content && !id && (
             <div className="flex flex-col items-start justify-start space-y-4">

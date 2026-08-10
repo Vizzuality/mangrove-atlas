@@ -41,7 +41,9 @@ const Legend = ({ items }: Legend) => {
 
                 {
                   <ul
-                    style={{ maxHeight: !!collapse[d.label] ? 85 : 0 }}
+                    // rem, not px: an inline pixel cap does not grow when the
+                    // user increases text size, so the list clipped at 200% zoom.
+                    style={{ maxHeight: !!collapse[d.label] ? '5.3125rem' : 0 }}
                     className={cn({
                       'text-brand-800 w-fit overflow-y-auto px-4 py-1 font-bold italic underline': true,
                       'py-0': !collapse[d.label],

@@ -78,11 +78,11 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
   };
   return (
     <Collapsible onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger className="min-w-[375px]" iconType="plus-minus">
+      <CollapsibleTrigger className="min-w-[min(375px,100%)]" iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>IUCN ECOSYSTEM RED LIST ASSESSMENT</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex w-full min-w-[450px] flex-col space-y-2 border-none px-6 shadow-none">
+        <div className="flex w-full min-w-[min(450px,100%)] flex-col space-y-2 border-none px-6 shadow-none">
           <a
             className="text-brand-800 w-full text-right text-xs underline"
             target="_blank"

@@ -111,7 +111,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
 
             <DialogContent
               className={cn({
-                'h-screen w-screen min-w-135 md:mb-20 md:h-auto md:w-auto': true,
+                'h-screen w-screen min-w-[min(33.75rem,100%)] md:mb-20 md:h-auto md:w-auto': true,
                 hidden: guideIsActive,
               })}
               overlay={false}
