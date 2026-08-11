@@ -40,14 +40,17 @@ export default function MainApp() {
         <MobileLayout />
       </Media>
 
-      <main id="main-content" className="pointer-events-none relative h-screen w-screen">
+      <div className="pointer-events-none relative h-screen w-screen">
         {/* h-full is required: the widgets layout scrolls internally
             (h-full + overflow-y-auto) and needs a definite-height parent —
             without it the list grows to content height and mobile can't scroll. */}
-        <div className={cn('h-full', { 'hidden lg:block': mapView })}>
+        {/* A labelled region, not the main landmark: main lives in the route
+            layout around the map (see src/app/[[...params]]/layout.tsx). The
+            label lets screen-reader users jump to the widget list directly. */}
+        <section aria-label="Widgets" className={cn('h-full', { 'hidden lg:block': mapView })}>
           <WidgetsContainer />
-        </div>
-      </main>
+        </section>
+      </div>
 
       <WelcomeIntroMessage />
     </>

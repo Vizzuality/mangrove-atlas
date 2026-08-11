@@ -121,17 +121,20 @@ export default function SignupPage() {
   return (
     <div className="relative flex min-h-screen bg-white">
       <Logo position="top-left" width={360} />
-      <section
+      {/* Empty decorative panel: no content, and `mrt-hero-title` only exists on
+          the signin page, so the section/aria-labelledby pair named nothing here. */}
+      <div
+        aria-hidden="true"
         className="flex w-[50%] flex-col justify-center bg-cover bg-right px-4 py-8"
-        aria-labelledby="mrt-hero-title"
         style={{
           backgroundImage: 'url(/images/login/image.webp)',
         }}
       />
 
-      <section className="mx-auto w-full max-w-md px-4 pb-20">
+      <div className="mx-auto w-full max-w-md px-4 pb-20">
         <LandingNavigation />
-        <div className="flex h-full w-full flex-col justify-center space-y-10">
+        {/* See login-container: main is the form column, not the whole screen. */}
+        <main id="main-content" className="flex h-full w-full flex-col justify-center space-y-10">
           <h1 className="text-brand-800 font-sans text-[40px] font-light">Sign up</h1>
           <div className="space-y-6">
             <Form {...form}>
@@ -307,8 +310,8 @@ export default function SignupPage() {
 
             <FooterSignin />
           </div>
-        </div>
-      </section>
+        </main>
+      </div>
     </div>
   );
 }

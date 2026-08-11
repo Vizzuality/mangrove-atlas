@@ -11,9 +11,8 @@ test.describe('a11y: embedded view', () => {
   });
 
   test('exposes a main landmark for the skip link', async ({ page }) => {
-    // Unblocked by phase 5B. The root layout renders a skip link on every
-    // route, so #main-content must exist here too.
-    test.fixme(true, 'No <main id="main-content"> on /embedded until phase 5B');
+    // The root layout renders a skip link on every route, so #main-content must
+    // exist here too.
     await page.goto('/embedded/country/IDN');
     await expect(page.locator('main#main-content')).toHaveCount(1);
   });

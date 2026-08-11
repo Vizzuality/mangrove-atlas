@@ -18,9 +18,8 @@ test.describe('a11y: auth pages', () => {
     });
 
     test(`${route} exposes a main landmark for the skip link`, async ({ page }) => {
-      // Unblocked by phase 5B (src/app/auth/layout.tsx). Auth pages currently
-      // use <section>, so the root layout's skip link points at nothing here.
-      test.fixme(true, 'No <main id="main-content"> on auth routes until phase 5B');
+      // Exactly one: each auth page marks its own form column, so a stray
+      // wrapper landmark in the shared layout would show up as a second.
       await page.goto(route);
       await expect(page.locator('main#main-content')).toHaveCount(1);
     });

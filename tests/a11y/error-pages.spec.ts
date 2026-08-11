@@ -12,8 +12,6 @@ test.describe('a11y: error pages', () => {
   });
 
   test('404 exposes a main landmark for the skip link', async ({ page }) => {
-    // Unblocked by phase 5B.
-    test.fixme(true, 'No <main id="main-content"> on not-found until phase 5B');
     await page.goto('/this-route-does-not-exist');
     await expect(page.locator('main#main-content')).toHaveCount(1);
   });

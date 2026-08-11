@@ -7,13 +7,14 @@ export const metadata: Metadata = {
 /**
  * The auth pages are all `'use client'`, so they cannot export `metadata`
  * themselves — this layout (and the per-route layouts beside each page)
- * supplies it.
+ * supplies it. Metadata only: no wrapper element.
  *
- * It also provides the `<main id="main-content">` landmark. The root layout
- * renders a "Skip to main content" link on every route, and without this the
- * link pointed at nothing here: the auth pages wrap their content in
- * `<section>`, so there was no main landmark to skip to.
+ * The main landmark is deliberately *not* here. Wrapping `children` in one made
+ * main cover the whole screen — the logo, the decorative hero and the landing
+ * nav included — when the main content of these routes is just the form column.
+ * Each auth page marks its own form column as `<main id="main-content">`, which
+ * is what the root layout's skip link targets.
  */
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  return <main id="main-content">{children}</main>;
+  return children;
 }

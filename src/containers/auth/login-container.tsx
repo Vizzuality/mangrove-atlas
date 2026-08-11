@@ -65,10 +65,14 @@ export default function LoginPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-md px-4 pb-20">
+      <div className="mx-auto w-full max-w-md px-4 pb-20">
         <LandingNavigation />
         <div className="h-full">
-          <div className="flex h-full w-full flex-col justify-center space-y-10">
+          {/* The form column is the main content of this route, so the landmark
+              (and the root layout's skip target) sits here rather than around the
+              whole screen: the logo, the decorative hero and the landing nav are
+              not what someone skipping the chrome wants to land on. */}
+          <main id="main-content" className="flex h-full w-full flex-col justify-center space-y-10">
             <h1 className="text-brand-800 font-sans text-[40px] font-light">Log in</h1>
 
             {searchParams.get('verified') === 'pending' && (
@@ -83,9 +87,9 @@ export default function LoginPage() {
                 <FooterSignup />
               </div>
             </div>
-          </div>
+          </main>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
