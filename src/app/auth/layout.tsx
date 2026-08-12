@@ -5,10 +5,6 @@ export const metadata: Metadata = {
 };
 
 /**
- * The auth pages are all `'use client'`, so they cannot export `metadata`
- * themselves — this layout (and the per-route layouts beside each page)
- * supplies it. Metadata only: no wrapper element.
- *
  * The main landmark is deliberately *not* here. Wrapping `children` in one made
  * main cover the whole screen — the logo, the decorative hero and the landing
  * nav included — when the main content of these routes is just the form column.
