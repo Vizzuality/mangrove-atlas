@@ -9,10 +9,10 @@ test.describe('a11y: auth pages', () => {
     test(`${route} has no WCAG violations`, async ({ page }) => {
       await page.goto(route);
       // Auth pages are client components behind a form — the submit button is
-      // the last thing to render, so it is the reliable settle signal.
-      await expect(
-        page.getByRole('button', { name: /sign in|sign up|send|reset/i }).first()
-      ).toBeVisible();
+      // the last thing to render, so it is the reliable settle signal. Matched
+      // by type rather than by name: the three pages label it "Log in",
+      // "Register" and "Submit", and the copy is translated.
+      await expect(page.locator('main#main-content button[type="submit"]')).toBeVisible();
 
       await expectNoViolations(page, { route });
     });
