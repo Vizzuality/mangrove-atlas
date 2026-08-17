@@ -171,10 +171,6 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
             })}
           >
-            {/* The input carried no `id`, so both labels' `htmlFor` pointed at
-                nothing and the file input was unlabelled. They also shared one
-                `id`, duplicating it in the DOM. There is now a single label
-                bound to a real id, with the state in its text. */}
             <input
               id="input-file-upload"
               data-testid="shapefile-upload"

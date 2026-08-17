@@ -9,17 +9,6 @@ import { IconBaseProps } from 'react-icons/lib';
 
 import type { RadioOption } from '../types';
 
-/**
- * The visible text lives *inside* the radio button rather than in a sibling
- * <label htmlFor>. Radix renders `RadioGroup.Item` as a <button role="radio">,
- * and `htmlFor` only binds to labelable elements — so the previous markup gave
- * these radios no accessible name at all, and clicking the text did nothing.
- *
- * Putting the text in the button's content makes it the button's own name and
- * makes the whole row a pointer target, with no ref plumbing or click
- * forwarding. When the caller suppresses the text (`label={false}`) the name
- * falls back to `aria-label`.
- */
 const RadioGroupItem = ({
   option,
   className,

@@ -44,9 +44,6 @@ export default function LoginPage() {
         style={{ backgroundImage: 'url(/images/login/image.webp)' }}
       >
         <div className="mx-24 max-w-xl space-y-6 text-white">
-          {/* Not a heading: this decorative hero precedes the page <h1> in
-              DOM order, so marking it up as one put an h2 before the h1. A
-              region's aria-labelledby can point at any text node. */}
           <p id="mrt-hero-title" className="text-6xl font-light">
             Welcome to Global Mangrove Watch
           </p>

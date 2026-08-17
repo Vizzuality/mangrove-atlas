@@ -636,8 +636,6 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                 >
                   <button
                     type="button"
-                    // The name came from the image alt, which described the
-                    // graphic rather than what activating the button does.
                     aria-label="Remove map marker"
                     onClick={(e) => {
                       e.stopPropagation();

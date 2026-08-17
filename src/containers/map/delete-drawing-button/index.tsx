@@ -43,8 +43,6 @@ const DeleteDrawingButton = ({
           [SIZE[size]]: true,
         })}
       >
-        {/* The only child is aria-hidden, so without an explicit label this
-            button had no accessible name at all. */}
         <button
           type="button"
           onClick={handleResetPage}

@@ -4,15 +4,6 @@ import type { Result } from 'axe-core';
 
 import { getKnownIssues } from '../known-issues';
 
-/**
- * WCAG tags we hold the app to.
- *
- * `best-practice` is deliberately excluded. It fires `region` and
- * `page-has-heading-one` on every scan, and both are asserted explicitly and
- * more precisely elsewhere (landmark and heading coverage live in the phase 5
- * specs). Including it would bury real WCAG failures under advisory noise and
- * push us toward muting rules wholesale.
- */
 export const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] as const;
 
 interface ScanOptions {

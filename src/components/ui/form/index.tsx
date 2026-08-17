@@ -120,13 +120,6 @@ function FormLabel({
   );
 }
 
-/**
- * Optional helper text for a field.
- *
- * `FormControl` points `aria-describedby` at this element's id. Until this
- * component existed, that id referenced nothing at all, so every field in the
- * app advertised a description that no assistive technology could resolve.
- */
 function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   const { formDescriptionId } = useFormField();
   const { registerDescription } = React.useContext(FormItemContext);

@@ -9,7 +9,6 @@ const SpeciesDistributionMapLegend = () => {
         <p>{legend[0]}</p>
         <p>{legend[2]}</p>
       </div>
-      {/* The bar carried no name — see restoration/map-legend.tsx. */}
       <div
         role="img"
         aria-label={`Species distribution, from ${legend[0]} (lightest) to ${legend[2]} (darkest)`}

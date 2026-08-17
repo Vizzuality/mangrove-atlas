@@ -49,10 +49,6 @@ const HighResolutionExtentBasemap = () => {
   return (
     <div className="relative flex flex-col text-sm leading-none text-black/85">
       <RadioGroup onValueChange={handleClick} defaultValue={defaultActive} className="space-y-2">
-        {/* The option text is rendered by RadioGroupItem, inside the radio
-            button itself. A sibling <label htmlFor> cannot name a Radix radio
-            (it renders a <button>, which is not labelable), so these radios
-            previously had no accessible name and the text was not clickable. */}
         <RadioGroupItem
           option={{ value: 'no-layer', label: 'No layer' }}
           data-testid="no-layer"

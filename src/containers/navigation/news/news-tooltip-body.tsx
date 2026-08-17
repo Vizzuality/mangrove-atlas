@@ -37,11 +37,6 @@ const NewsTooltipBody = ({
   onDismissTooltip: () => void;
 }) => (
   <>
-    {/* Was a bare <HiXIcon onClick>: not focusable, no role, no accessible
-        name, and no keyboard path to dismissing the tooltip. It was also
-        rendered twice — once per branch — so both copies stacked at the same
-        absolute position when there were no unseen posts, and the copy inside
-        the <ul> was an invalid child of a list. */}
     <button
       type="button"
       aria-label="Dismiss"

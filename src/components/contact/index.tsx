@@ -230,12 +230,6 @@ function ContactForm() {
               name="privacyPolicy"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  {/* The checkbox was previously wrapped in a <button> that also
-                      contained the Radix Checkbox (itself a <button role="checkbox">)
-                      and a <Link> — nested interactive content, invalid HTML, and a
-                      keyboard trap for the link. The <Label htmlFor> bound to nothing
-                      either, because Radix renders a button, so the checkbox had no
-                      accessible name. The name now comes from aria-labelledby. */}
                   <div className="flex items-center space-x-2.5 text-black/85">
                     <FormControl>
                       <Checkbox

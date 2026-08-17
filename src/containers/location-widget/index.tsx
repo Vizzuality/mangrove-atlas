@@ -81,10 +81,6 @@ const LocationWidget = () => {
   return (
     <>
       <div className="bg-brand-600 shadow-control relative flex h-52 flex-col justify-between rounded-3xl bg-[url(/images/location-bg.svg)] bg-cover bg-center text-center">
-        {/* The <h1> sits outside the button: a heading inside an interactive
-            control is not exposed as a heading, and the page had no h1 at all
-            until the location query resolved (the fallback was a bare skeleton
-            div). It now always renders, with a placeholder while loading. */}
         <h1 className="contents">
           <button
             type="button"

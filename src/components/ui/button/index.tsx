@@ -5,19 +5,6 @@ import cn from '@/lib/classnames';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-/**
- * Colours resolve to the project palette in `tailwind.config.mjs`.
- *
- * This file previously carried shadcn's semantic token names — `ring-ring`,
- * `ring-offset-background`, `bg-destructive`, `bg-accent`, `text-primary` —
- * none of which are defined here: there is no `@theme` block, no `:root`
- * custom properties, and no matching keys in the Tailwind config. Tailwind
- * emitted nothing for them, so the focus ring had no colour (WCAG 2.4.7) and
- * the destructive/ghost hover states rendered unstyled.
- *
- * They are mapped to real palette values rather than by introducing a
- * semantic-token layer, because the app has no theming layer to hang one on.
- */
 const buttonVariants = cva(
   'cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-3xl transition-colors text-sm font-medium ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-800 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 border',
   {

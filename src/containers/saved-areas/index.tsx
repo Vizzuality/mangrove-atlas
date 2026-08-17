@@ -33,9 +33,6 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         tooltipPosition={{ top: -65, left: -5 }}
         message="Coming soon"
       >
-        {/* DialogTrigger renders a <button>; a <div> and <p> inside it is flow
-            content in a button, which is invalid HTML. Inline elements keep the
-            same layout without the nesting violation. */}
         <DialogTrigger className={menuItemStyle}>
           <LuBookmarkIcon
             aria-hidden="true"
