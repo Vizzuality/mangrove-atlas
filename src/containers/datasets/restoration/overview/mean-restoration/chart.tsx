@@ -30,7 +30,6 @@ const RestorationOverviewChart = ({
       >
         <TRIANGLE_SVG
           className="absolute -top-5 left-1/2 inline-block h-4 w-5 -translate-x-1/2 fill-current"
-          role="img"
           aria-hidden={true}
           style={{ left: !!trianglePosition && trianglePosition }}
         />

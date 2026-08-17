@@ -29,7 +29,7 @@ const Indicator = (indicator: IndicatorTypes) => {
         {info && (
           <Tooltip>
             <TooltipTrigger className="border-brand-800/20 text-brand-800 flex h-5 w-5 items-center justify-center rounded-full border-2">
-              <INFO_SVG className="h-3 w-3 shrink-0 fill-current" role="img" title="Info" />
+              <INFO_SVG className="h-3 w-3 shrink-0 fill-current" role="img" aria-label="Info" />
             </TooltipTrigger>
 
             <TooltipPortal>
@@ -58,7 +58,7 @@ const Indicator = (indicator: IndicatorTypes) => {
         </a>
       )}
       {!!check && (
-        <CheckIcon className="col-span-1 h-5 w-5 fill-current" role="img" title="Check" />
+        <CheckIcon className="col-span-1 h-5 w-5 fill-current" role="img" aria-label="Yes" />
       )}
     </div>
   );

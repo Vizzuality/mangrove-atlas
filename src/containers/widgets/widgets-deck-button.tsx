@@ -55,7 +55,7 @@ export default function WidgetsDeckButton() {
             className="bg-brand-800 shadow-control hover:bg-brand-800/90 focus-visible:ring-brand-400 flex h-12 min-w-[48px] cursor-pointer items-center gap-2 rounded-full py-4 pr-5 pl-4 text-sm font-semibold text-white transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             variants={buttonMotion}
           >
-            <SETTINGS_SVG className="h-4 w-4 shrink-0 fill-current" role="img" aria-hidden={true} />
+            <SETTINGS_SVG className="h-4 w-4 shrink-0 fill-current" aria-hidden={true} />
             <motion.span variants={textMotion} className="whitespace-nowrap">
               Widgets deck
             </motion.span>

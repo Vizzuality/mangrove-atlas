@@ -127,12 +127,12 @@ const IndicatorSources = ({
   }, [setActiveLayers, layerId, buildLayer, isNationalLayerActive, locationIso, source]);
 
   return (
-    <div className={className}>
+    <div role="row" className={className}>
       <IndicatorSource source={source} color={color} />
       <IndicatorYear yearSelected={yearSelected} setYearSelected={setYearSelected} years={years} />
       <IndicatorExtent unit={unit} dataSource={dataSource} />
 
-      <div className="flex min-h-min justify-end space-x-2">
+      <div role="cell" className="flex min-h-min justify-end space-x-2">
         <WidgetControls
           content={{
             link: dataSource?.download_link ?? undefined,

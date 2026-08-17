@@ -7,7 +7,10 @@ import News from '@/containers/navigation/news';
 const HELPER_ID = 'menu-categories';
 
 const AppTools = () => (
-  <div className="bg-brand-800 fixed top-2 left-4 z-20 hidden h-11 w-[540px] rounded-[32px] px-5 shadow-md lg:block">
+  <nav
+    aria-label="Main"
+    className="bg-brand-800 fixed top-2 left-4 z-20 hidden h-11 w-[min(540px,calc(100vw-2rem))] rounded-[32px] px-5 shadow-md lg:block"
+  >
     {/* <div className="grid h-full grid-cols-4 gap-4"> */}
     <div className="flex h-full items-center justify-around">
       <div className="flex items-center justify-center">
@@ -35,7 +38,7 @@ const AppTools = () => (
         </Helper>
       </div>
     </div>
-  </div>
+  </nav>
 );
 
 export default AppTools;

@@ -126,16 +126,17 @@ const AlertsWidget = () => {
                   {selectedStartDate?.label}
                   <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current"
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </span>
               </PopoverTrigger>
 
               <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
-                  {startDateOptions?.map((date) => (
-                    <li key={date?.label} className="last-of-type:pb-4">
+                  {/* Keyed by value + index: the label degrades to ", <year>" for any
+                      month the MONTHS lookup misses, which would repeat within a year. */}
+                  {startDateOptions?.map((date, i) => (
+                    <li key={`${date?.value}-${i}`} className="last-of-type:pb-4">
                       <button
                         aria-label="Select start date"
                         className={cn({
@@ -170,16 +171,15 @@ const AlertsWidget = () => {
                   {selectedEndDate?.label}
                   <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current"
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </span>
               </PopoverTrigger>
 
               <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
-                  {endDateOptions?.map((date) => (
-                    <li key={date?.label} className="last-of-type:pb-4">
+                  {endDateOptions?.map((date, i) => (
+                    <li key={`${date?.value}-${i}`} className="last-of-type:pb-4">
                       <button
                         aria-label="Select end date"
                         className={cn({

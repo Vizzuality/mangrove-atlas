@@ -33,9 +33,9 @@ const LocationsMobile = () => {
               type="button"
               onClick={openMenu}
               aria-label="Locations"
-              className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
+              className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              <GLASS_SVG className="h-8 w-8 fill-current stroke-white" role="img" title="Glass" />
+              <GLASS_SVG className="h-8 w-8 fill-current stroke-white" aria-hidden="true" />
               <span className="text-xxs font-sans leading-none text-white">Locations</span>
             </button>
           </DialogTrigger>

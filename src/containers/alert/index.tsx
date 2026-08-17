@@ -94,11 +94,7 @@ const AnalysisAlert = () => {
                 onClick={() => setAnalysisAlert(false)}
                 aria-label="Reset analysis"
               >
-                <CLOSE_SVG
-                  className="absolute right-8 h-8 w-8 fill-current"
-                  role="img"
-                  title="Close"
-                />
+                <CLOSE_SVG className="absolute right-8 h-8 w-8 fill-current" aria-hidden="true" />
               </button>
             </div>
             <div className="flex flex-col space-y-5">

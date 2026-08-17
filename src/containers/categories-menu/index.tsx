@@ -97,8 +97,7 @@ const Category = () => {
                   {isSelected && (
                     <CHECK_SVG
                       className="h-full w-full fill-current p-px text-white"
-                      role="img"
-                      title="Checkmark"
+                      aria-hidden="true"
                     />
                   )}
                 </span>

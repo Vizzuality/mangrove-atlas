@@ -37,18 +37,23 @@ const NewsTooltipBody = ({
   onDismissTooltip: () => void;
 }) => (
   <>
+    <button
+      type="button"
+      aria-label="Dismiss"
+      className="absolute top-2 right-2 cursor-pointer p-1 font-extrabold"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onDismissTooltip();
+      }}
+    >
+      <HiXIcon className="h-4 w-4" aria-hidden="true" />
+    </button>
+
     {!unseenPosts?.length && (
       <div className="max-w-xs space-y-1 sm:max-w-70">
         <div className="flex items-center justify-between space-x-2 font-bold">
           <span className="text-xs uppercase">Tool updated!</span>
-          <HiXIcon
-            className="absolute top-2 right-2 h-4 w-4 cursor-pointer font-extrabold"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onDismissTooltip();
-            }}
-          />
         </div>
         <p className="text-sm">
           A new version is live. See what’s been improved and discover the new features added to the
@@ -58,15 +63,9 @@ const NewsTooltipBody = ({
     )}
 
     <ul className="max-w-2xs space-y-2">
-      {unseenPosts?.map((post) => <TooltipItem key={post.id} post={post} />)}
-      <HiXIcon
-        className="absolute top-2 right-2 h-4 w-4 cursor-pointer font-extrabold"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onDismissTooltip();
-        }}
-      />
+      {unseenPosts?.map((post) => (
+        <TooltipItem key={post.id} post={post} />
+      ))}
     </ul>
   </>
 );

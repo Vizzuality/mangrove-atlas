@@ -13,15 +13,11 @@ const ConfigureWidgets = () => {
           <DialogTrigger asChild>
             <button
               type="button"
-              className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
+              className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               data-testid="widgets-deck-trigger-mobile"
               aria-label="Configure widgets"
             >
-              <CONFIGS_SVG
-                className="h-8 w-8 fill-current text-white"
-                role="img"
-                title="Widgets deck"
-              />
+              <CONFIGS_SVG className="h-8 w-8 fill-current text-white" aria-hidden="true" />
               <span className="text-xxs font-sans leading-none text-white">Configure</span>
             </button>
           </DialogTrigger>

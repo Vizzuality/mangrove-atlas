@@ -2,11 +2,39 @@ import { notFound } from 'next/navigation';
 
 import { QueryClient, dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
+import type { Metadata } from 'next';
 
 import type { DataResponse } from '@/containers/datasets/locations/hooks';
 import PrintReportPage from '@/containers/print-report';
 
 const ALLOWED_LOCATION_TYPES = ['custom-area', 'country', 'wdpa'];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ params?: string[] }>;
+}): Promise<Metadata> {
+  const { params: urlParams } = await params;
+  const locationId = urlParams?.[1];
+
+  let name = 'Worldwide';
+
+  if (locationId) {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations/${locationId}`, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (res.ok) {
+        const json = (await res.json()) as { data?: DataResponse['data'][0] };
+        if (json.data?.name) name = json.data.name;
+      }
+    } catch {
+      // Leave the default; the page itself decides whether this is a 404.
+    }
+  }
+
+  return { title: `${name} report` };
+}
 
 export default async function Page({ params }: { params: Promise<{ params?: string[] }> }) {
   const { params: urlParams } = await params;

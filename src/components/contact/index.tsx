@@ -23,7 +23,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -146,7 +145,7 @@ function ContactForm() {
                   open={isOpen}
                 >
                   <FormControl>
-                    <SelectTrigger className="focus-visible:ring-ring focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
+                    <SelectTrigger className="focus-visible:ring-brand-800 focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
                       <SelectValue placeholder="Select" />
                       {/* <LuChevronDown
                         className={cn({
@@ -231,13 +230,13 @@ function ContactForm() {
               name="privacyPolicy"
               render={({ field }) => (
                 <FormItem className="space-y-1.5">
-                  <FormControl>
-                    <button type="button" className="flex items-center space-x-2.5 text-black/85">
+                  <div className="flex items-center space-x-2.5 text-black/85">
+                    <FormControl>
                       <Checkbox
-                        id="privacyPolicy"
+                        aria-labelledby="privacyPolicy-label"
                         onCheckedChange={(checked) => field.onChange(checked)}
                         className={cn({
-                          '[data=] h-5 w-5 cursor-pointer border border-black/15': true,
+                          'h-5 w-5 shrink-0 cursor-pointer border border-black/15': true,
                         })}
                         checked={field.value}
                       >
@@ -252,6 +251,7 @@ function ContactForm() {
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
+                            aria-hidden="true"
                             className="lucide lucide-circle-check-icon lucide-circle-check stroke-2 text-white"
                           >
                             <circle cx="12" cy="12" r="10" />
@@ -259,14 +259,14 @@ function ContactForm() {
                           </svg>
                         </CheckboxIndicator>
                       </Checkbox>
-                      <Label htmlFor="privacyPolicy" className="cursor-pointer">
-                        I agree with the 
-                        <Link href="/" className="underline">
-                          Privacy Policy.
-                        </Link>
-                      </Label>
-                    </button>
-                  </FormControl>
+                    </FormControl>
+                    <span id="privacyPolicy-label">
+                      I agree with the{' '}
+                      <Link href="/" className="underline">
+                        Privacy Policy.
+                      </Link>
+                    </span>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

@@ -12,12 +12,13 @@ const UNIT_ARIA = {
 
 const IndicatorExtent = ({ unit, dataSource }: IndicatorExtentProps) => {
   if (!dataSource?.value) {
-    return <span />;
+    return <span role="cell" />;
   }
   const displayUnit = unit ? LABEL_UNITS[unit] || unit : '';
   const ariaUnit = unit ? UNIT_ARIA[unit] || unit : '';
   return (
     <span
+      role="cell"
       className="whitespace-nowrap"
       aria-label={`${numberFormat(dataSource.value)} ${ariaUnit}`.trim()}
     >

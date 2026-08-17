@@ -144,14 +144,14 @@ const LegendControls = ({
   if (l.id === 'custom-area') return null;
 
   const iconBtn = compact
-    ? 'inline-flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full text-black/42 hover:bg-black/5'
-    : 'inline-flex h-7.5 w-7.5 cursor-pointer items-center justify-center rounded-full text-black/42 hover:bg-black/5';
+    ? 'inline-flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full text-black/60 hover:bg-black/5'
+    : 'inline-flex h-7.5 w-7.5 cursor-pointer items-center justify-center rounded-full text-black/60 hover:bg-black/5';
   const opacityIconCls = compact ? 'h-4 w-4' : 'h-6.5 w-6.5';
   const showHideIconCls = compact ? 'h-5 w-5' : 'h-7 w-7';
   const closeIconCls = compact ? 'h-3 w-3' : '';
   const infoBtnCls = compact
-    ? 'mr-1 flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42'
-    : 'mr-1 flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42';
+    ? 'mr-1 flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/60 text-black/60'
+    : 'mr-1 flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-black/60 text-black/60';
   const infoIconCls = compact ? 'h-2 w-2 fill-current' : 'h-3 w-3 fill-current';
 
   return (
@@ -165,12 +165,7 @@ const LegendControls = ({
                 onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
               >
                 <button type="button" aria-label="Layer info" className={infoBtnCls}>
-                  <INFO_SVG
-                    className={infoIconCls}
-                    role="img"
-                    aria-hidden={true}
-                    aria-label="Info layer"
-                  />
+                  <INFO_SVG className={infoIconCls} aria-hidden={true} />
                 </button>
               </TooltipTrigger>
               <TooltipPortal>
@@ -219,6 +214,7 @@ const LegendControls = ({
           >
             <Slider
               className="w-[150px] pt-2"
+              thumbAriaLabel={`Opacity of ${layerNameToDisplay ?? 'layer'}`}
               defaultValue={[parseFloat(l.opacity)]}
               onValueChange={(op: number[]) => onChangeOpacity(op[0], l.id)}
             />

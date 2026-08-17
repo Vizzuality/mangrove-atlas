@@ -77,8 +77,7 @@ const HabitatExtent = () => {
                     {currentStartYear}
                     <TRIANGLE_SVG
                       className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                      role="img"
-                      title="Arrow"
+                      aria-hidden="true"
                     />
                   </button>
                 </PopoverTrigger>
@@ -125,8 +124,7 @@ const HabitatExtent = () => {
                     {currentEndYear}
                     <TRIANGLE_SVG
                       className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                      role="img"
-                      title="Arrow"
+                      aria-hidden="true"
                     />
                   </button>
                 </PopoverTrigger>
@@ -206,8 +204,7 @@ const HabitatExtent = () => {
                 'text-brand-800 inline-block h-2 w-2 fill-current': true,
                 'rotate-180 transform': limit === 10,
               })}
-              role="img"
-              title="Arrow"
+              aria-hidden="true"
             />
           </button>
         </div>

@@ -5,6 +5,8 @@ import cn from '@/lib/classnames';
 import { activeGuideAtom } from '@/store/guide';
 import { useSyncActiveLayers } from '@/store/layers';
 
+import type { DraggableAttributes } from '@dnd-kit/core';
+import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { useAtomValue } from 'jotai';
 
@@ -26,7 +28,23 @@ import LegendControls from '../legend-controls';
 
 const NATIONAL_DASHBOARD_PREFIX = 'mangrove_national_dashboard_layer_';
 
-const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolean; l: Layer }) => {
+const LegendItem = ({
+  id,
+  embedded = false,
+  l,
+  listeners,
+  attributes,
+  setActivatorNodeRef,
+}: {
+  id: string;
+  embedded?: boolean;
+  l: Layer;
+  // Injected by SortableItem. The drag activator belongs on the handle button
+  // below, not on the wrapper around the item's other controls.
+  listeners?: SyntheticListenerMap;
+  attributes?: DraggableAttributes;
+  setActivatorNodeRef?: (element: HTMLElement | null) => void;
+}) => {
   const [statisticsDialogVisibility, setStatisticsDialogVisibility] = useState(false);
   const [activeLayers] = useSyncActiveLayers();
   const guideIsActive = useAtomValue(activeGuideAtom);
@@ -80,10 +98,13 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
             {!embedded && (
               <button
                 type="button"
+                ref={setActivatorNodeRef}
                 aria-label="Drag to reorder"
                 className="flex min-h-6 min-w-6 cursor-grab items-center justify-center active:cursor-grabbing"
+                {...attributes}
+                {...listeners}
               >
-                <DRAG_SVG role="img" title="Order layer" />
+                <DRAG_SVG aria-hidden="true" />
               </button>
             )}
           </Media>
@@ -111,7 +132,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
 
             <DialogContent
               className={cn({
-                'h-screen w-screen min-w-135 md:mb-20 md:h-auto md:w-auto': true,
+                'h-screen w-screen min-w-[min(33.75rem,100%)] md:mb-20 md:h-auto md:w-auto': true,
                 hidden: guideIsActive,
               })}
               overlay={false}

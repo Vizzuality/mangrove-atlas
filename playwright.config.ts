@@ -84,6 +84,11 @@ export default defineConfig({
      * instead of the 2-minute test-timeout that tells us nothing. */
     actionTimeout: 10000,
     storageState: STORAGE_STATE,
+    /* Motion/AnimatePresence cards sit at `opacity: 0` mid-animation. axe
+     * samples whatever is on screen, so animating cards produce flaky
+     * colour-contrast results. Reduced motion settles them immediately and
+     * also matches how a `prefers-reduced-motion` user sees the app. */
+    contextOptions: { reducedMotion: 'reduce' },
   },
 
   /* Configure projects for major browsers */

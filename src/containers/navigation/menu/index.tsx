@@ -32,9 +32,9 @@ const Menu = ({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) => {
             type="button"
             onClick={() => setSection('main')}
             aria-label="Menu"
-            className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-none"
+            className="flex w-14 cursor-pointer flex-col items-center justify-center space-y-1 text-white transition-opacity hover:opacity-80 focus-visible:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
-            <MENU_SVG className="h-8 w-8 fill-current text-white" role="img" title="Menu" />
+            <MENU_SVG className="h-8 w-8 fill-current text-white" aria-hidden="true" />
             <span className="text-xxs font-sans leading-none text-white">Menu</span>
           </button>
         </DialogTrigger>
@@ -54,7 +54,7 @@ const Menu = ({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) => {
               onClick={() => setSection('main')}
               className="flex h-full cursor-pointer items-center space-x-2"
             >
-              <MENU_SVG className="h-6 w-6 fill-current" role="img" title="Menu" />
+              <MENU_SVG className="h-6 w-6 fill-current" aria-hidden="true" />
               <span className="font-sans text-sm text-white">Menu</span>
             </button>
           </DialogTrigger>

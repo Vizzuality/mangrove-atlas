@@ -33,7 +33,10 @@ test.describe('Blog navigation', () => {
     await postsList.waitFor();
 
     // Get the first post and its title
-    const firstPost = postsList.locator('h5').first();
+    // Selected by test id, not heading level: post titles moved from h5 to h4
+    // to close a gap in the heading hierarchy, and the level is presentation,
+    // not the thing this test is about.
+    const firstPost = postsList.getByTestId('post-title').first();
     const postTitle = await firstPost.textContent();
 
     // Click on the first post

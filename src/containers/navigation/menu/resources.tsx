@@ -93,6 +93,7 @@ const ResourcesMenu = ({ setSection }) => {
                 'h-4 w-4 stroke-[1px]': true,
                 'text-brand-800 rotate-180': isOpen,
               })}
+              aria-hidden="true"
             />
             <span className="sr-only">Toggle</span>
           </div>

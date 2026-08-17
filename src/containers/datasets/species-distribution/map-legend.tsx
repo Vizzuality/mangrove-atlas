@@ -10,6 +10,8 @@ const SpeciesDistributionMapLegend = () => {
         <p>{legend[2]}</p>
       </div>
       <div
+        role="img"
+        aria-label={`Species distribution, from ${legend[0]} (lightest) to ${legend[2]} (darkest)`}
         className="h-3 w-full border"
         style={{
           background:

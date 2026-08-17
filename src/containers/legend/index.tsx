@@ -32,10 +32,13 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
           {title}
         </h3>
       )}
+      {/* opacity-30 put this subtitle at ~1.9:1. black/60 is 5.7:1. */}
+      {/* Was an <h2> immediately after the <h3> above, i.e. the level went
+          backwards. It is a subtitle of that title, so h4. */}
       {subtitle && (
-        <h2 className="flex max-w-[120px] flex-col justify-center text-sm font-bold opacity-30">
+        <h4 className="flex max-w-[120px] flex-col justify-center text-sm font-bold text-black/60">
           {subtitle}
-        </h2>
+        </h4>
       )}
       {items?.map(
         ({

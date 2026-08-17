@@ -21,11 +21,20 @@ const Toaster = ({ icon = false, ...props }: ToasterProps & { icon?: boolean }) 
         !icon
           ? undefined
           : {
-              success: <CheckCircledIcon className="text-brand-800 size-4 fill-current" />,
-              info: <InfoCircledIcon className="bg-brand-800 size-4" />,
-              warning: <ExclamationTriangleIcon className="bg-brand-800 size-4" />,
-              error: <Cross1Icon className="bg-brand-800 size-4" />,
-              loading: <ReloadIcon className="bg-brand-800 size-4 animate-spin" />,
+              success: (
+                <CheckCircledIcon
+                  className="text-brand-800 size-4 fill-current"
+                  aria-hidden="true"
+                />
+              ),
+              info: <InfoCircledIcon className="bg-brand-800 size-4" aria-hidden="true" />,
+              warning: (
+                <ExclamationTriangleIcon className="bg-brand-800 size-4" aria-hidden="true" />
+              ),
+              error: <Cross1Icon className="bg-brand-800 size-4" aria-hidden="true" />,
+              loading: (
+                <ReloadIcon className="bg-brand-800 size-4 animate-spin" aria-hidden="true" />
+              ),
             }
       }
       style={

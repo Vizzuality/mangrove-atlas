@@ -44,9 +44,9 @@ export default function LoginPage() {
         style={{ backgroundImage: 'url(/images/login/image.webp)' }}
       >
         <div className="mx-24 max-w-xl space-y-6 text-white">
-          <h2 id="mrt-hero-title" className="text-6xl font-light">
+          <p id="mrt-hero-title" className="text-6xl font-light">
             Welcome to Global Mangrove Watch
-          </h2>
+          </p>
           <p className="text-sm leading-relaxed text-white">
             A coordinated effort across sectors and geographies will accomplish more, faster. Global
             Mangrove Watch is the evidence base informing the Global Mangrove Alliance, a
@@ -62,10 +62,14 @@ export default function LoginPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-md px-4 pb-20">
+      <div className="mx-auto w-full max-w-md px-4 pb-20">
         <LandingNavigation />
         <div className="h-full">
-          <div className="flex h-full w-full flex-col justify-center space-y-10">
+          {/* The form column is the main content of this route, so the landmark
+              (and the root layout's skip target) sits here rather than around the
+              whole screen: the logo, the decorative hero and the landing nav are
+              not what someone skipping the chrome wants to land on. */}
+          <main id="main-content" className="flex h-full w-full flex-col justify-center space-y-10">
             <h1 className="text-brand-800 font-sans text-[40px] font-light">Log in</h1>
 
             {searchParams.get('verified') === 'pending' && (
@@ -80,9 +84,9 @@ export default function LoginPage() {
                 <FooterSignup />
               </div>
             </div>
-          </div>
+          </main>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

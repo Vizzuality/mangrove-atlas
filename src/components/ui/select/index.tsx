@@ -23,7 +23,7 @@ function SelectIcon({
   ...props
 }: ComponentProps<typeof SelectPrimitive.Icon>) {
   return (
-    <SelectPrimitive.Icon className={cn(className, 'text-muted-foreground')} {...props}>
+    <SelectPrimitive.Icon className={cn(className, 'text-black/60')} {...props}>
       {children}
     </SelectPrimitive.Icon>
   );
@@ -38,7 +38,7 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       className={cn(
         className,
-        'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-3xl px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
+        'focus:ring-brand-800 flex h-9 w-full items-center justify-between rounded-3xl border-black/15 px-3 py-0 text-sm ring-offset-white placeholder:text-black/60 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50'
       )}
       {...props}
     >
@@ -89,7 +89,7 @@ function SelectItem({
   return (
     <SelectPrimitive.Item
       className={cn(
-        'focus:bg-accent focus:text-accent-foreground relative w-full cursor-pointer items-center justify-between outline-none',
+        'focus:bg-brand-100 focus:text-brand-900 relative w-full cursor-pointer items-center justify-between',
         className
       )}
       {...props}

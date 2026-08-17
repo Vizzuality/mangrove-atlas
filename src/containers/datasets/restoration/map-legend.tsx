@@ -6,6 +6,8 @@ const RestorationMapLegend = () => (
     </div>
 
     <div
+      role="img"
+      aria-label="Restoration potential, from 0% (lightest) to 100% (darkest)"
       className="h-3 w-full border"
       style={{
         background:

@@ -53,9 +53,9 @@ const RolesSelect = ({
         <button
           id={id}
           type="button"
-          className="focus:border-brand-800 flex w-full cursor-pointer items-center justify-between space-x-4 rounded-[100px] border border-black/10 py-2 pr-2 pl-3 text-left text-sm focus:outline-none"
+          className="focus:border-brand-800 flex w-full cursor-pointer items-center justify-between space-x-4 rounded-[100px] border border-black/10 py-2 pr-2 pl-3 text-left text-sm"
         >
-          <span className={cn('truncate', { 'text-zinc-400': !selectedLabels.length })}>
+          <span className={cn('truncate', { 'text-black/60': !selectedLabels.length })}>
             {selectedLabels.length ? selectedLabels.join(', ') : placeholder}
           </span>
           <ARROW_SVG
@@ -95,7 +95,12 @@ const RolesSelect = ({
                     { 'border-4': checked }
                   )}
                 >
-                  {checked && <CHECK_SVG className="fill-brand-800/70 h-2.5 w-2.5 fill-current" />}
+                  {checked && (
+                    <CHECK_SVG
+                      className="fill-brand-800/70 h-2.5 w-2.5 fill-current"
+                      aria-hidden="true"
+                    />
+                  )}
                 </span>
                 <span>{option.label}</span>
               </button>

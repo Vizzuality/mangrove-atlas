@@ -68,15 +68,24 @@ const useFormField = () => {
 
 type FormItemContextValue = {
   id: string;
+  /** Whether a <FormDescription> is mounted inside this item. */
+  hasDescription: boolean;
+  registerDescription: () => void;
 };
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   const id = React.useId();
+  const [hasDescription, setHasDescription] = React.useState(false);
+
+  const value = React.useMemo(
+    () => ({ id, hasDescription, registerDescription: () => setHasDescription(true) }),
+    [id, hasDescription]
+  );
 
   return (
-    <FormItemContext.Provider value={{ id }}>
+    <FormItemContext.Provider value={value}>
       <div data-slot="form-item" className={cn('grid gap-2', className)} {...props} />
     </FormItemContext.Provider>
   );
@@ -94,7 +103,7 @@ function FormLabel({
     <Label
       data-slot="form-label"
       data-error={!!error}
-      className={cn('data-[error=true]:text-destructive mb-1 block text-black/85', className)}
+      className={cn('mb-1 block text-black/85 data-[error=true]:text-red-700', className)}
       htmlFor={formItemId}
       {...props}
     >
@@ -111,14 +120,41 @@ function FormLabel({
   );
 }
 
+function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
+  const { formDescriptionId } = useFormField();
+  const { registerDescription } = React.useContext(FormItemContext);
+
+  React.useEffect(() => {
+    registerDescription();
+  }, [registerDescription]);
+
+  return (
+    <p
+      data-slot="form-description"
+      id={formDescriptionId}
+      className={cn('text-sm text-black/60', className)}
+      {...props}
+    />
+  );
+}
+
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const itemContext = React.useContext(FormItemContext);
+
+  // Only advertise the ids that actually exist in the DOM. A dangling
+  // aria-describedby is worse than none: screen readers announce nothing but
+  // the field looks correctly described to automated checks.
+  const describedBy =
+    [itemContext.hasDescription ? formDescriptionId : null, error ? formMessageId : null]
+      .filter(Boolean)
+      .join(' ') || undefined;
 
   return (
     <Slot
       data-slot="form-control"
       id={formItemId}
-      aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
+      aria-describedby={describedBy}
       aria-invalid={!!error}
       {...props}
     />
@@ -145,4 +181,4 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
   );
 }
 
-export { Form, FormItem, FormLabel, FormControl, FormMessage, FormField };
+export { Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField };

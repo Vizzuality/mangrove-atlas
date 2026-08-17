@@ -27,12 +27,31 @@ const Sources = ({ data, iso }) => {
   return (
     <section className="space-y-6.25">
       {data?.map(({ indicator, sources }) => (
-        <div key={indicator}>
-          <div className={`${gridCols} py-2`}>
-            <h5 className="text-sm font-normal">Source</h5>
-            <h5 className="text-sm font-normal">Year</h5>
-            <h5 className="text-sm font-normal">Extent</h5>
-            <span />
+        /*
+         * ARIA table roles rather than <table> markup: the visual layout is a
+         * CSS grid whose cells are rendered by three separate components, and
+         * real table elements would force either display:contents on the cells
+         * (which drops them from the accessibility tree in some browsers) or a
+         * layout rewrite. The roles give screen readers row/column association
+         * with no rendering change at all.
+         *
+         * The column labels were <h5> elements — they are not headings, and
+         * they polluted the page outline with three entries per indicator.
+         */
+        <div key={indicator} role="table" aria-label={`${indicator} sources`}>
+          <div role="row" className={`${gridCols} py-2`}>
+            <span role="columnheader" className="text-sm font-normal">
+              Source
+            </span>
+            <span role="columnheader" className="text-sm font-normal">
+              Year
+            </span>
+            <span role="columnheader" className="text-sm font-normal">
+              Extent
+            </span>
+            <span role="columnheader" className="sr-only">
+              Layer controls
+            </span>
           </div>
           {sources.map(({ source, years, unit, data_source }) => {
             const colorIndex = sourceColorMap.get(source) ?? 0;
@@ -47,7 +66,9 @@ const Sources = ({ data, iso }) => {
                 key={layerKey}
                 indicator={indicator}
                 source={source}
-                years={years}
+                // Deduped: the year selector keys its options by the year, and a
+                // repeated year would also turn a single-year source into a dropdown.
+                years={years ? [...new Set(years)] : years}
                 unit={unit}
                 data_source={data_source}
                 color={color}

@@ -7,8 +7,6 @@ import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import type { PrimitiveAtom } from 'jotai';
 import { useAtom } from 'jotai';
-import { CgRadioCheck } from 'react-icons/cg';
-import type { IconBaseProps } from 'react-icons/lib';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
 
@@ -29,8 +27,6 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from '@/styles/widge
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse, Specie } from './types';
-
-const RadioCheckIcon = CgRadioCheck as unknown as (p: IconBaseProps) => JSX.Element;
 
 const SpeciesLocation = () => {
   const { type: locationType, id } = useSyncLocation();
@@ -161,20 +157,18 @@ const SpeciesLocation = () => {
                       key={specie.value}
                       value={specie.value}
                       onSelect={() => onSelectSpecies(specie.value)}
-                      className="flex cursor-pointer items-center space-x-4 py-1"
+                      className="flex cursor-pointer items-center gap-2.5 py-1"
                     >
                       <span
                         aria-hidden="true"
                         className={cn(
-                          'flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-black/85',
-                          { 'border-brand-800 border-4': isSelected }
+                          'border-grey-400 flex size-5 shrink-0 items-center justify-center rounded-full border bg-white',
+                          { 'border-brand-800 border-2': isSelected }
                         )}
                       >
-                        {isSelected && <RadioCheckIcon className="text-brand-800 h-2.5 w-2.5" />}
+                        {isSelected && <span className="bg-brand-800 size-2.5 rounded-full" />}
                       </span>
-                      <span className="text-brand-800 text-sm leading-none font-semibold">
-                        {specie.label}
-                      </span>
+                      <span className="text-sm leading-5 text-black/85">{specie.label}</span>
                     </CommandItem>
                   );
                 })}

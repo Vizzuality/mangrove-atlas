@@ -38,9 +38,9 @@ const PrintReportPage = () => {
             key={slug}
             className="mb-4 break-inside-avoid overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-sm print:max-h-[calc(100vh-20mm)]"
           >
-            <h3 className="mb-3 text-xs font-semibold tracking-wider text-black/60 uppercase">
+            <h2 className="mb-3 text-xs font-semibold tracking-wider text-black/60 uppercase">
               {name}
-            </h3>
+            </h2>
             <Widget />
           </div>
         );

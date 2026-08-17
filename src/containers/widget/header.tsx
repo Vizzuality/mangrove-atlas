@@ -34,7 +34,7 @@ const WidgetHeader = ({ title, id, isCollapsed, children }: PropsWithChildren<He
 
   return (
     <header className="flex items-center justify-between">
-      <h2 className="flex min-w-0 flex-1">
+      <h2 id={`widget-${id}-title`} className="flex min-w-0 flex-1">
         <button
           type="button"
           onClick={handleWidgetCollapsed}

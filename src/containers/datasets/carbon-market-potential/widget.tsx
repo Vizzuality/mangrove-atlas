@@ -54,8 +54,7 @@ const CarbonMarketPotentialWidget = () => {
                   {label}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </button>
               </PopoverTrigger>
@@ -97,8 +96,7 @@ const CarbonMarketPotentialWidget = () => {
                   {unit.label}
                   <ARROW_SVG
                     className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
-                    role="img"
-                    title="Arrow"
+                    aria-hidden="true"
                   />
                 </button>
               </PopoverTrigger>

@@ -33,7 +33,7 @@ const SortableList = dynamic(() => import('@/components/map/legend/sortable/list
 });
 
 const iconBtn =
-  'inline-flex h-7.5 w-7.5 items-center justify-center rounded-full text-black/42 hover:bg-black/5';
+  'inline-flex h-7.5 w-7.5 items-center justify-center rounded-full text-black/60 hover:bg-black/5';
 
 type SourceRowProps = {
   id: string;
@@ -90,7 +90,7 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
       <button
         type="button"
         aria-label={`Reorder source ${name}`}
-        className="flex shrink-0 cursor-grab items-center justify-center text-black/42"
+        className="flex shrink-0 cursor-grab items-center justify-center text-black/60"
       >
         <DRAG_SVG aria-hidden={true} />
       </button>
@@ -125,6 +125,7 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
           >
             <Slider
               className="w-[150px] pt-2"
+              thumbAriaLabel={`Opacity of ${name}`}
               defaultValue={[parseFloat(layer.opacity)]}
               onValueChange={(op: number[]) => changeOpacity(op[0])}
             />

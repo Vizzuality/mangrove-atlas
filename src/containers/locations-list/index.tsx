@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 'react-virtualized';
 
@@ -55,10 +55,17 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
   const locationsToDisplay = searchValue === '' ? locations : searchResults;
-  const cache = new CellMeasurerCache({
-    fixedWidth: true,
-    defaultHeight: 100,
-  });
+  // A fresh cache on every render discards all measured row heights, so the next
+  // render re-measures and the rows shift. That shift lands between a click's
+  // mousedown and mouseup and the click is lost — see the focus guard below.
+  const cache = useMemo(
+    () =>
+      new CellMeasurerCache({
+        fixedWidth: true,
+        defaultHeight: 100,
+      }),
+    []
+  );
 
   const handleLocation = useCallback(
     (location: Location) => {
@@ -143,8 +150,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               aria-disabled={locationId === locationsToDisplay[index].id || undefined}
               tabIndex={-1}
               className={cn({
-                'hover:bg-brand-800/10 flex h-full w-full flex-1 cursor-pointer items-center justify-between px-4 py-1 hover:rounded-2xl':
-                  true,
+                'hover:bg-brand-800/10 flex h-full w-full flex-1 cursor-pointer items-center justify-between px-4 py-1 hover:rounded-2xl': true,
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
                 'bg-brand-800/5 border-brand-800 rounded-2xl border-2': focusedIndex === index,
               })}
@@ -167,7 +173,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               >
                 {locationsToDisplay[index].name}
               </p>
-              <span className="text-grey-800 text-opacity-90 text-xs">
+              <span className="text-grey-600 text-xs">
                 {locationNames[locationsToDisplay[index].location_type]}
               </span>
             </button>
@@ -221,11 +227,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             className="absolute top-1/2 right-6 flex -translate-y-1/2 cursor-pointer items-center"
             onClick={() => setSearchValue('')}
           >
-            <CLOSE_SVG
-              className="h-5 w-5 transform fill-current opacity-50"
-              role="img"
-              aria-hidden={true}
-            />
+            <CLOSE_SVG className="h-5 w-5 transform fill-current opacity-50" aria-hidden={true} />
           </button>
         )}
       </div>
@@ -252,9 +254,18 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                     : undefined
                 }
                 onKeyDown={handleListKeyDown}
-                onFocus={() => {
+                // React's onFocus is focusin, which bubbles: pressing the mouse on an
+                // option focuses that option and would activate the keyboard cursor
+                // here, re-rendering the list (scrollToIndex) before mouseup and
+                // swallowing the click. Only a Tab onto the listbox itself counts.
+                onFocus={(e) => {
+                  if (e.target !== e.currentTarget) return;
                   if (focusedIndex < 0) setFocusedIndex(0);
                 }}
+                // The listbox holds DOM focus while `aria-activedescendant`
+                // moves the active option. Suppressing the container outline is
+                // correct here *because* the active option carries its own
+                // visible indicator (border-2 border-brand-800, see renderRow).
                 className="focus:outline-none"
                 style={{ width, height }}
               >

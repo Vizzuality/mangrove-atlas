@@ -636,6 +636,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                 >
                   <button
                     type="button"
+                    aria-label="Remove map marker"
                     onClick={(e) => {
                       e.stopPropagation();
                       setCoordinates(null);
@@ -643,7 +644,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                       setPin(false);
                     }}
                   >
-                    <Image src="/images/MapMarker.png" alt="Map Marker" width={24} height={40} />
+                    <Image src="/images/MapMarker.png" alt="" width={24} height={40} />
                   </button>
                 </Marker>
               )}

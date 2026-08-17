@@ -44,15 +44,17 @@ export default function ForgotPasswordPage() {
   return (
     <div className="relative flex min-h-screen bg-white">
       <Logo position="top-left" width={360} />
-      <section
+      {/* Empty decorative panel — see the signup page. */}
+      <div
+        aria-hidden="true"
         className="flex w-[50%] flex-col justify-center bg-cover bg-right px-4 py-8"
-        aria-labelledby="mrt-hero-title"
         style={{ backgroundImage: 'url(/images/login/image.webp)' }}
       />
 
-      <section className="mx-auto w-full max-w-md px-4 pb-20">
+      <div className="mx-auto w-full max-w-md px-4 pb-20">
         <LandingNavigation />
-        <div className="flex h-full w-full flex-col justify-center space-y-10">
+        {/* See login-container: main is the form column, not the whole screen. */}
+        <main id="main-content" className="flex h-full w-full flex-col justify-center space-y-10">
           <h1 className="text-brand-800 font-sans text-[40px] font-light">Forgot Password</h1>
           {resetPassword.isSuccess && (
             <SuccessAlert message="Please check your inbox for instructions to reset your password" />
@@ -74,8 +76,9 @@ export default function ForgotPasswordPage() {
                           <Input
                             type="email"
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-black/60"
                             placeholder="Email"
+                            autoComplete="email"
                           />
                         </FormControl>
                         <FormMessage />
@@ -93,8 +96,8 @@ export default function ForgotPasswordPage() {
               </form>
             </Form>
           </div>
-        </div>
-      </section>
+        </main>
+      </div>
     </div>
   );
 }

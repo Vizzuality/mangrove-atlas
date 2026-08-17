@@ -120,8 +120,17 @@ const WidgetsMenu: FC = () => {
   );
 
   return (
-    <div>
-      <div className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold tracking-[1px] uppercase">
+    /* A checkbox group, not tabular data: each row is two independent toggles
+       for one dataset. A fieldset/legend names the group; every checkbox gets
+       its own aria-label combining the column ("widget" / "layer") with the
+       dataset name, since the visible <p> is a sibling and the column headings
+       below are not programmatically associated with anything. */
+    <fieldset>
+      <legend className="sr-only">Widgets and map layers to display</legend>
+      <div
+        aria-hidden="true"
+        className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold tracking-[1px] uppercase"
+      >
         <div>Widget</div>
         <div>Layer</div>
         <div>Name</div>
@@ -130,35 +139,41 @@ const WidgetsMenu: FC = () => {
         <div key="menu-item-all" className="grid grid-cols-[57px_42px_auto] gap-4 text-sm">
           <Checkbox
             id="all-widgets"
+            aria-label="Select all widgets"
             data-testid="all-widgets-checkbox"
             onCheckedChange={handleAllWidgets}
             checked={widgets.length === activeWidgets.length}
             defaultChecked={categorySelected === 'all_datasets'}
             className={cn({
-              'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white text-white':
-                true,
+              'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white text-white': true,
               'bg-brand-800': widgets.length === activeWidgets.length,
             })}
           >
             <CheckboxIndicator>
-              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon
+                className="h-2.5 w-2.5 fill-current font-bold text-white"
+                aria-hidden="true"
+              />
             </CheckboxIndicator>
           </Checkbox>
 
           <Checkbox
             id="all-layers"
+            aria-label="Select all layers"
             data-testid="all-layers-checkbox"
             onCheckedChange={handleAllLayers}
             defaultChecked={false}
             checked={LAYERS.length === activeLayers?.length}
             className={cn({
-              'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white text-white':
-                true,
+              'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white text-white': true,
               'bg-brand-800': LAYERS.length === activeLayers?.length,
             })}
           >
             <CheckboxIndicator>
-              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon
+                className="h-2.5 w-2.5 fill-current font-bold text-white"
+                aria-hidden="true"
+              />
             </CheckboxIndicator>
           </Checkbox>
           <p
@@ -180,15 +195,15 @@ const WidgetsMenu: FC = () => {
               })}
             >
               <Checkbox
-                id={slug}
-                data-testid={`${slug}-checkbox`}
+                id={`${slug}-widget`}
+                aria-label={`${name} widget`}
+                data-testid={`${slug}-widget-checkbox`}
                 onCheckedChange={() => handleWidgets(slug)}
                 defaultChecked
                 disabled={!enabledWidgets.includes(slug)}
                 checked={activeWidgets.includes(slug)}
                 className={cn({
-                  'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white':
-                    true,
+                  'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white': true,
                   'bg-brand-800 text-white':
                     activeWidgets.includes(slug) && enabledWidgets.includes(slug),
                 })}
@@ -200,21 +215,22 @@ const WidgetsMenu: FC = () => {
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeWidgets.includes(slug),
                       })}
+                      aria-hidden="true"
                     />
                   </CheckboxIndicator>
                 )}
               </Checkbox>
               {!!layersIds && !!layersIds.length && slug !== 'mangrove_national_dashboard' && (
                 <Checkbox
-                  id={slug}
-                  data-testid={`${slug}-checkbox`}
+                  id={`${slug}-layer`}
+                  aria-label={`${name} layer`}
+                  data-testid={`${slug}-layer-checkbox`}
                   onCheckedChange={() => handleLayers(slug)}
                   disabled={!enabledWidgets.includes(slug)}
                   defaultChecked
                   checked={activeLayersIds?.includes(slug)}
                   className={cn({
-                    'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white':
-                      true,
+                    'text-brand-500 m-auto h-3 w-3 cursor-pointer rounded-sm border border-black/15 bg-white': true,
                     'bg-brand-800 font-bold text-white':
                       activeLayersIds?.includes(slug) && enabledWidgets.includes(slug),
                   })}
@@ -225,6 +241,7 @@ const WidgetsMenu: FC = () => {
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeLayersIds?.includes(slug),
                       })}
+                      aria-hidden="true"
                     />
                   </CheckboxIndicator>
                 </Checkbox>
@@ -244,7 +261,7 @@ const WidgetsMenu: FC = () => {
           );
         })}
       </div>
-    </div>
+    </fieldset>
   );
 };
 

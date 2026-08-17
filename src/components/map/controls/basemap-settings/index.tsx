@@ -25,16 +25,15 @@ const BasemapSettings = () => {
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger
+            aria-label="Basemap settings"
             data-testid="basemap-settings-button"
             className={cn({
-              'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
-                true,
+              'group shadow-control focus-visible:shadow-control-focus inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none': true,
             })}
           >
             <BASEMAP_SETTINGS_SVG
               className="group-disabled:fill-grey-75 h-4 w-4 group-hover:bg-gray-100"
-              role="img"
-              title="Basemap settings"
+              aria-hidden="true"
             />
           </DialogTrigger>
         </TooltipTrigger>
@@ -54,7 +53,7 @@ const BasemapSettings = () => {
             tooltipPosition={{ top: -140, left: 0 }}
             message="use these buttons to switch between basemaps"
           >
-            <div className="flex w-[490px] flex-col space-y-2">
+            <div className="flex max-h-[80dvh] w-[min(490px,calc(100vw-3rem))] flex-col space-y-2 overflow-y-auto">
               <p className="text-xs font-bold tracking-[1px] uppercase">map style</p>
               <Basemaps />
             </div>

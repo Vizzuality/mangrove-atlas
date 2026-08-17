@@ -56,9 +56,9 @@ const LanguageSelector = ({
             className
           )}
         >
-          <LANGUAGES_ICON className="h-6 w-6 shrink-0" />
+          <LANGUAGES_ICON className="h-6 w-6 shrink-0" aria-hidden="true" />
           <span className="text-sm">{currentLanguage?.name}</span>
-          {hasArrow && <CHEVRON_ICON role="img" className="h-4 w-4" />}
+          {hasArrow && <CHEVRON_ICON aria-hidden="true" className="h-4 w-4" />}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white">
           {languages.map((lang) => (

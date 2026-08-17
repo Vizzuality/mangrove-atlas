@@ -31,6 +31,28 @@
 }
 
 @layer base {
+  :root {
+    /* Consumed by `.bg-blur` below, which referenced it while it was never
+       defined anywhere — an invalid-at-computed-value-time declaration.
+       (`.bg-blur` is currently tree-shaken out of the build entirely, so
+       widget cards render as plain `bg-white`; defining this makes the rule
+       correct if the utility is ever emitted again.) */
+    --background-rgb: 255, 255, 255;
+  }
+
+  /*
+   * Global focus fallback.
+   *
+   * Individual components layer their own `focus-visible:ring-*` on top; this
+   * exists so that a control which forgets one — or which strips the UA
+   * outline with `outline-none` — still shows a visible focus indicator
+   * (WCAG 2.4.7). Keyed on :focus-visible, so pointer users never see it.
+   */
+  :focus-visible {
+    outline: 2px solid #00857f; /* brand-800 */
+    outline-offset: 2px;
+  }
+
   input[type='search']::-webkit-search-decoration,
   input[type='search']::-webkit-search-cancel-button,
   input[type='search']::-webkit-search-results-button,
@@ -130,10 +152,28 @@
   }
 }
 
-/* Firefox */
+/* Firefox equivalent of the ::-webkit-scrollbar rules above. `--secondary` and
+   `--primary` were never defined, so this silently fell back to the UA default. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--secondary) var(--primary);
+  scrollbar-color: #cdd0d0 #f3f5f5;
+}
+
+/*
+ * CSS-driven motion (Tailwind `animate-*`, the collapsible keyframes, the help
+ * hotspot ping) is outside motion/react's control, so it needs its own opt-out.
+ * WCAG 2.3.3. Kept near-zero rather than `none` so animation/transition end
+ * events still fire and JS that waits on them does not hang.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Brush charts: don't clip axis labels that overflow the plot. The first/last year

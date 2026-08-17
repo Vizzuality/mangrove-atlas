@@ -36,7 +36,7 @@ const NewsButton = ({
       data-testid="news-button"
       aria-label="Open news and updates"
       onClick={onClick}
-      className="relative flex h-full w-14 cursor-pointer items-center justify-center rounded transition outline-none lg:w-auto lg:px-2"
+      className="relative flex h-full w-14 cursor-pointer items-center justify-center rounded transition lg:w-auto lg:px-2"
     >
       <Helper
         className={{ button: '-top-2.5 -right-4 z-20', tooltip: 'w-fit-content' }}
@@ -48,8 +48,7 @@ const NewsButton = ({
             <span className="relative inline-block h-8 w-8 lg:h-6 lg:w-6">
               <NEWS_SVG
                 className="h-8 w-8 fill-current text-white lg:h-6 lg:w-6"
-                role="img"
-                title="News"
+                aria-hidden="true"
               />
               {showIndicator && (
                 <span

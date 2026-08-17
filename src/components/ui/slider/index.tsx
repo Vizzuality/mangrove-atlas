@@ -67,12 +67,12 @@ const Slider = ({
         aria-label={thumbAriaLabel}
         aria-valuetext={thumbAriaValueText}
         className={cn(
-          'focus-visible:ring-ring relative flex min-h-6 min-w-6 cursor-pointer items-center justify-center bg-transparent before:block before:h-4 before:w-4 before:rounded-full before:border before:border-white before:bg-black before:content-[""] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
+          'focus-visible:ring-brand-800 relative flex min-h-6 min-w-6 cursor-pointer items-center justify-center bg-transparent before:block before:h-4 before:w-4 before:rounded-full before:border before:border-white before:bg-black before:content-[""] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
           thumbClassName
         )}
       >
         {showValueLabel && (
-          <p className="absolute bottom-3 text-xs text-black/40">{displayValue}</p>
+          <p className="absolute bottom-3 text-xs text-black/60">{displayValue}</p>
         )}
       </SliderPrimitive.Thumb>
     </SliderPrimitive.Root>

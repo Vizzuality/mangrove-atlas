@@ -37,7 +37,8 @@ const PotentialBenefitsToFisheries = () => {
         <div className="space-y-4">
           <h3 className="text-xs uppercase">potential benefits to fisheries</h3>
           <p className={WIDGET_SENTENCE_STYLE}>
-            Mangrove restoration enhanced the production of new individuals for commercial purposes:{' '}
+            Mangrove restoration enhanced the production of new individuals for commercial
+            purposes:{' '}
           </p>
           <div className="grid flex-1 grid-cols-2 flex-col items-center gap-2 pb-10">
             {data?.map(({ indicator, value }) => {
@@ -55,7 +56,6 @@ const PotentialBenefitsToFisheries = () => {
                       className={cn({
                         'box-content h-6 w-6 rounded-md fill-current p-1': true,
                       })}
-                      role="img"
                       aria-hidden={true}
                     />
                   </div>

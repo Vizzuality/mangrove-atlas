@@ -12,7 +12,7 @@ import ZOOM_IN_SVG from '@/svgs/map/zoom-in';
 import ZOOM_OUT_SVG from '@/svgs/map/zoom-out';
 
 const COMMON_CLASSES =
-  'bg-white group w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
+  'bg-white group focus-visible:shadow-control-focus w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
 
 const SVG_COMMON_CLASSES = 'h-4 w-4 group-disabled:fill-grey-75';
 
@@ -55,11 +55,7 @@ const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }
             disabled={zoom >= maxZoom}
             onClick={increaseZoom}
           >
-            <ZOOM_IN_SVG
-              className={`fill-current ${SVG_COMMON_CLASSES}`}
-              role="img"
-              title="Zoom-in"
-            />
+            <ZOOM_IN_SVG className={`fill-current ${SVG_COMMON_CLASSES}`} aria-hidden="true" />
           </button>
         </TooltipTrigger>
         <TooltipContent className="bg-gray-600 px-2 text-white">Zoom in</TooltipContent>
@@ -75,11 +71,7 @@ const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }
             disabled={zoom <= minZoom}
             onClick={decreaseZoom}
           >
-            <ZOOM_OUT_SVG
-              className={`fill-current ${SVG_COMMON_CLASSES}`}
-              role="img"
-              title="Zoom-out"
-            />
+            <ZOOM_OUT_SVG className={`fill-current ${SVG_COMMON_CLASSES}`} aria-hidden="true" />
           </button>
         </TooltipTrigger>
         <TooltipContent className="bg-gray-600 px-2 text-white">Zoom out</TooltipContent>

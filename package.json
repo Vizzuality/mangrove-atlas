@@ -94,6 +94,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
     "@playwright/test": "1.61.1",
     "@tailwindcss/forms": "0.5.11",
     "@tailwindcss/postcss": "4.3.2",
@@ -110,6 +111,7 @@
     "@types/react-dom": "18.2.0",
     "@vitejs/plugin-react": "6.0.3",
     "@vitest/coverage-v8": "4.1.9",
+    "axe-core": "4.13.0",
     "eslint": "9.39.2",
     "eslint-config-next": "16.2.10",
     "eslint-config-prettier": "10.1.8",

@@ -109,8 +109,7 @@ const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
             <Listbox.Options
               className={cn({
-                'pointer-events-auto absolute top-full left-0 z-50 mt-1 max-h-60 w-full overflow-y-auto text-base leading-6 focus:outline-none':
-                  true,
+                'pointer-events-auto absolute top-full left-0 z-50 mt-1 max-h-60 w-full overflow-y-auto text-base leading-6': true,
                 [THEME[theme].menu]: true,
               })}
             >
@@ -153,8 +152,10 @@ const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   const groupOptions = options?.filter((o) => o.group === g.value);
 
                   return (
-                    <div key={g.value}>
-                      <h3 className="py-2 pl-3 text-xs font-bold">{g.label}</h3>
+                    <div key={g.value} role="group" aria-labelledby={`select-group-${g.value}`}>
+                      <p id={`select-group-${g.value}`} className="py-2 pl-3 text-xs font-bold">
+                        {g.label}
+                      </p>
                       {groupOptions?.map((opt) => (
                         <Option key={opt.value} opt={opt} theme={theme} />
                       ))}
