@@ -22,13 +22,24 @@ type MosaicsResponse = {
   data?: Mosaics[];
 };
 
-const getDates = (data: Mosaics[] = []) =>
-  data
+// Mosaics collapse to month granularity, so two mosaics acquired in the same month
+// yield the same option `value` — an ambiguous Radix select value and a duplicate
+// React key. Keep the first of each month.
+const getDates = (data: Mosaics[] = []) => {
+  const seen = new Set<string>();
+
+  return data
     .filter((m) => m?.first_acquired)
     .map(({ first_acquired }) => ({
       value: format(new Date(first_acquired), 'yyyy-MM'),
       label: format(new Date(first_acquired), 'MMMM yyyy'),
-    }));
+    }))
+    .filter(({ value }) => {
+      if (seen.has(value)) return false;
+      seen.add(value);
+      return true;
+    });
+};
 
 type DateOption = { value: string; label: string };
 

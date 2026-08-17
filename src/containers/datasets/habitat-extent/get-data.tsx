@@ -29,7 +29,10 @@ export function getHabitatExtentData({
   widgetSlug,
 }: GetHabitatExtentDataArgs) {
   const metadata = data?.metadata;
-  const years = metadata?.year?.sort();
+  // Copy before sorting (`sort` would mutate the cached response), sort numerically
+  // (the default comparator is lexicographic) and drop repeats — a duplicate year
+  // reaches the selector, the timeline and the map sources as a duplicate key.
+  const years = metadata?.year ? [...new Set(metadata.year)].sort((a, b) => a - b) : undefined;
   const currentYear = year || years?.[years?.length - 1];
   const dataByYear = data?.data?.filter(({ year: y }) => y === currentYear);
   const dataParsed = dataByYear?.reduce(

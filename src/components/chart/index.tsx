@@ -200,7 +200,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                 <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
                   {!!bars[key].label && <Label {...bars[key].label} />}
                   {bars[key].itemColor &&
-                    data.map((item) => <Cell key={`c_${item.color}`} fill={item.color} />)}
+                    data.map((item, i) => <Cell key={`c_${i}`} fill={item.color} />)}
                 </Bar>
               );
             })}
@@ -235,7 +235,8 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                 </Pie>
               );
             })}
-          {referenceLines && referenceLines.map((line) => <ReferenceLine key={line} {...line} />)}
+          {referenceLines &&
+            referenceLines.map((line, i) => <ReferenceLine key={`rl_${i}`} {...line} />)}
           {tooltip && <Tooltip {...tooltip} />}
           {/* {brush && (
             <BrushRecharts

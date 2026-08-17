@@ -55,14 +55,21 @@ const ChartDataTable = ({ data, xKey, seriesKeys, caption, labelledBy }: ChartDa
         </tr>
       </thead>
       <tbody>
-        {data.map((row, index) => (
-          <tr key={rowLabel(row, xKey, index)}>
-            <th scope="row">{rowLabel(row, xKey, index)}</th>
-            {seriesKeys.map((key) => (
-              <td key={key}>{cellValue(row[key])}</td>
-            ))}
-          </tr>
-        ))}
+        {data.map((row, index) => {
+          const label = rowLabel(row, xKey, index);
+
+          return (
+            // Rows are positional and never reorder, and labels repeat by design
+            // (a monthly series charted against `year` shares one label per year),
+            // so the index is part of the key.
+            <tr key={`${label}-${index}`}>
+              <th scope="row">{label}</th>
+              {seriesKeys.map((key) => (
+                <td key={key}>{cellValue(row[key])}</td>
+              ))}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

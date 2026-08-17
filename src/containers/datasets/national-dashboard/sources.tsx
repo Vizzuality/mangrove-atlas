@@ -66,7 +66,9 @@ const Sources = ({ data, iso }) => {
                 key={layerKey}
                 indicator={indicator}
                 source={source}
-                years={years}
+                // Deduped: the year selector keys its options by the year, and a
+                // repeated year would also turn a single-year source into a dropdown.
+                years={years ? [...new Set(years)] : years}
                 unit={unit}
                 data_source={data_source}
                 color={color}

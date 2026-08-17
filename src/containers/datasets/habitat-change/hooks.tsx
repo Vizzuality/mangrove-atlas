@@ -65,7 +65,8 @@ export function useMangroveHabitatChange(
   const { data, isFetched } = query;
   const noData = isFetched && !data?.data?.length;
 
-  const years = data?.metadata?.years;
+  // Deduped: both year selectors key their options by the year itself.
+  const years = data?.metadata?.years ? [...new Set(data.metadata.years)] : undefined;
   const unit = data?.metadata?.units?.[0]?.value || [];
   const currentStartYear = startYear || years?.[0];
   const currentEndYear = endYear || years?.[years?.length - 1];

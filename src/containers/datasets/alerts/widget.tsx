@@ -133,8 +133,10 @@ const AlertsWidget = () => {
 
               <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
-                  {startDateOptions?.map((date) => (
-                    <li key={date?.label} className="last-of-type:pb-4">
+                  {/* Keyed by value + index: the label degrades to ", <year>" for any
+                      month the MONTHS lookup misses, which would repeat within a year. */}
+                  {startDateOptions?.map((date, i) => (
+                    <li key={`${date?.value}-${i}`} className="last-of-type:pb-4">
                       <button
                         aria-label="Select start date"
                         className={cn({
@@ -176,8 +178,8 @@ const AlertsWidget = () => {
 
               <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
-                  {endDateOptions?.map((date) => (
-                    <li key={date?.label} className="last-of-type:pb-4">
+                  {endDateOptions?.map((date, i) => (
+                    <li key={`${date?.value}-${i}`} className="last-of-type:pb-4">
                       <button
                         aria-label="Select end date"
                         className={cn({
