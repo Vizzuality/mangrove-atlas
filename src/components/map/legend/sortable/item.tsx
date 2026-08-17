@@ -14,7 +14,15 @@ const SortableItem: React.FC<SortableItemProps> = ({
   children,
   'data-testid': dataTestId,
 }: SortableItemProps) => {
-  const { attributes, listeners, transform, transition, isDragging, setNodeRef } = useSortable({
+  const {
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+    setNodeRef,
+    setActivatorNodeRef,
+  } = useSortable({
     id,
   });
 
@@ -23,10 +31,14 @@ const SortableItem: React.FC<SortableItemProps> = ({
     transition,
   };
 
+  // The drag activator goes on the child's own handle button. Spreading it here
+  // instead would give this wrapper `role="button"` and `tabindex="0"` around the
+  // item's other controls — nested interactive content (WCAG 4.1.2).
   const CHILD = cloneElement(children as ReactElement, {
     sortable,
     listeners,
     attributes,
+    setActivatorNodeRef,
   });
 
   return (
@@ -39,10 +51,6 @@ const SortableItem: React.FC<SortableItemProps> = ({
       })}
       style={style}
       data-testid={dataTestId}
-      {...(sortable?.handle && {
-        ...listeners,
-        ...attributes,
-      })}
     >
       {CHILD}
     </div>

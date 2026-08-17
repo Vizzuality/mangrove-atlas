@@ -5,7 +5,9 @@ import { expectNoViolations } from './utils/axe';
 test.describe('a11y: embedded view', () => {
   test('has no WCAG violations', async ({ page }) => {
     await page.goto('/embedded/country/IDN');
-    await expect(page.getByTestId('widgets-wrapper')).toBeVisible();
+    // The embedded view is the map and its legend — there is no widgets column
+    // here, so the legend is the last thing to settle.
+    await expect(page.getByTestId('legend-content')).toBeVisible();
 
     await expectNoViolations(page, { route: '/embedded' });
   });
