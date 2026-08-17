@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 'react-virtualized';
 
@@ -55,10 +55,17 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
   const locationsToDisplay = searchValue === '' ? locations : searchResults;
-  const cache = new CellMeasurerCache({
-    fixedWidth: true,
-    defaultHeight: 100,
-  });
+  // A fresh cache on every render discards all measured row heights, so the next
+  // render re-measures and the rows shift. That shift lands between a click's
+  // mousedown and mouseup and the click is lost — see the focus guard below.
+  const cache = useMemo(
+    () =>
+      new CellMeasurerCache({
+        fixedWidth: true,
+        defaultHeight: 100,
+      }),
+    []
+  );
 
   const handleLocation = useCallback(
     (location: Location) => {
@@ -247,7 +254,12 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                     : undefined
                 }
                 onKeyDown={handleListKeyDown}
-                onFocus={() => {
+                // React's onFocus is focusin, which bubbles: pressing the mouse on an
+                // option focuses that option and would activate the keyboard cursor
+                // here, re-rendering the list (scrollToIndex) before mouseup and
+                // swallowing the click. Only a Tab onto the listbox itself counts.
+                onFocus={(e) => {
+                  if (e.target !== e.currentTarget) return;
                   if (focusedIndex < 0) setFocusedIndex(0);
                 }}
                 // The listbox holds DOM focus while `aria-activedescendant`
