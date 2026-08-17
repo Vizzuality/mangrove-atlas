@@ -39,7 +39,7 @@ export const Option = ({ opt, theme }: OptionProps) => {
             [THEME[theme].item.disabled]: d,
           })}
         >
-          <Checkbox className="h-4 w-4 cursor-pointer" checked={s}>
+          <Checkbox className="h-3 w-3 cursor-pointer" checked={s}>
             <CheckboxIndicator>
               <CHECK_SVG
                 className="fill-brand-800/70 h-2.5 w-2.5 fill-current"
