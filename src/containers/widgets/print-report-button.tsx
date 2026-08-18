@@ -19,9 +19,12 @@ export default function PrintReportButton() {
   const searchParams = useSearchParams();
 
   const handlePrintReport = useCallback(() => {
-    const qs = searchParams.toString();
+    const params = new URLSearchParams(searchParams.toString());
+    // The report opens the print dialog itself once the map and charts have
+    // finished rendering, so this stays a single click for the user.
+    params.set('autoprint', '1');
     const printPath = `/print-report${pathname === '/' ? '' : pathname}`;
-    window.open(qs ? `${printPath}?${qs}` : printPath, '_blank');
+    window.open(`${printPath}?${params.toString()}`, '_blank');
   }, [pathname, searchParams]);
 
   const helperButtonClass =
