@@ -10,12 +10,15 @@ export default function PrintReportLayout({ children }: { children: React.ReactN
   return (
     // id="main-content" is the target of the root layout's skip link.
     <main id="main-content" className="print-report relative min-h-screen w-full bg-white p-4">
+      {/* The mark on transparent ground — the app's `logo-bg.png` carries a
+          teal wedge behind it, which reads as a printed block of ink in the
+          corner of every page. Same artwork as the favicon. */}
       <Image
-        src="/images/logo-bg.png"
+        src="/images/logo-mark.png"
         alt="Global Mangrove Watch"
-        width={80}
-        height={93}
-        className="absolute top-0 right-0 z-10"
+        width={76}
+        height={90}
+        className="absolute top-4 right-4 z-10"
       />
       {/* The page is laid out in millimetres on screen as well as in print:
           the A4 landscape box is 277x190mm after margins, and any size that
