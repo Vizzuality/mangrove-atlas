@@ -163,6 +163,13 @@
   display: none !important;
 }
 
+/* Brushes are range controls: the printed chart already shows the range they
+   are set to, so the strip underneath is dead weight. */
+.print-report .c-brush,
+.print-report .recharts-brush {
+  display: none;
+}
+
 /* The map legend is a reference strip, not body copy: every dataset legend sets
    its own type sizes, so the report scales the whole block down in one place. */
 .print-report-legend :is(p, span, div, li, td, th) {

@@ -7,6 +7,8 @@ import { RestorationSitesMapFilters } from '@/store/widgets/restoration-sites';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { useSetAtom } from 'jotai';
 
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
+
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Loading from '@/components/ui/loading';
 import { BUTTON_STYLES, WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
@@ -16,6 +18,8 @@ import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from 
 import SelectedFilters from './selected-filters';
 
 const RestorationSitesWidget = () => {
+  const isPrintReport = useIsPrintReport();
+
   // filters component state to avoid refetch on every selection
   const [filters, setFilters] = useState<{ [key: string]: string[] | number[] }>({});
 
@@ -75,7 +79,7 @@ const RestorationSitesWidget = () => {
             <p className={WIDGET_SENTENCE_STYLE}>
               There are <span className="font-bold">{data.data?.length}</span> restoration sites in{' '}
               {data.location}
-              {!areFiltersEmpty && ' that match your criteria'}.<sup>*</sup>
+              {!areFiltersEmpty && ' that match your criteria'}.{!isPrintReport && <sup>*</sup>}
             </p>
           )}
           {data.data?.length === 0 && (
@@ -84,10 +88,13 @@ const RestorationSitesWidget = () => {
               one
             </p>
           )}
+          {/* Filtering and the MRTT footnote are both invitations to act, which
+              a printed page cannot offer. */}
           <Dialog open={open} onOpenChange={setOpen}>
             <div
               className={cn({
                 'flex justify-between text-xs': true,
+                hidden: isPrintReport,
                 'border-b-grey-50 border-b-2 pb-5': areFiltersSelected,
               })}
             >
@@ -141,7 +148,7 @@ const RestorationSitesWidget = () => {
               filtersSelected={filtersSelected}
             />
           )}
-          <div className="text-sm">
+          <div className={cn({ 'text-sm': true, hidden: isPrintReport })}>
             <sup>*</sup>As entered into the Mangrove Restoration Tracker Tool. Enter your data{' '}
             {/* "here" is meaningless out of context, and screen reader users often navigate by a
                 list of links alone — aria-label gives this one a name that stands on its own. */}

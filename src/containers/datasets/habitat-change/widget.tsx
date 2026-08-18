@@ -7,6 +7,7 @@ import { habitatChangeEndYear, habitatChangeStartYear } from '@/store/widgets/ha
 
 import { useAtom } from 'jotai';
 
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
 import NoData from '@/containers/widgets/no-data';
 
 import Chart from '@/components/chart';
@@ -40,6 +41,7 @@ const labelsForLayer = [
   // }, TO - DO - add back when client fixes data for gain and loss
 ];
 const HabitatExtent = () => {
+  const isPrintReport = useIsPrintReport();
   const [startYear, setStartYear] = useAtom(habitatChangeStartYear);
   const [endYear, setEndYear] = useAtom(habitatChangeEndYear);
   const [limit, setLimit] = useState<UseParamsOptions['limit']>(5);
@@ -182,10 +184,14 @@ const HabitatExtent = () => {
             <Chart config={config} />
           </div>
 
+          {/* A control: the report prints whichever ranking length is set. */}
           <button
             aria-label="set number of countries to show"
             type="button"
-            className="text-brand-800 flex w-full items-center justify-center space-x-2 text-sm font-semibold"
+            className={cn({
+              'text-brand-800 flex w-full items-center justify-center space-x-2 text-sm font-semibold': true,
+              hidden: isPrintReport,
+            })}
             onClick={() => {
               const newLimit = limit === 5 ? 10 : 5;
               // Google Analytics tracking

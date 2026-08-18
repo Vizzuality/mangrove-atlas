@@ -10,6 +10,7 @@ import type { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 import type { PrimitiveAtom } from 'jotai';
 import { useAtom, useAtomValue } from 'jotai';
 
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
 import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
@@ -30,6 +31,7 @@ import { useAlerts } from './hooks';
 import Legend from './legend';
 
 const AlertsWidget = () => {
+  const isPrintReport = useIsPrintReport();
   const [startDate, setStartDate] = useAtom(
     alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
   );
@@ -220,35 +222,39 @@ const AlertsWidget = () => {
 
           <Legend />
           <Chart config={config} />
-          <Chart
-            config={{
-              ...configBrush,
-              onBrushEnd: ({ startIndex, endIndex }) => {
-                if (startIndex) {
-                  // Google Analytics tracking
-                  trackEvent('Widget iteration - start date change in alerts', {
-                    category: 'Widget iteration',
-                    action: 'Brush - drag',
-                    label: `Widget iteration - alerts start date ${fullData[startIndex]?.startDate}`,
-                    value: fullData[startIndex]?.startDate,
-                  });
-                  setStartDate(fullData[startIndex]?.startDate);
-                }
-                if (endIndex) {
-                  // Google Analytics tracking
-                  trackEvent('Widget iteration - end date change in alerts', {
-                    category: 'Widget iteration',
-                    action: 'Brush - drag',
-                    label: `Widget iteration - alerts end date ${fullData[endIndex]?.endDate}`,
-                    value: fullData[endIndex]?.endDate,
-                  });
-                  setEndDate(fullData[endIndex]?.endDate);
-                }
-              },
-              startIndex: configBrush?.customBrush?.startIndex,
-              endIndex: configBrush?.customBrush?.endIndex,
-            }}
-          />
+          {/* The brush chart is a range control, and the chart above already
+              shows the range it is set to — the report drops it for the height. */}
+          {!isPrintReport && (
+            <Chart
+              config={{
+                ...configBrush,
+                onBrushEnd: ({ startIndex, endIndex }) => {
+                  if (startIndex) {
+                    // Google Analytics tracking
+                    trackEvent('Widget iteration - start date change in alerts', {
+                      category: 'Widget iteration',
+                      action: 'Brush - drag',
+                      label: `Widget iteration - alerts start date ${fullData[startIndex]?.startDate}`,
+                      value: fullData[startIndex]?.startDate,
+                    });
+                    setStartDate(fullData[startIndex]?.startDate);
+                  }
+                  if (endIndex) {
+                    // Google Analytics tracking
+                    trackEvent('Widget iteration - end date change in alerts', {
+                      category: 'Widget iteration',
+                      action: 'Brush - drag',
+                      label: `Widget iteration - alerts end date ${fullData[endIndex]?.endDate}`,
+                      value: fullData[endIndex]?.endDate,
+                    });
+                    setEndDate(fullData[endIndex]?.endDate);
+                  }
+                },
+                startIndex: configBrush?.customBrush?.startIndex,
+                endIndex: configBrush?.customBrush?.endIndex,
+              }}
+            />
+          )}
         </div>
       )}
       {!isError && !isLoading && (
