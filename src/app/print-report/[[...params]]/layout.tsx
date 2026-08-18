@@ -27,8 +27,8 @@ export default function PrintReportLayout({ children }: { children: React.ReactN
         <div className="print-report-map relative h-[120mm] w-full overflow-hidden rounded-[20px] border border-black/10">
           <MapContainer mapId="print-report" hideControls />
           <PrintMapCamera />
-          <PrintLegend />
         </div>
+        <PrintLegend />
         {children}
         <PrintFooter />
       </div>

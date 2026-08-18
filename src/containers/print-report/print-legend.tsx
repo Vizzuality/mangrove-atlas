@@ -2,10 +2,14 @@
 
 import { useMemo } from 'react';
 
+import cn from '@/lib/classnames';
+
 import { useSyncActiveLayers } from '@/store/layers';
 
 import { MAP_LEGENDS } from '@/containers/datasets';
 import { LAYERS } from '@/containers/layers/constants';
+
+import { WIDGET_SUBTITLE_STYLE } from '@/styles/widgets';
 
 const PrintLegend = () => {
   const [activeLayers] = useSyncActiveLayers();
@@ -33,16 +37,18 @@ const PrintLegend = () => {
   if (!legendItems.length) return null;
 
   return (
-    <div className="absolute right-4 bottom-4 z-50 max-w-72 rounded-2xl bg-white/90 p-4 shadow-md backdrop-blur-sm">
-      <h2 className="mb-2 text-xs font-bold tracking-wider text-black/85 uppercase">Legend</h2>
-      <div className="space-y-3">
+    // Sits under the map rather than over it: an overlay hides the very
+    // coastline the reader is looking at, and on paper there is room below.
+    <div className="mt-3 break-inside-avoid">
+      <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-2 text-black/85')}>Legend</h2>
+      <div className="flex flex-wrap items-start gap-x-8 gap-y-3">
         {legendItems.map((item) => (
-          <div key={item.id}>
+          <div key={item.id} className="min-w-0">
             <p className="text-xs font-semibold tracking-wider text-black/85 uppercase">
               {item.title}
             </p>
             {item.LegendComponent && (
-              <div className="pt-1 pl-1">
+              <div className="pt-1">
                 <item.LegendComponent />
               </div>
             )}
