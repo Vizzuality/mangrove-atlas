@@ -17,7 +17,7 @@ import PrintWidgetCard from './widget-card';
 
 /**
  * Opens the report directly below the map and is the only card to span the
- * full 190mm page width; every other widget takes half.
+ * full 277mm page width; every other widget takes half.
  */
 const LEAD_SLUG = 'mangrove_habitat_extent';
 

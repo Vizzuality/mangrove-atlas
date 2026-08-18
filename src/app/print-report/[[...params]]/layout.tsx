@@ -18,13 +18,14 @@ export default function PrintReportLayout({ children }: { children: React.ReactN
         className="absolute top-0 right-0 z-10"
       />
       {/* The page is laid out in millimetres on screen as well as in print:
-          the A4 portrait box is 190x277mm after margins, and any size that
+          the A4 landscape box is 277x190mm after margins, and any size that
           changes between the two would re-frame the map — mapbox keeps the
           centre and zoom on resize, not the bounds, so the printed map would
           cover a different area than the one on screen. */}
-      <div className="mx-auto w-full max-w-[190mm]">
+      <div className="mx-auto w-full max-w-[277mm]">
         <PrintHeader />
-        <div className="print-report-map relative h-[120mm] w-full overflow-hidden rounded-[20px] border border-black/10">
+        {/* Half the 190mm page, as in the design. */}
+        <div className="print-report-map relative h-[95mm] w-full overflow-hidden rounded-[20px] border border-black/10">
           <MapContainer mapId="print-report" hideControls />
           <PrintMapCamera />
         </div>

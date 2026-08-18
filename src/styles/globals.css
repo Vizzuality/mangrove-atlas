@@ -157,12 +157,10 @@
   line-height: 1.4;
 }
 
-/* Donut widgets keep their legend beside the chart when the card spans the full
-   page width. The app only does this from `md` up, which a report card never
-   reaches — the widgets themselves are left alone and the wrapper is matched by
-   the pie it holds. Half-width cards stay stacked: the pie is drawn at a fixed
-   radius, so beside a legend in ~90mm it paints straight over the labels. */
-.print-report .col-span-2 div:has(> figure .recharts-pie) {
+/* Donut widgets keep their legend beside the chart. The app only does this from
+   `md` up, which a report card never reaches — the widgets themselves are left
+   alone and the wrapper is matched by the pie it holds. */
+.print-report div:has(> figure .recharts-pie) {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
@@ -187,9 +185,9 @@
   }
 
   @page {
-    /* Usable box after margins: 190mm x 277mm. Size printed elements in mm —
+    /* Usable box after margins: 277mm x 190mm. Size printed elements in mm —
        viewport units mean nothing once the page box takes over. */
-    size: A4 portrait;
+    size: A4 landscape;
     margin: 10mm;
   }
 }
