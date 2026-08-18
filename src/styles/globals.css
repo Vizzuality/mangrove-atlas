@@ -150,6 +150,12 @@
   display: none;
 }
 
+/* Chart tooltips answer a hover. On paper they are a stray box frozen over the
+   plot, so the report never shows them. */
+.print-report .recharts-tooltip-wrapper {
+  display: none !important;
+}
+
 /* The map legend is a reference strip, not body copy: every dataset legend sets
    its own type sizes, so the report scales the whole block down in one place. */
 .print-report-legend :is(p, span, div, li, td, th) {

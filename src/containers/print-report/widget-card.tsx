@@ -19,10 +19,12 @@ import { ReportNoDataProvider } from './no-data-context';
  */
 const PrintWidgetCard = ({
   name,
+  applicability,
   children,
   fullWidth = false,
 }: {
   name: string;
+  applicability?: string;
   children: ReactNode;
   fullWidth?: boolean;
 }) => {
@@ -41,7 +43,15 @@ const PrintWidgetCard = ({
           isEmpty && 'hidden'
         )}
       >
-        <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-4 text-black/85')}>{name}</h2>
+        <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-2 text-black/85')}>{name}</h2>
+        {applicability && (
+          // The app pairs this with a "Learn more" dialog; a printed page has
+          // nowhere to open it, so the report keeps the line and drops the link.
+          <p className="mb-4 text-sm text-black/85">
+            <span className="font-semibold">Data applicability:</span>{' '}
+            <span className="font-light">{applicability}.</span>
+          </p>
+        )}
         {children}
       </div>
     </ReportNoDataProvider>

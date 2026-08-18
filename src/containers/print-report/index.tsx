@@ -60,12 +60,17 @@ const PrintReportPage = () => {
     // engine paginates. Sizes stay identical on screen and in print so the
     // preview is the printed page.
     <div className="grid grid-flow-row-dense grid-cols-2 items-start gap-3 py-6">
-      {orderedWidgets.map(({ slug, name }) => {
+      {orderedWidgets.map(({ slug, name, applicability }) => {
         const Widget = WIDGETS[slug];
         if (!Widget) return null;
 
         return (
-          <PrintWidgetCard key={slug} name={name} fullWidth={slug === LEAD_SLUG}>
+          <PrintWidgetCard
+            key={slug}
+            name={name}
+            applicability={applicability}
+            fullWidth={slug === LEAD_SLUG}
+          >
             <Widget />
           </PrintWidgetCard>
         );
