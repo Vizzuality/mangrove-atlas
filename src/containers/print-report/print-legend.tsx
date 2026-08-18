@@ -37,14 +37,15 @@ const PrintLegend = () => {
   if (!legendItems.length) return null;
 
   return (
-    // Sits under the map rather than over it: an overlay hides the very
-    // coastline the reader is looking at, and on paper there is room below.
-    <div className="mt-3 break-inside-avoid">
-      <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-2 text-black/85')}>Legend</h2>
-      <div className="flex flex-wrap items-start gap-x-8 gap-y-3">
+    // `print-report-legend` scales the layer legends down as a block: each one
+    // sets its own font sizes, so the report overrides them in one rule rather
+    // than editing every dataset's legend (see globals.css).
+    <div className="print-report-legend mt-3 break-inside-avoid">
+      <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-2 text-[10px] text-black/85')}>Legend</h2>
+      <div className="grid grid-flow-row-dense grid-cols-2 gap-x-8 gap-y-2">
         {legendItems.map((item) => (
           <div key={item.id} className="min-w-0">
-            <p className="text-xs font-semibold tracking-wider text-black/85 uppercase">
+            <p className="text-[10px] font-semibold tracking-wider text-black/85 uppercase">
               {item.title}
             </p>
             {item.LegendComponent && (

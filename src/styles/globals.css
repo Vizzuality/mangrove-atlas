@@ -150,6 +150,13 @@
   display: none;
 }
 
+/* The map legend is a reference strip, not body copy: every dataset legend sets
+   its own type sizes, so the report scales the whole block down in one place. */
+.print-report-legend :is(p, span, div, li, td, th) {
+  font-size: 10px;
+  line-height: 1.4;
+}
+
 /* Donut widgets keep their legend beside the chart when the card spans the full
    page width. The app only does this from `md` up, which a report card never
    reaches — the widgets themselves are left alone and the wrapper is matched by
