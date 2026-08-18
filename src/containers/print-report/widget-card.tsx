@@ -4,6 +4,8 @@ import { ReactNode, useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
+import { WIDGET_SUBTITLE_STYLE } from '@/styles/widgets';
+
 import { ReportNoDataProvider } from './no-data-context';
 
 /**
@@ -34,14 +36,12 @@ const PrintWidgetCard = ({
         // chart loses its axis) and clipped output is worse than a card that
         // spills onto the next page.
         className={cn(
-          'break-inside-avoid overflow-hidden rounded-3xl border border-gray-100 bg-white p-4 shadow-sm print:overflow-visible print:shadow-none',
+          'break-inside-avoid overflow-hidden rounded-[20px] border border-black/10 bg-white p-6 print:overflow-visible',
           fullWidth && 'col-span-2',
           isEmpty && 'hidden'
         )}
       >
-        <h2 className="mb-3 text-xs font-semibold tracking-wider text-black/60 uppercase">
-          {name}
-        </h2>
+        <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-4 text-black/85')}>{name}</h2>
         {children}
       </div>
     </ReportNoDataProvider>

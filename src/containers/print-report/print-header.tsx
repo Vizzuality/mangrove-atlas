@@ -58,24 +58,29 @@ const PrintHeader = () => {
   }, [shouldAutoPrint, isReady]);
 
   return (
-    <div className="flex items-center gap-4 py-4">
+    // The title block is centred over the page, as in the report design; the
+    // print button sits outside the flow so it cannot shift that centring.
+    <div className="relative py-6 text-center">
       <button
         type="button"
         onClick={handlePrint}
         disabled={!isReady}
         aria-busy={!isReady || undefined}
-        className="print-report-no-print bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-8 py-2 text-sm font-semibold text-white shadow-md transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+        className="print-report-no-print bg-brand-800 hover:bg-brand-800/90 absolute top-6 left-0 rounded-3xl px-8 py-2 text-sm font-semibold text-white shadow-md transition-colors disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isReady ? 'Print report' : 'Preparing report…'}
       </button>
-      <div>
-        <h1 className="text-3xl font-light text-black/85 first-letter:uppercase">{displayName}</h1>
-        <p className="mt-1 text-sm text-black/60">
-          {typeLabel && <span>{typeLabel} &middot; </span>}
-          {generatedOn && <span className="notranslate">{generatedOn} &middot; </span>}
-          Powered by Global Mangrove Watch &middot; globalmangrovewatch.org
-        </p>
-      </div>
+      <h1 className="text-5xl leading-tight font-light text-black/85 first-letter:uppercase">
+        {displayName}
+      </h1>
+      <p className="mt-2 text-lg font-light text-black/85">
+        Powered by Global Mangrove Watch &middot;{' '}
+        <span className="notranslate">globalmangrovewatch.org</span>
+      </p>
+      <p className="mt-1 text-sm text-black/54">
+        {typeLabel && <span>{typeLabel} &middot; </span>}
+        {generatedOn && <span className="notranslate">{generatedOn}</span>}
+      </p>
     </div>
   );
 };

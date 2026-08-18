@@ -16,20 +16,10 @@ import type { WidgetTypes } from 'types/widget';
 import PrintWidgetCard from './widget-card';
 
 /**
- * Widgets whose year timeline or brushed chart collapses at half the page
- * width — their axis labels overrun the card — so they take the full 190mm.
+ * Opens the report directly below the map and is the only card to span the
+ * full 190mm page width; every other widget takes half.
  */
-const FULL_WIDTH_SLUGS: string[] = [
-  'mangrove_national_dashboard',
-  'mangrove_habitat_extent',
-  'mangrove_net_change',
-  'mangrove_habitat_change',
-  'mangrove_alerts',
-  // Its donut collapses to nothing inside a half-width card.
-  'mangrove_species_threatened',
-  'mangrove_drivers_change',
-  'mangrove_global_tidal_wetland_change',
-];
+const LEAD_SLUG = 'mangrove_habitat_extent';
 
 const PrintReportPage = () => {
   const [{ customGeojson }] = useAtom(drawingToolAtom);
@@ -46,17 +36,26 @@ const PrintReportPage = () => {
     );
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
+  // Habitat extent leads the report, directly under the map, as in the design.
+  const orderedWidgets = useMemo(
+    () => [
+      ...widgetsAvailable.filter(({ slug }) => slug === LEAD_SLUG),
+      ...widgetsAvailable.filter(({ slug }) => slug !== LEAD_SLUG),
+    ],
+    [widgetsAvailable]
+  );
+
   return (
     // Grid rather than CSS multi-column, which reflows badly once the print
     // engine paginates. Sizes stay identical on screen and in print so the
     // preview is the printed page.
-    <div className="grid grid-cols-2 items-start gap-3 py-6">
-      {widgetsAvailable.map(({ slug, name }) => {
+    <div className="grid grid-flow-row-dense grid-cols-2 items-start gap-3 py-6">
+      {orderedWidgets.map(({ slug, name }) => {
         const Widget = WIDGETS[slug];
         if (!Widget) return null;
 
         return (
-          <PrintWidgetCard key={slug} name={name} fullWidth={FULL_WIDTH_SLUGS.includes(slug)}>
+          <PrintWidgetCard key={slug} name={name} fullWidth={slug === LEAD_SLUG}>
             <Widget />
           </PrintWidgetCard>
         );

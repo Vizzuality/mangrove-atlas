@@ -25,15 +25,13 @@ const PrintFooter = () => {
   }, [isClient, pathname, searchParams]);
 
   return (
-    <footer className="mt-2 break-inside-avoid px-4 pb-6 text-xs text-black/60">
-      <p>
-        Generated from Global Mangrove Watch &middot;{' '}
-        <span className="notranslate">globalmangrovewatch.org</span>. Dataset sources and
-        methodology for each indicator are described in its info panel on the site.
+    <footer className="mt-4 break-inside-avoid pt-4 pb-8 text-center">
+      <p className="text-lg font-light text-black/85">
+        Generate your report at <span className="notranslate">globalmangrovewatch.org</span>
       </p>
       {sourceUrl && (
-        <p className="mt-1 break-all">
-          View this report online: <span className="notranslate">{sourceUrl}</span>
+        <p className="mt-2 text-xs break-all text-black/54">
+          <span className="notranslate">{sourceUrl}</span>
         </p>
       )}
     </footer>

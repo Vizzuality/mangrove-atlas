@@ -24,7 +24,7 @@ export default function PrintReportLayout({ children }: { children: React.ReactN
           cover a different area than the one on screen. */}
       <div className="mx-auto w-full max-w-[190mm]">
         <PrintHeader />
-        <div className="print-report-map relative h-[110mm] w-full overflow-hidden rounded-3xl border border-gray-200">
+        <div className="print-report-map relative h-[120mm] w-full overflow-hidden rounded-[20px] border border-black/10">
           <MapContainer mapId="print-report" hideControls />
           <PrintMapCamera />
           <PrintLegend />
