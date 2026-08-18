@@ -150,6 +150,13 @@
   display: none;
 }
 
+/* Each restoration section ends with a rule that bleeds past its own box to
+   separate it from the next one in the stacked layout. Laid out in columns it
+   just cuts across the gutter, so the report drops them. */
+.restoration-print div[class*='-left-10'] {
+  display: none;
+}
+
 /* Chart tooltips answer a hover. On paper they are a stray box frozen over the
    plot, so the report never shows them. */
 .print-report .recharts-tooltip-wrapper {

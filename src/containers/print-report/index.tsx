@@ -16,11 +16,15 @@ import type { WidgetTypes } from 'types/widget';
 
 import PrintWidgetCard from './widget-card';
 
-/**
- * Opens the report directly below the map and is the only card to span the
- * full 277mm page width; every other widget takes half.
- */
+/** Opens the report, directly below the map. */
 const LEAD_SLUG = 'mangrove_habitat_extent';
+
+/**
+ * Cards spanning the full 277mm page width; every other widget takes half.
+ * Restoration earns it by laying its five sections out in two columns — at half
+ * width those columns would be ~65mm, narrower than any of them is built for.
+ */
+const FULL_WIDTH_SLUGS: string[] = [LEAD_SLUG, 'mangrove_restoration'];
 
 const PrintReportPage = () => {
   const [{ customGeojson }] = useAtom(drawingToolAtom);
@@ -69,7 +73,7 @@ const PrintReportPage = () => {
             key={slug}
             name={name}
             applicability={applicability}
-            fullWidth={slug === LEAD_SLUG}
+            fullWidth={FULL_WIDTH_SLUGS.includes(slug)}
           >
             <Widget />
           </PrintWidgetCard>
