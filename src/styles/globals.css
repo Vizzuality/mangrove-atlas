@@ -137,17 +137,41 @@
   display: none !important;
 }
 
+/* A report is read, not operated: every dropdown trigger shows its selected
+   value as plain text, without the underline, arrow or pointer affordance.
+   Applies on the report page itself so the on-screen preview matches print. */
+.print-report .widget-select {
+  cursor: default;
+  border-bottom: 0;
+  pointer-events: none;
+}
+
+.print-report .widget-select svg {
+  display: none;
+}
+
 @media print {
   .print-report {
     background-color: #fff;
+    /* Without this the print engine drops chart fills, legend swatches and the
+       card backgrounds, leaving an unreadable monochrome report. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .print-report-no-print {
     display: none;
   }
 
+  /* The map is one raster; splitting it across pages renders it twice. */
+  .print-report-map {
+    break-inside: avoid;
+  }
+
   @page {
-    size: A4 landscape;
+    /* Usable box after margins: 190mm x 277mm. Size printed elements in mm —
+       viewport units mean nothing once the page box takes over. */
+    size: A4 portrait;
     margin: 10mm;
   }
 }

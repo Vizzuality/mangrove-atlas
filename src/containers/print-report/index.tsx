@@ -13,6 +13,24 @@ import { useWidgets } from '@/containers/widgets/hooks';
 
 import type { WidgetTypes } from 'types/widget';
 
+import PrintWidgetCard from './widget-card';
+
+/**
+ * Widgets whose year timeline or brushed chart collapses at half the page
+ * width — their axis labels overrun the card — so they take the full 190mm.
+ */
+const FULL_WIDTH_SLUGS: string[] = [
+  'mangrove_national_dashboard',
+  'mangrove_habitat_extent',
+  'mangrove_net_change',
+  'mangrove_habitat_change',
+  'mangrove_alerts',
+  // Its donut collapses to nothing inside a half-width card.
+  'mangrove_species_threatened',
+  'mangrove_drivers_change',
+  'mangrove_global_tidal_wetland_change',
+];
+
 const PrintReportPage = () => {
   const [{ customGeojson }] = useAtom(drawingToolAtom);
   const [{ uploadedGeojson }] = useAtom(drawingUploadToolAtom);
@@ -29,20 +47,18 @@ const PrintReportPage = () => {
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   return (
-    <div className="columns-2 gap-4 p-4 pt-6">
+    // Grid rather than CSS multi-column, which reflows badly once the print
+    // engine paginates. Sizes stay identical on screen and in print so the
+    // preview is the printed page.
+    <div className="grid grid-cols-2 items-start gap-3 py-6">
       {widgetsAvailable.map(({ slug, name }) => {
         const Widget = WIDGETS[slug];
         if (!Widget) return null;
+
         return (
-          <div
-            key={slug}
-            className="mb-4 break-inside-avoid overflow-hidden rounded-3xl border border-gray-100 bg-white p-6 shadow-sm print:max-h-[calc(100vh-20mm)]"
-          >
-            <h2 className="mb-3 text-xs font-semibold tracking-wider text-black/60 uppercase">
-              {name}
-            </h2>
+          <PrintWidgetCard key={slug} name={name} fullWidth={FULL_WIDTH_SLUGS.includes(slug)}>
             <Widget />
-          </div>
+          </PrintWidgetCard>
         );
       })}
     </div>
