@@ -7,9 +7,10 @@ import { useSyncActiveWidgets } from '@/store/widgets';
 
 import { useAtom } from 'jotai';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { WIDGETS } from '@/containers/datasets';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from '@/containers/widgets/constants';
-import { useWidgets } from '@/containers/widgets/hooks';
 
 import type { WidgetTypes } from 'types/widget';
 
@@ -25,16 +26,25 @@ const PrintReportPage = () => {
   const [{ customGeojson }] = useAtom(drawingToolAtom);
   const [{ uploadedGeojson }] = useAtom(drawingUploadToolAtom);
   const [activeWidgets] = useSyncActiveWidgets();
-  const enabledWidgets = useWidgets();
+  const { type: locationType } = useSyncLocation();
+  const currentLocation = locationType || 'worldwide';
 
+  // Selected widgets for this location — the same rule the sidebar applies.
+  // Deliberately NOT `useWidgets()`: that also intersects with the selected
+  // category, which would drop every active widget filed under a different one
+  // (and the category defaults to `distribution_and_change` when the report URL
+  // carries no `category` param).
   const widgetsAvailable = useMemo(() => {
     if (customGeojson || uploadedGeojson) {
       return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));
     }
-    return enabledWidgets.filter(
-      ({ slug }) => activeWidgets?.includes(slug) && slug !== 'widgets_deck_tool'
+    return widgets.filter(
+      ({ slug, locationType: widgetLocations }) =>
+        widgetLocations.includes(currentLocation) &&
+        activeWidgets?.includes(slug) &&
+        slug !== 'widgets_deck_tool'
     );
-  }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
+  }, [activeWidgets, currentLocation, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   // Habitat extent leads the report, directly under the map, as in the design.
   const orderedWidgets = useMemo(
