@@ -1,9 +1,9 @@
 import Image from 'next/image';
 
 import MapContainer from '@/containers/map';
+import { LEAD_MAP_LAYER_IDS } from '@/containers/print-report/constants';
 import PrintFooter from '@/containers/print-report/print-footer';
 import PrintHeader from '@/containers/print-report/print-header';
-import PrintLegend from '@/containers/print-report/print-legend';
 import PrintMapCamera from '@/containers/print-report/print-map-camera';
 
 export default function PrintReportLayout({ children }: { children: React.ReactNode }) {
@@ -24,12 +24,15 @@ export default function PrintReportLayout({ children }: { children: React.ReactN
           cover a different area than the one on screen. */}
       <div className="mx-auto w-full max-w-[277mm]">
         <PrintHeader />
-        {/* Half the 190mm page, as in the design. */}
-        <div className="print-report-map relative h-[95mm] w-full overflow-hidden rounded-[20px] border border-black/10">
-          <MapContainer mapId="print-report" hideControls />
+        {/* Roughly half the 170mm page box: the map and the habitat extent
+            widget beneath it are the whole first page, with room to spare for a
+            title that wraps. The map shows the mangrove extent alone — every
+            other layer gets its own small map, beside the widget it belongs to,
+            from page two on. */}
+        <div className="print-report-map relative h-[75mm] w-full overflow-hidden rounded-[20px] border border-black/10">
+          <MapContainer mapId="print-report" hideControls layerIds={LEAD_MAP_LAYER_IDS} />
           <PrintMapCamera />
         </div>
-        <PrintLegend />
         {children}
         <PrintFooter />
       </div>

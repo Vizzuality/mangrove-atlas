@@ -17,11 +17,27 @@ import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
-const LayerManagerContainer = () => {
+const LayerManagerContainer = ({
+  layerIds,
+  registerInteractions = true,
+}: {
+  /** Restrict rendering to these active layers. Defaults to all of them. */
+  layerIds?: string[];
+  /**
+   * Secondary maps (the per-layer cards in the print report) must not touch the
+   * shared `interactiveLayerIdsAtom` — unmounting one would strip ids the main
+   * map still needs.
+   */
+  registerInteractions?: boolean;
+} = {}) => {
   const [layers] = useSyncActiveLayers();
   const [, setInteractiveLayerIds] = useAtom(interactiveLayerIdsAtom);
 
-  const activeLayersIds = useMemo(() => layers?.map((l) => l?.id), [layers]);
+  const activeLayersIds = useMemo(() => {
+    const ids = layers?.map((l) => l?.id);
+    if (!layerIds) return ids;
+    return ids?.filter((id) => layerIds.some((layerId) => id?.includes(layerId)));
+  }, [layers, layerIds]);
 
   const ACTIVE_LAYERS = useMemo(() => {
     const filteredLayers = activeLayersIds?.filter(
@@ -47,18 +63,20 @@ const LayerManagerContainer = () => {
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
+      if (!registerInteractions) return;
       setInteractiveLayerIds((prevInteractiveIds) => [...prevInteractiveIds, ...styleIds]);
     },
-    [setInteractiveLayerIds]
+    [registerInteractions, setInteractiveLayerIds]
   );
 
   const handleRemove = useCallback(
     (styleIds: LayerProps['id'][]) => {
+      if (!registerInteractions) return;
       setInteractiveLayerIds((prevInteractiveIds) => [
         ...prevInteractiveIds.filter((id) => !styleIds?.includes(id)),
       ]);
     },
-    [setInteractiveLayerIds]
+    [registerInteractions, setInteractiveLayerIds]
   );
 
   return (

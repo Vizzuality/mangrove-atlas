@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -25,31 +25,40 @@ const READY_TIMEOUT_MS = 15000;
  * the map has finished rendering its tiles, webfonts are resolved and the
  * charts have settled.
  */
-export default function usePrintReady(mapId = 'print-report') {
+export default function usePrintReady(mainMapId = 'print-report') {
   const fetchingCount = useIsFetching();
   const maps = useMap();
-  const map = maps[mapId];
 
-  // `idle` fires once the style, sources and visible tiles are all rendered.
-  const subscribeToMap = useCallback(
-    (onChange: () => void) => {
-      if (!map) return () => undefined;
-      const mapInstance = map.getMap();
-      mapInstance.on('idle', onChange);
-      return () => {
-        mapInstance.off('idle', onChange);
-      };
-    },
-    [map]
+  // The report's own map plus one per layer card — all of them must have drawn.
+  const mapInstances = useMemo(
+    () =>
+      Object.entries(maps)
+        .filter(([key, value]) => key !== 'current' && !!value)
+        .map(([, value]) => value.getMap()),
+    [maps]
   );
 
-  const getMapIdle = useCallback(() => {
-    if (!map) return false;
-    const mapInstance = map.getMap();
-    return mapInstance.loaded() && mapInstance.areTilesLoaded();
-  }, [map]);
+  const hasMainMap = !!maps[mainMapId];
 
-  const mapIdle = useSyncExternalStore(subscribeToMap, getMapIdle, () => false);
+  // `idle` fires once the style, sources and visible tiles are all rendered.
+  const subscribeToMaps = useCallback(
+    (onChange: () => void) => {
+      mapInstances.forEach((mapInstance) => mapInstance.on('idle', onChange));
+      return () => {
+        mapInstances.forEach((mapInstance) => mapInstance.off('idle', onChange));
+      };
+    },
+    [mapInstances]
+  );
+
+  const getMapsIdle = useCallback(() => {
+    if (!hasMainMap || !mapInstances.length) return false;
+    return mapInstances.every(
+      (mapInstance) => mapInstance.loaded() && mapInstance.areTilesLoaded()
+    );
+  }, [hasMainMap, mapInstances]);
+
+  const mapIdle = useSyncExternalStore(subscribeToMaps, getMapsIdle, () => false);
 
   const [fontsReady, setFontsReady] = useState(false);
   const [settled, setSettled] = useState(false);

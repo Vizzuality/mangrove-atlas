@@ -198,10 +198,10 @@
   }
 
   @page {
-    /* Usable box after margins: 277mm x 190mm. Size printed elements in mm —
+    /* Usable box after margins: 277mm x 170mm. Size printed elements in mm —
        viewport units mean nothing once the page box takes over. */
     size: A4 landscape;
-    margin: 10mm;
+    margin: 20mm 10mm 10mm;
   }
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, useCallback } from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -16,20 +16,35 @@ import { ReportNoDataProvider } from './no-data-context';
  * The card hides with `display: none` rather than unmounting: unmounting would
  * take the widget's empty state down with it, which withdraws the signal and
  * brings the card straight back.
+ *
+ * The empty flag itself is held by the report, not here — a widget's map card is
+ * a sibling in the grid, and it has to disappear along with the widget rather
+ * than drift into the next row on its own.
  */
 const PrintWidgetCard = ({
+  slug,
   name,
   applicability,
   children,
   fullWidth = false,
+  breakAfter = false,
+  isEmpty = false,
+  onEmptyChange,
 }: {
+  slug: string;
   name: string;
   applicability?: string;
   children: ReactNode;
   fullWidth?: boolean;
+  /** Ends the printed page after this card, so the next one opens a new page. */
+  breakAfter?: boolean;
+  isEmpty?: boolean;
+  onEmptyChange: (slug: string, isEmpty: boolean) => void;
 }) => {
-  const [isEmpty, setIsEmpty] = useState(false);
-  const reportNoData = useCallback((empty: boolean) => setIsEmpty(empty), []);
+  const reportNoData = useCallback(
+    (empty: boolean) => onEmptyChange(slug, empty),
+    [onEmptyChange, slug]
+  );
 
   return (
     <ReportNoDataProvider value={reportNoData}>
@@ -40,19 +55,21 @@ const PrintWidgetCard = ({
         className={cn(
           'break-inside-avoid overflow-hidden rounded-[20px] border border-black/10 bg-white p-6 print:overflow-visible',
           fullWidth && 'col-span-2',
+          breakAfter && 'print:break-after-page',
           isEmpty && 'hidden'
         )}
       >
-        <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-2 text-black/85')}>{name}</h2>
+        <h2 className={cn(WIDGET_SUBTITLE_STYLE, 'mb-4 text-black/85')}>{name}</h2>
+        {children}
         {applicability && (
-          // The app pairs this with a "Learn more" dialog; a printed page has
-          // nowhere to open it, so the report keeps the line and drops the link.
-          <p className="mb-4 text-sm text-black/85">
+          // Closes the card, where the app puts it. The app pairs it with a
+          // "Learn more" dialog; a printed page has nowhere to open one, so the
+          // report keeps the line and drops the link.
+          <p className="mt-4 text-sm text-black/85">
             <span className="font-semibold">Data applicability:</span>{' '}
             <span className="font-light">{applicability}.</span>
           </p>
         )}
-        {children}
       </div>
     </ReportNoDataProvider>
   );

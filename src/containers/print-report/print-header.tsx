@@ -60,7 +60,9 @@ const PrintHeader = () => {
   return (
     // The title block is centred over the page, as in the report design; the
     // print button sits outside the flow so it cannot shift that centring.
-    <div className="relative py-6 text-center">
+    // Tighter in print: the first page has to hold the map and the lead widget
+    // under it, and every millimetre the masthead takes comes out of the map.
+    <div className="relative py-6 text-center print:py-3">
       <button
         type="button"
         onClick={handlePrint}
@@ -70,7 +72,7 @@ const PrintHeader = () => {
       >
         {isReady ? 'Print report' : 'Preparing report…'}
       </button>
-      <h1 className="text-5xl leading-tight font-light text-black/85 first-letter:uppercase">
+      <h1 className="text-5xl leading-tight font-light text-black/85 first-letter:uppercase print:text-4xl">
         {displayName}
       </h1>
       <p className="mt-2 text-lg font-light text-black/85">
