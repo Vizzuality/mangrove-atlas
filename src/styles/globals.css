@@ -210,6 +210,13 @@
     size: A4 landscape;
     margin: 20mm 10mm 10mm;
   }
+
+  /* The first page opens with the title and the map, which need no run-in
+     space above them — the wide top margin is there to separate the running
+     content on the pages that follow. */
+  @page :first {
+    margin-top: 10mm;
+  }
 }
 
 /* Firefox equivalent of the ::-webkit-scrollbar rules above. `--secondary` and
