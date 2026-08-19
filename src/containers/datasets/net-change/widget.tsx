@@ -117,18 +117,22 @@ const NetChangeWidget = () => {
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
-      <div className="flex flex-col items-center space-y-4">
-        <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
-        {isAnalysisRunning && isFetching && (
-          <button
-            type="button"
-            onClick={handleCancelAnalysis}
-            className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
-          >
-            Cancel analysis
-          </button>
-        )}
-      </div>
+      {/* Only while it has something to show: the card wrapper spaces its
+          children, so an empty block still opens a gap under the title. */}
+      {isFetching && (
+        <div className="flex flex-col items-center space-y-4">
+          <Loading iconClassName="flex w-10 h-10 m-auto my-10" />
+          {isAnalysisRunning && (
+            <button
+              type="button"
+              onClick={handleCancelAnalysis}
+              className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
+            >
+              Cancel analysis
+            </button>
+          )}
+        </div>
+      )}
       {(isCanceled || isError) && !isFetching && !data?.data?.length && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>

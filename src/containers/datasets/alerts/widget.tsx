@@ -96,6 +96,16 @@ const AlertsWidget = () => {
     defaultEndDate,
   } = data;
 
+  // Shorter in the report, with less air above the plot: the series reads just
+  // as well at this height, and it is what brings the card inside a single
+  // printed page. The bottom margin stays — it carries the rotated year labels.
+  const chartConfig = config as { margin?: Record<string, number> };
+  const printChartConfig = {
+    ...chartConfig,
+    height: 240,
+    margin: { ...chartConfig.margin, top: 16 },
+  };
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
@@ -221,7 +231,7 @@ const AlertsWidget = () => {
           </div>
 
           <Legend />
-          <Chart config={config} />
+          <Chart config={isPrintReport ? printChartConfig : config} />
           {/* The brush chart is a range control, and the chart above already
               shows the range it is set to — the report drops it for the height. */}
           {!isPrintReport && (
@@ -259,7 +269,13 @@ const AlertsWidget = () => {
       )}
       {!isError && !isLoading && (
         <>
-          <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
+          {/* The report drops the brush chart that used to sit above this, so
+              the run-in space above it has nothing left to clear. */}
+          <p
+            className={cn('items-center font-sans text-lg leading-7 font-light', {
+              'pt-6': !isPrintReport,
+            })}
+          >
             There are <span className="font-bold"> 535</span> areas monitored in the world.
           </p>
           <div className="flex space-x-2">
