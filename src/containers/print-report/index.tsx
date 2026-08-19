@@ -5,8 +5,9 @@ import { Fragment, useCallback, useMemo, useState } from 'react';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { useSyncActiveLayers } from '@/store/layers';
 import { useSyncActiveWidgets } from '@/store/widgets';
+import { SpeciesLocationState } from '@/store/widgets/species-location';
 
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
 
@@ -23,6 +24,7 @@ const PrintReportPage = () => {
   const [{ customGeojson }] = useAtom(drawingToolAtom);
   const [{ uploadedGeojson }] = useAtom(drawingUploadToolAtom);
   const [activeWidgets] = useSyncActiveWidgets();
+  const selectedSpecies = useAtomValue(SpeciesLocationState);
   const { type: locationType } = useSyncLocation();
   const currentLocation = locationType || 'worldwide';
 
@@ -56,7 +58,11 @@ const PrintReportPage = () => {
       ({ slug, locationType: widgetLocations }) =>
         widgetLocations.includes(currentLocation) &&
         (activeWidgets?.includes(slug) || ownsActiveLayer(slug)) &&
-        slug !== 'widgets_deck_tool'
+        slug !== 'widgets_deck_tool' &&
+        // Species location is a picker: with no species chosen it has nothing to
+        // report, so it is left out of the grid entirely rather than taking a
+        // cell for an empty card.
+        (slug !== 'mangrove_species_location' || !!selectedSpecies)
     );
   }, [
     activeWidgets,
@@ -64,6 +70,7 @@ const PrintReportPage = () => {
     customGeojson,
     uploadedGeojson,
     ownsActiveLayer,
+    selectedSpecies,
   ]) satisfies WidgetTypes[];
 
   // Habitat extent leads the report, directly under the map, as in the design.
@@ -169,8 +176,13 @@ const PrintReportPage = () => {
               );
             })}
             {layerCardIds && <PrintLayerCard slug={widget.slug} layerIds={layerCardIds} />}
-            {/* Unpaired and layer-less: the other half of the row stays empty. */}
-            {!layerCardIds && !companion && !FULL_WIDTH_SLUGS.includes(widget.slug) && <div />}
+            {/* Unpaired and layer-less: the other half of the row stays empty.
+                Not for a widget with no data — its card is out of the layout, so
+                a filler beside it would be a hole in the grid on its own. */}
+            {!layerCardIds &&
+              !companion &&
+              !emptySlugs[widget.slug] &&
+              !FULL_WIDTH_SLUGS.includes(widget.slug) && <div />}
           </Fragment>
         );
       })}
