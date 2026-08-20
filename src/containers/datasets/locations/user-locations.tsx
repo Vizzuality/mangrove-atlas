@@ -4,13 +4,15 @@ import type GeoJSON from 'geojson';
 
 import API from 'services/api';
 
+import type { LocationTypes } from './types';
+
 export type UserLocationType = 'system' | 'custom';
 
 type SystemLocation = {
   id: number;
   name: string;
   iso: string;
-  location_type: UserLocationType;
+  location_type: LocationTypes;
   bounds: Bounds | null;
 };
 

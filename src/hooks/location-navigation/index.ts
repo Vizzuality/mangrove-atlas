@@ -38,6 +38,7 @@ export const locationToNavTarget = (
     case 'country':
       return { type: 'country', iso: location.iso };
     case 'wdpa':
+      if (!location.location_id) return { type: 'worldwide' };
       return { type: 'wdpa', locationId: location.location_id };
     case 'custom-area':
       return { type: 'custom-area' };
