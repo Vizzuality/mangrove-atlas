@@ -19,18 +19,7 @@ export type LegendItem = Readonly<{
 }>;
 
 export type CategoryIds =
-  | 'ce'
-  | 'en'
-  | 'vu'
-  | 'nt'
-  | 'lc'
-  | 'dd'
-  | 'CE'
-  | 'EN'
-  | 'VU'
-  | 'NT'
-  | 'LC'
-  | 'DD';
+  'ce' | 'en' | 'vu' | 'nt' | 'lc' | 'dd' | 'CE' | 'EN' | 'VU' | 'NT' | 'LC' | 'DD';
 
 export type Colors = Readonly<{ [key: Label]: string }>;
 
