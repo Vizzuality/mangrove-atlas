@@ -26,6 +26,12 @@ describe('locationToNavTarget', () => {
     });
   });
 
+  it('falls back to worldwide for a wdpa location missing its location_id', () => {
+    expect(
+      locationToNavTarget({ location_type: 'wdpa', iso: '', location_id: undefined as never })
+    ).toEqual({ type: 'worldwide' });
+  });
+
   it('maps a custom-area location', () => {
     expect(
       locationToNavTarget({ location_type: 'custom-area', iso: '', location_id: '0' })
