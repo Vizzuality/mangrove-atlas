@@ -107,7 +107,10 @@ const PrintLayerCard = ({ slug, layerIds }: { slug: string; layerIds: string[] }
         onError={(e) => console.error('Layer map error:', e.error?.message)}
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       >
-        <LayerManager layerIds={layerIds} registerInteractions={false} />
+        {/* `includeInactive`: the report decides which ids belong on this card —
+            for contextual-layer widgets that includes a layer the user never
+            switched on, which has no active-layers entry to match. */}
+        <LayerManager layerIds={layerIds} registerInteractions={false} includeInactive />
       </Map>
     </div>
   );

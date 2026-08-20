@@ -27,7 +27,6 @@ const PrintWidgetCard = ({
   applicability,
   children,
   fullWidth = false,
-  breakAfter = false,
   isEmpty = false,
   onEmptyChange,
 }: {
@@ -36,8 +35,6 @@ const PrintWidgetCard = ({
   applicability?: string;
   children: ReactNode;
   fullWidth?: boolean;
-  /** Ends the printed page after this card, so the next one opens a new page. */
-  breakAfter?: boolean;
   isEmpty?: boolean;
   onEmptyChange: (slug: string, isEmpty: boolean) => void;
 }) => {
@@ -55,7 +52,6 @@ const PrintWidgetCard = ({
         className={cn(
           'break-inside-avoid overflow-hidden rounded-[20px] border border-black/10 bg-white p-6 print:overflow-visible',
           fullWidth && 'col-span-2',
-          breakAfter && 'print:break-after-page',
           isEmpty && 'hidden'
         )}
       >

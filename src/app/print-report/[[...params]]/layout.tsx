@@ -9,7 +9,15 @@ import PrintMapCamera from '@/containers/print-report/print-map-camera';
 export default function PrintReportLayout({ children }: { children: React.ReactNode }) {
   return (
     // id="main-content" is the target of the root layout's skip link.
-    <main id="main-content" className="print-report relative min-h-screen w-full bg-white p-4">
+    // `print:p-0`: the @page margins already frame the printed page, and the
+    // screen padding would shrink the 277mm content box by 2rem in print. That
+    // resize re-frames every map — mapbox clears its canvas to fit the new box
+    // and the print snapshot lands before it repaints, so the maps at the end
+    // of the report printed blank.
+    <main
+      id="main-content"
+      className="print-report relative min-h-screen w-full bg-white p-4 print:p-0"
+    >
       {/* The mark on transparent ground, in brand-800 — the app's `logo-bg.png`
           carries a teal wedge behind it, which reads as a printed block of ink
           in the corner of every page. Its top lines up with the title beside

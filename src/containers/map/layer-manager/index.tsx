@@ -20,6 +20,7 @@ const CountryBoundariesLayer = LAYERS['country-boundaries'];
 const LayerManagerContainer = ({
   layerIds,
   registerInteractions = true,
+  includeInactive = false,
 }: {
   /** Restrict rendering to these active layers. Defaults to all of them. */
   layerIds?: string[];
@@ -29,6 +30,12 @@ const LayerManagerContainer = ({
    * map still needs.
    */
   registerInteractions?: boolean;
+  /**
+   * Render every id in `layerIds` even without an active-layers entry. The
+   * print report uses it for contextual-layer cards, whose layer may not have
+   * been switched on in the app. Only meaningful together with `layerIds`.
+   */
+  includeInactive?: boolean;
 } = {}) => {
   const [layers] = useSyncActiveLayers();
   const [, setInteractiveLayerIds] = useAtom(interactiveLayerIdsAtom);
@@ -36,8 +43,11 @@ const LayerManagerContainer = ({
   const activeLayersIds = useMemo(() => {
     const ids = layers?.map((l) => l?.id);
     if (!layerIds) return ids;
-    return ids?.filter((id) => layerIds.some((layerId) => id?.includes(layerId)));
-  }, [layers, layerIds]);
+    const active = ids?.filter((id) => layerIds.some((layerId) => id?.includes(layerId))) ?? [];
+    if (!includeInactive) return active;
+    const missing = layerIds.filter((layerId) => !active.some((id) => id?.includes(layerId)));
+    return [...active, ...missing];
+  }, [layers, layerIds, includeInactive]);
 
   const ACTIVE_LAYERS = useMemo(() => {
     const filteredLayers = activeLayersIds?.filter(
