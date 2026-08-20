@@ -16,6 +16,7 @@ import { LuPencil, LuCheck } from 'react-icons/lu';
 
 import { useLocationNavigation, locationToNavTarget } from 'hooks/location-navigation';
 
+import type { Location } from '@/containers/datasets/locations/types';
 import {
   useDeleteUserLocation,
   useGetUserLocations,
@@ -80,7 +81,7 @@ type Props = {
   userLocationId: number;
   name: string;
   locationType: UserLocationType;
-  location?: Feature<Polygon> | null;
+  location?: Location | null;
   geometry?: CustomGeometry;
 };
 

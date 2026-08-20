@@ -6,7 +6,7 @@ import { groupBy } from 'lodash-es';
 
 import { useSyncLocation } from 'hooks/use-sync-location';
 
-import { useLocation } from '@/containers/datasets/locations/hooks';
+import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
 import {
   useGetUserLocations,
   useGetUserSites,
@@ -23,6 +23,7 @@ const SavedAreasContent = () => {
   const { type: locationType, id: routeId } = useSyncLocation();
 
   const { data: location } = useLocation(routeId, locationType ?? undefined);
+  const { data: locationsRes } = useLocations();
   const { data: userLocationsRes, isLoading: isLoadingUserLocations } = useGetUserLocations();
 
   const userLocations = userLocationsRes?.data ?? [];
@@ -76,7 +77,7 @@ const SavedAreasContent = () => {
                     userLocationId={ul.id}
                     name={ul.name}
                     locationType={ul.location_type}
-                    location={ul.location}
+                    location={locationsRes?.data?.find((l) => l.id === ul.location?.id) ?? null}
                   />
                 ) : (
                   <LocationItem
