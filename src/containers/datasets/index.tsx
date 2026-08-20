@@ -12,6 +12,11 @@ import DriversChangeWidget from '@/containers/datasets/drivers-change/widget';
 import EmissionsMitigationWidget from '@/containers/datasets/emissions-mitigation/widget';
 import FisheriesWidget from '@/containers/datasets/fisheries';
 import FloodProtectionWidget from '@/containers/datasets/flood-protection';
+import {
+  FloodProtectionAreaWidget,
+  FloodProtectionPopulationWidget,
+  FloodProtectionStockWidget,
+} from '@/containers/datasets/flood-protection/indicator-widget';
 import HabitatChangeWidget from '@/containers/datasets/habitat-change/widget';
 import HabitatExtentWidget from '@/containers/datasets/habitat-extent/widget';
 import HeightWidget from '@/containers/datasets/height/widget';
@@ -59,9 +64,11 @@ export const WIDGETS: WidgetsCollection = {
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeWidget,
   mangrove_iucn_ecoregion: IUCNEcoregionWidget,
   mangrove_salt_marsh: SaltMarshWidget,
-  mangrove_coastal_protection_area: FloodProtectionWidget,
-  mangrove_coastal_protection_population: FloodProtectionWidget,
-  mangrove_coastal_protection_stock: FloodProtectionWidget,
+  // Single indicators of the coastal-protection dataset, used by the print
+  // report to lay the three of them out as separate cards.
+  mangrove_coastal_protection_area: FloodProtectionAreaWidget,
+  mangrove_coastal_protection_population: FloodProtectionPopulationWidget,
+  mangrove_coastal_protection_stock: FloodProtectionStockWidget,
   widgets_deck_tool: CustomizeWidgetsDeck,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
