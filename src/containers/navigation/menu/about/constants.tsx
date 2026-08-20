@@ -23,7 +23,7 @@ export const ConvenedBy = [
     name: 'The Nature Conservancy',
     url: 'https://www.nature.org/',
     image: '/images/partners/convened/TNC.webp',
-    size: [150, 40],
+    size: [150, 51],
   },
 ] satisfies ItemType[];
 

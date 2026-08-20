@@ -15,7 +15,13 @@ const PartnersLinks = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image alt="GMA" src="/images/menu/gma.webp" width={150} height={65} />
+          <Image
+            alt="GMA"
+            src="/images/menu/gma.webp"
+            width={150}
+            height={65}
+            className="h-auto w-[150px]"
+          />
         </Link>
       </div>
 
