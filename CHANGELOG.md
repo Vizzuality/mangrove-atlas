@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.7](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.6...v8.0.0-rc.7) (2026-08-20)
+
+
+### Bug Fixes
+
+* **a11y:** WCAG 2.2 AA remediation with axe-core regression harness ([#1656](https://github.com/Vizzuality/mangrove-atlas/issues/1656)) ([67e5118](https://github.com/Vizzuality/mangrove-atlas/commit/67e511836da6388934fc9596b4e48f124cfaa222))
+* keep partner logo aspect ratios controlled in CSS ([#1661](https://github.com/Vizzuality/mangrove-atlas/issues/1661)) ([18690b6](https://github.com/Vizzuality/mangrove-atlas/commit/18690b64eca8d378943eaf4c485dd1e04b34e7a0))
+* resolve saved WDPA areas to canonical location before navigating ([#1660](https://github.com/Vizzuality/mangrove-atlas/issues/1660)) ([bcfc570](https://github.com/Vizzuality/mangrove-atlas/commit/bcfc57052a706d958f58dfdc4c4225b3d747a4bd))
+
 ## [8.0.0-rc.6](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.5...v8.0.0-rc.6) (2026-08-05)
 
 
