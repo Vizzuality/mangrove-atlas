@@ -19,7 +19,8 @@
 - [Radix UI](https://www.radix-ui.com/) — accessible UI primitives
 - [NextAuth v4](https://next-auth.js.org/) — authentication
 - [Transifex Native](https://www.transifex.com/) — internationalization (en, fr, es)
-- [Playwright](https://playwright.dev/) — end-to-end testing
+- [Playwright](https://playwright.dev/) — end-to-end & accessibility testing (with [axe-core](https://github.com/dequelabs/axe-core))
+- [Vitest](https://vitest.dev/) — unit & component testing (with React Testing Library)
 
 ## Getting Started
 
@@ -56,9 +57,13 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 pnpm dev              # Start dev server (port 3000)
 pnpm build            # Production build
 pnpm lint             # Run ESLint
+pnpm lint:a11y        # Run oxlint static accessibility checks (jsx-a11y rules)
 pnpm check-types      # TypeScript type checking
-pnpm test             # Run Playwright end-to-end tests
+pnpm test             # Run Playwright tests (end-to-end + accessibility)
 pnpm test-ui          # Run Playwright tests with interactive UI
+pnpm test:unit        # Run Vitest unit & component tests
+pnpm test:unit:watch  # Run Vitest in watch mode
+pnpm test:unit:coverage # Run Vitest with coverage report
 ```
 
 Run a single Playwright test:
@@ -66,6 +71,8 @@ Run a single Playwright test:
 ```bash
 npx playwright test tests/navigation.spec.ts
 ```
+
+See [docs/testing.md](docs/testing.md) for the full test inventory, conventions, and CI details.
 
 ## Project Structure
 
