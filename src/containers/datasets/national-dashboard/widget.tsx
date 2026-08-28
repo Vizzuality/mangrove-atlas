@@ -45,17 +45,12 @@ const NationalDashboard = () => {
           {!!data?.metadata?.other_resources.length && isFetched && (
             <OtherResources resources={data?.metadata?.other_resources} />
           )}
-          {data?.data?.mangrove_breakthrough_committed &&
-            process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-              <>
-                <div className="bg-brand-800/35 absolute right-0 left-0 h-0.5" />
 
-                <MangroveBreakthrough
-                  location={location.name}
-                  mangroveBreakthrough={data?.data?.mangrove_breakthrough_committed}
-                />
-              </>
-            )}
+          <div className="bg-brand-800/35 absolute right-0 left-0 h-0.5" />
+          <MangroveBreakthrough
+            location={location.name}
+            mangroveBreakthrough={data?.data?.[0]?.mangrove_breakthrough_committed}
+          />
         </div>
       )}
     </div>
