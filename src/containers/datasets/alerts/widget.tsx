@@ -10,6 +10,7 @@ import type { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 import type { PrimitiveAtom } from 'jotai';
 import { useAtom, useAtomValue } from 'jotai';
 
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
 import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
@@ -30,6 +31,7 @@ import { useAlerts } from './hooks';
 import Legend from './legend';
 
 const AlertsWidget = () => {
+  const isPrintReport = useIsPrintReport();
   const [startDate, setStartDate] = useAtom(
     alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
   );
@@ -93,6 +95,16 @@ const AlertsWidget = () => {
     defaultStartDate,
     defaultEndDate,
   } = data;
+
+  // Shorter in the report, with less air above the plot: the series reads just
+  // as well at this height, and it is what brings the card inside a single
+  // printed page. The bottom margin stays — it carries the rotated year labels.
+  const chartConfig = config as { margin?: Record<string, number> };
+  const printChartConfig = {
+    ...chartConfig,
+    height: 240,
+    margin: { ...chartConfig.margin, top: 16 },
+  };
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
@@ -219,41 +231,51 @@ const AlertsWidget = () => {
           </div>
 
           <Legend />
-          <Chart config={config} />
-          <Chart
-            config={{
-              ...configBrush,
-              onBrushEnd: ({ startIndex, endIndex }) => {
-                if (startIndex) {
-                  // Google Analytics tracking
-                  trackEvent('Widget iteration - start date change in alerts', {
-                    category: 'Widget iteration',
-                    action: 'Brush - drag',
-                    label: `Widget iteration - alerts start date ${fullData[startIndex]?.startDate}`,
-                    value: fullData[startIndex]?.startDate,
-                  });
-                  setStartDate(fullData[startIndex]?.startDate);
-                }
-                if (endIndex) {
-                  // Google Analytics tracking
-                  trackEvent('Widget iteration - end date change in alerts', {
-                    category: 'Widget iteration',
-                    action: 'Brush - drag',
-                    label: `Widget iteration - alerts end date ${fullData[endIndex]?.endDate}`,
-                    value: fullData[endIndex]?.endDate,
-                  });
-                  setEndDate(fullData[endIndex]?.endDate);
-                }
-              },
-              startIndex: configBrush?.customBrush?.startIndex,
-              endIndex: configBrush?.customBrush?.endIndex,
-            }}
-          />
+          <Chart config={isPrintReport ? printChartConfig : config} />
+          {/* The brush chart is a range control, and the chart above already
+              shows the range it is set to — the report drops it for the height. */}
+          {!isPrintReport && (
+            <Chart
+              config={{
+                ...configBrush,
+                onBrushEnd: ({ startIndex, endIndex }) => {
+                  if (startIndex) {
+                    // Google Analytics tracking
+                    trackEvent('Widget iteration - start date change in alerts', {
+                      category: 'Widget iteration',
+                      action: 'Brush - drag',
+                      label: `Widget iteration - alerts start date ${fullData[startIndex]?.startDate}`,
+                      value: fullData[startIndex]?.startDate,
+                    });
+                    setStartDate(fullData[startIndex]?.startDate);
+                  }
+                  if (endIndex) {
+                    // Google Analytics tracking
+                    trackEvent('Widget iteration - end date change in alerts', {
+                      category: 'Widget iteration',
+                      action: 'Brush - drag',
+                      label: `Widget iteration - alerts end date ${fullData[endIndex]?.endDate}`,
+                      value: fullData[endIndex]?.endDate,
+                    });
+                    setEndDate(fullData[endIndex]?.endDate);
+                  }
+                },
+                startIndex: configBrush?.customBrush?.startIndex,
+                endIndex: configBrush?.customBrush?.endIndex,
+              }}
+            />
+          )}
         </div>
       )}
       {!isError && !isLoading && (
         <>
-          <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
+          {/* The report drops the brush chart that used to sit above this, so
+              the run-in space above it has nothing left to clear. */}
+          <p
+            className={cn('items-center font-sans text-lg leading-7 font-light', {
+              'pt-6': !isPrintReport,
+            })}
+          >
             There are <span className="font-bold"> 535</span> areas monitored in the world.
           </p>
           <div className="flex space-x-2">

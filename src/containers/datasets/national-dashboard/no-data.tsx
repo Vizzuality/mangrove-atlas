@@ -1,5 +1,7 @@
 import cn from '@/lib/classnames';
 
+import { useReportNoData } from '@/containers/print-report/no-data-context';
+
 import ContactForm from '@/components/contact';
 import { buttonVariants } from '@/components/ui/button';
 import {
@@ -11,6 +13,9 @@ import {
 } from '@/components/ui/dialog';
 
 const NoData = () => {
+  // No-op outside the print report; there it drops the whole card.
+  useReportNoData();
+
   return (
     <div className="flex flex-col items-start space-y-4 rounded-lg bg-black/5 px-6 py-5">
       <p className="font-sans text-xs leading-5 sm:text-base sm:leading-6">

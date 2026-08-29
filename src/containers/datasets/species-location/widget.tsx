@@ -11,6 +11,8 @@ import { useAtom } from 'jotai';
 import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
+import OmitFromReport from '@/containers/print-report/omit-from-report';
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
 import { useIsLayerActive } from '@/containers/widget/selector';
 import NoData from '@/containers/widgets/no-data';
 
@@ -29,6 +31,7 @@ import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse, Specie } from './types';
 
 const SpeciesLocation = () => {
+  const isPrintReport = useIsPrintReport();
   const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location },
@@ -93,6 +96,10 @@ const SpeciesLocation = () => {
 
   if (isFetched && !species?.length) return <NoData />;
 
+  // The report only carries this widget once a species has been picked — the
+  // species picker itself is nothing but a control.
+  if (isPrintReport && !specieSelected) return <OmitFromReport />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
@@ -121,60 +128,66 @@ const SpeciesLocation = () => {
             </div>
           )}
 
-          <div className="border-brand-400 border-opacity-50 h-1 border-b border-dashed" />
-          {location !== 'worldwide' && (
-            <p>
-              Species list is filtered by <span className="font-bold">{location}</span>
-            </p>
+          {!isPrintReport && (
+            <>
+              <div className="border-brand-400 border-opacity-50 h-1 border-b border-dashed" />
+              {location !== 'worldwide' && (
+                <p>
+                  Species list is filtered by <span className="font-bold">{location}</span>
+                </p>
+              )}
+            </>
           )}
-          <Command className="w-full">
-            <div className="w-full pt-6">
-              <CommandInput
-                placeholder="Search species..."
-                onValueChange={() => requestAnimationFrame(updateFade)}
-                className="border-brand-400 w-full rounded-3xl text-sm placeholder:text-sm placeholder:text-black/85"
-              />
-            </div>
-            <CommandList className="relative mt-2" aria-label="Species">
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup
-                ref={listRef}
-                onScroll={updateFade}
-                className={cn(
-                  'space-y relative mb-2 flex h-full max-h-[170px] flex-col overflow-y-auto py-2',
-                  {
-                    'before:content before:pointer-events-none before:absolute before:top-0 before:right-4 before:left-0 before:z-10 before:h-5 before:w-full before:bg-linear-to-b before:from-white':
-                      fade.top,
-                    'after:content after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-linear-to-t after:from-white':
-                      fade.bottom,
-                  }
-                )}
-              >
-                {specieOptions.map((specie) => {
-                  const isSelected = specieSelected?.scientific_name === specie.value;
-                  return (
-                    <CommandItem
-                      key={specie.value}
-                      value={specie.value}
-                      onSelect={() => onSelectSpecies(specie.value)}
-                      className="flex cursor-pointer items-center gap-2.5 py-1"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          'border-grey-400 flex size-5 shrink-0 items-center justify-center rounded-full border bg-white',
-                          { 'border-brand-800 border-2': isSelected }
-                        )}
+          {!isPrintReport && (
+            <Command className="w-full">
+              <div className="w-full pt-6">
+                <CommandInput
+                  placeholder="Search species..."
+                  onValueChange={() => requestAnimationFrame(updateFade)}
+                  className="border-brand-400 w-full rounded-3xl text-sm placeholder:text-sm placeholder:text-black/85"
+                />
+              </div>
+              <CommandList className="relative mt-2" aria-label="Species">
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup
+                  ref={listRef}
+                  onScroll={updateFade}
+                  className={cn(
+                    'space-y relative mb-2 flex h-full max-h-[170px] flex-col overflow-y-auto py-2',
+                    {
+                      'before:content before:pointer-events-none before:absolute before:top-0 before:right-4 before:left-0 before:z-10 before:h-5 before:w-full before:bg-linear-to-b before:from-white':
+                        fade.top,
+                      'after:content after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-linear-to-t after:from-white':
+                        fade.bottom,
+                    }
+                  )}
+                >
+                  {specieOptions.map((specie) => {
+                    const isSelected = specieSelected?.scientific_name === specie.value;
+                    return (
+                      <CommandItem
+                        key={specie.value}
+                        value={specie.value}
+                        onSelect={() => onSelectSpecies(specie.value)}
+                        className="flex cursor-pointer items-center gap-2.5 py-1"
                       >
-                        {isSelected && <span className="bg-brand-800 size-2.5 rounded-full" />}
-                      </span>
-                      <span className="text-sm leading-5 text-black/85">{specie.label}</span>
-                    </CommandItem>
-                  );
-                })}
-              </CommandGroup>
-            </CommandList>
-          </Command>
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'border-grey-400 flex size-5 shrink-0 items-center justify-center rounded-full border bg-white',
+                            { 'border-brand-800 border-2': isSelected }
+                          )}
+                        >
+                          {isSelected && <span className="bg-brand-800 size-2.5 rounded-full" />}
+                        </span>
+                        <span className="text-sm leading-5 text-black/85">{specie.label}</span>
+                      </CommandItem>
+                    );
+                  })}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          )}
         </>
       )}
     </div>

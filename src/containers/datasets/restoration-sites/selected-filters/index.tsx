@@ -24,8 +24,7 @@ const SelectedFilters = ({
               type="button"
               className={cn({
                 [BUTTON_STYLES]: true,
-                'flex items-center space-x-2 overflow-hidden bg-[#00857f26] text-sm text-ellipsis whitespace-nowrap text-black/85':
-                  true,
+                'flex items-center space-x-2 overflow-hidden bg-[#00857f26] text-sm text-ellipsis whitespace-nowrap text-black/85': true,
               })}
             >
               <button type="button" onClick={() => handleRemoveFilter(filter, value)}>

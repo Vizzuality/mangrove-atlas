@@ -68,7 +68,16 @@ export const MAP_DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: boolean }) => {
+const MapContainer = ({
+  mapId,
+  hideControls,
+  layerIds,
+}: {
+  mapId: string;
+  hideControls?: boolean;
+  /** Restricts the map to these layers; omitted, it renders every active one. */
+  layerIds?: string[];
+}) => {
   const [position, setPosition] = useAtom(mapDraggableTooltipPositionAtom);
   const mapPopUpDimensions = useAtomValue(mapDraggableTooltipDimensionsAtom);
 
@@ -555,7 +564,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
         >
           {loaded && (
             <>
-              <LayerManager />
+              <LayerManager layerIds={layerIds} />
               {(isDrawingToolEnabled || uploadedGeojson) && (
                 <DrawControl
                   onCreate={handleUserDrawing}

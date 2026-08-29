@@ -1,5 +1,6 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
 import NoData from '@/containers/widgets/no-data';
 
 import {
@@ -16,6 +17,7 @@ import IUCNEcoregionsChart from './chart';
 import { useMangroveEcoregions } from './hooks';
 
 const IUCNEcoregions = () => {
+  const isPrintReport = useIsPrintReport();
   const { data, isLoading, isFetched } = useMangroveEcoregions();
 
   if (isFetched && !data) return <NoData />;
@@ -39,33 +41,38 @@ const IUCNEcoregions = () => {
             <span className="font-bold"> {data.ecoregion_total}</span> marine provinces classified
             under vulnerable status.
           </p>
-          <p className={WIDGET_SENTENCE_STYLE}>Click on the map for more information.</p>
+          {!isPrintReport && (
+            <p className={WIDGET_SENTENCE_STYLE}>Click on the map for more information.</p>
+          )}
           <IUCNEcoregionsChart config={data?.config} />
-          <Dialog onOpenChange={handleAnalytics}>
-            <DialogTrigger>
-              <div className="text-brand-800 w-full text-center text-sm font-normal underline">
-                <p>Associated reports</p>
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <div className="no-scrollbar space-y-4 overflow-y-auto p-4">
-                <DialogTitle className="font-sans text-2xl font-light text-black/85">
-                  IUCN Ecosystem Red List Assessment
-                </DialogTitle>
-                <h4 className="py-4 text-sm font-bold">Associated reports</h4>
-                <ul className="text-light text-brand-800 space-y-4 text-sm underline">
-                  {data.reports.map(({ name, url }) => (
-                    <li key={name} className="">
-                      <a target="_blank" rel="noopener noreferrer" href={url}>
-                        {name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <DialogClose />
-            </DialogContent>
-          </Dialog>
+          {/* The reports open in a dialog, which a printed page cannot do. */}
+          {!isPrintReport && (
+            <Dialog onOpenChange={handleAnalytics}>
+              <DialogTrigger>
+                <div className="text-brand-800 w-full text-center text-sm font-normal underline">
+                  <p>Associated reports</p>
+                </div>
+              </DialogTrigger>
+              <DialogContent>
+                <div className="no-scrollbar space-y-4 overflow-y-auto p-4">
+                  <DialogTitle className="font-sans text-2xl font-light text-black/85">
+                    IUCN Ecosystem Red List Assessment
+                  </DialogTitle>
+                  <h4 className="py-4 text-sm font-bold">Associated reports</h4>
+                  <ul className="text-light text-brand-800 space-y-4 text-sm underline">
+                    {data.reports.map(({ name, url }) => (
+                      <li key={name} className="">
+                        <a target="_blank" rel="noopener noreferrer" href={url}>
+                          {name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <DialogClose />
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       )}
     </div>
