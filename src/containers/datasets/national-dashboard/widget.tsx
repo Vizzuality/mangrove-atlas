@@ -14,7 +14,7 @@ import OtherResources from './other-resources';
 import Sources from './sources';
 
 const NationalDashboard = () => {
-  const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
+  const { data, isFetching, isFetched } = useNationalDashboard();
 
   const { type: locationType, id } = useSyncLocation();
   const ISO = data?.locationIso;
@@ -34,7 +34,7 @@ const NationalDashboard = () => {
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
-      <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
+      <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isFetching && data && (
         <div>
           {firstIndicator?.legal_status && locationName && (
