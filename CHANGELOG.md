@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.7](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.6...v8.0.0-rc.7) (2026-08-31)
+
+
+### Bug Fixes
+
+* **a11y:** WCAG 2.2 AA remediation with axe-core regression harness ([#1656](https://github.com/Vizzuality/mangrove-atlas/issues/1656)) ([67e5118](https://github.com/Vizzuality/mangrove-atlas/commit/67e511836da6388934fc9596b4e48f124cfaa222))
+* align national dashboard widget styles with design ([#1665](https://github.com/Vizzuality/mangrove-atlas/issues/1665)) ([ff22c69](https://github.com/Vizzuality/mangrove-atlas/commit/ff22c6959885d02b27a3b6941836adc48005afd4))
+* keep partner logo aspect ratios controlled in CSS ([#1661](https://github.com/Vizzuality/mangrove-atlas/issues/1661)) ([18690b6](https://github.com/Vizzuality/mangrove-atlas/commit/18690b64eca8d378943eaf4c485dd1e04b34e7a0))
+* national dashboard row layout — omit empty extent cell, align columns ([#1668](https://github.com/Vizzuality/mangrove-atlas/issues/1668)) ([8e4b802](https://github.com/Vizzuality/mangrove-atlas/commit/8e4b802cc17d53d745e84c51ac4bea0edf9257ff))
+* resolve saved WDPA areas to canonical location before navigating ([#1660](https://github.com/Vizzuality/mangrove-atlas/issues/1660)) ([bcfc570](https://github.com/Vizzuality/mangrove-atlas/commit/bcfc57052a706d958f58dfdc4c4225b3d747a4bd))
+* show loader while national dashboard widget fetches ([#1666](https://github.com/Vizzuality/mangrove-atlas/issues/1666)) ([a9eaea2](https://github.com/Vizzuality/mangrove-atlas/commit/a9eaea2053c17f788fa3248aecf2f00d1641877e))
+
 ## [8.0.0-rc.6](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.5...v8.0.0-rc.6) (2026-08-05)
 
 
