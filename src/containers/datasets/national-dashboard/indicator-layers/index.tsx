@@ -111,8 +111,16 @@ const IndicatorSources = ({
     }
   }, [setActiveLayers, layerId, buildLayer, isNationalLayerActive, locationIso, source]);
 
+  // Without an extent cell the 1fr extent column would render as an empty gap
+  // between the year and the controls, so the source name takes the free space
+  // instead and the year/controls pack to the right.
+  const hasExtent = Boolean(dataSource?.value);
+  const gridCols = hasExtent
+    ? 'grid-cols-[140px_max-content_1fr_max-content]'
+    : 'grid-cols-[1fr_max-content_max-content]';
+
   return (
-    <div role="row" className={className}>
+    <div role="row" className={`grid items-center gap-x-4 ${gridCols} ${className ?? ''}`}>
       <IndicatorSource source={source} color={color} />
       <IndicatorYear yearSelected={yearSelected} setYearSelected={setYearSelected} years={years} />
       <IndicatorExtent unit={unit} dataSource={dataSource} />

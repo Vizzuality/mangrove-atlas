@@ -24,7 +24,6 @@ const Sources = ({ data, iso }: { data: IndicatorDataItem[]; iso: string }) => {
     .scale(COLORS)
     .colors(sourceColorMap.size > COLORS.length ? sourceColorMap.size : COLORS.length);
 
-  const gridCols = 'grid grid-cols-[140px_max-content_1fr_max-content] items-center gap-x-4';
   return (
     <section className="space-y-6.25 py-[25px]">
       {data?.map(({ indicator, sources }) => (
@@ -66,7 +65,7 @@ const Sources = ({ data, iso }: { data: IndicatorDataItem[]; iso: string }) => {
                 unit={unit}
                 data_source={data_source}
                 color={color}
-                className={`${gridCols} text-2lg py-3 leading-7.5 font-light`}
+                className="text-2lg py-3 leading-7.5 font-light"
               />
             );
           })}
