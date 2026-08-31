@@ -111,14 +111,13 @@ const IndicatorSources = ({
     }
   }, [setActiveLayers, layerId, buildLayer, isNationalLayerActive, locationIso, source]);
 
-  // Without an extent cell the 1fr extent column would render as an empty gap
-  // between the year and the controls, so everything packs to the left instead:
-  // the source name takes only the width it needs (minmax(0,…) still lets it
-  // shrink and truncate) and the year/controls sit right after it.
+  // Without an extent cell the source name takes only the width it needs
+  // (minmax(0,…) still lets it shrink and truncate), the year sits right after
+  // it, and the controls keep the right edge like every other row.
   const hasExtent = Boolean(dataSource?.value);
   const gridCols = hasExtent
     ? 'grid-cols-[140px_max-content_1fr_max-content]'
-    : 'grid-cols-[minmax(0,max-content)_max-content_max-content]';
+    : 'grid-cols-[minmax(0,max-content)_max-content_1fr]';
 
   return (
     <div role="row" className={`grid items-center gap-x-4 ${gridCols} ${className ?? ''}`}>
