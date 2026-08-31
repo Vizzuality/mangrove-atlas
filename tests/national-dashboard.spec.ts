@@ -72,6 +72,20 @@ test.describe('National Dashboard multi-source', () => {
     await expect(testSwitch).toHaveAttribute('data-state', 'checked');
   });
 
+  test('source without extent renders no extent cell', async ({ page }) => {
+    const widget = page.getByTestId(WIDGET_TESTID);
+    const row = widget.getByRole('row').filter({ hasText: 'NOEXTENT' });
+
+    await expect(row).toBeVisible();
+    // Source, year and layer controls only — the extent cell is omitted when
+    // the value is missing or 0.
+    await expect(row.getByRole('cell')).toHaveCount(3);
+    await expect(row.getByText('km²')).toHaveCount(0);
+    await expect(
+      row.getByRole('switch', { name: /Toggle NOEXTENT Habitat extent area layer/ })
+    ).toBeVisible();
+  });
+
   test('year picker is per-source', async ({ page }) => {
     const widget = page.getByTestId(WIDGET_TESTID);
 

@@ -117,7 +117,10 @@ const IndicatorSources = ({
       <IndicatorYear yearSelected={yearSelected} setYearSelected={setYearSelected} years={years} />
       <IndicatorExtent unit={unit} dataSource={dataSource} />
 
-      <div role="cell" className="flex min-h-min justify-end space-x-2">
+      {/* col-start-[-2] pins the controls to the table's last column even when
+          the extent cell is absent for this row/year, so the switch keeps the
+          same right-aligned position in every row. */}
+      <div role="cell" className="col-start-[-2] flex min-h-min justify-end space-x-2">
         <WidgetControls
           content={{
             link: dataSource?.download_link ?? undefined,

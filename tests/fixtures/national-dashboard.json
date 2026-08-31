@@ -40,6 +40,21 @@
               "source_layer": "test_2025"
             }
           ]
+        },
+        {
+          "source": "NOEXTENT",
+          "unit": "km2",
+          "years": [2025],
+          "data_source": [
+            {
+              "year": 2025,
+              "value": 0,
+              "layer_link": "globalmangrovewatch.noextent_2025",
+              "download_link": null,
+              "layer_info": "NOEXTENT 2025 mangrove extent",
+              "source_layer": "noextent_2025"
+            }
+          ]
         }
       ]
     }
