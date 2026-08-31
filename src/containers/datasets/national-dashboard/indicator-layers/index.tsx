@@ -46,22 +46,16 @@ const IndicatorSources = ({
     [activeLayers, layerId]
   );
 
-  const buildLayer = useCallback(
-    (): Layer => ({
-      id: layerId,
-      opacity: '1',
-      visibility: 'visible',
-      settings: {
-        name: source,
-        location: locationIso,
-        layerIndex,
-        source: dataSource?.layer_link,
-        source_layer: dataSource?.source_layer,
-        year: yearSelected,
-      },
+  const layerSettings = useMemo(
+    () => ({
+      name: source,
+      location: locationIso,
+      layerIndex,
+      source: dataSource?.layer_link,
+      source_layer: dataSource?.source_layer,
+      year: yearSelected,
     }),
     [
-      layerId,
       source,
       locationIso,
       layerIndex,
@@ -71,33 +65,24 @@ const IndicatorSources = ({
     ]
   );
 
+  const buildLayer = useCallback(
+    (): Layer => ({
+      id: layerId,
+      opacity: '1',
+      visibility: 'visible',
+      settings: layerSettings,
+    }),
+    [layerId, layerSettings]
+  );
+
   const updateCurrentLayer = useCallback(
     (layers: Layer[] = []): Layer[] =>
       layers.map((layer) =>
         layer.id === layerId
-          ? {
-              ...layer,
-              settings: {
-                ...layer.settings,
-                name: source,
-                location: locationIso,
-                layerIndex,
-                source: dataSource?.layer_link,
-                source_layer: dataSource?.source_layer,
-                year: yearSelected,
-              },
-            }
+          ? { ...layer, settings: { ...layer.settings, ...layerSettings } }
           : layer
       ),
-    [
-      layerId,
-      source,
-      locationIso,
-      layerIndex,
-      dataSource?.layer_link,
-      dataSource?.source_layer,
-      yearSelected,
-    ]
+    [layerId, layerSettings]
   );
 
   useEffect(() => {

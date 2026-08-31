@@ -94,10 +94,10 @@ const SourceRow = ({ layer, color, name }: SourceRowProps) => {
       >
         <DRAG_SVG aria-hidden={true} />
       </button>
-      <div className="flex min-w-0 flex-1 items-start">
+      <div className="flex min-w-0 flex-1 items-center">
         <div
           style={{ backgroundColor: color }}
-          className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
+          className="mr-2.5 h-4 w-2 shrink-0 rounded-sm"
           aria-hidden="true"
         />
         <p className="truncate text-sm">{name}</p>
