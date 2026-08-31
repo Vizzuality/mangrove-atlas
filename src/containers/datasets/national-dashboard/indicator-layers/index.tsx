@@ -111,21 +111,16 @@ const IndicatorSources = ({
     }
   }, [setActiveLayers, layerId, buildLayer, isNationalLayerActive, locationIso, source]);
 
-  // Without an extent cell the source name takes only the width it needs
-  // (minmax(0,…) still lets it shrink and truncate), the year sits right after
-  // it, and the controls keep the right edge like every other row.
-  const hasExtent = Boolean(dataSource?.value);
-  const gridCols = hasExtent
-    ? 'grid-cols-[140px_max-content_1fr_max-content]'
-    : 'grid-cols-[minmax(0,max-content)_max-content_1fr]';
-
   return (
-    <div role="row" className={`grid items-center gap-x-4 ${gridCols} ${className ?? ''}`}>
+    <div role="row" className={className}>
       <IndicatorSource source={source} color={color} />
       <IndicatorYear yearSelected={yearSelected} setYearSelected={setYearSelected} years={years} />
       <IndicatorExtent unit={unit} dataSource={dataSource} />
 
-      <div role="cell" className="flex min-h-min justify-end space-x-2">
+      {/* col-start-[-2] pins the controls to the table's last column even when
+          the extent cell is absent for this row/year, so the switch keeps the
+          same right-aligned position in every row. */}
+      <div role="cell" className="col-start-[-2] flex min-h-min justify-end space-x-2">
         <WidgetControls
           content={{
             link: dataSource?.download_link ?? undefined,
