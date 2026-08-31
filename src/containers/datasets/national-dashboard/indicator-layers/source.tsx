@@ -7,7 +7,7 @@ const IndicatorSource = ({ source, color }: IndicatorSourceProps) => (
       className="h-4 w-2 shrink-0 rounded-sm"
       aria-hidden="true"
     />
-    <span className="truncate" title={source}>
+    <span className="min-w-0 flex-1 truncate" title={source}>
       {source}
     </span>
   </div>
