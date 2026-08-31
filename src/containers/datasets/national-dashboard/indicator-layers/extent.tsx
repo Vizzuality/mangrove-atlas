@@ -11,8 +11,10 @@ const UNIT_ARIA = {
 };
 
 const IndicatorExtent = ({ unit, dataSource }: IndicatorExtentProps) => {
+  // No extent (missing or 0): omit the cell entirely. The row grid's 1fr extent
+  // column absorbs the gap and the controls cell keeps hugging the right edge.
   if (!dataSource?.value) {
-    return <span role="cell" />;
+    return null;
   }
   const displayUnit = unit ? LABEL_UNITS[unit] || unit : '';
   const ariaUnit = unit ? UNIT_ARIA[unit] || unit : '';
