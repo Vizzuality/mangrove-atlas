@@ -40,12 +40,19 @@ const Sources = ({ data, iso }: { data: IndicatorDataItem[]; iso: string }) => {
          * they polluted the page outline with three entries per indicator.
          */
         <div key={indicator} role="table" aria-label={`${indicator} sources`}>
-          {/* Headers stay for screen readers; the design shows the rows without them. */}
-          <div role="row" className="sr-only">
-            <span role="columnheader">Source</span>
-            <span role="columnheader">Year</span>
-            <span role="columnheader">Extent</span>
-            <span role="columnheader">Layer controls</span>
+          <div role="row" className={`${gridCols} py-2`}>
+            <span role="columnheader" className="text-sm font-normal">
+              Source
+            </span>
+            <span role="columnheader" className="text-sm font-normal">
+              Year
+            </span>
+            <span role="columnheader" className="text-sm font-normal">
+              Extent
+            </span>
+            <span role="columnheader" className="sr-only">
+              Layer controls
+            </span>
           </div>
           {sources.map(({ source, years, unit, data_source }) => {
             const colorIndex = sourceColorMap.get(source) ?? 0;
