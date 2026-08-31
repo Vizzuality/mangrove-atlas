@@ -74,3 +74,4 @@ data/notebooks/uv.lock
 # Local planning notes / docs (untracked by design), except the ones we commit
 /docs/*
 !/docs/features-in-progress.md
+!/docs/testing.md
