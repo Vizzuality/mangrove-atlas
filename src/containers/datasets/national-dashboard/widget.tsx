@@ -1,5 +1,3 @@
-import cn from '@/lib/classnames';
-
 import { useSyncLocation } from 'hooks/use-sync-location';
 
 import Loading from '@/components/ui/loading';
@@ -22,34 +20,38 @@ const NationalDashboard = () => {
   const ISO = data?.locationIso;
 
   const { data: location } = useLocation(id, locationType);
+  const locationName = location?.name;
+
+  const firstIndicator = data?.data?.[0];
 
   if (
     isFetched &&
-    !data?.data?.mangrove_breakthrough_committed &&
-    !data?.data?.legal_status &&
+    !firstIndicator?.mangrove_breakthrough_committed &&
+    !firstIndicator?.legal_status &&
     data?.data?.length === 0
   )
     return <NoMetadata />;
 
   return (
-    <div className={cn(WIDGET_CARD_WRAPPER_STYLE)}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isFetching && data && (
-        <div className="space-y-6.25">
-          {data?.data?.legal_status && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-            <LegalStatus location={location.name} legalStatus={data?.data?.legal_status} />
+        <div>
+          {firstIndicator?.legal_status && locationName && (
+            <LegalStatus location={locationName} legalStatus={firstIndicator.legal_status} />
           )}
-          {isFetched && !data?.data.length && <NoData />}
-          {isFetched && data?.data.length > 0 && <Sources data={data?.data} iso={ISO} />}
-
-          {!!data?.metadata?.other_resources.length && isFetched && (
-            <OtherResources resources={data?.metadata?.other_resources} />
+          {data.data?.length ? <Sources data={data.data} iso={ISO} /> : <NoData />}
+          {!!data.metadata?.other_resources?.length && (
+            <>
+              <div className="bg-brand-800/30 absolute right-0 left-0 h-0.5" />
+              <OtherResources resources={data.metadata.other_resources} />
+            </>
           )}
 
-          <div className="bg-brand-800/35 absolute right-0 left-0 h-0.5" />
+          <div className="bg-brand-800/30 absolute right-0 left-0 h-0.5" />
           <MangroveBreakthrough
-            location={location.name}
-            mangroveBreakthrough={data?.data?.[0]?.mangrove_breakthrough_committed}
+            location={locationName ?? ''}
+            mangroveBreakthrough={!!firstIndicator?.mangrove_breakthrough_committed}
           />
         </div>
       )}

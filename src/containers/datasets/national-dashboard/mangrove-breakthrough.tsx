@@ -11,15 +11,15 @@ const MangroveBreakthrough = ({
   mangroveBreakthrough: boolean;
 }) => {
   return (
-    <section className="space-y-2 py-[25px]">
-      <div className="flex items-center justify-between">
+    <section className="space-y-2 py-6.25">
+      <div className="flex items-center justify-between gap-8">
         <p
           className={cn({
-            'text-sm first-letter:capitalize': true,
+            'text-sm leading-5 first-letter:capitalize': true,
             'max-w-[50%]': mangroveBreakthrough,
           })}
         >
-          {location} is {mangroveBreakthrough ? '' : 'not currently'} committed to{' '}
+          {location} has {mangroveBreakthrough ? '' : 'not yet '}endorsed the{' '}
           <Link
             href="https://www.mangrovealliance.org/news/the-mangrove-breakthrough"
             target="_blank"
@@ -35,6 +35,7 @@ const MangroveBreakthrough = ({
             alt="Mangrove breakthrough"
             width={135}
             height={26}
+            className="h-[26px] w-auto shrink-0 object-contain"
           />
         )}
       </div>

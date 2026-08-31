@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
@@ -47,13 +47,18 @@ export function useNationalDashboard(
     return ['national_dashboard', JSON.stringify(params), location_id];
   }, [params, location_id]);
 
-  return useQuery<DataResponse, Error, NationalDashboardResult>({
-    queryKey,
-    queryFn: fetchMangroveNationalDashboard,
-    select: (data: DataResponse) => ({
+  const select = useCallback(
+    (data: DataResponse): NationalDashboardResult => ({
       ...data,
       locationIso: iso,
     }),
+    [iso]
+  );
+
+  return useQuery<DataResponse, Error, NationalDashboardResult>({
+    queryKey,
+    queryFn: fetchMangroveNationalDashboard,
+    select,
     ...queryOptions,
   });
 }

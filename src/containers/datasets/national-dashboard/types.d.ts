@@ -1,55 +1,10 @@
-type DataSource = {
-  download_link: string;
+export type IndicatorSourceEntry = {
+  year: number;
+  value: number;
   layer_info: string;
   layer_link: string;
-  value: number;
-  year: number;
-};
-type Source = {
-  data_source: DataSource[];
-  source: string;
-  unit: string;
-  years: number[];
-};
-
-type Data = {
-  indicator: string;
-  sources: Source[];
-  legal_status?: string;
-  mangrove_breakthrough_committed?: boolean | null;
-  [key: string]: unknown;
-};
-
-type Metadata = {
-  locations_id: string;
-  note: string;
-  other_resources: OtherResource[];
-};
-export type DataResponse = {
-  data: any;
-  metadata: Metadata;
-};
-
-export type LayerSettingsType = {
-  source?: string;
-  name?: string;
-  source_layer?: string;
-  layerIndex?: number;
-  year?: number;
-  [key: string]: string | number;
-};
-
-export type IndicatorResponse = {
-  data: IndicatorDataItem[];
-  metadata: IndicatorMetadata;
-  locationIso: string;
-};
-
-export type IndicatorDataItem = {
-  indicator: string;
-  legal_status: 'forest' | 'mangrove';
-  mangrove_breakthrough_committed: boolean | null;
-  sources: IndicatorSource[];
+  download_link: string | null;
+  source_layer: string;
 };
 
 export type IndicatorSource = {
@@ -59,13 +14,11 @@ export type IndicatorSource = {
   data_source: IndicatorSourceEntry[];
 };
 
-export type IndicatorSourceEntry = {
-  year: number;
-  value: number;
-  layer_info: string;
-  layer_link: string;
-  download_link: string | null;
-  source_layer: string;
+export type IndicatorDataItem = {
+  indicator: string;
+  legal_status: 'forest' | 'mangrove';
+  mangrove_breakthrough_committed: boolean | null;
+  sources: IndicatorSource[];
 };
 
 export type OtherResource = {
@@ -79,4 +32,18 @@ export type IndicatorMetadata = {
   legal_status_options: string[];
   other_resources: OtherResource[];
   note: string | null;
+};
+
+export type DataResponse = {
+  data: IndicatorDataItem[];
+  metadata: IndicatorMetadata;
+};
+
+export type LayerSettingsType = {
+  source?: string;
+  name?: string;
+  source_layer?: string;
+  layerIndex?: number;
+  year?: number;
+  [key: string]: string | number;
 };

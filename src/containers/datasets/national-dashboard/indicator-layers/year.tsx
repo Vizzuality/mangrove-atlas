@@ -18,7 +18,7 @@ const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearPr
               type="button"
               aria-haspopup="listbox"
               aria-label={`Select year, current ${yearSelected}`}
-              className={`${WIDGET_SELECT_STYLES}`}
+              className={WIDGET_SELECT_STYLES}
             >
               {yearSelected}
               <ARROW_SVG

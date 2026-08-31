@@ -1,13 +1,8 @@
 import type { WidgetSlugType } from 'types/widget';
 
-type DataSourceType = {
-  year: number;
-  value: number;
-  layer_link: `globalmangrovewatch.${string}`;
-  download_link: string | null;
-  layer_info: string;
-  source_layer: string;
-};
+import type { IndicatorSourceEntry } from '../types';
+
+type DataSourceType = IndicatorSourceEntry;
 
 export type IndicatorSourcesProps = {
   id: WidgetSlugType;
