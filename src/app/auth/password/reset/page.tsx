@@ -85,7 +85,7 @@ function ResetPasswordForm() {
 
   return (
     <div className="relative flex min-h-screen bg-white">
-      <Logo position="top-left" width={360} />
+      <Logo position="top-left" width={360} className="z-10" />
       {/* Empty decorative panel — see the signup page. */}
       <div
         aria-hidden="true"
