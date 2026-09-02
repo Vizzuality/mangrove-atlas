@@ -1,8 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import cn from '@/lib/classnames';
+
 type LogoProps = {
   src?: string;
+  className?: string;
   onClick?: () => void;
   width?: number;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
@@ -24,6 +27,7 @@ const INTRINSIC_HEIGHT = 216;
 
 const Logo = ({
   src = '/images/logo.webp',
+  className,
   onClick,
   width = INTRINSIC_WIDTH,
   position = 'top-right',
@@ -31,7 +35,7 @@ const Logo = ({
   return (
     <Link
       href="/"
-      className={`pointer-events-auto fixed z-[800] ${POSITION_CLASSES[position]}`}
+      className={cn('pointer-events-auto fixed z-[800]', POSITION_CLASSES[position], className)}
       draggable={false}
       data-testid="desktop-logo"
       {...(onClick && { onClick })}

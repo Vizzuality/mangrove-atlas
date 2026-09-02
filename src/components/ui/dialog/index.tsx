@@ -45,6 +45,8 @@ const DialogContent = forwardRef<
   ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
     overlay?: boolean;
     classNameContent?: string;
+    /** Applied to the wrapper that sizes the card and anchors DialogClose. */
+    classNameWrapper?: string;
     hideScrollFade?: boolean;
   }
 >(
@@ -52,6 +54,7 @@ const DialogContent = forwardRef<
     {
       className,
       classNameContent,
+      classNameWrapper,
       children,
       overlay: _overlay,
       hideScrollFade,
@@ -74,18 +77,21 @@ const DialogContent = forwardRef<
           ref={ref}
           aria-describedby={ariaDescribedBy}
           className={cn({
-            'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-hidden duration-300 sm:p-4':
-              true,
+            'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 pointer-events-none absolute z-40 h-screen w-full overflow-hidden duration-300 sm:p-4': true,
 
             [classNameContent || '']: !!classNameContent,
           })}
           {...props}
         >
-          <div className="pointer-events-auto relative mx-auto w-full sm:max-w-135 lg:mx-0 lg:mt-4 lg:ml-6">
+          <div
+            className={cn(
+              'pointer-events-auto relative mx-auto w-full sm:max-w-135 lg:mx-0 lg:mt-4 lg:ml-6',
+              classNameWrapper
+            )}
+          >
             <div
               className={cn({
-                'sm:shadow-card flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-4rem)] sm:p-8 md:rounded-3xl':
-                  true,
+                'sm:shadow-card flex max-h-screen w-full shrink-0 flex-col overflow-y-auto border-none bg-white p-6 sm:max-h-[calc(100vh-4rem)] sm:p-8 md:rounded-3xl': true,
                 [className || '']: !!className,
               })}
             >
@@ -128,8 +134,7 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'md:shadow-card absolute top-4 right-4 z-30 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-10 md:bg-white/70 md:backdrop-blur-sm':
-          true,
+        'md:shadow-card absolute top-4 right-4 z-30 flex h-11 w-10 cursor-pointer items-center justify-end focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none sm:-top-2 sm:-right-10 sm:rounded-r-[20px] md:top-10 md:bg-white/70 md:backdrop-blur-sm': true,
         [className || '']: !!className,
       })}
       onClick={onClose}
