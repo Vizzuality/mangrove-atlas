@@ -120,7 +120,7 @@ export default function SignupPage() {
 
   return (
     <div className="relative flex min-h-screen bg-white">
-      <Logo position="top-left" width={360} />
+      <Logo position="top-left" width={360} className="z-10" />
       {/* Empty decorative panel: no content, and `mrt-hero-title` only exists on
           the signin page, so the section/aria-labelledby pair named nothing here. */}
       <div
