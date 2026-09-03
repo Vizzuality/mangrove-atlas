@@ -15,7 +15,7 @@
     "@google-cloud/storage": "^5.1.1",
     "date-fns": "^2.14.0",
     "stream-chain": "^2.2.2",
-    "stream-json": "^1.6.0"
+    "stream-json": "^3.5.0"
   },
   "overrides": {
     "http-proxy-agent": {
