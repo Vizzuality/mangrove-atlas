@@ -12,8 +12,10 @@ const MangrovesSaltMarshLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
   const LAYER = useLayer({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    // Defaults cover the print report's layer cards, which render this layer
+    // even when it has no entry in the active-layers state.
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   if (!SOURCE || !LAYER) return null;

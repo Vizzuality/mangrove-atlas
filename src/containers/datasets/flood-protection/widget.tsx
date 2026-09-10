@@ -10,6 +10,7 @@ import type {
   FloodProtectionPeriodId,
 } from '@/containers/datasets/flood-protection/types';
 // import NoData from '@/containers/widgets/no-data';
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
 
 import Loading from '@/components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -40,6 +41,7 @@ const FloodProtection = ({
   selectedPeriod: FloodProtectionPeriodId;
   setPeriod: (period: FloodProtectionPeriodId) => void;
 }) => {
+  const isPrintReport = useIsPrintReport();
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
   const handlePeriod = useCallback(
@@ -155,21 +157,25 @@ const FloodProtection = ({
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && data && (
         <div className="space-y-4">
-          <header className="flex justify-between">
-            <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3>
-            <div className="flex items-start space-x-2">
-              <SwitchWrapper id="planet_medres_visual_monthly" label="Planet monthly mosaic">
-                <SwitchRoot
-                  data-testid={id}
-                  onClick={handleClick}
-                  defaultChecked={isActive}
-                  checked={isActive}
-                >
-                  <SwitchThumb />
-                </SwitchRoot>
-              </SwitchWrapper>
-            </div>
-          </header>
+          {/* The report's card already names the indicator, and a layer switch
+              means nothing on paper — the whole header goes. */}
+          {!isPrintReport && (
+            <header className="flex justify-between">
+              <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3>
+              <div className="flex items-start space-x-2">
+                <SwitchWrapper id="planet_medres_visual_monthly" label="Planet monthly mosaic">
+                  <SwitchRoot
+                    data-testid={id}
+                    onClick={handleClick}
+                    defaultChecked={isActive}
+                    checked={isActive}
+                  >
+                    <SwitchThumb />
+                  </SwitchRoot>
+                </SwitchWrapper>
+              </div>
+            </header>
+          )}
           <p className={WIDGET_SENTENCE_STYLE}>
             In <span className="font-bold first-letter:uppercase"> {data.location}</span>, mangroves
             are expected to protect{' '}

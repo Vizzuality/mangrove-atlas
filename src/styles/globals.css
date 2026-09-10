@@ -137,18 +137,85 @@
   display: none !important;
 }
 
+/* A report is read, not operated: every dropdown trigger shows its selected
+   value as plain text, without the underline, arrow or pointer affordance.
+   Applies on the report page itself so the on-screen preview matches print. */
+.print-report .widget-select {
+  cursor: default;
+  border-bottom: 0;
+  pointer-events: none;
+}
+
+.print-report .widget-select svg {
+  display: none;
+}
+
+/* Each restoration section ends with a rule that bleeds past its own box to
+   separate it from the next one in the stacked layout. Laid out in columns it
+   just cuts across the gutter, so the report drops them. */
+.restoration-print div[class*='-left-10'] {
+  display: none;
+}
+
+/* Chart tooltips answer a hover. On paper they are a stray box frozen over the
+   plot, so the report never shows them. */
+.print-report .recharts-tooltip-wrapper {
+  display: none !important;
+}
+
+/* Brushes are range controls: the printed chart already shows the range they
+   are set to, so the strip underneath is dead weight. */
+.print-report .c-brush,
+.print-report .recharts-brush {
+  display: none;
+}
+
+/* The map legend is a reference strip, not body copy: every dataset legend sets
+   its own type sizes, so the report scales the whole block down in one place. */
+.print-report-legend :is(p, span, div, li, td, th) {
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+/* Donut widgets keep their legend beside the chart. The app only does this from
+   `md` up, which a report card never reaches — the widgets themselves are left
+   alone and the wrapper is matched by the pie it holds. */
+.print-report div:has(> figure .recharts-pie) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+}
+
 @media print {
   .print-report {
     background-color: #fff;
+    /* Without this the print engine drops chart fills, legend swatches and the
+       card backgrounds, leaving an unreadable monochrome report. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .print-report-no-print {
     display: none;
   }
 
+  /* The map is one raster; splitting it across pages renders it twice. */
+  .print-report-map {
+    break-inside: avoid;
+  }
+
   @page {
+    /* Usable box after margins: 277mm x 170mm. Size printed elements in mm —
+       viewport units mean nothing once the page box takes over. */
     size: A4 landscape;
-    margin: 10mm;
+    margin: 20mm 10mm 10mm;
+  }
+
+  /* The first page opens with the title and the map, which need no run-in
+     space above them — the wide top margin is there to separate the running
+     content on the pages that follow. */
+  @page :first {
+    margin-top: 10mm;
   }
 }
 

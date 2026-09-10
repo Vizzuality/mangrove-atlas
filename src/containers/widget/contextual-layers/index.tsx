@@ -34,7 +34,9 @@ const ContextualLayersComponent = ({
   const name = info?.name ?? '';
   const thumbSource = info?.thumbSource;
 
-  if (isPrintReport && !isActive) return null;
+  // Map tips prompt the reader to switch a layer on — an offer a printed page
+  // cannot honour, so the report drops them outright.
+  if (isPrintReport) return null;
 
   return (
     <div className="bg-brand-800/10 relative flex flex-col space-y-5 rounded-2xl p-4">

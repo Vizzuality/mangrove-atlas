@@ -41,8 +41,6 @@ const WidgetsContainer: FC = () => {
     );
   }, [activeWidgets, currentLocation, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
-  const isCustomArea = !!(customGeojson || uploadedGeojson);
-
   return (
     <WidgetsLayout>
       <AppTools />
@@ -64,7 +62,7 @@ const WidgetsContainer: FC = () => {
         <WidgetsDeckContent />
       </Dialog>
 
-      {!!widgetsAvailable.length && isCustomArea && <PrintReportButton />}
+      {!!widgetsAvailable.length && <PrintReportButton />}
     </WidgetsLayout>
   );
 };

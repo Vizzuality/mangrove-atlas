@@ -29,7 +29,8 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
           {info.point_count && (
             <p className="text-sm text-black/85">
               <span>
-                There are <strong>{info.point_count}</strong> restoration sites in this location.{' '}
+                There are <strong>{info.point_count}</strong> restoration sites in this
+                location.{' '}
               </span>
               <br />
               <span className="font-extralight">Zoom in to view more details about each site</span>

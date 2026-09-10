@@ -10,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import type { PrimitiveAtom } from 'jotai';
 import { useAtom, useAtomValue } from 'jotai';
 
+import useIsPrintReport from '@/containers/print-report/use-is-print-report';
 import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
@@ -31,6 +32,7 @@ import { useMangroveHabitatExtent, widgetSlug } from './hooks';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
+  const isPrintReport = useIsPrintReport();
   const [year, setYear] = useAtom(habitatExtentSettings as unknown as PrimitiveAtom<number | null>);
   const [isPlaying, setIsPlaying] = useAtom(habitatExtentIsPlaying);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
@@ -230,17 +232,21 @@ const HabitatExtent = () => {
             </Popover>
             .
           </p>
-          <div className="py-4">
-            {sortedYears.length > 1 && (
-              <Timeline
-                years={sortedYears}
-                currentYear={currentYear}
-                isPlaying={isPlaying}
-                onYearChange={handleYearChange}
-                onTogglePlay={handleTogglePlay}
-              />
-            )}
-          </div>
+          {/* The timeline is a control: on paper the selected year is already
+              stated in the sentence above. */}
+          {!isPrintReport && (
+            <div className="py-4">
+              {sortedYears.length > 1 && (
+                <Timeline
+                  years={sortedYears}
+                  currentYear={currentYear}
+                  isPlaying={isPlaying}
+                  onYearChange={handleYearChange}
+                  onTogglePlay={handleTogglePlay}
+                />
+              )}
+            </div>
+          )}
           <ContextualLayersWrapper
             origin="mangrove_alerts"
             id={contextualLayers[0].id}

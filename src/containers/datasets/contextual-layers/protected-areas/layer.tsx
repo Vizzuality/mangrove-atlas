@@ -14,8 +14,10 @@ const MangrovesProtectedAreasLayer = ({ beforeId, id, onAdd, onRemove }: LayerPr
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    // Defaults cover the print report's layer cards, which render this layer
+    // even when it has no entry in the active-layers state.
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   const ids = LAYERS.map((layer) => layer.id);

@@ -33,7 +33,8 @@ export async function generateMetadata({
     }
   }
 
-  return { title: `${name} report` };
+  // Browsers seed the "Save as PDF" filename from the document title.
+  return { title: `${name} — Mangrove report` };
 }
 
 export default async function Page({ params }: { params: Promise<{ params?: string[] }> }) {
