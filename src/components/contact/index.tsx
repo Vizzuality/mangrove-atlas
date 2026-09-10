@@ -8,12 +8,13 @@ import Link from 'next/link';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
+import { PRIVACY_NOTICE_URL } from '@/lib/legal';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -30,11 +31,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+
+import CHECK_SVG from '@/svgs/ui/check';
 
 import { TOPICS } from './constants';
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
-const isDev = process.env.NEXT_PUBLIC_ENVIRONMENT === 'development';
 
 const ContactFormSchema = z.object({
   name: z.string({ message: 'Name is required' }).min(2, 'Name must contain at least 2 characters'),
@@ -45,14 +48,14 @@ const ContactFormSchema = z.object({
     .email('Invalid email'),
   topic: z.enum(TOPICS_VALUES, { message: 'Please, select a topic' }),
   message: z.string().min(1, 'Message is required'),
-  privacyPolicy: isDev
-    ? z.boolean().refine((val) => val === true, {
-        message: 'You must accept the Privacy Policy',
-      })
-    : z.boolean().optional(),
+  privacyPolicy: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the Privacy Notice',
+  }),
 });
 
 type FormSchema = z.infer<typeof ContactFormSchema>;
+
+const LABEL_CLASS = 'text-xs font-semibold leading-[18px]';
 
 function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -66,12 +69,13 @@ function ContactForm() {
       email: '',
       topic: undefined,
       message: '',
-      privacyPolicy: true,
+      privacyPolicy: false,
     },
     mode: 'onSubmit',
   });
 
   const onSubmitData = async (values: FormSchema) => {
+    setStatus('loading');
     try {
       const response = await fetch('/api/send', {
         method: 'POST',
@@ -100,6 +104,7 @@ function ContactForm() {
       setStatus('error');
     }
   };
+
   return (
     <Form {...form}>
       <form ref={formRef} onSubmit={form.handleSubmit(onSubmitData)} className="text-black/85">
@@ -109,7 +114,7 @@ function ContactForm() {
             name="name"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-xs">Name</FormLabel>
+                <FormLabel className={LABEL_CLASS}>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter your name" type="text" autoComplete="name" {...field} />
                 </FormControl>
@@ -122,13 +127,33 @@ function ContactForm() {
             name="organization"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-xs">Organization</FormLabel>
-                <Input
-                  placeholder="Enter your organization"
-                  type="text"
-                  autoComplete="organization"
-                  {...field}
-                />
+                <FormLabel className={LABEL_CLASS}>Organization</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your organization name"
+                    type="text"
+                    autoComplete="organization"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className={LABEL_CLASS}>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your email"
+                    type="email"
+                    autoComplete="email"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -137,7 +162,7 @@ function ContactForm() {
             name="topic"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-xs">Topics</FormLabel>
+                <FormLabel className={LABEL_CLASS}>Topic</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -145,15 +170,8 @@ function ContactForm() {
                   open={isOpen}
                 >
                   <FormControl>
-                    <SelectTrigger className="focus-visible:ring-brand-800 focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
-                      <SelectValue placeholder="Select" />
-                      {/* <LuChevronDown
-                        className={cn({
-                          'h-4 w-4': true,
-                          'rotate-180': isOpen,
-                        })}
-                    
-                      /> */}
+                    <SelectTrigger className="focus-visible:ring-brand-800 focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm font-light focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-black/60">
+                      <SelectValue placeholder="Select one" />
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -164,14 +182,14 @@ function ContactForm() {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        aria-hidden="true"
                         className={cn({
-                          'lucide lucide-chevron-down-icon lucide-chevron-down h-4 w-4': true,
+                          'h-4 w-4 shrink-0 text-black/85': true,
                           'rotate-180': isOpen,
                         })}
                       >
                         <path d="m6 9 6 6 6-6" />
                       </svg>
-                      <span className="sr-only">Select</span>
                     </SelectTrigger>
                   </FormControl>
                   <FormMessage />
@@ -183,7 +201,6 @@ function ContactForm() {
                       {TOPICS.map(({ label, value }) => (
                         <SelectItem key={value} value={value} className="hover:text-brand-800">
                           {label}
-                          <span className="sr-only">Select</span>
                         </SelectItem>
                       ))}
                     </div>
@@ -194,90 +211,64 @@ function ContactForm() {
           />
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="space-y-1.5">
-                <FormLabel className="text-xs">Email</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your email"
-                    type="text"
-                    autoComplete="email"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="message"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-xs">Your message</FormLabel>
+                <FormLabel className={LABEL_CLASS}>Your message</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your message" autoComplete="message" {...field} />
+                  <Textarea placeholder="Type your message here" rows={3} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          {isDev && (
-            <FormField
-              control={form.control}
-              name="privacyPolicy"
-              render={({ field }) => (
-                <FormItem className="space-y-1.5">
-                  <div className="flex items-center space-x-2.5 text-black/85">
-                    <FormControl>
-                      <Checkbox
-                        aria-labelledby="privacyPolicy-label"
-                        onCheckedChange={(checked) => field.onChange(checked)}
-                        className={cn({
-                          'h-5 w-5 shrink-0 cursor-pointer border border-black/15': true,
-                        })}
-                        checked={field.value}
-                      >
-                        <CheckboxIndicator className="bg-brand-800">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                            className="lucide lucide-circle-check-icon lucide-circle-check stroke-2 text-white"
-                          >
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="m9 12 2 2 4-4" />
-                          </svg>
-                        </CheckboxIndicator>
-                      </Checkbox>
-                    </FormControl>
-                    <span id="privacyPolicy-label">
-                      I agree with the{' '}
-                      <Link href="/" className="underline">
-                        Privacy Policy.
-                      </Link>
-                    </span>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
+          <FormField
+            control={form.control}
+            name="privacyPolicy"
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <div className="flex items-center gap-2.5 text-sm text-black/85">
+                  <FormControl>
+                    <CheckboxPrimitive.Root
+                      aria-labelledby="privacyPolicy-label"
+                      checked={field.value}
+                      onCheckedChange={(checked) => field.onChange(checked === true)}
+                      className="focus-visible:ring-brand-800 data-[state=checked]:border-brand-800 data-[state=checked]:bg-brand-800 flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded border border-black/15 bg-white text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    >
+                      <CheckboxPrimitive.Indicator>
+                        <CHECK_SVG className="h-3 w-3 fill-current" aria-hidden="true" />
+                      </CheckboxPrimitive.Indicator>
+                    </CheckboxPrimitive.Root>
+                  </FormControl>
+                  <span id="privacyPolicy-label">
+                    I agree with the{' '}
+                    <Link
+                      href={PRIVACY_NOTICE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
+                      Privacy Notice
+                    </Link>
+                    .
+                  </span>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <div className="space-y-4">
-            {status === 'loading' && <p>Sending...</p>}
-            {status === 'success' && <p>Email sent successfully!</p>}
-            {status === 'error' && <p>Failed to send email. Please try again.</p>}
-            <Button type="submit" className="h-9 w-full" disabled={!form.formState.isValid}>
+            {status === 'loading' && <p className="text-sm">Sending...</p>}
+            {status === 'success' && <p className="text-sm">Email sent successfully!</p>}
+            {status === 'error' && (
+              <p className="text-sm text-red-700">Failed to send email. Please try again.</p>
+            )}
+            <Button
+              type="submit"
+              className="h-9 w-full font-bold"
+              disabled={status === 'loading' || status === 'success'}
+            >
               Send message
             </Button>
           </div>
