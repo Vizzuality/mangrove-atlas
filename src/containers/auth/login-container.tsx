@@ -36,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <div className="relative flex min-h-screen bg-white">
-      <Logo position="top-left" width={360} />
+      <Logo position="top-left" width={360} className="z-10" />
 
       <section
         className="flex w-[50%] flex-col justify-center bg-cover bg-right px-4 py-8"
