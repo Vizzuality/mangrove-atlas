@@ -4,6 +4,8 @@ import { useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
+import Link from 'next/link';
+
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 import { PRIVACY_NOTICE_URL } from '@/lib/legal';
@@ -240,9 +242,14 @@ function ContactForm() {
                   </FormControl>
                   <span id="privacyPolicy-label">
                     I agree with the{' '}
-                    <a href={PRIVACY_NOTICE_URL} download className="underline">
+                    <Link
+                      href={PRIVACY_NOTICE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
                       Privacy Notice
-                    </a>
+                    </Link>
                     .
                   </span>
                 </div>

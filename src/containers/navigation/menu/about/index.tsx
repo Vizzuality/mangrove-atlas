@@ -124,13 +124,14 @@ const About = () => {
         </p>
         <p>
           Read our{' '}
-          <a
+          <Link
             href={PRIVACY_NOTICE_URL}
-            download
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-brand-800 font-semibold hover:underline"
           >
             Privacy Notice
-          </a>
+          </Link>
           .
         </p>
       </div>

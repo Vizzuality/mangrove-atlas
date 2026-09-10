@@ -116,9 +116,14 @@ const ResourcesMenu = ({ setSection }) => {
         </CollapsibleContent>
       </Collapsible>
 
-      <a href={PRIVACY_NOTICE_URL} download className="text-2lg hover:text-brand-800 font-light">
+      <Link
+        href={PRIVACY_NOTICE_URL}
+        className="text-2lg hover:text-brand-800 font-light"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         Privacy Notice
-      </a>
+      </Link>
     </div>
   );
 };
