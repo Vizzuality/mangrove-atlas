@@ -1,7 +1,5 @@
 import cn from '@/lib/classnames';
 
-// import Helper from '@/containers/help/helper';
-
 import ContactForm from '@/components/contact';
 import {
   Dialog,
@@ -14,30 +12,16 @@ import {
 const Contact = ({ className }: { className?: string }) => {
   return (
     <Dialog>
-      {/* <Helper
-        className={{
-          button: '-top-2 -right-4',
-          tooltip: 'w-fit-content',
-        }}
-        tooltipPosition={{ top: -40, left: 0 }}
-        message=""
-      > */}
       <DialogTrigger className={cn(className)}>Contact Us</DialogTrigger>
-      {/* </Helper> */}
 
       <DialogContent
         data-testid="ContactForm-content"
-        className={cn({
-          'font-sans md:mb-20 md:w-[540px]': true,
-        })}
+        className="font-sans md:mb-20"
+        classNameWrapper="sm:max-w-[436px]"
       >
-        <div className="space-y-10 py-10">
-          <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-            <DialogTitle className="text-2xl leading-4 font-light md:pt-0 md:text-3xl">
-              Contact Us
-            </DialogTitle>
-          </div>
-        </div>
+        <DialogTitle className="mb-6 text-3xl leading-8 font-light text-black/85">
+          Contact
+        </DialogTitle>
         <ContactForm />
         <DialogClose />
       </DialogContent>

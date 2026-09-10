@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import cn from '@/lib/classnames';
+import { PRIVACY_NOTICE_URL } from '@/lib/legal';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 
@@ -84,7 +85,7 @@ const ResourcesMenu = ({ setSection }) => {
         Mangrove Restoration Tracker Tool
       </Link>
 
-      <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
+      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger iconType={null} className="p-0">
           <div className="text-2lg hover:text-brand-800 flex w-full items-center space-x-4 font-light">
             <span className={cn({ 'text-brand-800': isOpen })}>Resources</span>
@@ -98,7 +99,7 @@ const ResourcesMenu = ({ setSection }) => {
             <span className="sr-only">Toggle</span>
           </div>
         </CollapsibleTrigger>
-        <CollapsibleContent>
+        <CollapsibleContent className="pt-4">
           <div className="border-l-grey-400/20 flex flex-col space-y-2 border-l px-6">
             {RESOURCES_LINKS.map(({ label, href }) => (
               <a
@@ -114,6 +115,15 @@ const ResourcesMenu = ({ setSection }) => {
           </div>
         </CollapsibleContent>
       </Collapsible>
+
+      <Link
+        href={PRIVACY_NOTICE_URL}
+        className="text-2lg hover:text-brand-800 font-light"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Privacy Notice
+      </Link>
     </div>
   );
 };

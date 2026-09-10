@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { PRIVACY_NOTICE_URL } from '@/lib/legal';
+
 import { ConvenedBy, Donors, SupportedBy } from './constants';
 import AboutPartners from './partners';
 
@@ -119,6 +121,18 @@ const About = () => {
           FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM
           MAPS AND INFORMATION PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR
           SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
+        </p>
+        <p>
+          Read our{' '}
+          <Link
+            href={PRIVACY_NOTICE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-800 font-semibold hover:underline"
+          >
+            Privacy Notice
+          </Link>
+          .
         </p>
       </div>
     </div>
