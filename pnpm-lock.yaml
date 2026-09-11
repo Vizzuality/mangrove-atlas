@@ -182,13 +182,13 @@ importers:
         version: 16.2.11(@babel/core@7.29.6)(@playwright/test@1.61.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-auth:
         specifier: 4.24.15
-        version: 4.24.15(next@16.2.11(@babel/core@7.29.6)(@playwright/test@1.61.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@9.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 4.24.15(next@16.2.11(@babel/core@7.29.6)(@playwright/test@1.61.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@9.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-themes:
         specifier: 0.4.6
         version: 0.4.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       nodemailer:
-        specifier: 9.0.3
-        version: 9.0.3
+        specifier: 9.1.1
+        version: 9.1.1
       nuqs:
         specifier: 2.9.0
         version: 2.9.0(next@16.2.11(@babel/core@7.29.6)(@playwright/test@1.61.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
@@ -853,8 +853,8 @@ packages:
       '@emnapi/core': ^1.7.1
       '@emnapi/runtime': ^1.7.1
 
-  '@napi-rs/wasm-runtime@1.2.3':
-    resolution: {integrity: sha512-UMduMbqO5s5zF2NkNacMT/yK5Y5QiKvWr2+50bzIIxFDwVJ2h49b+oyjaCGPhJxd2/gC2x39EHv/gHVuu36x2Q==}
+  '@napi-rs/wasm-runtime@1.2.4':
+    resolution: {integrity: sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=23.5.0}
     peerDependencies:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
@@ -4666,8 +4666,8 @@ packages:
     resolution: {integrity: sha512-J6l92tKHX6w8Jy5nO1Vuc01NoIiRGi/d6qBKVxh+IQ8Cr3b6HbVNfKiF8ZpFKufTwpwxMmce2W3iQZ861ZRyTg==}
     engines: {node: '>=18'}
 
-  nodemailer@9.0.3:
-    resolution: {integrity: sha512-n+YP+NKwR5zRWa60k3GiQ6Q3B4KXCoAw40dAKeCtYn020iNN74aWK2liXIC3ZEATeGql7we3tE3t8QwhY0eskw==}
+  nodemailer@9.1.1:
+    resolution: {integrity: sha512-izw9mVKFix6YSnC9eLgV6g1opl9DUlRio9ZNcq+Wu9Ujn2UwF+8Nl0B8nz22kEC+CTZCvinkxwJ0DeFbb6NwcQ==}
     engines: {node: '>=6.0.0'}
 
   npm-run-path@5.3.0:
@@ -6296,7 +6296,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.3
     optional: true
 
-  '@napi-rs/wasm-runtime@1.2.3(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
+  '@napi-rs/wasm-runtime@1.2.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
       '@emnapi/core': 1.10.0
       '@emnapi/runtime': 1.10.0
@@ -7561,7 +7561,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.10.0
       '@emnapi/runtime': 1.10.0
-      '@napi-rs/wasm-runtime': 1.2.3(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+      '@napi-rs/wasm-runtime': 1.2.4(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     optional: true
 
   '@rolldown/binding-win32-arm64-msvc@1.0.3':
@@ -10169,7 +10169,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-auth@4.24.15(next@16.2.11(@babel/core@7.29.6)(@playwright/test@1.61.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@9.0.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next-auth@4.24.15(next@16.2.11(@babel/core@7.29.6)(@playwright/test@1.61.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@9.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.29.7
       '@panva/hkdf': 1.2.1
@@ -10184,7 +10184,7 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 11.1.1
     optionalDependencies:
-      nodemailer: 9.0.3
+      nodemailer: 9.1.1
 
   next-themes@0.4.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -10232,7 +10232,7 @@ snapshots:
 
   node-releases@2.0.50: {}
 
-  nodemailer@9.0.3: {}
+  nodemailer@9.1.1: {}
 
   npm-run-path@5.3.0:
     dependencies:
