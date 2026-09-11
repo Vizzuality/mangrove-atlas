@@ -10,7 +10,13 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
   productionBrowserSourceMaps: false,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  output: 'standalone',
+  // Standalone output is what the Dockerfile and the Playwright webServer run.
+  // On Vercel it is unnecessary and, on every stable Next 16.3.x, breaks the
+  // build: 16.3 stopped emitting `.next/next-server.js.nft.json` when an
+  // adapter is present and Vercel's onBuildComplete still reads it
+  // (vercel/next.js#96646). Fixed upstream in vercel/next.js#98167, not yet
+  // released — drop this condition once a 16.3.x/16.4 with it ships.
+  output: process.env.VERCEL ? undefined : 'standalone',
   poweredByHeader: false,
 
   images: {
