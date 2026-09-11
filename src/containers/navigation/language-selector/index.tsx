@@ -50,6 +50,7 @@ const LanguageSelector = ({
     >
       <DropdownMenu>
         <DropdownMenuTrigger
+          aria-label={currentLanguage ? `Language: ${currentLanguage.name}` : 'Language'}
           className={cn(
             'flex cursor-pointer items-center space-x-2 font-semibold whitespace-nowrap',
             THEME[theme],
