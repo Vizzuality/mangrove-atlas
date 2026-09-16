@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import cn from '@/lib/classnames';
-import { PRIVACY_NOTICE_URL } from '@/lib/legal';
+// import { PRIVACY_NOTICE_URL } from '@/lib/legal';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 
@@ -116,14 +116,15 @@ const ResourcesMenu = ({ setSection }) => {
         </CollapsibleContent>
       </Collapsible>
 
-      <Link
+      {/* Privacy Notice link hidden; page still lives at /privacy-notice */}
+      {/* <Link
         href={PRIVACY_NOTICE_URL}
         className="text-2lg hover:text-brand-800 font-light"
         rel="noopener noreferrer"
         target="_blank"
       >
         Privacy Notice
-      </Link>
+      </Link> */}
     </div>
   );
 };
