@@ -24,11 +24,13 @@ const POSITION_CLASSES: Record<string, string> = {
 // the asset's aspect ratio so both props stay consistent with the rendered
 // box (display size is still driven by CSS: width + height auto), which
 // avoids the "width/height modified but not the other" warning.
+// The default asset is an SVG (served as-is by next/image), so it stays crisp
+// at any size and device pixel ratio; the raster fallback was capped at 562px.
 const INTRINSIC_SIZES: Record<string, { width: number; height: number }> = {
-  '/images/logo.webp': { width: 562, height: 662 },
+  '/images/logo.svg': { width: 562, height: 662 },
   '/images/logo-bg.png': { width: 186, height: 216 },
 };
-const DEFAULT_SRC = '/images/logo.webp';
+const DEFAULT_SRC = '/images/logo.svg';
 const DEFAULT_WIDTH = 186;
 
 const Logo = ({
