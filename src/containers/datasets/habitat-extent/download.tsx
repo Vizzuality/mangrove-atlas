@@ -4,7 +4,7 @@ const INFO = [
   {
     id: 1,
     title: 'Zenodo (vector and raster data)',
-    href: 'https://zenodo.org/record/6894273',
+    href: 'https://doi.org/10.5281/zenodo.21346456',
   },
   {
     id: 2,
