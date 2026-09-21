@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.8](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.7...v8.0.0-rc.8) (2026-09-21)
+
+
+### Bug Fixes
+
+* **deps:** address 5 dependency vulnerabilities and remove stale pnpm overrides ([#1689](https://github.com/Vizzuality/mangrove-atlas/issues/1689)) ([c9501a1](https://github.com/Vizzuality/mangrove-atlas/commit/c9501a17dc119be8339435a32d401c70bb1a3332))
+* pass real display width to next/image so login logo is sharp on HiDPI ([#1683](https://github.com/Vizzuality/mangrove-atlas/issues/1683)) ([ce6e43e](https://github.com/Vizzuality/mangrove-atlas/commit/ce6e43ee77d55df0694d0294aa5386060153dafc))
+* use vector logo on auth and legal pages so it is sharp at any DPR ([#1686](https://github.com/Vizzuality/mangrove-atlas/issues/1686)) ([e43f8c4](https://github.com/Vizzuality/mangrove-atlas/commit/e43f8c48d529f3ffaec9c5d80c64eb48ef20af10))
+
 ## [8.0.0-rc.7](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.6...v8.0.0-rc.7) (2026-09-14)
 
 
