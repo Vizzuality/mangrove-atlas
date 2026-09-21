@@ -134,17 +134,6 @@
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
-    "overrides": {
-      "jsdom>undici": "7.29.0",
-      "minimatch@^10>brace-expansion": "5.0.9",
-      "minimatch@3>brace-expansion": "1.1.18",
-      "next-auth>uuid": "11.1.1",
-      "axios>form-data": "4.0.6",
-      "brace-expansion@<1.1.18": ">=1.1.18",
-      "brace-expansion@>=4.0.0 <5.0.9": ">=5.0.9",
-      "nanoid@>=4.0.0 <5.1.16": ">=5.1.16",
-      "nanoid@<3.3.18": "3.3.18"
-    },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",
