@@ -44,22 +44,18 @@ const getColorKeys = (data: Data[]) =>
 const REPORTS = [
   {
     name: 'RLE Mangroves of the Sunda Shelf (pdf)',
-
     url: 'https://ecoevorxiv.org/repository/view/5866/',
   },
   {
     name: 'RLE Mangroves of the Western Coral Triangle (pdf)',
-
     url: 'https://ecoevorxiv.org/repository/view/5867/',
   },
   {
     name: 'RLE Mangroves of the Andaman (pdf)',
-
     url: 'https://ecoevorxiv.org/repository/view/5862/',
   },
   {
     name: 'RLE Mangroves of the South China Sea (pdf)',
-
     url: 'https://ecoevorxiv.org/repository/view/5865/',
   },
 ];
@@ -112,9 +108,8 @@ export function useMangroveEcoregions(
     queryKey: ['iucn-ecoregion', params],
     queryFn: fetchMangroveIUCNEcoregions,
     select: ({ data, metadata }) => {
-      const dataFiltered = data?.filter((d) => d.category !== 'nt');
-      const colorKeys = getColorKeys(dataFiltered);
-      const dataWithColors = getChartData(dataFiltered, colorKeys);
+      const colorKeys = getColorKeys(data);
+      const dataWithColors = getChartData(data, colorKeys);
 
       return {
         ...metadata,
@@ -164,7 +159,8 @@ export function useLayers({
   visibility?: Visibility;
 }): LayerProps[] {
   const OVERALL_ASSESSMENT = {
-    CE: '#EE4D5A',
+    CE: '#EE4D5A', // TO - DO - remove CE when API gets updated (CR will replace CE)
+    CR: '#EE4D5A',
     VU: '#ECDA9A',
     LC: '#B4DCAA',
     DD: '#ECECEF',
