@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-// import { PRIVACY_NOTICE_URL } from '@/lib/legal';
+import { PRIVACY_NOTICE_URL } from '@/lib/legal';
 
 import { ConvenedBy, Donors, SupportedBy } from './constants';
 import AboutPartners from './partners';
@@ -122,8 +122,7 @@ const About = () => {
           MAPS AND INFORMATION PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR
           SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
         </p>
-        {/* Privacy Notice link hidden; page still lives at /privacy-notice */}
-        {/* <p>
+        <p>
           Read our{' '}
           <Link
             href={PRIVACY_NOTICE_URL}
@@ -134,7 +133,7 @@ const About = () => {
             Privacy Notice
           </Link>
           .
-        </p> */}
+        </p>
       </div>
     </div>
   );

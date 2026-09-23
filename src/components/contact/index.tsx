@@ -4,14 +4,14 @@ import { useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-// import Link from 'next/link';
+import Link from 'next/link';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
-// import { PRIVACY_NOTICE_URL } from '@/lib/legal';
+import { PRIVACY_NOTICE_URL } from '@/lib/legal';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-// import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 
-// import CHECK_SVG from '@/svgs/ui/check';
+import CHECK_SVG from '@/svgs/ui/check';
 
 import { TOPICS } from './constants';
 
@@ -48,12 +48,9 @@ const ContactFormSchema = z.object({
     .email('Invalid email'),
   topic: z.enum(TOPICS_VALUES, { message: 'Please, select a topic' }),
   message: z.string().min(1, 'Message is required'),
-  // Privacy Notice checkbox hidden for now (see form below); consent is not
-  // enforced until it comes back.
-  // privacyPolicy: z.boolean().refine((val) => val === true, {
-  //   message: 'You must accept the Privacy Notice',
-  // }),
-  privacyPolicy: z.boolean().optional(),
+  privacyPolicy: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the Privacy Notice',
+  }),
 });
 
 type FormSchema = z.infer<typeof ContactFormSchema>;
@@ -225,7 +222,6 @@ function ContactForm() {
               </FormItem>
             )}
           />
-          {/* Privacy Notice checkbox hidden for now; page still lives at /privacy-notice
           <FormField
             control={form.control}
             name="privacyPolicy"
@@ -244,24 +240,23 @@ function ContactForm() {
                       </CheckboxPrimitive.Indicator>
                     </CheckboxPrimitive.Root>
                   </FormControl>
-                  [[ Privacy Notice link hidden; page still lives at /privacy-notice ]]
                   <span id="privacyPolicy-label">
-                    I agree with the Privacy Notice.
-                    [[ <Link
+                    I agree with the{' '}
+                    <Link
                       href={PRIVACY_NOTICE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline"
                     >
                       Privacy Notice
-                    </Link> ]]
+                    </Link>
+                    .
                   </span>
                 </div>
                 <FormMessage />
               </FormItem>
             )}
           />
-          */}
 
           <div className="space-y-4">
             {status === 'loading' && <p className="text-sm">Sending...</p>}
