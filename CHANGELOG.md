@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.9](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.8...v8.0.0-rc.9) (2026-09-24)
+
+
+### Bug Fixes
+
+* remove empty sources gap in national dashboard widget ([#1695](https://github.com/Vizzuality/mangrove-atlas/issues/1695)) ([1570d27](https://github.com/Vizzuality/mangrove-atlas/commit/1570d27e71203aa7b1acfe4059590bd7f63602fb))
+* show NT category and add CR colour in IUCN RLE widget ([#1691](https://github.com/Vizzuality/mangrove-atlas/issues/1691)) ([5ee3f6d](https://github.com/Vizzuality/mangrove-atlas/commit/5ee3f6d862ccb85c5d37a04a862f30c8ef7da688))
+
 ## [8.0.0-rc.8](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.7...v8.0.0-rc.8) (2026-09-21)
 
 
