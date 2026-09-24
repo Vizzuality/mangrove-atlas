@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.10](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.9...v8.0.0-rc.10) (2026-09-24)
+
+
+### Bug Fixes
+
+* seed location cache on navigation to avoid worldwide flash ([#1696](https://github.com/Vizzuality/mangrove-atlas/issues/1696)) ([1db9a07](https://github.com/Vizzuality/mangrove-atlas/commit/1db9a07682b85b55c1cfdc7281e29a2e252f15fb))
+
 ## [8.0.0-rc.9](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.8...v8.0.0-rc.9) (2026-09-24)
 
 
