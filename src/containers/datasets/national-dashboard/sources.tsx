@@ -11,6 +11,10 @@ const slugify = (value: string) =>
     .replace(/^-+|-+$/g, '');
 
 const Sources = ({ data, iso }: { data: IndicatorDataItem[]; iso: string }) => {
+  // Indicators without sources would render an empty table (blank gap).
+
+  if (!data?.length) return null;
+
   const sourceColorMap = new Map<string, number>();
   data?.forEach(({ sources }) => {
     sources?.forEach(({ source }) => {
