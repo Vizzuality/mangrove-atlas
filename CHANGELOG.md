@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.11](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.10...v8.0.0-rc.11) (2026-09-24)
+
+
+### Features
+
+* update national dashboard no data card to Figma design ([#1698](https://github.com/Vizzuality/mangrove-atlas/issues/1698)) ([2b472a6](https://github.com/Vizzuality/mangrove-atlas/commit/2b472a63c6716ea5276b2ca39b04d31ea8551038))
+
 ## [8.0.0-rc.10](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.9...v8.0.0-rc.10) (2026-09-24)
 
 
