@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { tmpCameraAtom } from '@/store/map';
 
+import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { useSetAtom } from 'jotai';
 
@@ -51,6 +52,7 @@ export const locationToNavTarget = (
 export function useLocationNavigation() {
   const searchParams = useSearchParams();
   const setTmpCamera = useSetAtom(tmpCameraAtom);
+  const queryClient = useQueryClient();
 
   const navigate = useCallback(
     (target: NavTarget, bbox?: BBox | null) => {
@@ -74,10 +76,26 @@ export function useLocationNavigation() {
 
   const navigateToLocation = useCallback(
     (location: Location) => {
+      const target = locationToNavTarget(location);
+
+      // Seed `useLocation`'s cache with the object we already have. Without it,
+      // the new key has no data and `useLocation` hands out its worldwide-shaped
+      // placeholder, so every widget fetches and flashes worldwide data until
+      // `/locations/:id` resolves.
+      const urlId =
+        target.type === 'country'
+          ? target.iso
+          : target.type === 'wdpa'
+            ? String(target.locationId)
+            : null;
+      if (urlId) {
+        queryClient.setQueryData(['location', target.type, urlId], { data: location });
+      }
+
       const bbox = location.bounds ? (turfBbox(location.bounds) as BBox) : null;
-      navigate(locationToNavTarget(location), bbox);
+      navigate(target, bbox);
     },
-    [navigate]
+    [navigate, queryClient]
   );
 
   return { navigate, navigateToLocation };
