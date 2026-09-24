@@ -14,17 +14,17 @@ import NO_DATA_SVG from '@/svgs/ui/no-data';
 
 const NoMetadata = () => {
   return (
-    <div className="m-auto flex w-full max-w-full break-inside-avoid flex-col items-center justify-center space-y-4 rounded-3xl bg-white py-8">
-      <NO_DATA_SVG className="h-40 w-40 fill-current" aria-hidden="true" />
-      <p className="max-w-80 text-center font-sans text-lg leading-5 font-light sm:text-base sm:leading-6">
+    <div className="flex w-full break-inside-avoid flex-col items-center justify-center gap-4 px-10 font-sans">
+      <NO_DATA_SVG className="h-40 w-40 shrink-0 p-2" aria-hidden="true" />
+      <p className="text-2lg text-center leading-7.25 font-light text-black/85">
         No data available. Help us expand our coverage by submitting yours.
       </p>
       {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
         <Dialog>
           <DialogTrigger
             className={cn(
-              buttonVariants({ variant: 'outline' }),
-              'text-brand-800 border-brand-800/20 w-fit justify-start border-2 text-left text-sm'
+              buttonVariants({ variant: 'outline', size: 'none' }),
+              'text-brand-800 border-brand-800/20 h-7.5 border-2 px-5 py-1.25 text-sm font-semibold'
             )}
           >
             Submit Data
@@ -32,7 +32,7 @@ const NoMetadata = () => {
           <DialogContent
             data-testid="ContactForm-content"
             className={cn({
-              'w-fit font-sans md:mb-20 md:w-[540px]': true,
+              'w-fit font-sans md:mb-20 md:w-135': true,
             })}
           >
             <div className="space-y-10 py-10">
