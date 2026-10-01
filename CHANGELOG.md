@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.11](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.10...v8.0.0-rc.11) (2026-10-01)
+
+
+### Features
+
+* filter country geometries to only those in locations_bo.csv ([#1701](https://github.com/Vizzuality/mangrove-atlas/issues/1701)) ([a711fb9](https://github.com/Vizzuality/mangrove-atlas/commit/a711fb97a991a9f4d42a96a128032eae75eee1b9))
+* update national dashboard no data card to Figma design ([#1698](https://github.com/Vizzuality/mangrove-atlas/issues/1698)) ([2b472a6](https://github.com/Vizzuality/mangrove-atlas/commit/2b472a63c6716ea5276b2ca39b04d31ea8551038))
+
+
+### Bug Fixes
+
+* env-driven SSO origin allowlist for frame-ancestors, redirect_uri and CORS ([#1702](https://github.com/Vizzuality/mangrove-atlas/issues/1702)) ([8079ca6](https://github.com/Vizzuality/mangrove-atlas/commit/8079ca6c3f5ef25cca19b094f5fc7493477416f4))
+
 ## [8.0.0-rc.10](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.9...v8.0.0-rc.10) (2026-09-24)
 
 
