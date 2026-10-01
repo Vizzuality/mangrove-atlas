@@ -28,6 +28,7 @@ const ENV_DEFAULTS: Record<string, string> = {
   NEXTAUTH_URL: 'https://example.com',
   NEXTAUTH_SECRET: 'test',
   AUTH_API_URL: 'https://example.com',
+  SSO_ALLOWED_ORIGINS: '',
 };
 
 // Overlay real .env files (ascending priority — later overrides earlier) onto

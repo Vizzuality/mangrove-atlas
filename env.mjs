@@ -11,6 +11,11 @@ export const env = createEnv({
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AUTH_API_URL: z.string().url(),
+    // Comma-separated extra origins allowed to frame /api/auth/sso/authorize,
+    // be used as SSO redirect_uri, and call the SSO endpoints cross-origin
+    // (e.g. staging MRTT, http://localhost:3000). NEXT_PUBLIC_MRTT_SITE and
+    // NEXTAUTH_URL are always allowed.
+    SSO_ALLOWED_ORIGINS: z.string().optional(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -63,6 +68,7 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     AUTH_API_URL: process.env.AUTH_API_URL,
+    SSO_ALLOWED_ORIGINS: process.env.SSO_ALLOWED_ORIGINS,
     NEXT_PUBLIC_SMTP_ADDRESS: process.env.NEXT_PUBLIC_SMTP_ADDRESS,
     NEXT_PUBLIC_SMTP_PASSWORD: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
     NEXT_PUBLIC_SMTP_PORT: process.env.NEXT_PUBLIC_SMTP_PORT,

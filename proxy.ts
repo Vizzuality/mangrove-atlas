@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const HIDDEN_IN_PROD = ['/auth'];
+import { isAllowedOrigin } from '@/lib/auth/sso-config';
 
-const allowedOrigins = new Set([
-  'https://mrtt.globalmangrovewatch.org',
-  'https://mrtt-staging.globalmangrovewatch.org',
-  'http://localhost:3000',
-]);
+const HIDDEN_IN_PROD = ['/auth'];
 
 const corsBaseHeaders: Record<string, string> = {
   'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
@@ -17,7 +13,7 @@ const corsBaseHeaders: Record<string, string> = {
 
 function withCors(request: NextRequest, response: NextResponse) {
   const origin = request.headers.get('origin');
-  if (origin && allowedOrigins.has(origin.replace(/\/$/, ''))) {
+  if (isAllowedOrigin(origin)) {
     response.headers.set('Access-Control-Allow-Origin', origin);
     for (const [k, v] of Object.entries(corsBaseHeaders)) response.headers.set(k, v);
   }
