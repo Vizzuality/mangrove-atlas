@@ -4,7 +4,7 @@ import { verifySSOCode } from '@/lib/auth/sso-code';
 import { getSSOCorsHeaders } from '@/lib/auth/sso-config';
 
 export async function POST(request: NextRequest) {
-  const corsHeaders = getSSOCorsHeaders();
+  const corsHeaders = getSSOCorsHeaders(request);
 
   let body: { code?: string };
   try {
@@ -58,6 +58,6 @@ export async function POST(request: NextRequest) {
   );
 }
 
-export async function OPTIONS() {
-  return new NextResponse(null, { status: 204, headers: getSSOCorsHeaders() });
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, { status: 204, headers: getSSOCorsHeaders(request) });
 }

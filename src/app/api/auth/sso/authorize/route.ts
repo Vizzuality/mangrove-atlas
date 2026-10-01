@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { authOptions } from '@/lib/auth/auth';
 import { generateSSOCode } from '@/lib/auth/sso-code';
-import { isAllowedRedirectUri } from '@/lib/auth/sso-config';
+import { getSSOFrameAncestorsHeader, isAllowedRedirectUri } from '@/lib/auth/sso-config';
 import { clearSSOCookie, getSSOToken, setSSOCookie } from '@/lib/auth/sso-cookie';
 
 import { getServerSession } from 'next-auth';
@@ -24,6 +24,16 @@ function getPublicOrigin(request: NextRequest): string {
 }
 
 export async function GET(request: NextRequest) {
+  const response = await handleAuthorize(request);
+  // MRTT loads this endpoint in a hidden iframe for silent SSO; every
+  // response (redirects included) must carry the frame-ancestors allowlist.
+  for (const [key, value] of Object.entries(getSSOFrameAncestorsHeader())) {
+    response.headers.set(key, value);
+  }
+  return response;
+}
+
+async function handleAuthorize(request: NextRequest): Promise<NextResponse> {
   const redirectUri = request.nextUrl.searchParams.get('redirect_uri');
 
   if (!redirectUri || !isAllowedRedirectUri(redirectUri)) {

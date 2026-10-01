@@ -4,7 +4,7 @@ import { getSSOCorsHeaders, isAllowedRedirectUri } from '@/lib/auth/sso-config';
 import { clearNextAuthCookies, clearSSOCookie, getSSOToken } from '@/lib/auth/sso-cookie';
 
 export async function POST(request: NextRequest) {
-  const corsHeaders = getSSOCorsHeaders();
+  const corsHeaders = getSSOCorsHeaders(request);
 
   // Invalidate token with backend if present
   const token = getSSOToken(request);
@@ -40,6 +40,6 @@ export async function POST(request: NextRequest) {
   return response;
 }
 
-export async function OPTIONS() {
-  return new NextResponse(null, { status: 204, headers: getSSOCorsHeaders() });
+export async function OPTIONS(request: NextRequest) {
+  return new NextResponse(null, { status: 204, headers: getSSOCorsHeaders(request) });
 }
