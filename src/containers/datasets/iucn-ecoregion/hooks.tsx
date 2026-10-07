@@ -9,11 +9,12 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { COLORS, LABELS } from './constants';
+import { COLORS, LABELS, OVERALL_ASSESSMENT } from './constants';
+import type { CategoryId } from './constants';
 import CustomTooltip from './tooltip';
 import type { CategoryIds } from './types';
 
-type ColorKey = CategoryIds[];
+type ColorKeys = Partial<Record<CategoryId, string>>;
 
 type Data = {
   indicator: CategoryIds;
@@ -21,6 +22,8 @@ type Data = {
   color: string;
   category: CategoryIds;
 };
+
+const toCategoryId = (category: CategoryIds) => category.toLowerCase() as CategoryId;
 
 type Metadata = {
   total: number;
@@ -32,14 +35,11 @@ type DataResponse = {
   metadata: Metadata;
 };
 
-const getColorKeys = (data: Data[]) =>
-  data?.reduce(
-    (acc, d) => ({
-      ...acc,
-      [d.category]: COLORS[d.category],
-    }),
-    []
-  );
+const getColorKeys = (data: Data[]): ColorKeys =>
+  data?.reduce<ColorKeys>((acc, d) => {
+    const key = toCategoryId(d.category);
+    return { ...acc, [key]: COLORS[key] };
+  }, {});
 
 const REPORTS = [
   {
@@ -60,19 +60,20 @@ const REPORTS = [
   },
 ];
 
-const getChartData = (data: Data[], colorKeys: ColorKey[]) => {
+const getChartData = (data: Data[], colorKeys: ColorKeys) => {
   const total = data?.reduce((acc, d) => acc + d.value, 0);
   return data?.map((d) => {
     const percentage = (d.value * 100) / total;
+    const key = toCategoryId(d.category);
 
     return {
       ...d,
-      label: LABELS[d.category],
-      value: percentage,
+      label: LABELS[key],
+      percentage,
+      percentageFormatted: formatAxis(percentage),
       showValue: false,
       highlightValue: false,
-      valueFormatted: formatAxis(percentage),
-      color: colorKeys[d.category],
+      color: colorKeys[key],
     };
   });
 };
@@ -158,18 +159,7 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): LayerProps[] {
-  const OVERALL_ASSESSMENT = {
-    CE: '#EE4D5A', // TO - DO - remove CE when API gets updated (CR will replace CE)
-    CR: '#EE4D5A',
-    VU: '#ECDA9A',
-    LC: '#B4DCAA',
-    DD: '#ECECEF',
-    EN: '#F97B57',
-  };
-  const COLORS = Object.keys(OVERALL_ASSESSMENT).reduce(
-    (acc, value) => [...acc, [value, OVERALL_ASSESSMENT[value]]].flat(),
-    []
-  );
+  const matchColors = Object.entries(OVERALL_ASSESSMENT).flat();
 
   return [
     {
@@ -179,7 +169,7 @@ export function useLayers({
       filter: ['has', 'overall_assessment'],
       type: 'fill',
       paint: {
-        'fill-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
+        'fill-color': ['match', ['get', 'overall_assessment'], ...matchColors, '#ccc'],
 
         'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, opacity * 0.55],
       },
@@ -194,7 +184,7 @@ export function useLayers({
       filter: ['has', 'overall_assessment'],
       type: 'line',
       paint: {
-        'line-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
+        'line-color': ['match', ['get', 'overall_assessment'], ...matchColors, '#ccc'],
         'line-width': 1.75,
         'line-offset': -0.3,
         'line-opacity': opacity * 0.55,

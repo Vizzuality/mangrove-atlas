@@ -1,16 +1,11 @@
+import type { COLORS, LABELS } from './constants';
+
 type Specie = Readonly<{
   scientific_name: string;
   iucn_url: string;
 }>;
 
-type Label = Readonly<
-  | 'Critically Endangered'
-  | 'Endangered'
-  | 'Vulnerable'
-  | 'Near Threatened'
-  | 'Least Concern'
-  | 'Data Deficient'
->;
+export type Label = (typeof LABELS)[keyof typeof LABELS];
 
 export type LegendItem = Readonly<{
   value: number;
@@ -18,38 +13,9 @@ export type LegendItem = Readonly<{
   label: Label;
 }>;
 
-export type CategoryIds =
-  | 'ce'
-  | 'en'
-  | 'vu'
-  | 'nt'
-  | 'lc'
-  | 'dd'
-  | 'CE'
-  | 'EN'
-  | 'VU'
-  | 'NT'
-  | 'LC'
-  | 'DD';
+type LowerCategoryId = keyof typeof COLORS;
 
-export type Colors = Readonly<{ [key: Label]: string }>;
-
-export const COLORS = {
-  ce: '#EE4D5A',
-  en: '#F97B57',
-  vu: '#ECDA9A',
-  lc: '#B4DCAA',
-  dd: '#ECECEF',
-  ne: '#ECECEF',
-};
-
-export const LABELS = {
-  ce: 'Critically Endangered',
-  en: 'Endangered',
-  vu: 'Vulnerable',
-  lc: 'Least Concern',
-  dd: 'Data Deficient',
-};
+export type CategoryIds = LowerCategoryId | Uppercase<LowerCategoryId>;
 
 export type IUCNEcoregionPopUpInfoLabels =
   | 'distribution_of_biotic_processes'
@@ -62,7 +28,7 @@ export type IUCNEcoregionPopUpInfoLabels =
 export type IUCNEcoregionPopUpInfo = {
   [K in IUCNEcoregionPopUpInfoLabels as `${K}_${number}`]?: CategoryIds;
 } & {
-  region: string; // Corrected type
+  region: string;
   overall_assessment: CategoryIds;
   unit_name: string;
 };

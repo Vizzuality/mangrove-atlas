@@ -1,16 +1,21 @@
 type TooltipProps = {
   payload: {
     label: string;
-    valueFormatted: number;
+    value: number;
+    percentageFormatted: string;
   };
 };
 
 const CustomTooltip = ({ payload }: TooltipProps) => {
-  const { label, valueFormatted } = payload;
+  const { label, value, percentageFormatted } = payload;
   return (
     <div className="space-y-2 rounded-2xl bg-white p-4 text-sm shadow-lg">
+      <p className="font-bold">{label}</p>
       <p className="pl-3 text-xs">
-        <span className="font-bold">{label}:</span> {valueFormatted} %
+        <span className="mr-4 font-bold">Number of provinces</span> {value}
+      </p>
+      <p className="pl-3 text-xs">
+        <span className="mr-4 font-bold">Percentage</span> {percentageFormatted} %
       </p>
     </div>
   );

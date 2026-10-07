@@ -2,9 +2,10 @@ import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 // import { INFO } from '@/containers/datasets';
-import { COLORS } from '@/containers/datasets/iucn-ecoregion/constants';
+import { COLORS, LEGEND_ITEMS } from '@/containers/datasets/iucn-ecoregion/constants';
+import type { CategoryId } from '@/containers/datasets/iucn-ecoregion/constants';
 import { useMangroveEcoregions } from '@/containers/datasets/iucn-ecoregion/hooks';
-import type { IUCNEcoregionPopUpInfo, Label } from '@/containers/datasets/iucn-ecoregion/types';
+import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 // import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
@@ -19,18 +20,6 @@ type Tags =
   | 'Area of occupancy'
   | 'Threat locations <5'
   | 'Not evaluated';
-
-const legendItems = [
-  { color: '#F3AD6A', label: 'Vulnerable' },
-  {
-    color: '#B4DCAA',
-    label: 'Least Concern',
-  },
-  {
-    color: '#ECECEF',
-    label: 'Not Evaluated',
-  },
-];
 
 const FAKE_DATA_POP_UP = [
   {
@@ -93,8 +82,8 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
           </a>
 
           <div className="flex flex-col space-y-1">
-            <ul className="flex space-x-2 text-sm">
-              {legendItems.map(({ color, label }) => (
+            <ul className="flex flex-wrap gap-x-2 gap-y-1 text-sm">
+              {LEGEND_ITEMS.map(({ color, label }) => (
                 <li key={label} className="flex items-center space-x-2">
                   {color && (
                     <div
@@ -115,18 +104,15 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
             <p className="text-sn font-sans font-semibold">{info?.unit_name}</p>
             <div className="max-h-[250px] overflow-y-auto pt-3 pr-2">
               {FAKE_DATA_POP_UP.map(
-                ({ label, tags, data }: { label: Label; tags: Tags[]; data: string }) => (
-                  <div key="label">
+                ({ label, tags, data }: { label: string; tags: Tags[]; data: string }) => (
+                  <div key={label}>
                     <p className="text-sm">{label}</p>
                     <ul className="flex space-x-3 py-4">
                       {tags.map((tag, index) => {
                         const infoKey = `${data}_${index + 1}`;
-                        const colorKey = info[infoKey] as string;
-
-                        // Check if colorKey is defined and has a value
-                        const backgroundColor = colorKey
-                          ? COLORS[colorKey.toLowerCase() as keyof typeof COLORS]
-                          : 'ne';
+                        const colorKey = info[infoKey] as string | undefined;
+                        const categoryId = colorKey?.toLowerCase() as CategoryId | undefined;
+                        const backgroundColor = (categoryId && COLORS[categoryId]) || COLORS.ne;
 
                         return (
                           <div
