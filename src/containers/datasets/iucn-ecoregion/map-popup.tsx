@@ -1,11 +1,14 @@
 import { trackEvent } from '@/lib/analytics/ga';
-import cn from '@/lib/classnames';
 
 // import { INFO } from '@/containers/datasets';
 import { COLORS, LEGEND_ITEMS } from '@/containers/datasets/iucn-ecoregion/constants';
 import type { CategoryId } from '@/containers/datasets/iucn-ecoregion/constants';
 import { useMangroveEcoregions } from '@/containers/datasets/iucn-ecoregion/hooks';
 import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
+import {
+  POPUP_SECTION_CONTENT_STYLE,
+  POPUP_SECTION_TRIGGER_STYLE,
+} from '@/containers/map/pop-up/constants';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 // import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
@@ -66,14 +69,14 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
     });
   };
   return (
-    <Collapsible onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger className="min-w-[min(375px,100%)]" iconType="plus-minus">
+    <Collapsible className="w-full sm:min-w-[467px]" onOpenChange={handleAnalytics}>
+      <CollapsibleTrigger className={POPUP_SECTION_TRIGGER_STYLE} iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>IUCN ECOSYSTEM RED LIST ASSESSMENT</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex w-full min-w-[min(450px,100%)] flex-col space-y-2 border-none px-6 shadow-none">
+        <div className={POPUP_SECTION_CONTENT_STYLE}>
           <a
-            className="text-brand-800 w-full text-right text-xs underline"
+            className="text-brand-800 w-full text-right text-sm underline"
             target="_blank"
             rel="noopener noreferrer"
             href={url}
@@ -81,33 +84,28 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
             Province Descriptions
           </a>
 
-          <div className="flex flex-col space-y-1">
-            <ul className="flex flex-wrap gap-x-2 gap-y-1 text-sm">
+          <div className="flex flex-col space-y-3.75">
+            <ul className="flex flex-wrap gap-x-3.75 gap-y-2.5 text-sm leading-5">
               {LEGEND_ITEMS.map(({ color, label }) => (
-                <li key={label} className="flex items-center space-x-2">
+                <li key={label} className="flex items-center gap-2.5">
                   {color && (
-                    <div
-                      className={cn({
-                        'h-4 w-2 shrink-0 rounded-full font-normal': true,
-                      })}
-                      style={{ backgroundColor: color }}
-                    />
+                    <div className="h-4 w-2 shrink-0 rounded" style={{ backgroundColor: color }} />
                   )}
-                  {<span>{label}</span>}
+                  <span>{label}</span>
                 </li>
               ))}
             </ul>
-            <p className="text-xs">(1) Or any 50 year period</p>
+            <p className="text-xs leading-[18px]">(1) Or any 50 year period</p>
           </div>
 
-          <div>
-            <p className="text-sn font-sans font-semibold">{info?.unit_name}</p>
-            <div className="max-h-[250px] overflow-y-auto pt-3 pr-2">
+          <div className="pt-2.5">
+            <p className="font-sans text-sm font-semibold">{info?.unit_name}</p>
+            <div className="space-y-3.75 pt-3.75">
               {FAKE_DATA_POP_UP.map(
                 ({ label, tags, data }: { label: string; tags: Tags[]; data: string }) => (
                   <div key={label}>
-                    <p className="text-sm">{label}</p>
-                    <ul className="flex space-x-3 py-4">
+                    <p className="text-sm leading-5 font-light">{label}</p>
+                    <ul className="flex gap-2.5 pt-3.75">
                       {tags.map((tag, index) => {
                         const infoKey = `${data}_${index + 1}`;
                         const colorKey = info[infoKey] as string | undefined;
@@ -115,13 +113,13 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
                         const backgroundColor = (categoryId && COLORS[categoryId]) || COLORS.ne;
 
                         return (
-                          <div
+                          <li
                             key={`${label}-distribution_of_biotic_processes_${index + 1}`}
-                            className="flex-1 rounded-3xl py-2 text-center text-xs font-normal"
+                            className="flex flex-1 items-center justify-center rounded-full px-2.5 py-1.25 text-center text-xs leading-[18px]"
                             style={{ backgroundColor }}
                           >
                             {tag}
-                          </div>
+                          </li>
                         );
                       })}
                     </ul>

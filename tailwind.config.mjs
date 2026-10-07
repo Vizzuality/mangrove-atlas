@@ -64,6 +64,7 @@ const tailwindConfig = {
         medium: '0px 4px 12px 0px rgba(168, 168, 168, 0.25)',
         '3xl': '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
         control: '0px 4px 12px 0px rgba(0, 0, 0, 0.08)',
+        popup: '0px 20px 30px 0px rgba(0, 0, 0, 0.1)',
         // White button focus state: keep the control drop shadow, then an inset
         // white gap + a 2px brand ring at 40% opacity (Figma Button/White/A focused).
         'control-focus':

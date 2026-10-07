@@ -1,6 +1,10 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
 import Detail from '@/containers/datasets/restoration/map-popup/detail';
+import {
+  POPUP_SECTION_CONTENT_STYLE,
+  POPUP_SECTION_TRIGGER_STYLE,
+} from '@/containers/map/pop-up/constants';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
@@ -33,11 +37,11 @@ const Details = ({ data }: { data: RestorationPopUp }) => {
   };
   return (
     <Collapsible className="w-full" onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger iconType="plus-minus">
+      <CollapsibleTrigger className={POPUP_SECTION_TRIGGER_STYLE} iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>DETAILS</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <section className="flex w-full flex-col space-y-2 border-none px-6 pb-6 shadow-none">
+        <section className={POPUP_SECTION_CONTENT_STYLE}>
           <div className="flex w-full grow flex-col items-center justify-between">
             <Detail label="Tidal range" pct={Tidal_range1} value={Tidal_range} />
             <Detail label="Antecedent SLR" pct={Ant_SLR1} value={Ant_SLR} />

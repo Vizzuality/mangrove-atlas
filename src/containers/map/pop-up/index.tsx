@@ -131,7 +131,7 @@ const MapPopup = ({
         <div
           ref={popUpRef}
           className={cn(
-            'shadow-popup absolute z-50 flex flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300',
+            'shadow-popup absolute z-50 flex flex-col overflow-hidden rounded-[10px] border bg-white transition-all duration-300',
             'w-fit-content flex grow flex-col border-gray-300',
             isPinned && 'border-brand-800 border-2 shadow-md sm:w-[532px]',
             flash && 'ring-brand-400 ring-2'
@@ -141,14 +141,14 @@ const MapPopup = ({
           style={{ maxHeight }}
         >
           {/* Pop-up controls */}
-          <div className="flex w-full items-center justify-between rounded-t-3xl hover:bg-white/90">
+          <div className="flex w-full items-center justify-between rounded-t-[10px] hover:bg-white/90">
             <MapPopupDragHandler
               listeners={listeners}
               attributes={attributes}
               handleClickToDocker={handleClickToDocker}
             />
 
-            <div className="mt-3 mr-6 flex items-center justify-end space-x-4">
+            <div className="mt-3 mr-5 flex items-center justify-end space-x-4">
               <MapPopupPin handleClickToDocker={handleClickToDocker} isPinned={isPinned} />
               <MapPopupClose handleClose={handleClose} />
             </div>
@@ -158,10 +158,10 @@ const MapPopup = ({
           <ScrollArea className="relative flex grow flex-col overflow-x-hidden overflow-y-auto">
             {/* Gradients */}
             <div className="pointer-events-none absolute top-0 right-0 left-0 z-10 h-8 bg-linear-to-b from-white to-transparent" />
-            <div className="pointer-events-none absolute right-6 bottom-0 left-6 z-10 h-8 bg-linear-to-t from-white to-transparent" />
+            <div className="pointer-events-none absolute right-5 bottom-0 left-5 z-10 h-8 bg-linear-to-t from-white to-transparent" />
 
             <div
-              className="relative min-w-93.75 divide-y divide-gray-200 rounded-b-3xl bg-white"
+              className="relative min-w-93.75 divide-y divide-gray-200 rounded-b-[10px] bg-white"
               style={{ maxHeight }}
             >
               <LocationPopup
