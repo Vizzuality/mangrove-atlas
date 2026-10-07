@@ -146,7 +146,7 @@ export function useSource(): SourceProps {
   return {
     id: 'mangrove-iucn-ecoregion',
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.20gft2fx',
+    url: 'mapbox://globalmangrovewatch.v2xt8m',
   };
 }
 
