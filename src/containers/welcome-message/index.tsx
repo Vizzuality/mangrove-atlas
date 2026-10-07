@@ -1,7 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
+import { welcomeMessageOpenAtom } from '@/store/welcome-message';
+
+import { useSetAtom } from 'jotai';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { Button } from '@/components/ui/button';
@@ -22,6 +25,12 @@ const WelcomeIntroMessage = () => {
   );
   const [dismissed, setDismissed] = useState(false);
   const isOpen = !hasSeenWelcome && !dismissed;
+
+  const setWelcomeOpen = useSetAtom(welcomeMessageOpenAtom);
+  useEffect(() => {
+    setWelcomeOpen(isOpen);
+    return () => setWelcomeOpen(false);
+  }, [isOpen, setWelcomeOpen]);
 
   const handleClose = useCallback(() => {
     setDismissed(true);

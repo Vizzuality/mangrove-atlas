@@ -1,7 +1,9 @@
 import { Open_Sans, Inter } from 'next/font/google';
-import Script from 'next/script';
 
 import type { Metadata, Viewport } from 'next';
+
+import GoogleAnalytics from '@/components/analytics/google-analytics';
+import CookieBanner from '@/components/cookie-banner';
 
 import 'styles/globals.css';
 import 'styles/mapbox.css';
@@ -81,27 +83,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to main content
         </a>
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-        />
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
-                page_path: window.location.pathname,
-              });
-            `,
-          }}
-        />
+        {/* Google Analytics loads only after the visitor accepts cookies. */}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         <TransifexLiveInit />
         <Providers>{children}</Providers>
+        <CookieBanner />
       </body>
     </html>
   );
