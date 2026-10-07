@@ -166,13 +166,13 @@ importers:
         version: 16.3.8(@babel/core@7.29.7)(@playwright/test@1.61.1)(@types/node@22.18.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-auth:
         specifier: 4.24.15
-        version: 4.24.15(next@16.3.8(@babel/core@7.29.7)(@playwright/test@1.61.1)(@types/node@22.18.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@9.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 4.24.15(next@16.3.8(@babel/core@7.29.7)(@playwright/test@1.61.1)(@types/node@22.18.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@10.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-themes:
         specifier: 0.4.6
         version: 0.4.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       nodemailer:
-        specifier: 9.1.1
-        version: 9.1.1
+        specifier: 10.0.9
+        version: 10.0.9
       nuqs:
         specifier: 2.9.0
         version: 2.9.0(next@16.3.8(@babel/core@7.29.7)(@playwright/test@1.61.1)(@types/node@22.18.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
@@ -4658,9 +4658,9 @@ packages:
     resolution: {integrity: sha512-x0InOIyzgdk+eyaWaRJFH5snEtiImgBgblZ2CyPrLmqqcuMQkEvcDPHbzqbD8eDsSeJbVOjn+crzyzHaM4D+/A==}
     engines: {node: '>=18'}
 
-  nodemailer@9.1.1:
-    resolution: {integrity: sha512-izw9mVKFix6YSnC9eLgV6g1opl9DUlRio9ZNcq+Wu9Ujn2UwF+8Nl0B8nz22kEC+CTZCvinkxwJ0DeFbb6NwcQ==}
-    engines: {node: '>=6.0.0'}
+  nodemailer@10.0.9:
+    resolution: {integrity: sha512-BF0qcyplCwp+jMk6HCjFykBz/YhhZSsxrARhOldLwFWH+8kGjQsd2WIMIZhqEuyXRoGFi0ONbDeWDMDoL8MhLw==}
+    engines: {node: '>=20.0.0'}
 
   npm-run-path@5.3.0:
     resolution: {integrity: sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ==}
@@ -10179,7 +10179,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-auth@4.24.15(next@16.3.8(@babel/core@7.29.7)(@playwright/test@1.61.1)(@types/node@22.18.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@9.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next-auth@4.24.15(next@16.3.8(@babel/core@7.29.7)(@playwright/test@1.61.1)(@types/node@22.18.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(nodemailer@10.0.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.29.7
       '@panva/hkdf': 1.2.1
@@ -10194,7 +10194,7 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 11.1.1
     optionalDependencies:
-      nodemailer: 9.1.1
+      nodemailer: 10.0.9
 
   next-themes@0.4.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -10243,7 +10243,7 @@ snapshots:
 
   node-releases@2.0.56: {}
 
-  nodemailer@9.1.1: {}
+  nodemailer@10.0.9: {}
 
   npm-run-path@5.3.0:
     dependencies:
