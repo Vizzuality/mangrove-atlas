@@ -1,6 +1,10 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
 import RestorationDataGroup from '@/containers/datasets/restoration/map-popup/restoration-data-group';
+import {
+  POPUP_SECTION_CONTENT_STYLE,
+  POPUP_SECTION_TRIGGER_STYLE,
+} from '@/containers/map/pop-up/constants';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
@@ -19,15 +23,15 @@ const EcosystemServices = ({ data }: { data: RestorationPopUp }) => {
   };
   return (
     <Collapsible className="w-full" onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger iconType="plus-minus">
+      <CollapsibleTrigger className={POPUP_SECTION_TRIGGER_STYLE} iconType="plus-minus">
         <div className="flex w-full flex-col space-y-0.5 text-start">
           <h3 className={WIDGET_SUBTITLE_STYLE}>ECOSYSTEM SERVICES</h3>
           <p className="text-sm font-light">for restored mangroves</p>
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <section className="flex w-full flex-col space-y-2 border-none px-6 pb-6 shadow-none">
-          <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2">
+        <section className={POPUP_SECTION_CONTENT_STYLE}>
+          <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2.5">
             <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO₂e" />
             <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO₂e" />
 

@@ -32,7 +32,7 @@ const MapPopupDragHandler = ({
           onDoubleClick={handleClickToDocker}
         >
           <MdOutlineDragHandleIcon
-            className="text-brand-800 mt-3 ml-6 h-6 w-6"
+            className="text-brand-800 mt-3 ml-5 h-6 w-6"
             aria-hidden="true"
           />
         </button>

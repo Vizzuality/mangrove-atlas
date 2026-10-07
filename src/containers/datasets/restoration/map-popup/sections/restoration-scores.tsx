@@ -1,6 +1,10 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
 import RestorationDataGroup from '@/containers/datasets/restoration/map-popup/restoration-data-group';
+import {
+  POPUP_SECTION_CONTENT_STYLE,
+  POPUP_SECTION_TRIGGER_STYLE,
+} from '@/containers/map/pop-up/constants';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
@@ -22,11 +26,11 @@ const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
 
   return (
     <Collapsible className="w-full min-w-[min(450px,100%)]" onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger iconType="plus-minus">
+      <CollapsibleTrigger className={POPUP_SECTION_TRIGGER_STYLE} iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SCORES</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <section className="flex w-full flex-col space-y-2 px-6 pb-6">
+        <section className={POPUP_SECTION_CONTENT_STYLE}>
           <div className="w-full">
             <div className="flex grow items-center justify-between">
               <RestorationDataGroup label="Mangrove type" value={Class} />
@@ -44,8 +48,8 @@ const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
           </div>
 
           <div className="w-full">
-            <h4 className="py-4 font-sans text-sm font-light">Restoration potential score</h4>
-            <div className="flex grow items-center justify-between space-x-6">
+            <h4 className="py-3.75 font-sans text-sm font-light">Restoration potential score</h4>
+            <div className="flex grow items-center justify-between gap-5">
               <div className="relative h-6 w-full bg-slate-100">
                 <div
                   className="h-full w-full"

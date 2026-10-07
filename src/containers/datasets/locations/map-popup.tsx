@@ -1,12 +1,17 @@
 import { useCallback, useState } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
+import cn from '@/lib/classnames';
 
 import type { GeoJSONFeature } from 'mapbox-gl';
 
 import { useLocationNavigation } from 'hooks/location-navigation';
 
 import { useLocations } from '@/containers/datasets/locations/hooks';
+import {
+  POPUP_SECTION_CONTENT_STYLE,
+  POPUP_SECTION_TRIGGER_STYLE,
+} from '@/containers/map/pop-up/constants';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
@@ -84,11 +89,15 @@ const LocationPopUP = ({
       open={nonExpansible ? nonExpansible : isOpen}
       onOpenChange={handlePopUpContentVisibility}
     >
-      <CollapsibleTrigger iconType={!nonExpansible ? 'plus-minus' : null} disabled={nonExpansible}>
+      <CollapsibleTrigger
+        className={POPUP_SECTION_TRIGGER_STYLE}
+        iconType={!nonExpansible ? 'plus-minus' : null}
+        disabled={nonExpansible}
+      >
         <h3 className={WIDGET_SUBTITLE_STYLE}>Analyse an area</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex w-full flex-col space-y-2 border-none px-6 pb-6 font-sans shadow-none">
+        <div className={cn(POPUP_SECTION_CONTENT_STYLE, 'font-sans')}>
           <button
             type="button"
             onClick={handleClickLocation}
@@ -107,7 +116,7 @@ const LocationPopUP = ({
             <button
               key={NAME}
               type="button"
-              className="grid w-full cursor-pointer grid-cols-10 gap-4 px-6 pb-6 font-sans"
+              className="grid w-full cursor-pointer grid-cols-10 gap-4 px-5 pb-5 font-sans"
               onClick={() => handleClickProtectedArea(index)}
             >
               <div className="col-span-7 flex flex-col text-left">
