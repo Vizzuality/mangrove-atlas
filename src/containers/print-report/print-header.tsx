@@ -2,6 +2,10 @@
 
 import { useCallback, useMemo } from 'react';
 
+import { customAreaLabelAtom } from '@/store/drawing-tool';
+
+import { useAtomValue } from 'jotai';
+
 import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
@@ -16,10 +20,12 @@ const PrintHeader = () => {
     enabled: (!!locationType && !!id) || locationType !== 'custom-area',
   });
 
+  const customAreaLabel = useAtomValue(customAreaLabelAtom);
+
   const displayName = useMemo(() => {
-    if (locationType === 'custom-area') return 'Custom Area';
+    if (locationType === 'custom-area') return customAreaLabel ?? 'Custom Area';
     return locationName || 'Worldwide';
-  }, [locationType, locationName]);
+  }, [locationType, locationName, customAreaLabel]);
 
   const handlePrint = useCallback(() => {
     window.print();

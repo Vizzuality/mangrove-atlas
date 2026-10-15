@@ -75,3 +75,4 @@ data/notebooks/uv.lock
 /docs/*
 !/docs/features-in-progress.md
 !/docs/testing.md
+!/docs/adr/
