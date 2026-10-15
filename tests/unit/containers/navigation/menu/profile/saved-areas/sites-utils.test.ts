@@ -50,13 +50,17 @@ describe('parseSiteGeometries', () => {
     expect(out).not.toHaveProperty('2');
   });
 
-  it('skips malformed or non-polygon geometries without throwing', () => {
+  it('skips malformed or non-polygon geometries without throwing, logging the malformed one', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const out = parseSiteGeometries([
       { id: 1, site_area: '{not json' },
       { id: 2, site_area: JSON.stringify({ type: 'Point', coordinates: [0, 0] }) },
       { id: 3, site_area: JSON.stringify(square) },
     ]);
     expect(Object.keys(out)).toEqual(['3']);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy.mock.calls[0][0]).toContain('site 1');
+    errorSpy.mockRestore();
   });
 });
 

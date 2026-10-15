@@ -138,8 +138,10 @@ export const parseSiteGeometries = (rows: MRTTSiteGeometryRow[]): MRTTSiteGeomet
       if (geometry?.type === 'Polygon' || geometry?.type === 'MultiPolygon') {
         out[row.id] = geometry;
       }
-    } catch {
-      // Malformed geometry for one site must not hide the rest of the list.
+    } catch (error) {
+      // One malformed site_area must not hide the rest of the list, but it is a data bug
+      // in the backend (site saved with an unparsable polygon), so make it visible.
+      console.error(`Malformed site_area for MRTT site ${row.id}`, error);
     }
   }
   return out;
