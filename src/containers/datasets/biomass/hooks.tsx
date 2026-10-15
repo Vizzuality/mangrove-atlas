@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { numberFormat } from '@/lib/format';
+import { formatOrNull, numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -72,7 +72,9 @@ export function useMangroveBiomass(
           .then(({ data }) => data['mangrove_biomass'])
           .catch((err: CanceledError<unknown> | AxiosError) => {
             if (err.code === 'ERR_CANCELED') onCancel?.();
-            return err;
+            // Rethrow so React Query reports `isError` and the widget shows its error state;
+            // resolving with the error object rendered it as data (→ "NaN" values).
+            throw err;
           });
       }
 
@@ -111,12 +113,19 @@ export function useMangroveBiomass(
       (queryOptions?.enabled ?? true),
   });
   const { data, isError, isFetching, refetch, isFetched } = query;
-  const noData = isFetched && !data?.data?.length;
+  // A failed request also counts as "fetched" (with the empty placeholder data); keep it
+  // out of noData so the widget shows the error state instead.
+  const noData = !isError && isFetched && !data?.data?.length;
 
   const years = data?.metadata?.year;
-  const selectedYear = currentYear || years?.[years?.length - 1];
+  // The year atom is set from the main API and never reset; the analysis response can carry
+  // a different year, so only keep it when this response has it (else "NaN t/ha").
+  const selectedYear =
+    currentYear && (!years?.length || years.includes(currentYear))
+      ? currentYear
+      : years?.[years?.length - 1];
   const dataFiltered = data?.data?.filter(({ indicator }) => indicator !== 'total');
-  const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass.find(
+  const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass?.find(
     ({ year }) => year === selectedYear
   )?.value;
 
@@ -126,9 +135,9 @@ export function useMangroveBiomass(
   const total = dataFiltered?.reduce((acc, d) => acc + d.value, 0);
   const ChartData = dataFiltered?.map((d) => ({
     label: d.indicator,
-    value: (d.value * 100) / total,
+    value: total ? (d.value * 100) / total : 0,
     showValue: false,
-    valueFormatted: `${numberFormat((d.value * 100) / total)} %`,
+    valueFormatted: `${numberFormat(total ? (d.value * 100) / total : 0)} %`,
     color: colorKeys[d.indicator],
   }));
 
@@ -153,7 +162,8 @@ export function useMangroveBiomass(
   };
 
   return {
-    mean: numberFormat(avgBiomassFiltered),
+    // null (not "NaN") when there is no mean for the year — the widget renders a fallback.
+    mean: formatOrNull(avgBiomassFiltered),
     unit,
     year: selectedYear,
     noData,

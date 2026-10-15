@@ -19,6 +19,13 @@ describe('getData', () => {
     expect(getData([], 'm', colors)).toBeNull();
   });
 
+  it('returns 0% (not "NaN") when every bucket is 0', () => {
+    const zeros = rows.map((r) => ({ ...r, value: 0 })) as Data[];
+    const [row] = getData(zeros, 'm', colors)! as Record<string, unknown>[];
+    expect(row['0-5 m']).toBe('0.00');
+    expect(row['5-10 m']).toBe('0.00');
+  });
+
   it('computes percentage-of-total per indicator', () => {
     const [row] = getData(rows, 'm', colors)! as Record<string, unknown>[];
     expect(row['0-5 m']).toBe('25.00');

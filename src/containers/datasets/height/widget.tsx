@@ -39,6 +39,8 @@ const HeightWidget = () => {
   }, [refetch]);
 
   if (noData) return <NoData />;
+
+  const hasData = !!data?.data?.length && mean !== null && !isFetching && !isError && !isCanceled;
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
@@ -54,7 +56,7 @@ const HeightWidget = () => {
           </button>
         )}
       </div>
-      {(!isCanceled || isError) && !isFetching && !data && (
+      {(isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
             An error occurred while fetching the data. You can try again.
@@ -69,7 +71,7 @@ const HeightWidget = () => {
           </button>
         </div>
       )}
-      {!!data && !isFetching && !isError && (
+      {hasData && (
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             Mean mangrove maximum canopy height in <span className="font-bold"> {location}</span>{' '}

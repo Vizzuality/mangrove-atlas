@@ -176,7 +176,11 @@ const getData = (data) =>
   );
 
 const getTotal = (data: { count: number }[]) =>
-  data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
+  data?.reduce(
+    // `?? 0`: one row without a count would turn the whole total into NaN.
+    (previous: number, current: { count: number }) => (current.count ?? 0) + previous,
+    0
+  );
 
 // Brush x-axis labelling for sparse monthly series. Year values repeat per data
 // point and months can be missing, so labelling each year at its first point

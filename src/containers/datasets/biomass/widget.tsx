@@ -59,7 +59,7 @@ const BiomassWidget = () => {
           </button>
         )}
       </div>
-      {(!isCanceled || isError) && !isFetching && !mean && (
+      {(isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
             An error occurred while fetching the data. You can try again.
@@ -73,7 +73,7 @@ const BiomassWidget = () => {
           </button>
         </div>
       )}
-      {mean && !isFetching && !isError && (
+      {mean !== null && !isFetching && !isError && !isCanceled && (
         <>
           <p className={WIDGET_SENTENCE_STYLE}>
             Mean mangrove aboveground biomass density in{' '}

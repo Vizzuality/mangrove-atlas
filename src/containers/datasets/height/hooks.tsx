@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { numberFormat } from '@/lib/format';
+import { formatOrNull, numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -43,7 +43,7 @@ export const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes)
   const total = barsValues.reduce((previous, current) => current + previous);
   return [
     data?.reduce((acc, d) => {
-      const percentage = (d.value / total) * 100;
+      const percentage = total ? (d.value / total) * 100 : 0;
       return {
         ...acc,
         year: d.year,
@@ -102,7 +102,9 @@ export function useMangroveHeight(
         .then(({ data }) => data['mangrove_height'])
         .catch((err: CanceledError<unknown> | AxiosError) => {
           if (err.code === 'ERR_CANCELED') onCancel?.();
-          return err;
+          // Rethrow so React Query reports `isError` and the widget shows its error state;
+          // resolving with the error object rendered it as data (→ "NaN" values).
+          throw err;
         });
     }
 
@@ -137,13 +139,16 @@ export function useMangroveHeight(
       (queryOptions?.enabled ?? true),
   });
 
-  const { data, isFetched } = query;
-  const noData = isFetched && !data?.data?.length;
+  const { data, isFetched, isError } = query;
+  // A failed request also counts as "fetched" (with the empty placeholder data); keep it
+  // out of noData so the widget shows the error state instead.
+  const noData = !isError && isFetched && !data?.data?.length;
 
   const mean = data?.metadata?.avg_height?.[0]?.value;
   const unit = data?.metadata?.units?.value;
   const years = data?.metadata?.year || [];
-  const year = Math.max(...years);
+  // Math.max() of an empty list is -Infinity (placeholder / cancelled analysis).
+  const year = years.length ? Math.max(...years) : null;
   const COLORS_BY_INDICATOR = useMemo(() => getColorKeys(data?.data), [data?.data]);
 
   const chartData = useMemo(
@@ -169,8 +174,8 @@ export function useMangroveHeight(
   const TooltipData = {
     content: (properties) => <Tooltip {...properties} payload={properties.payload} />,
   };
-  const dataMin = Math.min(...years);
-  const dataMax = Math.max(...years);
+  const dataMin = years.length ? Math.min(...years) : undefined;
+  const dataMax = year ?? undefined;
   const config = {
     chartBase: {
       type: 'bar',
@@ -218,7 +223,8 @@ export function useMangroveHeight(
 
   return {
     ...query,
-    mean: numberFormat(mean),
+    // null (not "NaN") when there is no mean — the widget renders a fallback.
+    mean: formatOrNull(mean),
     location,
     unit,
     year,

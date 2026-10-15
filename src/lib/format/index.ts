@@ -26,6 +26,16 @@ export const adaptiveFormat = (value: number, minDecimals = 2): string => {
 
 export const formatNumberNearestInteger = (value: number) => adaptiveFormat(value, 0);
 export const numberFormat = (value: number) => adaptiveFormat(value, 2);
+
+/**
+ * Like `adaptiveFormat`, but returns `null` instead of the string "NaN" (or "Infinity")
+ * when the value is missing or not a finite number, so callers can render a no-data or
+ * error state instead of printing "NaN" to the user. Use it for any value that comes from
+ * an API response that can be empty (e.g. analysis results for a custom area).
+ */
+export const formatOrNull = (value: number | null | undefined, minDecimals = 2): string | null =>
+  typeof value === 'number' && Number.isFinite(value) ? adaptiveFormat(value, minDecimals) : null;
+
 export const formatAxis = format(',.0d');
 export const formatMillion = formatPrefix(',.0', 1e6);
 export const significantDigitsFormat = format('.3s');

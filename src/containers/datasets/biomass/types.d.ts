@@ -61,7 +61,7 @@ export type BiomassData = {
   isFetching: QueryObserverBaseResult['isFetching'];
   isError: QueryObserverBaseResult['isError'];
   refetch: QueryObserverBaseResult['refetch'];
-  mean: string;
+  mean: string | null;
   unit: string;
   year: number;
   config: ChartConfig;

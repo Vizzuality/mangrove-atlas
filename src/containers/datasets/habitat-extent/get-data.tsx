@@ -1,4 +1,4 @@
-import { numberFormat } from '@/lib/format';
+import { formatOrNull, numberFormat } from '@/lib/format';
 
 import CustomTooltip from '@/components/chart/tooltip';
 
@@ -33,7 +33,11 @@ export function getHabitatExtentData({
   // (the default comparator is lexicographic) and drop repeats — a duplicate year
   // reaches the selector, the timeline and the map sources as a duplicate key.
   const years = metadata?.year ? [...new Set(metadata.year)].sort((a, b) => a - b) : undefined;
-  const currentYear = year || years?.[years?.length - 1];
+  // A year selected for another location (the settings atom is not reset on navigation)
+  // may not exist in this response; fall back to the latest year instead of rendering
+  // values for a year with no rows (→ undefined → "NaN").
+  const latestYear = years?.[years.length - 1];
+  const currentYear = year && (!years || years.includes(year)) ? year : latestYear;
   const dataByYear = data?.data?.filter(({ year: y }) => y === currentYear);
   const dataParsed = dataByYear?.reduce(
     (acc, d) => ({
@@ -49,24 +53,38 @@ export function getHabitatExtentData({
   const mangroveArea = dataParsed?.habitat_extent_area;
   const mangroveCoastCoverage = dataParsed?.linear_coverage;
   const mangroveCoastCoveragePercentage = (mangroveCoastCoverage * 100) / totalLength || 0;
-  const nonMangrove = totalLength - mangroveCoastCoverage;
+  // The analysis API (custom areas) returns no coastline fields; keep this null rather
+  // than `undefined - undefined` = NaN.
+  const nonMangrove =
+    Number.isFinite(totalLength) && Number.isFinite(mangroveCoastCoverage)
+      ? totalLength - mangroveCoastCoverage
+      : null;
   const defaultUnitLinearCoverage = metadata?.units?.linear_coverage;
-  const area = unit === 'ha' ? mangroveArea * 100 : mangroveArea;
+  const area = Number.isFinite(mangroveArea)
+    ? unit === 'ha'
+      ? mangroveArea * 100
+      : mangroveArea
+    : null;
   const mangroveAreaLabel = `Coastline coverage in ${currentYear}`;
 
-  const coastlineCoverage = unit === 'ha' ? mangroveCoastCoverage * 100 : mangroveCoastCoverage;
-  const nonMangrovesCoverage = unit === 'ha' ? nonMangrove * 100 : nonMangrove;
+  const coastlineCoverage = Number.isFinite(mangroveCoastCoverage)
+    ? unit === 'ha'
+      ? mangroveCoastCoverage * 100
+      : mangroveCoastCoverage
+    : null;
+  const nonMangrovesCoverage =
+    nonMangrove !== null ? (unit === 'ha' ? nonMangrove * 100 : nonMangrove) : null;
 
   const LegendData = [
     {
       label: mangroveAreaLabel,
-      value: numberFormat(mangroveCoastCoverage),
+      value: formatOrNull(mangroveCoastCoverage),
       unit: 'km',
       color: '#06C4BD',
     },
     {
       label: 'Non mangroves',
-      value: numberFormat(nonMangrove),
+      value: formatOrNull(nonMangrove),
       unit: 'km',
       color: '#ECECEF',
     },
@@ -87,7 +105,7 @@ export function getHabitatExtentData({
           value: numberFormat(mangroveCoastCoveragePercentage),
           unit: '%',
         },
-        { label: 'Coverage', value: numberFormat(coastlineCoverage), unit },
+        { label: 'Coverage', value: formatOrNull(coastlineCoverage), unit },
       ],
     },
     {
@@ -100,7 +118,7 @@ export function getHabitatExtentData({
           value: numberFormat(100 - mangroveCoastCoveragePercentage),
           unit: '%',
         },
-        { label: 'Coverage:', value: numberFormat(nonMangrovesCoverage), unit },
+        { label: 'Coverage:', value: formatOrNull(nonMangrovesCoverage), unit },
       ],
     },
   ];
@@ -118,10 +136,11 @@ export function getHabitatExtentData({
 
   return {
     metadata,
-    area: numberFormat(+area),
-    nonMangrove: numberFormat(+nonMangrove),
-    mangroveCoastCoveragePercentage: numberFormat(+mangroveCoastCoveragePercentage),
-    totalLength: numberFormat(+totalLength),
+    // null (not "NaN") when the response has no value — the widget renders a fallback.
+    area: formatOrNull(area),
+    nonMangrove: formatOrNull(nonMangrove),
+    mangroveCoastCoveragePercentage: formatOrNull(mangroveCoastCoveragePercentage),
+    totalLength: formatOrNull(totalLength),
     years: metadata?.year, // API improvement, change year to years as is an array
     units: metadata?.units,
     legend: LegendData,
