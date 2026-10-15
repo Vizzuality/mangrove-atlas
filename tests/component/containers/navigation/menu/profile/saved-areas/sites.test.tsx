@@ -124,6 +124,26 @@ describe('UserMRTTSites', () => {
     expect(screen.queryByRole('button', { name: 'Analyse site Undrawn Site' })).toBeNull();
   });
 
+  it('marks sites as busy while the geometry lookup is still loading', async () => {
+    let resolveGeometries: (v: unknown) => void = () => {};
+    requestMock.mockImplementation(({ url }: { url: string }) => {
+      if (url === '/sites') return Promise.resolve({ data: sites });
+      return new Promise((resolve) => {
+        resolveGeometries = resolve;
+      });
+    });
+    renderSites();
+
+    const name = await screen.findByText('Mangrove Creek');
+    expect(name).toHaveAttribute('aria-busy', 'true');
+    expect(screen.queryByRole('button', { name: 'Analyse site Mangrove Creek' })).toBeNull();
+
+    resolveGeometries({ data: widgetSites });
+    expect(
+      await screen.findByRole('button', { name: 'Analyse site Mangrove Creek' })
+    ).toBeInTheDocument();
+  });
+
   it('renders nothing when the user has no MRTT sites', async () => {
     requestMock.mockImplementation(({ url }: { url: string }) =>
       Promise.resolve({ data: url === '/sites' ? [] : { data: [] } })

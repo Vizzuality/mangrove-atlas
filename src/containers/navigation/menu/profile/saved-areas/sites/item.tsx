@@ -19,14 +19,24 @@ import SvgExternalLink from '@/svgs/ui/external_link';
 
 import { siteGeometryToBBox, siteGeometryToFeatureCollection } from './utils';
 
+export type GeometryStatus = 'loading' | 'error' | 'ready';
+
 type Props = {
   id: number;
   name: string;
   /** Null when `/widgets/sites` has no polygon for this site (not drawn yet in MRTT). */
   geometry: Geometry | null;
+  /** State of the geometry lookup, so "still loading" is not shown as "no polygon". */
+  geometryStatus?: GeometryStatus;
 };
 
-const SitesItem = ({ name, id, geometry }: Props) => {
+const NO_GEOMETRY_MESSAGE: Record<GeometryStatus, string> = {
+  loading: 'Loading site boundaries…',
+  error: 'Site boundaries could not be loaded. Try again later.',
+  ready: 'This site has no area drawn in the MRTT yet.',
+};
+
+const SitesItem = ({ name, id, geometry, geometryStatus = 'ready' }: Props) => {
   const { navigate } = useLocationNavigation();
 
   const setDrawingUploadToolState = useSetAtom(drawingUploadToolAtom);
@@ -95,10 +105,15 @@ const SitesItem = ({ name, id, geometry }: Props) => {
       ) : (
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="cursor-default text-black/60 first-letter:uppercase">{name}</span>
+            <span
+              className="cursor-default text-black/60 first-letter:uppercase"
+              aria-busy={geometryStatus === 'loading'}
+            >
+              {name}
+            </span>
           </TooltipTrigger>
           <TooltipContent className="bg-gray-700 px-2 text-white">
-            This site has no area drawn in the MRTT yet.
+            {NO_GEOMETRY_MESSAGE[geometryStatus]}
           </TooltipContent>
         </Tooltip>
       )}

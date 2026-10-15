@@ -23,7 +23,11 @@ const UserMRTTSites = () => {
   } = useGetUserSites({
     select: groupSitesByLandscape,
   });
-  const { data: geometries } = useGetMRTTSitesGeometries();
+  const {
+    data: geometries,
+    isLoading: isLoadingGeometries,
+    isError: isGeometriesError,
+  } = useGetMRTTSitesGeometries();
 
   // A user outside any MRTT organisation (or an endpoint error) just has no sites to
   // show — the saved-areas list above still works, so render nothing instead of an error.
@@ -63,6 +67,9 @@ const UserMRTTSites = () => {
                   id={site.id}
                   name={site.site_name}
                   geometry={geometries?.[site.id] ?? null}
+                  geometryStatus={
+                    isLoadingGeometries ? 'loading' : isGeometriesError ? 'error' : 'ready'
+                  }
                 />
               ))}
             </ul>
