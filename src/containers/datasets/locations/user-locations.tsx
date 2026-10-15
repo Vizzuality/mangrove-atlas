@@ -113,10 +113,48 @@ type UserLocationCreateBodyCustom = BaseCreateBody & {
 
 type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
 
+/**
+ * `GET /widgets/sites` is the only endpoint that exposes a site's polygon (`site_area`,
+ * a GeoJSON geometry serialised as a string). `GET /sites` (the user-scoped list) has no
+ * geometry, so the saved-areas panel joins the two by `id` to zoom/analyse MRTT sites.
+ */
+export type MRTTSiteGeometryRow = {
+  id: number;
+  site_area: string | null;
+};
+
+export type MRTTSitesGeometryResponse = {
+  data: MRTTSiteGeometryRow[];
+};
+
+export type MRTTSiteGeometries = Record<number, GeoJSON.Geometry>;
+
+export const parseSiteGeometries = (rows: MRTTSiteGeometryRow[]): MRTTSiteGeometries => {
+  const out: MRTTSiteGeometries = {};
+  for (const row of rows) {
+    if (!row.site_area) continue;
+    try {
+      const geometry = JSON.parse(row.site_area) as GeoJSON.Geometry;
+      if (geometry?.type === 'Polygon' || geometry?.type === 'MultiPolygon') {
+        out[row.id] = geometry;
+      }
+    } catch {
+      // Malformed geometry for one site must not hide the rest of the list.
+    }
+  }
+  return out;
+};
+
 export const fetchUserSites = () =>
   API.request<UserSitesResponse>({
     method: 'GET',
     url: '/sites',
+  }).then((r) => r.data);
+
+const fetchMRTTSitesGeometries = () =>
+  API.request<MRTTSitesGeometryResponse>({
+    method: 'GET',
+    url: '/widgets/sites',
   }).then((r) => r.data);
 
 const fetchUserLocations = () =>
@@ -150,6 +188,23 @@ export function useGetUserSites<T = UserSitesResponse>(
   return useQuery<UserSitesResponse, Error, T>({
     queryKey: ['user_sites'],
     queryFn: fetchUserSites,
+    ...queryOptions,
+  });
+}
+
+export function useGetMRTTSitesGeometries(
+  queryOptions: Omit<
+    UseQueryOptions<MRTTSitesGeometryResponse, Error, MRTTSiteGeometries>,
+    'queryKey' | 'queryFn' | 'select'
+  > = {}
+) {
+  return useQuery<MRTTSitesGeometryResponse, Error, MRTTSiteGeometries>({
+    // Same key family as the restoration-sites widget so cache invalidation stays simple,
+    // but unfiltered: the widget keys include location + filters.
+    queryKey: ['restoration-sites', 'geometries'],
+    queryFn: fetchMRTTSitesGeometries,
+    select: ({ data }) => parseSiteGeometries(data),
+    staleTime: 5 * 60 * 1000,
     ...queryOptions,
   });
 }
