@@ -5,7 +5,7 @@ import { useCallback, useMemo } from 'react';
 import Link from 'next/link';
 
 import { analysisAtom } from '@/store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { customAreaNameAtom, drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import type { Geometry } from 'geojson';
 import { useSetAtom } from 'jotai';
@@ -30,6 +30,7 @@ const SitesItem = ({ name, id, geometry }: Props) => {
   const { navigate } = useLocationNavigation();
 
   const setDrawingUploadToolState = useSetAtom(drawingUploadToolAtom);
+  const setCustomAreaName = useSetAtom(customAreaNameAtom);
   const resetDrawingToolState = useResetAtom(drawingToolAtom);
   const setAnalysisState = useSetAtom(analysisAtom);
 
@@ -54,15 +55,19 @@ const SitesItem = ({ name, id, geometry }: Props) => {
         uploadedGeojson: featureCollection,
         customGeojson: null,
       }));
+      // Still a custom-area route; only the title shows the site name instead of "Custom Area".
+      setCustomAreaName({ name, geojson: featureCollection });
       setAnalysisState((prev) => ({ ...prev, enabled: true }));
       navigate({ type: 'custom-area' }, bounds);
     },
     [
       featureCollection,
       bounds,
+      name,
       navigate,
       resetDrawingToolState,
       setDrawingUploadToolState,
+      setCustomAreaName,
       setAnalysisState,
     ]
   );

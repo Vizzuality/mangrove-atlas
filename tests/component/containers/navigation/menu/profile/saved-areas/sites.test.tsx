@@ -1,5 +1,5 @@
 import { analysisAtom } from '@/store/analysis';
-import { drawingUploadToolAtom } from '@/store/drawing-tool';
+import { customAreaLabelAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { tmpCameraAtom } from '@/store/map';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -113,6 +113,8 @@ describe('UserMRTTSites', () => {
     expect(upload.uploadedGeojson?.features[0].geometry).toEqual(square);
     expect(upload.customGeojson).toBeNull();
     expect(store.get(tmpCameraAtom)).toEqual({ bbox: [0, 0, 2, 1] });
+    // The route stays /custom-area but the title shows the site name.
+    expect(store.get(customAreaLabelAtom)).toBe('Mangrove Creek');
     expect(replaceState).toHaveBeenCalledWith(null, '', '/custom-area');
   });
 

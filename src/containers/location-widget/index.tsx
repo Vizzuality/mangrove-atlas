@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cn from '@/lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
+import { customAreaLabelAtom } from '@/store/drawing-tool';
 import { activeGuideAtom } from '@/store/guide';
 import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
@@ -26,6 +27,7 @@ const LocationWidget = () => {
   });
 
   const [{ enabled: isAnalysisEnabled }] = useAtom(analysisAtom);
+  const customAreaLabel = useAtomValue(customAreaLabelAtom);
 
   const setAnalysisAlert = useSetAtom(analysisAlertAtom);
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useAtom(locationsModalAtom);
@@ -47,14 +49,14 @@ const LocationWidget = () => {
 
   const locationName = useMemo(() => {
     if (locationType === 'custom-area') {
-      return 'Custom Area';
+      return customAreaLabel ?? 'Custom Area';
     }
     if (locationType) {
       return name;
     }
 
     return 'Worldwide';
-  }, [locationType, name]);
+  }, [locationType, name, customAreaLabel]);
 
   const openLocationsModal = useCallback(() => {
     if (!locationsModalIsOpen) setLocationsModalIsOpen(true);
