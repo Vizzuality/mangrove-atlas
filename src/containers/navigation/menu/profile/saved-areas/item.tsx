@@ -7,6 +7,7 @@ import cn from '@/lib/classnames';
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
+import { Close as DialogPrimitiveClose } from '@radix-ui/react-dialog';
 import turfBbox from '@turf/bbox';
 import bbox from '@turf/bbox';
 import type { Feature, FeatureCollection, Polygon, MultiPolygon, Geometry } from 'geojson';
@@ -177,7 +178,8 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
 
   const handleLocationClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
+      // No preventDefault: the button is wrapped in Radix `Dialog.Close`, which skips
+      // closing the host dialog when the click event is default-prevented.
       e.stopPropagation();
 
       if (locationType === 'system' && location) {
@@ -220,14 +222,17 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
       {(locationType === 'system' || (locationType === 'custom' && !isEditMode)) && (
         <Tooltip>
           <TooltipTrigger asChild>
-            <button
-              type="button"
-              aria-label={`Navigate to ${name}`}
-              className="focus-visible:ring-brand-500 underline-offset-2 first-letter:uppercase focus-visible:ring-2 focus-visible:outline-none"
-              onClick={handleLocationClick}
-            >
-              {name}
-            </button>
+            {/* Close the host dialog so the map is visible after navigating. */}
+            <DialogPrimitiveClose asChild>
+              <button
+                type="button"
+                aria-label={`Navigate to ${name}`}
+                className="focus-visible:ring-brand-500 underline-offset-2 first-letter:uppercase focus-visible:ring-2 focus-visible:outline-none"
+                onClick={handleLocationClick}
+              >
+                {name}
+              </button>
+            </DialogPrimitiveClose>
           </TooltipTrigger>
           <TooltipContent className="bg-gray-700 px-2 text-white">
             {locationType === 'system'

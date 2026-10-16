@@ -75,7 +75,8 @@ export const getWidgetData = (data: Data[], unit = '') => {
 
   const cumulativeValuesNetChange = [0, ...netChangeValues]?.reduce(
     (acc, value, i) => {
-      acc.push((acc[i] += value));
+      // A missing net_change would poison every later cumulative value with NaN.
+      acc.push((acc[i] += value ?? 0));
       return acc;
     },
     [0]
@@ -85,8 +86,8 @@ export const getWidgetData = (data: Data[], unit = '') => {
     data.map((l, i) => {
       const netResult =
         unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i];
-      const gain = l.year === firstYear ? 0 : unit === 'ha' ? l.gain * 100 : l.gain;
-      const loss = l.year === firstYear ? 0 : unit === 'ha' ? -l.loss * 100 : -l.loss;
+      const gain = l.year === firstYear ? 0 : unit === 'ha' ? (l.gain ?? 0) * 100 : (l.gain ?? 0);
+      const loss = l.year === firstYear ? 0 : unit === 'ha' ? -(l.loss ?? 0) * 100 : -(l.loss ?? 0);
 
       return {
         label: l.year,
@@ -112,6 +113,13 @@ export const getWidgetData = (data: Data[], unit = '') => {
     (l) => l.year
   );
 };
+
+// Keep `year` only when it exists in `years`; otherwise use `fallback`.
+export const getYearInSeries = (
+  year: number | null | undefined,
+  years: number[] | undefined,
+  fallback: number | undefined
+) => (year && years?.includes(year) ? year : fallback);
 
 // widget data
 export function useMangroveNetChange(
@@ -145,7 +153,9 @@ export function useMangroveNetChange(
         .then(({ data }) => data['mangrove_net_change'])
         .catch((err: CanceledError<unknown> | AxiosError) => {
           if (err.code === 'ERR_CANCELED') onCancel?.();
-          return err;
+          // Rethrow so React Query reports `isError` and the widget shows its error state;
+          // resolving with the error object rendered it as data (→ "NaN" values).
+          throw err;
         });
     }
 
@@ -175,11 +185,14 @@ export function useMangroveNetChange(
       (queryOptions?.enabled ?? true),
   });
 
-  const { data, isFetched } = query;
+  const { data, isFetched, isError } = query;
+  // A failed request also counts as "fetched" (with the empty placeholder data); keep it
+  // out of noData so the widget shows the error state instead.
   const noData =
-    location_id === 'custom-area'
-      ? isFetched && data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0
-      : isFetched && !data?.data?.length;
+    !isError &&
+    (location_id === 'custom-area'
+      ? isFetched && data?.data?.reduce((acc, value) => acc + (value.net_change ?? 0), 0) === 0
+      : isFetched && !data?.data?.length);
 
   // Derive years from the actual data series (source of truth) rather than
   // metadata.year, which can lag the response. Keeps the dropdowns, default
@@ -188,8 +201,11 @@ export function useMangroveNetChange(
     ? [...new Set(data.data.map((d) => d.year))].sort((a, b) => a - b)
     : [...(data?.metadata?.year ?? [])].sort((a, b) => a - b);
   const unit = selectedUnit || data.metadata?.units.net_change;
-  const currentStartYear = startYear || years?.[0];
-  const currentEndYear = endYear || years?.[years?.length - 1];
+  // The start/end atoms are not reset on navigation, so a window picked for another
+  // location (or a country before opening a custom area) may not exist in this series;
+  // filtering by it would leave no rows and a "NaN" net change. Fall back to the full range.
+  const currentStartYear = getYearInSeries(startYear, years, years?.[0]);
+  const currentEndYear = getYearInSeries(endYear, years, years?.[years?.length - 1]);
 
   // Mocked gain/loss (flag-gated) applied once to the full series.
   // Main chart shows the selected [startYear, endYear] window; the brush below
@@ -353,7 +369,8 @@ export function useMangroveNetChange(
     brushYears: fullYears,
     currentStartYear,
     currentEndYear,
-    netChange: numberFormat(Math.abs(change)),
+    // null (not "NaN") when the window has no data — the widget renders a fallback.
+    netChange: Number.isFinite(change) ? numberFormat(Math.abs(change)) : null,
     direction,
     unitOptions,
     noData,

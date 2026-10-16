@@ -76,7 +76,8 @@ const HabitatExtent = () => {
   } = data;
 
   const sortedYears = useMemo(() => [...(years || [])].sort((a, b) => a - b), [years]);
-  const currentYear = year || defaultYear;
+  // `defaultYear` is the selected year when this location has it, else the latest one.
+  const currentYear = defaultYear ?? year;
 
   const yearRef = useRef(currentYear);
   useEffect(() => {
@@ -140,7 +141,7 @@ const HabitatExtent = () => {
           </button>
         )}
       </div>
-      {(isCanceled || isError) && !isFetching && !data && (
+      {(isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
             An error occurred while fetching the data. You can try again.
@@ -156,7 +157,7 @@ const HabitatExtent = () => {
         </div>
       )}
 
-      {!!data && !isFetching && !isError && (
+      {area !== null && !isFetching && !isError && !isCanceled && (
         <div className="space-y-4">
           <p className={WIDGET_SENTENCE_STYLE}>
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}

@@ -52,6 +52,7 @@ vi.mock('services/api', () => ({
 
 import UserMRTTSites from '@/containers/navigation/menu/profile/saved-areas/sites';
 
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 beforeEach(() => {
@@ -71,7 +72,13 @@ function renderSites(store = createStore()) {
     <Provider store={store}>
       <QueryClientProvider client={client}>
         <TooltipProvider>
-          <UserMRTTSites />
+          {/* The list always lives inside a dialog (Saved areas or My profile). */}
+          <Dialog defaultOpen>
+            <DialogContent>
+              <DialogTitle>My areas</DialogTitle>
+              <UserMRTTSites />
+            </DialogContent>
+          </Dialog>
         </TooltipProvider>
       </QueryClientProvider>
     </Provider>
@@ -116,6 +123,16 @@ describe('UserMRTTSites', () => {
     // The route stays /custom-area but the title shows the site name.
     expect(store.get(customAreaLabelAtom)).toBe('Mangrove Creek');
     expect(replaceState).toHaveBeenCalledWith(null, '', '/custom-area');
+  });
+
+  it('closes the host dialog after selecting a site', async () => {
+    const user = userEvent.setup();
+    renderSites();
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    await user.click(await screen.findByRole('button', { name: 'Analyse site Mangrove Creek' }));
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
 
   it('renders a site without a drawn area as plain text, not a button', async () => {

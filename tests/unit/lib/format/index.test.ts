@@ -3,6 +3,7 @@ import {
   formatAxis,
   formatMillion,
   formatNumberNearestInteger,
+  formatOrNull,
   numberFormat,
   significantDigitsFormat,
 } from '@/lib/format';
@@ -54,6 +55,23 @@ describe('numberFormat', () => {
 
   it('leaves non-finite input to d3 (no crash)', () => {
     expect(numberFormat(Number.NaN)).toBe('NaN');
+  });
+});
+
+describe('formatOrNull', () => {
+  it('formats finite numbers like numberFormat / adaptiveFormat', () => {
+    expect(formatOrNull(1234.5)).toBe('1,234.50');
+    expect(formatOrNull(0)).toBe('0.00');
+    expect(formatOrNull(0.003)).toBe('0.003');
+    expect(formatOrNull(1234.6, 0)).toBe('1,235');
+  });
+
+  it('returns null instead of "NaN" / "Infinity" for missing or non-finite values', () => {
+    expect(formatOrNull(undefined)).toBeNull();
+    expect(formatOrNull(null)).toBeNull();
+    expect(formatOrNull(Number.NaN)).toBeNull();
+    expect(formatOrNull(Number.POSITIVE_INFINITY)).toBeNull();
+    expect(formatOrNull(Number.NEGATIVE_INFINITY)).toBeNull();
   });
 });
 

@@ -113,7 +113,9 @@ const NetChangeWidget = () => {
     []
   );
 
-  if (noData) return <NoData />;
+  const hasData = !!data?.data?.length && !isFetching && !isError;
+  // Rows exist but none fall in the selected window (no net change to report).
+  if (noData || (hasData && netChange === null)) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
@@ -143,7 +145,7 @@ const NetChangeWidget = () => {
           </button>
         </div>
       )}
-      {!!data?.data?.length && !isFetching && !isError && (
+      {hasData && (
         <div className="space-y-4">
           <p className={WIDGET_SENTENCE_STYLE}>
             The extent of mangroves in <span className="font-bold"> {location}</span> has{' '}

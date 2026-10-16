@@ -58,7 +58,9 @@ export function useMangroveHabitatExtent(
           .then(({ data }) => data['mangrove_extent'])
           .catch((err: CanceledError<unknown> | AxiosError) => {
             if (err.code === 'ERR_CANCELED') onCancel?.();
-            return err;
+            // Rethrow so React Query reports `isError` and the widget shows its error state;
+            // resolving with the error object rendered it as data (→ "NaN" values).
+            throw err;
           });
       }
 
@@ -96,10 +98,13 @@ export function useMangroveHabitatExtent(
   });
 
   const { data, isFetched, isFetching, isError, refetch } = query;
+  // A failed request also counts as "fetched" (with the empty placeholder data); keep it
+  // out of noData so the widget shows the error state instead.
   const noData =
-    location_id === 'custom-area'
+    !isError &&
+    (location_id === 'custom-area'
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.value, 0) === 0
-      : isFetched && !data?.data?.length;
+      : isFetched && !data?.data?.length);
 
   const { unit, year } = params;
   const DATA = useMemo(

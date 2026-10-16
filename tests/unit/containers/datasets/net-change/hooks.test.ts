@@ -4,6 +4,7 @@ import {
   getFormat,
   getNetChangeSources,
   getWidgetData,
+  getYearInSeries,
 } from '@/containers/datasets/net-change/hooks';
 import type { Data } from '@/containers/datasets/net-change/types';
 
@@ -164,5 +165,32 @@ describe('getNetChangeSources', () => {
 
   it('excludes the start year and returns empty when the window is degenerate', () => {
     expect(getNetChangeSources(years, 2025, 2025)).toEqual([]);
+  });
+});
+
+describe('getWidgetData — missing values', () => {
+  it('treats a missing net_change / gain / loss as 0 instead of poisoning the series', () => {
+    const withGaps = [
+      { year: 2000, net_change: 0, gain: 0, loss: 0 },
+      { year: 2010, net_change: undefined, gain: undefined, loss: 3 },
+      { year: 2020, net_change: -2, gain: 4, loss: undefined },
+    ] as unknown as Data[];
+    const result = getWidgetData(withGaps, 'km²')!;
+    expect(result.map((d) => d['Net result'])).toEqual([0, 0, -2]);
+    expect(JSON.stringify(result)).not.toMatch(/NaN/);
+  });
+});
+
+describe('getYearInSeries', () => {
+  const years = [2000, 2010, 2020];
+
+  it('keeps a year that exists in the series', () => {
+    expect(getYearInSeries(2010, years, 2000)).toBe(2010);
+  });
+
+  it('falls back when the year is stale (from another location) or unset', () => {
+    expect(getYearInSeries(1996, years, 2000)).toBe(2000);
+    expect(getYearInSeries(null, years, 2020)).toBe(2020);
+    expect(getYearInSeries(2010, undefined, undefined)).toBeUndefined();
   });
 });

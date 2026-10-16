@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { analysisAtom } from '@/store/analysis';
 import { customAreaNameAtom, drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
+import { Close as DialogPrimitiveClose } from '@radix-ui/react-dialog';
 import type { Geometry } from 'geojson';
 import { useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
@@ -52,7 +53,8 @@ const SitesItem = ({ name, id, geometry, geometryStatus = 'ready' }: Props) => {
 
   const handleSiteClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
+      // No preventDefault: the button is wrapped in Radix `Dialog.Close`, which skips
+      // closing the host dialog when the click event is default-prevented.
       e.stopPropagation();
       if (!featureCollection) return;
 
@@ -89,14 +91,18 @@ const SitesItem = ({ name, id, geometry, geometryStatus = 'ready' }: Props) => {
       {geometry ? (
         <Tooltip>
           <TooltipTrigger asChild>
-            <button
-              type="button"
-              aria-label={`Analyse site ${name}`}
-              className="focus-visible:ring-brand-500 text-left underline-offset-2 first-letter:uppercase focus-visible:ring-2 focus-visible:outline-none"
-              onClick={handleSiteClick}
-            >
-              {name}
-            </button>
+            {/* Closes whichever dialog hosts the list (Saved areas or My profile) so the
+                map and the analysis widgets are visible right after selecting a site. */}
+            <DialogPrimitiveClose asChild>
+              <button
+                type="button"
+                aria-label={`Analyse site ${name}`}
+                className="focus-visible:ring-brand-500 text-left underline-offset-2 first-letter:uppercase focus-visible:ring-2 focus-visible:outline-none"
+                onClick={handleSiteClick}
+              >
+                {name}
+              </button>
+            </DialogPrimitiveClose>
           </TooltipTrigger>
           <TooltipContent className="bg-gray-700 px-2 text-white">
             Click to view this site on the map and analyse it.
