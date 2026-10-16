@@ -8,7 +8,7 @@ import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse, CanceledError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -74,8 +74,7 @@ export const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
 // widget data
 export function useMangroveHeight(
   params?: UseParamsOptions,
-  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>,
-  onCancel?: () => void
+  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>
 ) {
   const { type: locationType, id } = useSyncLocation();
   const {
@@ -98,14 +97,7 @@ export function useMangroveHeight(
           'widgets[]': 'mangrove_height',
         },
         signal,
-      })
-        .then(({ data }) => data['mangrove_height'])
-        .catch((err: CanceledError<unknown> | AxiosError) => {
-          if (err.code === 'ERR_CANCELED') onCancel?.();
-          // Rethrow so React Query reports `isError` and the widget shows its error state;
-          // resolving with the error object rendered it as data (→ "NaN" values).
-          throw err;
-        });
+      }).then(({ data }) => data['mangrove_height']);
     }
 
     return API.request({

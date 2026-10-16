@@ -7,7 +7,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse, CanceledError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { format } from 'd3-format';
 import { useAtomValue } from 'jotai';
 
@@ -124,8 +124,7 @@ export const getYearInSeries = (
 // widget data
 export function useMangroveNetChange(
   params: UseParamsOptions,
-  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>,
-  onCancel?: () => void
+  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>
 ) {
   const { type: locationType, id } = useSyncLocation();
   const {
@@ -149,14 +148,7 @@ export function useMangroveNetChange(
           'widgets[]': 'mangrove_net_change',
         },
         signal,
-      })
-        .then(({ data }) => data['mangrove_net_change'])
-        .catch((err: CanceledError<unknown> | AxiosError) => {
-          if (err.code === 'ERR_CANCELED') onCancel?.();
-          // Rethrow so React Query reports `isError` and the widget shows its error state;
-          // resolving with the error object rendered it as data (→ "NaN" values).
-          throw err;
-        });
+      }).then(({ data }) => data['mangrove_net_change']);
     }
 
     return API.request({

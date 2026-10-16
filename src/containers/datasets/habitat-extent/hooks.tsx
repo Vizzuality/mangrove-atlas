@@ -6,7 +6,7 @@ import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, CanceledError } from 'axios';
+import { AxiosError } from 'axios';
 import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -28,8 +28,7 @@ export const widgetSlug = 'habitat-extent';
 // widget data
 export function useMangroveHabitatExtent(
   params: UseParamsOptions,
-  queryOptions: Omit<UseQueryOptions<ExtentData>, 'queryKey' | 'queryFn'> = {},
-  onCancel?: () => void
+  queryOptions: Omit<UseQueryOptions<ExtentData>, 'queryKey' | 'queryFn'> = {}
 ) {
   const { type: locationType, id } = useSyncLocation();
   const {
@@ -54,14 +53,7 @@ export function useMangroveHabitatExtent(
             'widgets[]': 'mangrove_extent',
           },
           signal,
-        })
-          .then(({ data }) => data['mangrove_extent'])
-          .catch((err: CanceledError<unknown> | AxiosError) => {
-            if (err.code === 'ERR_CANCELED') onCancel?.();
-            // Rethrow so React Query reports `isError` and the widget shows its error state;
-            // resolving with the error object rendered it as data (→ "NaN" values).
-            throw err;
-          });
+        }).then(({ data }) => data['mangrove_extent']);
       }
 
       return API.request<DataResponse>({
@@ -73,7 +65,7 @@ export function useMangroveHabitatExtent(
         },
       }).then((response) => response.data);
     },
-    [isAnalysisEnabled, geojson, location_id, currentLocation, params, onCancel]
+    [isAnalysisEnabled, geojson, location_id, currentLocation, params]
   );
 
   const query = useQuery({

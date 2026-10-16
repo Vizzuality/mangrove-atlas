@@ -38,11 +38,6 @@ const AlertsWidget = () => {
   );
   const { customGeojson } = useAtomValue(drawingToolAtom);
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
-  const [isCanceled, setIsCanceled] = useState(false);
-
-  const handleQueryCancellation = useCallback(() => {
-    setIsCanceled(true);
-  }, []);
 
   const widgetInfo = useMemo(
     () => widgets.find((widget) => widget.slug === 'mangrove_alerts'),
@@ -63,19 +58,14 @@ const AlertsWidget = () => {
     return geometry ? { geometry } : undefined;
   }, [geometry]);
 
-  const queryOptions = useMemo(() => ({ enabled: !isCanceled }), [isCanceled]);
-
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
     startDate ?? undefined,
     endDate ?? undefined,
     undefined,
-    dataParams,
-    queryOptions,
-    handleQueryCancellation
+    dataParams
   );
 
   const handleTryAgain = useCallback(async () => {
-    setIsCanceled(false);
     await refetch();
   }, [refetch]);
 

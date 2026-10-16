@@ -36,14 +36,9 @@ const HabitatExtent = () => {
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
   const [isCanceled, setIsCanceled] = useState(false);
 
-  const handleQueryCancellation = useCallback(() => {
-    setIsCanceled(true);
-  }, []);
-
   const { data, isFetching, isError, refetch } = useMangroveHabitatExtent(
     { year, unit: selectedUnitAreaExtent },
-    { enabled: !isCanceled },
-    handleQueryCancellation
+    { enabled: !isCanceled }
   );
 
   const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
@@ -53,6 +48,9 @@ const HabitatExtent = () => {
       predicate: ({ queryKey }) => queryKey.includes(widgetSlug),
       fetchStatus: 'fetching',
     });
+    // Only a user cancel counts: React Query also aborts in-flight requests on its own
+    // (unmount, key change), and the retried request must not be shown as an error.
+    setIsCanceled(true);
   }, [queryClient]);
 
   const handleTryAgain = useCallback(async () => {

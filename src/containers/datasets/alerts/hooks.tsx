@@ -10,7 +10,6 @@ import { analysisAtom } from '@/store/analysis';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, CanceledError } from 'axios';
 import type { PrimitiveAtom } from 'jotai';
 import { useAtomValue, useSetAtom } from 'jotai';
 import type {
@@ -219,8 +218,7 @@ export function useAlerts<TRaw = AlertsApiResponse>(
   queryOptions?: Omit<
     UseQueryOptions<TRaw, Error, AlertData | undefined, (string | unknown)[]>,
     'queryKey' | 'queryFn' | 'select'
-  >,
-  onCancel?: () => void
+  >
 ) {
   const setStartDate = useSetAtom(
     alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
@@ -255,8 +253,6 @@ export function useAlerts<TRaw = AlertsApiResponse>(
       });
       return response.data;
     } catch (err) {
-      const e = err as CanceledError<unknown> | AxiosError;
-      if ((e as any)?.code === 'ERR_CANCELED') onCancel?.();
       throw new Error('Error fetching alerts');
     }
   };
