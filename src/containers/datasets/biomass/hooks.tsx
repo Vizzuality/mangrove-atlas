@@ -9,7 +9,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { BiomassYearSettings } from '@/store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, CanceledError } from 'axios';
+import { AxiosError } from 'axios';
 import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -40,8 +40,7 @@ export const getColorKeys = (data: Data[] = []) =>
 // widget data
 export function useMangroveBiomass(
   params?: UseParamsOptions,
-  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey'>,
-  onCancel?: () => void
+  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey'>
 ): BiomassData {
   const currentYear = useAtomValue(BiomassYearSettings);
   const { customGeojson } = useAtomValue(drawingToolAtom);
@@ -68,14 +67,7 @@ export function useMangroveBiomass(
             'widgets[]': 'mangrove_biomass',
           },
           signal,
-        })
-          .then(({ data }) => data['mangrove_biomass'])
-          .catch((err: CanceledError<unknown> | AxiosError) => {
-            if (err.code === 'ERR_CANCELED') onCancel?.();
-            // Rethrow so React Query reports `isError` and the widget shows its error state;
-            // resolving with the error object rendered it as data (→ "NaN" values).
-            throw err;
-          });
+        }).then(({ data }) => data['mangrove_biomass']);
       }
 
       return API.request<DataResponse>({
@@ -88,7 +80,7 @@ export function useMangroveBiomass(
         },
       }).then(({ data }) => data);
     },
-    [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params, onCancel]
+    [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params]
   );
 
   const query = useQuery({

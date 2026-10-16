@@ -17,21 +17,19 @@ const BlueCarbonWidget = () => {
   const [isCanceled, setIsCanceled] = useState(false);
   const queryClient = useQueryClient();
   const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
-  const handleQueryCancellation = useCallback(() => {
-    setIsCanceled(true);
-  }, []);
-
   const handleCancelAnalysis = useCallback(async () => {
     await queryClient.cancelQueries({
       predicate: ({ queryKey }) => queryKey.includes(widgetSlug),
       fetchStatus: 'fetching',
     });
+    // Only a user cancel counts: React Query also aborts in-flight requests on its own
+    // (unmount, key change), and the retried request must not be shown as an error.
+    setIsCanceled(true);
   }, [queryClient]);
 
   const { data, isFetched, isFetching, isError, refetch } = useMangroveBlueCarbon(
     {},
-    { enabled: !isCanceled },
-    handleQueryCancellation
+    { enabled: !isCanceled }
   );
 
   const handleTryAgain = useCallback(async () => {

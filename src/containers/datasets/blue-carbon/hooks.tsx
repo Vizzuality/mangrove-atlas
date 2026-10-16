@@ -4,7 +4,7 @@ import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { CancelledError, useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, CanceledError } from 'axios';
+import { AxiosError } from 'axios';
 import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -29,8 +29,7 @@ export function useMangroveBlueCarbon(
   queryOptions?: Omit<
     UseQueryOptions<DataResponse, AxiosError | CancelledError, BlueCarbon>,
     'queryKey' | 'queryFn'
-  >,
-  onCancel?: () => void
+  >
 ) {
   const { type: locationType, id } = useSyncLocation();
 
@@ -54,12 +53,7 @@ export function useMangroveBlueCarbon(
           'widgets[]': 'mangrove_blue_carbon',
         },
         signal,
-      })
-        .then(({ data }) => data['mangrove_blue_carbon'])
-        .catch((err: CanceledError<unknown> | AxiosError) => {
-          if (err.code === 'ERR_CANCELED') onCancel?.();
-          return err;
-        });
+      }).then(({ data }) => data['mangrove_blue_carbon']);
     }
 
     return API.request<DataResponse>({

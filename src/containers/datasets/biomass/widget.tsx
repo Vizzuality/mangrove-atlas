@@ -19,12 +19,8 @@ const BiomassWidget = () => {
   const [isCanceled, setIsCanceled] = useState(false);
   const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
   const queryClient = useQueryClient();
-  const handleQueryCancellation = useCallback(() => {
-    setIsCanceled(true);
-  }, []);
-
   const { year, mean, unit, config, isFetching, location, refetch, isError, noData } =
-    useMangroveBiomass({}, { enabled: !isCanceled }, handleQueryCancellation);
+    useMangroveBiomass({}, { enabled: !isCanceled });
 
   if (year !== defaultYear) setYear(year);
 
@@ -33,6 +29,9 @@ const BiomassWidget = () => {
       predicate: ({ queryKey }) => queryKey.includes(widgetSlug),
       fetchStatus: 'fetching',
     });
+    // Only a user cancel counts: React Query also aborts in-flight requests on its own
+    // (unmount, key change), and the retried request must not be shown as an error.
+    setIsCanceled(true);
   }, [queryClient]);
 
   const handleTryAgain = useCallback(async () => {
