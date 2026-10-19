@@ -92,9 +92,7 @@ src/
 
 cloud-functions/        # Google Cloud Functions (Node.js 22)
 ├── analysis/           # Geospatial analysis (habitat extent, net change, biomass)
-├── alerts-tiler/       # Tile server for alert visualization
 ├── fetch-alerts/       # Deforestation alert data from Google Earth Engine
-├── fetch-alerts-heatmap/
 └── upload-alerts/
 ```
 

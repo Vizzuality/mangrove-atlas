@@ -23,7 +23,6 @@ Tiers:
 - **Component** — `tests/component/**/*.test.tsx` (6 files), Vitest + React Testing Library in jsdom.
 - **Unit** — `tests/unit/**/*.test.ts` (20 files), Vitest.
 - **Integration** — `tests/integration/` is wired into the Vitest config but currently empty (placeholder tier).
-- **Cloud functions** — `cloud-functions/alerts-tiler/test/` (1 file), Mocha + Sinon + c8 on a separate npm toolchain.
 
 ---
 
@@ -39,7 +38,6 @@ Tiers:
 | `pnpm test:unit:watch` | Vitest in watch mode |
 | `pnpm test:unit:coverage` | Vitest with v8 coverage report (`coverage/`) |
 | `pnpm lint:a11y` | oxlint static accessibility analysis (jsx-a11y rules) |
-| `cd cloud-functions/alerts-tiler && npm test` | Mocha cloud-function test (npm, not pnpm) |
 
 Playwright's `webServer` builds and serves the **standalone** production bundle (`pnpm build`, copy `public/` and `.next/static` into `.next/standalone`, then `node .next/standalone/server.js`), loading `.env.test` with `override: true` first. First run is slow (600 s webServer timeout); test/expect/navigation timeouts are 120 s, action timeout 10 s.
 
@@ -143,9 +141,7 @@ jsdom environment, `@testing-library/jest-dom` matchers via `vitest.setup.ts`. E
 
 ## Cloud functions
 
-- `cloud-functions/alerts-tiler/test/index.test.js` — `fetchAlertsTiler` returns a parseable Mapbox vector tile for a given x/y/z + date range. Mocha + Sinon + c8, run with `npm test` inside the function directory (cloud functions use npm lockfiles, not pnpm workspaces).
-  - ⚠️ **Not run by any CI workflow**, and currently broken: it asserts `res.status.calledOnceWith(200)` but `getMocks()` only stubs `res.send`, so `res.status` is never a Sinon stub.
-- No tests exist in `cloud-functions/analysis`, `fetch-alerts`, `fetch-alerts-heatmap`, or `upload-alerts`.
+- No tests exist in `cloud-functions/analysis`, `fetch-alerts`, or `upload-alerts`.
 
 ---
 

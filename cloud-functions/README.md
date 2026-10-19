@@ -55,64 +55,6 @@ gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http --memory 
 curl --request GET 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts?location_id=MOZ&start_date=2019-01-01&end_date=2022-01-01'
 ```
 
-### Fetch alerts heatmap (Map visualization)
-
-1. Go to the folder `fetch-alerts-heatmap`
-2. Download `credentials.json` and save to the root of the project (you will require access to google earth engine).
-3. For development run `npm install && npm run watch`.
-4. Open the browser and go to `http://localhost:8080/`
-
-By default the endpoint returns all data for all locations and aggregated by month.
-
-Params:
-
-* `location_id`, location ID from Mangrove API. Optional.
-* `start_date`, start date in format `YYYY-MM-DD`. Optional.
-* `end_date`, end date in format `YYYY-MM-DD`. Optional.
-
-Example request:  
-
-``` bash
-curl -X GET -G \
-'http://localhost:8080?location_id=MOZ&start_date=2019-01-01&end_date=2022-01-01' 
-```
-
-Example response:
-
-``` json
-{
-    "type": "FeatureCollection",
-    "name": "deforestation-alerts",
-    "features": [
-        {
-            "type": "Feature",
-            "properties": {
-                "count": 1,
-                "intensity": 1
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    35.10860631785158,
-                    -20.94996841295125
-                ]
-            }
-        }
-    ]
-}
-```
-
-#### Deploying
-
-```bash
-gcloud functions deploy fetch-alerts-heatmap --runtime nodejs10 --trigger-http --memory 128MB --timeout 540s --region us-central1 --entry-point fetchAlertsHeatmap --service-account-file ./credentials.json --source ./cloud-functions/fetch-alerts-heatmap
-```
-
-``` bash
-curl -X GET -G \
-'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?location_id=MOZ&start_date=2019-01-01&end_date=2022-01-01'
-```
-
 ### Analysis
 
 1. Go to the folder `analysis`

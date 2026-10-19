@@ -244,13 +244,13 @@ Because the old `analysis` function still exists until Phase 5:
 
 ## Other Cloud Functions: Why They Are Not Affected
 
-### fetch-alerts, alerts-tiler, fetch-alerts-heatmap
+### fetch-alerts
 
-These three functions remain as **single shared functions** (no staging/production split at this time). They are completely independent of the analysis split and will continue to work unchanged.
+This function remains a **single shared function** (no staging/production split at this time). They are completely independent of the analysis split and will continue to work unchanged.
 
 **Why they are not affected by this plan:**
 
-The alerts family uses a separate, hardcoded Axios instance (`src/services/cloud-functions/index.ts`):
+The alerts widget uses a separate, hardcoded Axios instance (`src/services/cloud-functions/index.ts`):
 
 ```ts
 const API_cloud_functions = axios.create({
@@ -258,25 +258,20 @@ const API_cloud_functions = axios.create({
 });
 ```
 
-This file is not touched by this plan. The alerts hooks (`src/containers/datasets/alerts/hooks.tsx` and `src/containers/datasets/alerts-staging/hooks.tsx`) call paths like `/fetch-alerts` against this hardcoded base, which remains valid. Their deployment workflows (`deploy-fetch-alerts.yml`, `deploy-alerts-tiler.yml`, `deploy-fetch-alerts-heatmap.yml`) are also untouched.
+This file is not touched by this plan. The alerts hooks (`src/containers/datasets/alerts/hooks.tsx`) call `/fetch-alerts` against this hardcoded base, which remains valid. Its deployment workflow (`deploy-fetch-alerts.yml`) is also untouched.
 
-**On `alerts-staging`:**  
-`src/containers/datasets/alerts-staging/` is a **client-side UI experiment** (a new alerts widget under a feature flag), not a reference to a separate cloud function. It currently calls the same shared `fetch-alerts`, `alerts-tiler`, and `fetch-alerts-heatmap` functions as the production alerts widget. This behaviour is preserved unchanged.
+`alerts-tiler` and `fetch-alerts-heatmap` were deprecated and removed.
 
-### Applying the same split to alerts functions in the future
+### Applying the same split to fetch-alerts in the future
 
-If the alerts functions need staging/production separation later, the same pattern applies:
+If fetch-alerts needs staging/production separation later, the same pattern applies:
 
-1. In each workflow, derive the function name from the branch (same step as §1 above):
+1. In the workflow, derive the function name from the branch (same step as §1 above):
    - `fetch-alerts` → `fetch-alerts-staging` / `fetch-alerts-production`
-   - `alerts-tiler` → `alerts-tiler-staging` / `alerts-tiler-production`
-   - `fetch-alerts-heatmap` → `fetch-alerts-heatmap-staging` / `fetch-alerts-heatmap-production`
 
 2. Make `src/services/cloud-functions/index.ts` env-var driven (introduce `NEXT_PUBLIC_CLOUD_FUNCTIONS_API_URL`) so Vercel can point each environment at the right base URL.
 
 3. Update Vercel to set `NEXT_PUBLIC_CLOUD_FUNCTIONS_API_URL` per environment.
-
-4. The hardcoded URLs in `alerts-staging/hooks.tsx` (for the heatmap and tiler tile sources) would also need to be replaced with the env var.
 
 This is deliberately out of scope now to keep the change set small and the risk low.
 
@@ -284,7 +279,7 @@ This is deliberately out of scope now to keep the change set small and the risk 
 
 ## Out of Scope (this plan)
 
-- Splitting `fetch-alerts`, `alerts-tiler`, and `fetch-alerts-heatmap` — covered above with a forward-looking note.
+- Splitting `fetch-alerts` — covered above with a forward-looking note.
 - Making `src/services/cloud-functions/index.ts` env-var driven — a prerequisite for the alerts split, not needed now.
 - Separate GEE service accounts per environment — not needed at this stage; both functions share `GEE_CREDENTIALS_JSON`.
 - Infrastructure-as-code (Terraform/Pulumi) for the GCP functions — worth considering if the number of managed functions grows.
