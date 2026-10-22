@@ -6,6 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [8.0.0-rc.11](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.10...v8.0.0-rc.11) (2026-10-22)
+
+
+### Features
+
+* cookie consent banner gating Google Analytics (GMW-1109) ([#1713](https://github.com/Vizzuality/mangrove-atlas/issues/1713)) ([4c84289](https://github.com/Vizzuality/mangrove-atlas/commit/4c84289c5cf993ff483cd1931afbb1438708f706))
+* filter country geometries to only those in locations_bo.csv ([#1701](https://github.com/Vizzuality/mangrove-atlas/issues/1701)) ([a711fb9](https://github.com/Vizzuality/mangrove-atlas/commit/a711fb97a991a9f4d42a96a128032eae75eee1b9))
+* MRTT sites enhancements — close dialog on select, no NaN in analysis widgets (GMW-1154) ([#1720](https://github.com/Vizzuality/mangrove-atlas/issues/1720)) ([92cd20f](https://github.com/Vizzuality/mangrove-atlas/commit/92cd20f17d893c641ea837755a7ec6f59ff67f5d))
+* MRTT sites in saved areas (GMW-1129) ([#1719](https://github.com/Vizzuality/mangrove-atlas/issues/1719)) ([a9ad5d0](https://github.com/Vizzuality/mangrove-atlas/commit/a9ad5d04548af3704f14f408ae1a9ddb0521d8ee))
+* update national dashboard no data card to Figma design ([#1698](https://github.com/Vizzuality/mangrove-atlas/issues/1698)) ([2b472a6](https://github.com/Vizzuality/mangrove-atlas/commit/2b472a63c6716ea5276b2ca39b04d31ea8551038))
+
+
+### Bug Fixes
+
+* **deps:** address 8 dependency vulnerabilities from 2026-10-07 audit ([#1707](https://github.com/Vizzuality/mangrove-atlas/issues/1707)) ([8b62ace](https://github.com/Vizzuality/mangrove-atlas/commit/8b62acea599840e21f753eca4b396467fe01fe93))
+* distinct colours, correct labels and real counts in IUCN ecoregion widget ([#1706](https://github.com/Vizzuality/mangrove-atlas/issues/1706)) ([11b8c14](https://github.com/Vizzuality/mangrove-atlas/commit/11b8c143936d672ac043856a34e026e4769c78ea))
+* env-driven SSO origin allowlist for frame-ancestors, redirect_uri and CORS ([#1702](https://github.com/Vizzuality/mangrove-atlas/issues/1702)) ([8079ca6](https://github.com/Vizzuality/mangrove-atlas/commit/8079ca6c3f5ef25cca19b094f5fc7493477416f4))
+* map popup spacing and radius to match Figma ([#1716](https://github.com/Vizzuality/mangrove-atlas/issues/1716)) ([d8da428](https://github.com/Vizzuality/mangrove-atlas/commit/d8da428accbedaacc861133c402e3aa8648f1ef7))
+* only user cancel puts analysis widgets in error state (GMW-1154) ([#1723](https://github.com/Vizzuality/mangrove-atlas/issues/1723)) ([7aece9b](https://github.com/Vizzuality/mangrove-atlas/commit/7aece9b70e05f01652857410911b0c4e17576788))
+* rename hi-res extent layer wording (GMW-1160) ([#1736](https://github.com/Vizzuality/mangrove-atlas/issues/1736)) ([6a9ec4c](https://github.com/Vizzuality/mangrove-atlas/commit/6a9ec4ccd9979f30503dbd03d247917347210bdb))
+* show map popup for ecoregion clicks outside locations ([#1735](https://github.com/Vizzuality/mangrove-atlas/issues/1735)) ([dcd8c0b](https://github.com/Vizzuality/mangrove-atlas/commit/dcd8c0b87bb24062a18a4dc26f3a756834898a3b))
+* shrink location title to fit header (GMW-1157) ([#1724](https://github.com/Vizzuality/mangrove-atlas/issues/1724)) ([e55eba3](https://github.com/Vizzuality/mangrove-atlas/commit/e55eba36bbedea6380ea918312f743d995a3b5ac))
+
 ## [8.0.0-rc.10](https://github.com/Vizzuality/mangrove-atlas/compare/v8.0.0-rc.9...v8.0.0-rc.10) (2026-09-24)
 
 
