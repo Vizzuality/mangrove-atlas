@@ -127,6 +127,12 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
     info: null,
   });
 
+  const hasPopupContent =
+    !!locationPopUp.info ||
+    !!restorationPopUp.info ||
+    !!restorationSitesPopUp.info ||
+    !!iucnEcoregionPopUp.info;
+
   const handleClickOutside = () => {
     removePopup();
   };
@@ -303,19 +309,15 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
     // A fresh map click opens a new (undocked) popup — clear any leftover
     // pinned/docked state so the pin control docks on first click.
     setPin(false);
+    // The marker anchors to the clicked point for any popup content, not only locations —
+    // ecoregions (and restoration) can be clicked outside a country boundary.
+    if (e?.lngLat) setCoordinates(e.lngLat);
+
     if (locationFeature) {
       const protectedAreas = protectedAreaFeature?.map((feature) => ({
         ...feature.properties,
         id: locationId,
       }));
-
-      if (map && e?.lngLat) {
-        const point = map?.project([e?.lngLat?.lng, e?.lngLat?.lat]);
-
-        point.y += 15;
-
-        setCoordinates(e?.lngLat);
-      }
 
       setLocationPopUp({
         info: {
@@ -498,7 +500,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
         setCursor('pointer');
       } else setCursor('grab');
     },
-    [cursor, map, loaded, isDrawingToolEnabled, customGeojson, setCursor]
+    [map, loaded, isDrawingToolEnabled, customGeojson, setCursor]
   );
 
   const handleMapLoad = useCallback(() => {
@@ -508,7 +510,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
 
   return (
     <>
-      {!!locationPopUp.info && !guideIsActive && (
+      {!guideIsActive && (
         <MapPopup
           mapId={mapId}
           locationInfo={{
@@ -627,7 +629,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                 </Controls>
               )}
 
-              {!!position && !!locationPopUp.info && (
+              {!!position && hasPopupContent && (
                 <Marker
                   latitude={coordinates?.lat || undefined}
                   longitude={coordinates?.lng || undefined}
