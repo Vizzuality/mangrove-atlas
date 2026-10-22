@@ -137,7 +137,7 @@ export const NATIONAL_DASHBOARD_LOCATIONS = [
 export const CONTEXTUAL_LAYERS_INFO: ContextualLayersProps = [
   {
     id: 'hi-res-extent',
-    name: 'High Resolution Extent',
+    name: '2020 high-resolution mangrove extent layer (10m).',
     thumbSource: '/images/thumbs/basemaps/hi-res-extent.jpg',
   },
   {

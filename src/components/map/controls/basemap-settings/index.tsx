@@ -70,17 +70,19 @@ const BasemapSettings = () => {
             <>
               <div className="flex items-center space-x-2">
                 <p className="text-xs font-semibold tracking-[1px] uppercase">
-                  High-resolution Mangrove extent
+                  2020 high-resolution mangrove extent layer (10m)
                 </p>
                 <Dialog>
                   <DialogTrigger
-                    aria-label="High-resolution Mangrove extent info"
+                    aria-label="2020 high-resolution mangrove extent layer (10m). info"
                     className="border-brand-800/20 text-brand-800 flex min-h-6 min-w-6 items-center justify-center rounded-full border-2"
                   >
                     <INFO_SVG className="h-3 w-3 shrink-0 fill-current" aria-hidden="true" />
                   </DialogTrigger>
                   <DialogContent className="w-screen md:mb-20 md:w-auto">
-                    <DialogTitle className="sr-only">High-resolution Mangrove extent</DialogTitle>
+                    <DialogTitle className="sr-only">
+                      2020 high-resolution mangrove extent layer (10m).
+                    </DialogTitle>
                     <div className="no-scrollbar overflow-y-auto">
                       <InfoHiRes />
                     </div>
