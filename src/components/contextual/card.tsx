@@ -8,6 +8,7 @@ import { useSyncBasemapContextual } from '@/store/map-settings';
 import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 import { INFO } from '@/containers/datasets/registries';
 
+import PreserveUnits from '@/components/preserve-units';
 import Info from '@/components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
@@ -59,7 +60,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
       <div className="flex w-full items-center justify-between">
         {name && (
           <h2 className="flex-1 cursor-pointer py-1 text-xs font-bold -tracking-tighter text-black/85 uppercase">
-            {name}
+            <PreserveUnits>{name}</PreserveUnits>
           </h2>
         )}
 

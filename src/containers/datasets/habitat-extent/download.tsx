@@ -13,7 +13,7 @@ const INFO = [
   },
   {
     id: 3,
-    title: 'High-resolution 2020 extent: Zenodo',
+    title: '2020 high-resolution mangrove extent layer (10m): Zenodo',
     href: 'https://zenodo.org/records/12756047',
   },
 ];

@@ -35,7 +35,7 @@ const widgets_prod = [
     contextualLayers: [
       {
         id: 'hi-res-extent',
-        description: 'Show 2020 high-resolution mangrove extent layer (10m).',
+        description: 'Show 2020 high-resolution mangrove extent layer (10m)',
       },
     ],
   },

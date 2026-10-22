@@ -17,6 +17,7 @@ import WidgetWrapper from '@/containers/widget';
 import { widgets } from '@/containers/widgets/constants';
 
 import { Media } from '@/components/media-query';
+import PreserveUnits from '@/components/preserve-units';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/components/ui/tooltip';
 import type { Layer } from 'types/layers';
@@ -118,7 +119,7 @@ const LegendItem = ({
                     className="flex min-h-6 cursor-pointer items-center"
                   >
                     <p className="pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
-                      {title}
+                      {typeof title === 'string' ? <PreserveUnits>{title}</PreserveUnits> : title}
                     </p>
                   </button>
                 </TooltipTrigger>

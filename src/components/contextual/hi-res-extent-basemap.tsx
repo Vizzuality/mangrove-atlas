@@ -5,8 +5,6 @@ import cn from '@/lib/classnames';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
-import { HIGH_RESOLUTION_EXTENT } from '@/containers/datasets/contextual-layers/constants';
-
 import RadioGroup from '@/components/ui/radio-group';
 import RadioGroupItem from '@/components/ui/radio-group/radio-group-item';
 import type { Layer } from 'types/layers';
@@ -36,10 +34,10 @@ const HighResolutionExtentBasemap = () => {
 
       // Google Analytics tracking
       if (id !== 'no-layer') {
-        trackEvent('Contextual layer high resolution extent layer', {
+        trackEvent('Contextual layer - 2020 high-resolution mangrove extent layer (10m).', {
           category: 'Layers - Contextual',
           action: 'Toggle',
-          label: 'Enable Contextual layer high resolution extent layer',
+          label: 'Enable Contextual layer - 2020 high-resolution mangrove extent layer (10m).',
         });
       }
     },
@@ -58,19 +56,17 @@ const HighResolutionExtentBasemap = () => {
           })}
         />
 
-        {HIGH_RESOLUTION_EXTENT.map(({ id, name }) => {
-          return (
-            <RadioGroupItem
-              key={id}
-              option={{ value: id, label: name }}
-              data-testid={id}
-              labelClassName={cn({
-                'cursor-pointer': true,
-                'text-brand-800 font-semibold': isActive === id,
-              })}
-            />
-          );
-        })}
+        <RadioGroupItem
+          option={{
+            value: 'hi-res-extent',
+            label: '2020 high-resolution mangrove extent layer (10m)',
+          }}
+          data-testid="hi-res-extent"
+          labelClassName={cn({
+            'cursor-pointer': true,
+            'text-brand-800 font-semibold': isActive === 'hi-res-extent',
+          })}
+        />
       </RadioGroup>
     </div>
   );
