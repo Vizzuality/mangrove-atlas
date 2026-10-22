@@ -12,7 +12,6 @@ import {
 } from '@/containers/map/pop-up/constants';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-// import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 type Tags =
