@@ -10,6 +10,10 @@ export function registerMapRef(ref: MapRef | null) {
   mapRef = ref;
 }
 
+export function getMapBounds(): [[number, number], [number, number]] | null {
+  return (mapRef?.getBounds()?.toArray() as [[number, number], [number, number]]) ?? null;
+}
+
 export function flyMapTo(bbox: [number, number, number, number], options?: FitBoundsOptions) {
   if (!mapRef) return;
 
