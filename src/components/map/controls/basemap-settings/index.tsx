@@ -7,6 +7,7 @@ import Helper from '@/containers/help/helper';
 import Basemaps from '@/components/contextual/basemaps';
 import BasemapsContextualMapSettings from '@/components/contextual/contextual-basemaps';
 import HighResolutionExtentBasemap from '@/components/contextual/hi-res-extent-basemap';
+import PreserveUnits from '@/components/preserve-units';
 import {
   Dialog,
   DialogClose,
@@ -70,7 +71,7 @@ const BasemapSettings = () => {
             <>
               <div className="flex items-center space-x-2">
                 <p className="text-xs font-semibold tracking-[1px] uppercase">
-                  2020 high-resolution mangrove extent layer (10m)
+                  <PreserveUnits>2020 high-resolution mangrove extent layer (10m)</PreserveUnits>
                 </p>
                 <Dialog>
                   <DialogTrigger
