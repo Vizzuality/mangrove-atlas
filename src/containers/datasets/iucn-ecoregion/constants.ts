@@ -25,7 +25,12 @@ export const OVERALL_ASSESSMENT = Object.fromEntries(
   Object.entries(COLORS).map(([key, color]) => [key.toUpperCase(), color])
 ) as Record<Uppercase<CategoryId>, string>;
 
-export const LEGEND_ITEMS = (Object.keys(COLORS) as CategoryId[]).map((key) => ({
+export type LegendItem = {
+  color: (typeof COLORS)[CategoryId];
+  label: (typeof LABELS)[CategoryId];
+};
+
+export const LEGEND_ITEMS: LegendItem[] = (Object.keys(COLORS) as CategoryId[]).map((key) => ({
   color: COLORS[key],
   label: LABELS[key],
 }));

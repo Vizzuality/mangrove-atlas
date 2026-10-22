@@ -119,7 +119,13 @@ const MapPopup = ({
     return `calc(${window.innerHeight - (position?.y ?? 0) - 20}px)`;
   }, [position?.y]);
 
-  if (!locationInfo.info) return null;
+  const hasContent =
+    !!locationInfo.info ||
+    !!restorationInfo?.info ||
+    !!restorationSitesInfo?.info ||
+    !!iucnEcoregionInfo?.info;
+
+  if (!hasContent) return null;
 
   return (
     <Draggable position={position} id="draggable-map-popup" isPinned={isPinned}>
@@ -164,10 +170,12 @@ const MapPopup = ({
               className="relative min-w-93.75 divide-y divide-gray-200 rounded-b-[10px] bg-white"
               style={{ maxHeight }}
             >
-              <LocationPopup
-                locationPopUpInfo={locationInfo}
-                nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}
-              />
+              {locationInfo.info && (
+                <LocationPopup
+                  locationPopUpInfo={locationInfo}
+                  nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}
+                />
+              )}
               {restorationInfo?.info && <RestorationPopup info={restorationInfo.info} />}
               {restorationSitesInfo?.info && (
                 <RestorationSitesPopup info={restorationSitesInfo.info} />

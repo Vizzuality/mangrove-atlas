@@ -1,9 +1,10 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
 // import { INFO } from '@/containers/datasets';
-import { COLORS, LEGEND_ITEMS } from '@/containers/datasets/iucn-ecoregion/constants';
+import { COLORS } from '@/containers/datasets/iucn-ecoregion/constants';
 import type { CategoryId } from '@/containers/datasets/iucn-ecoregion/constants';
 import { useMangroveEcoregions } from '@/containers/datasets/iucn-ecoregion/hooks';
+import IucnEcoregionPopupLegend from '@/containers/datasets/iucn-ecoregion/popup-legend';
 import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
 import {
   POPUP_SECTION_CONTENT_STYLE,
@@ -11,7 +12,6 @@ import {
 } from '@/containers/map/pop-up/constants';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-// import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 type Tags =
@@ -24,7 +24,7 @@ type Tags =
   | 'Threat locations <5'
   | 'Not evaluated';
 
-const FAKE_DATA_POP_UP = [
+const STATIC_DATA_POP_UP = [
   {
     label: 'Reduction in geographic distribution',
     tags: ['Historical (1750)', 'Past 50 years (1970)', 'Future (¹)'],
@@ -60,6 +60,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
   // Temp fix. TO -DO: Remove this when the data is updated
   const unitNameWithoutMangrove = info?.unit_name?.replace('Mangroves of', '').trim();
   const url = data?.reports?.find((d) => d.name.includes(unitNameWithoutMangrove))?.url;
+
   // Google Analytics tracking
   const handleAnalytics = () => {
     trackEvent('IUCN Ecoregion pop up - expand/collapse', {
@@ -68,6 +69,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
       label: 'IUCN Ecoregion pop up - expand/collapse',
     });
   };
+
   return (
     <Collapsible className="w-full sm:min-w-[467px]" onOpenChange={handleAnalytics}>
       <CollapsibleTrigger className={POPUP_SECTION_TRIGGER_STYLE} iconType="plus-minus">
@@ -75,33 +77,18 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className={POPUP_SECTION_CONTENT_STYLE}>
-          <a
-            className="text-brand-800 w-full text-right text-sm underline"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={url}
-          >
-            Province Descriptions
-          </a>
-
-          <div className="flex flex-col space-y-3.75">
-            <ul className="flex flex-wrap gap-x-3.75 gap-y-2.5 text-sm leading-5">
-              {LEGEND_ITEMS.map(({ color, label }) => (
-                <li key={label} className="flex items-center gap-2.5">
-                  {color && (
-                    <div className="h-4 w-2 shrink-0 rounded" style={{ backgroundColor: color }} />
-                  )}
-                  <span>{label}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-xs leading-[18px]">(1) Or any 50 year period</p>
-          </div>
-
           <div className="pt-2.5">
             <p className="font-sans text-sm font-semibold">{info?.unit_name}</p>
+            <a
+              className="text-brand-800 w-full text-right text-sm underline"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={url}
+            >
+              Province Description
+            </a>
             <div className="space-y-3.75 pt-3.75">
-              {FAKE_DATA_POP_UP.map(
+              {STATIC_DATA_POP_UP.map(
                 ({ label, tags, data }: { label: string; tags: Tags[]; data: string }) => (
                   <div key={label}>
                     <p className="text-sm leading-5 font-light">{label}</p>
@@ -128,6 +115,8 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
               )}
             </div>
           </div>
+
+          <IucnEcoregionPopupLegend />
         </div>
       </CollapsibleContent>
     </Collapsible>
