@@ -11,6 +11,7 @@ import { useAtomValue } from 'jotai';
 import DesktopLayout from '@/layouts/desktop';
 import MobileLayout from '@/layouts/mobile';
 
+import DefaultViewSync from '@/containers/default-view-sync';
 import WidgetsContainer from '@/containers/widgets';
 
 import { Media } from '@/components/media-query';
@@ -53,6 +54,7 @@ export default function MainApp() {
       </div>
 
       <WelcomeIntroMessage />
+      <DefaultViewSync />
     </>
   );
 }

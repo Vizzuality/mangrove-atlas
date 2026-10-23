@@ -86,6 +86,7 @@ export function SessionSync() {
           organization: payload.data.organization,
           roles: payload.data.user_roles ?? [],
           other_role: payload.data.user_role_other ?? null,
+          settings: payload.data.settings ?? null,
         };
 
         const differs =
@@ -93,7 +94,8 @@ export function SessionSync() {
           next.email !== user?.email ||
           next.organization !== (user?.organization ?? undefined) ||
           next.other_role !== (user?.other_role ?? null) ||
-          JSON.stringify(next.roles) !== JSON.stringify(user?.roles ?? []);
+          JSON.stringify(next.roles) !== JSON.stringify(user?.roles ?? []) ||
+          JSON.stringify(next.settings) !== JSON.stringify(user?.settings ?? null);
 
         if (differs) void update(next);
       })

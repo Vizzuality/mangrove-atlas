@@ -182,3 +182,19 @@
 .chart-overflow-visible .recharts-surface {
   overflow: visible;
 }
+
+/* Toast typography (title 14/20 bold, description 13/18 in the title's brand-900, pinned
+   via the Toaster's --normal-text). Sonner's own rules are unlayered (13px/500 title,
+   #3f3f3f description), so they beat Tailwind utilities; the extra toaster attribute
+   outranks them without !important. */
+[data-sonner-toaster] [data-sonner-toast][data-styled='true'] [data-title] {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+[data-sonner-toaster] [data-sonner-toast][data-styled='true'] [data-description] {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--normal-text);
+}

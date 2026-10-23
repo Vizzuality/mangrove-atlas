@@ -19,9 +19,19 @@ export type SignupPayload = {
 export type SignupResponse =
   | { ok: true; data?: any; message?: string }
   | { ok: false; error?: string; message?: string; errors?: Record<string, string[]> };
+// Saved default map view (GMW-1159). Stored on the user as nullable JSON; `null` means
+// "use the platform default". `saved_at` is server-set.
+export type UserSettings = {
+  basemap: 'light' | 'dark' | 'satellite';
+  bounds?: [[number, number], [number, number]];
+  widgets: string[];
+  layers: { id: string; opacity: number }[];
+  saved_at?: string;
+};
 export type UpdateUserPayload = {
   user: {
     email: string;
+    settings?: UserSettings | null;
     password?: string;
     name?: string;
     organization?: string;

@@ -26,6 +26,8 @@ import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 
 import CHECK_SVG from '@/svgs/ui/check';
 
+import DefaultView from './default-view';
+
 const ROLE_VALUES = ROLE_OPTIONS.map((o) => o.value);
 
 const formSchema = z
@@ -336,13 +338,17 @@ const AccountContent = () => {
             )}
           </div>
         </fieldset>
-        <div className="flex w-full items-center gap-6 pb-9">
+        <div className="flex w-full items-center gap-6">
           <p className="flex-1 text-sm text-red-500">{form.formState.errors.password?.message}</p>
           {form.formState.errors.current_password?.message && (
             <p className="flex-1 text-sm text-red-500">
               {form.formState.errors.current_password.message}
             </p>
           )}
+        </div>
+        {/* Saved independently of "Save changes" (its own PATCH). */}
+        <div className="pb-9">
+          <DefaultView />
         </div>
         {form.formState.errors.root?.message && (
           <p className="text-sm text-red-500">{form.formState.errors.root.message}</p>
