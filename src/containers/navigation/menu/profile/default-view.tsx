@@ -2,10 +2,9 @@
 
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { format } from 'date-fns';
 import { useSession } from 'next-auth/react';
 
-import { useDefaultView } from 'hooks/use-default-view';
+import { formatSavedAt, useDefaultView } from 'hooks/use-default-view';
 
 import { useUpdateDefaultView } from '@/containers/auth/hooks';
 import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
@@ -48,9 +47,7 @@ const DefaultView = () => {
           {settings ? (
             <>
               {settings.saved_at && (
-                <p className="font-semibold">
-                  Saved on {format(new Date(settings.saved_at), 'd MMM yyyy')}
-                </p>
+                <p className="font-semibold">Saved on {formatSavedAt(settings.saved_at)}</p>
               )}
               <p className="font-light">
                 {basemapName && `${basemapName} basemap · `}

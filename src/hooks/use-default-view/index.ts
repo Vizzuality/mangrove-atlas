@@ -6,6 +6,7 @@ import { useSyncActiveLayers } from '@/store/layers';
 import { tmpCameraAtom, useSyncBasemap, useSyncURLBounds } from '@/store/map';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
+import { format } from 'date-fns';
 import { useSetAtom } from 'jotai';
 
 import type { UserSettings } from 'services/auth';
@@ -13,6 +14,9 @@ import type { UserSettings } from 'services/auth';
 // URL keys that make up a map "view". If any is present on load, the URL wins over
 // the user's saved default.
 export const VIEW_QUERY_KEYS = ['basemap', 'active-widgets', 'layers', 'bounds'] as const;
+
+// e.g. "16 Oct 2026"
+export const formatSavedAt = (savedAt: string) => format(new Date(savedAt), 'd MMM yyyy');
 
 /**
  * Reads the current map view as `UserSettings`, and writes a saved view (or the

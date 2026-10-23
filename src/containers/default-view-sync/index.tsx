@@ -2,9 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 
-import { useSession } from 'next-auth/react';
+import { readDefaultViewNotice, writeDefaultViewNotice } from '@/lib/default-view-notice';
 
-import { useDefaultView, VIEW_QUERY_KEYS } from 'hooks/use-default-view';
+import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
+
+import { formatSavedAt, useDefaultView, VIEW_QUERY_KEYS } from 'hooks/use-default-view';
 
 const hasViewParams = (keys: readonly string[]) => {
   const params = new URLSearchParams(window.location.search);
@@ -38,6 +41,17 @@ export default function DefaultViewSync() {
     if (hasViewParams(['basemap', 'active-widgets', 'layers'])) return;
 
     applyView(settings);
+
+    // Once per saved view: a new save (new saved_at) shows it again.
+    const noticeKey = settings.saved_at ?? 'unknown';
+    if (readDefaultViewNotice() === noticeKey) return;
+    writeDefaultViewNotice(noticeKey);
+
+    toast('Showing your default view', {
+      description: settings.saved_at
+        ? `You saved it on ${formatSavedAt(settings.saved_at)}.`
+        : undefined,
+    });
   }, [status, settings, applyView]);
 
   return null;
