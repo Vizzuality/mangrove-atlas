@@ -29,6 +29,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import type { GeoJSONFeature, LngLatBoundsLike } from 'mapbox-gl';
+import { useSession } from 'next-auth/react';
 import { useOnClickOutside, useWindowSize } from 'usehooks-ts';
 
 import { useLocationNavigation } from 'hooks/location-navigation';
@@ -47,6 +48,7 @@ import Controls from '@/components/map/controls';
 import BasemapSettingsControl from '@/components/map/controls/basemap-settings';
 import FullScreenControl from '@/components/map/controls/fullscreen';
 import PitchReset from '@/components/map/controls/pitch-reset';
+import SaveViewControl from '@/components/map/controls/save-view';
 import ShareControl from '@/components/map/controls/share';
 import ZoomControl from '@/components/map/controls/zoom';
 import DrawControl from '@/components/map/drawing-tool';
@@ -78,6 +80,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   const [loaded, setLoaded] = useState(false);
 
   const [basemap] = useSyncBasemap();
+  const { status: sessionStatus } = useSession();
   const interactiveLayerIds = useAtomValue(interactiveLayerIdsAtom);
 
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
@@ -602,6 +605,19 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                         }
                       />
                     </Helper>
+                    {/* Default views are per user; nothing to save to when logged out. */}
+                    {sessionStatus === 'authenticated' && (
+                      <Helper
+                        className={{
+                          button: 'top-1 left-8 z-20',
+                          tooltip: 'w-80',
+                        }}
+                        tooltipPosition={{ top: 0, left: 330 }}
+                        message="Save the current basemap, widgets, layers and map extent as your default view. It will load automatically next time you visit."
+                      >
+                        <SaveViewControl />
+                      </Helper>
+                    )}
                     <Helper
                       className={{
                         button: 'top-1 left-8 z-20',

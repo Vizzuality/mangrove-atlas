@@ -1,6 +1,8 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+import type { UserSettings } from 'services/auth';
+
 declare module 'next-auth/jwt' {
   interface JWT {
     userId?: string;
@@ -10,6 +12,7 @@ declare module 'next-auth/jwt' {
     organization?: string | null;
     roles?: string[];
     otherRole?: string | null;
+    settings?: UserSettings | null;
   }
 }
 
@@ -19,6 +22,7 @@ declare module 'next-auth' {
     organization?: string | null;
     roles?: string[];
     other_role?: string | null;
+    settings?: UserSettings | null;
     id?: string;
   }
   interface Session {
@@ -81,6 +85,17 @@ export const authOptions: NextAuthOptions = {
 
         if (!token) return null;
 
+        // sign_in may not echo the saved map settings; read them from current_user.
+        let settings = data?.settings;
+        if (settings === undefined) {
+          const me = await fetch(`${process.env.AUTH_API_URL}/users/current_user`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null);
+          settings = (me?.user ?? me)?.settings;
+        }
+
         return {
           id: credentials.email,
           email: credentials.email,
@@ -88,6 +103,7 @@ export const authOptions: NextAuthOptions = {
           organization: data?.organization || null,
           roles: data?.user_roles ?? [],
           other_role: data?.user_role_other || null,
+          settings: settings ?? null,
           accessToken: token,
         };
       },
@@ -120,6 +136,7 @@ export const authOptions: NextAuthOptions = {
           organization: data.organization || null,
           roles: data.user_roles ?? [],
           other_role: data.user_role_other || null,
+          settings: data.settings ?? null,
           accessToken: credentials.token,
         };
       },
@@ -135,6 +152,7 @@ export const authOptions: NextAuthOptions = {
         token.organization = user.organization;
         token.roles = user.roles ?? [];
         token.otherRole = user.other_role;
+        token.settings = user.settings ?? null;
         token.email = user.email;
       }
 
@@ -146,6 +164,7 @@ export const authOptions: NextAuthOptions = {
         if (session.organization !== undefined) token.organization = session.organization;
         if (session.roles !== undefined) token.roles = session.roles;
         if (session.other_role !== undefined) token.otherRole = session.other_role;
+        if (session.settings !== undefined) token.settings = session.settings;
       }
 
       return token;
@@ -158,6 +177,7 @@ export const authOptions: NextAuthOptions = {
       if (token.organization) (session.user as any).organization = token.organization as string;
       (session.user as any).roles = (token.roles as string[]) ?? [];
       (session.user as any).other_role = (token.otherRole as string) ?? null;
+      (session.user as any).settings = token.settings ?? null;
       if (token.name) session.user.name = token.name as string;
       if (token.email) session.user.email = token.email as string;
 

@@ -30,6 +30,9 @@ vi.mock('services/auth', async (importOriginal) => {
   return { ...actual, updateUser: (...args: unknown[]) => updateUserMock(...args) };
 });
 
+// DefaultView reads URL/map state (nuqs) and is out of scope for the profile form.
+vi.mock('@/containers/navigation/menu/profile/default-view', () => ({ default: () => null }));
+
 import AccountContent from '@/containers/navigation/menu/profile/account';
 
 beforeAll(() => {

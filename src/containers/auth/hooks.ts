@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 
 import {
@@ -9,6 +10,7 @@ import {
   updateUser,
   UpdateUserPayload,
   UpdateUserResponse,
+  type UserSettings,
   type ResetPasswordPayload,
   type ResetPasswordUpdatePayload,
   type SignupPayload,
@@ -74,6 +76,38 @@ export function useSignup() {
     onError: (error) => {
       if (axios.isAxiosError(error)) {
         console.error('Signup error:', error.response?.data);
+      }
+    },
+  });
+}
+
+/* =========================
+   Default map view (user settings)
+   ========================= */
+
+export function useUpdateDefaultView() {
+  const { data: session, update: updateSession } = useSession();
+
+  return useMutation<UpdateUserResponse, unknown, UserSettings | null>({
+    mutationFn: (settings) => updateUser({ user: { email: session?.user?.email ?? '', settings } }),
+
+    onSuccess: (res, settings) => {
+      // Prefer the persisted record (carries the server-set saved_at).
+      type Persisted = { settings?: UserSettings | null };
+      const body = res as { user?: Persisted; data?: Persisted };
+      const persisted = body?.user ?? body?.data;
+      void updateSession({
+        settings: persisted?.settings !== undefined ? persisted.settings : settings,
+      });
+      toast.success(
+        settings ? 'Your default view has been saved.' : 'Your default view has been reset.'
+      );
+    },
+
+    onError: (error) => {
+      toast.error('We could not update your default view. Please try again.');
+      if (axios.isAxiosError(error)) {
+        console.error('Update default view error:', error.response?.data);
       }
     },
   });
