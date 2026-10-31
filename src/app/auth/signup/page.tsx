@@ -41,14 +41,14 @@ const formSchema = z
   .superRefine((data, ctx) => {
     if (data.password !== data['confirm-password']) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Passwords do not match',
         path: ['confirm-password'],
       });
     }
     if (data.user_roles?.includes(OTHER_ROLE_VALUE) && !data.user_role_other?.trim()) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Please describe your role',
         path: ['user_role_other'],
       });
@@ -59,7 +59,7 @@ export default function SignupPage() {
   const signup = useSignup();
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.input<typeof formSchema>, unknown, z.output<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',

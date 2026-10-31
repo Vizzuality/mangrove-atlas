@@ -31,7 +31,7 @@ const formSchema = z
   .superRefine((data, ctx) => {
     if (data.password !== data['password_confirmation']) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Passwords do not match',
         path: ['password_confirmation'],
       });

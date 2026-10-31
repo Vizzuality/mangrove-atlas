@@ -47,7 +47,7 @@ export const env = createEnv({
         }
       })
       .pipe(z.record(z.string(), z.boolean()))
-      .default('{}'),
+      .default({}),
     NEXT_PUBLIC_ENVIRONMENT: z.enum(['development', 'production', 'staging']),
   },
   /*
