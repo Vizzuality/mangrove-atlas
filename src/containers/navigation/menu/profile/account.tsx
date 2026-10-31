@@ -54,7 +54,7 @@ const formSchema = z
   .superRefine((data, ctx) => {
     if (data.user_roles?.includes(OTHER_ROLE_VALUE) && !data.user_role_other?.trim()) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Please describe your role',
         path: ['user_role_other'],
       });
@@ -62,7 +62,7 @@ const formSchema = z
     // Current password is only needed to change the password.
     if (data.password && !data.current_password) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Please enter your current password',
         path: ['current_password'],
       });
@@ -81,7 +81,7 @@ const AccountContent = () => {
     await signOut();
   }
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.input<typeof formSchema>, unknown, z.output<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: user?.name || '',
