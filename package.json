@@ -135,6 +135,9 @@
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
+    "overrides": {
+      "@tailwindcss/typography>postcss-selector-parser": "6.1.5"
+    },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",
