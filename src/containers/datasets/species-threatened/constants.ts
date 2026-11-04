@@ -1,5 +1,3 @@
-import { IUCN_COLORS } from '@/lib/iucn-colors';
-
 type ThreatenedSpecies = 'ex' | 'ew' | 're' | 'cr' | 'en' | 'vu' | 'lr' | 'nt' | 'lc' | 'dd';
 
 type Colors = Partial<Record<ThreatenedSpecies, string>>;
@@ -30,16 +28,15 @@ export const RED_LIST_CATEGORIES = {
   [Types.DD]: 'Data Deficient',
 };
 
-// Same palette as the IUCN Red List of Ecosystems widget
 export const COLORS: Colors = {
-  ex: IUCN_COLORS.ex,
-  ew: IUCN_COLORS.ew,
-  cr: IUCN_COLORS.cr,
-  en: IUCN_COLORS.en,
-  vu: IUCN_COLORS.vu,
-  nt: IUCN_COLORS.nt,
-  lc: IUCN_COLORS.lc,
-  dd: IUCN_COLORS.dd,
+  ex: '#000000',
+  ew: '#542243',
+  cr: '#EE4D5A',
+  en: '#F97B57',
+  vu: '#F3AD6A',
+  nt: '#ECDA9A',
+  lc: '#B4DCAA',
+  dd: '#ECECEF',
 };
 
 // TO - DO - double check with data the categories with no label
