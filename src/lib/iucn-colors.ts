@@ -15,12 +15,11 @@ export const IUCN_COLORS = {
   ne: '#FFFFFF',
 } as const;
 
-// Pie slice outline: white fills (e.g. Not Evaluated) get a grey outline so they don't
-// vanish on the white card; the rest get a thinner outline in their own color.
+// Pie slice outline: white fills (e.g. Not Evaluated) get a grey inner outline so they
+// don't vanish on the white card; the rest keep the default white separator so the gap
+// between slices matches the other widgets' pies.
 export const getIucnSliceStroke = (color?: string) =>
-  color?.toUpperCase() === '#FFFFFF'
-    ? { stroke: 'rgba(0, 0, 0, 0.15)', strokeWidth: 1 }
-    : { stroke: color, strokeWidth: 0.5 };
+  color?.toUpperCase() === '#FFFFFF' ? { stroke: 'rgba(0, 0, 0, 0.15)', strokeWidth: 1 } : {};
 
 // Text colors on top of each fill
 export const IUCN_FONT_COLORS: Record<keyof typeof IUCN_COLORS, string> = {

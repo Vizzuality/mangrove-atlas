@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { createElement, useId } from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -19,7 +19,9 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
+  Sector,
 } from 'recharts';
+import type { SectorProps } from 'recharts';
 
 import { useWidgetTitleId } from '@/containers/widget/context';
 
@@ -32,6 +34,31 @@ const DEFAULTVALUES = {
     outerRadius: 100,
     paddingAngle: 0.5,
   },
+};
+
+/**
+ * Pie slice with its stroke drawn inside the slice. SVG strokes straddle the edge, so the
+ * stroke is drawn at double width and clipped to the slice shape, leaving only the inner half.
+ */
+const InnerStrokeSector = ({ stroke, strokeWidth, ...props }: SectorProps) => {
+  const clipId = `pie-slice-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
+  const width = Number(strokeWidth);
+
+  // No explicit width: keep the default centered stroke (Pie's white separator)
+  if (!stroke || !width) return <Sector {...props} stroke={stroke} strokeWidth={strokeWidth} />;
+
+  return (
+    <g>
+      <defs>
+        <clipPath id={clipId}>
+          <Sector {...props} />
+        </clipPath>
+      </defs>
+      <g clipPath={`url(#${clipId})`}>
+        <Sector {...props} stroke={stroke} strokeWidth={width * 2} />
+      </g>
+    </g>
+  );
 };
 
 const ChartsMap = new Map([
@@ -212,6 +239,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
 
           {pies &&
             Object.keys(pies).map((key) => {
+              const hasSliceStroke = data?.some((d) => d.stroke);
               return (
                 <Pie
                   key={key}
@@ -221,6 +249,12 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                   endAngle={-270}
                   {...pies[key]}
                   {...DEFAULTVALUES[type]}
+                  // Recharts 2 has no per-slice `shape`: mark every slice active so
+                  // `activeShape` renders them all with the inner stroke.
+                  {...(hasSliceStroke && {
+                    activeIndex: data.map((_, i) => i),
+                    activeShape: <InnerStrokeSector />,
+                  })}
                 >
                   {data.map((d, i) => (
                     <Cell
