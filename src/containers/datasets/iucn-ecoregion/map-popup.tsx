@@ -1,7 +1,7 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
 // import { INFO } from '@/containers/datasets';
-import { COLORS } from '@/containers/datasets/iucn-ecoregion/constants';
+import { COLORS, FONT_COLORS } from '@/containers/datasets/iucn-ecoregion/constants';
 import type { CategoryId } from '@/containers/datasets/iucn-ecoregion/constants';
 import { useMangroveEcoregions } from '@/containers/datasets/iucn-ecoregion/hooks';
 import IucnEcoregionPopupLegend from '@/containers/datasets/iucn-ecoregion/popup-legend';
@@ -97,13 +97,15 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
                         const infoKey = `${data}_${index + 1}`;
                         const colorKey = info[infoKey] as string | undefined;
                         const categoryId = colorKey?.toLowerCase() as CategoryId | undefined;
-                        const backgroundColor = (categoryId && COLORS[categoryId]) || COLORS.ne;
+                        const resolvedId = categoryId && categoryId in COLORS ? categoryId : 'ne';
+                        const backgroundColor = COLORS[resolvedId];
+                        const color = FONT_COLORS[resolvedId];
 
                         return (
                           <li
                             key={`${label}-distribution_of_biotic_processes_${index + 1}`}
-                            className="flex flex-1 items-center justify-center rounded-full px-2.5 py-1.25 text-center text-xs leading-[18px]"
-                            style={{ backgroundColor }}
+                            className="flex flex-1 items-center justify-center rounded-full border border-black/15 px-2.5 py-1.25 text-center text-xs leading-[18px]"
+                            style={{ backgroundColor, color }}
                           >
                             {tag}
                           </li>
