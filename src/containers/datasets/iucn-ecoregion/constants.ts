@@ -1,26 +1,17 @@
-// IUCN RLE risk category scheme (fill)
-export const COLORS = {
-  co: '#000000',
-  cr: '#FF0000',
-  en: '#FFA500',
-  vu: '#FFFF00',
-  nt: '#ADFF2F',
-  lc: '#008000',
-  dd: '#808080',
-  ne: '#CCCCCC',
-} as const;
+import { IUCN_COLORS, IUCN_FONT_COLORS } from '@/lib/iucn-colors';
 
-// IUCN RLE risk category scheme (text on top of the fill)
-export const FONT_COLORS: Record<keyof typeof COLORS, string> = {
-  co: '#FFFFFF',
-  cr: '#FFFFFF',
-  en: '#000000',
-  vu: '#000000',
-  nt: '#000000',
-  lc: '#FFFFFF',
-  dd: '#FFFFFF',
-  ne: '#000000',
+// IUCN RLE risk categories (ecosystems), colors from the shared IUCN palette
+const CATEGORY_IDS = ['co', 'cr', 'en', 'vu', 'nt', 'lc', 'dd', 'ne'] as const;
+
+export type CategoryId = (typeof CATEGORY_IDS)[number];
+
+export const COLORS = Object.fromEntries(CATEGORY_IDS.map((key) => [key, IUCN_COLORS[key]])) as {
+  [K in CategoryId]: (typeof IUCN_COLORS)[K];
 };
+
+export const FONT_COLORS = Object.fromEntries(
+  CATEGORY_IDS.map((key) => [key, IUCN_FONT_COLORS[key]])
+) as Record<CategoryId, string>;
 
 export const LABELS = {
   co: 'Collapsed',
@@ -32,8 +23,6 @@ export const LABELS = {
   nt: 'Near Threatened',
   ne: 'Not Evaluated',
 } as const;
-
-export type CategoryId = keyof typeof COLORS;
 
 // Uppercase keys as emitted by the `overall_assessment` tileset property
 export const OVERALL_ASSESSMENT = Object.fromEntries(

@@ -1,6 +1,7 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { formatAxis } from '@/lib/format';
+import { getIucnSliceStroke } from '@/lib/iucn-colors';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
@@ -65,6 +66,7 @@ const getChartData = (data: Data[], colorKeys: ColorKeys) => {
   return data?.map((d) => {
     const percentage = (d.value * 100) / total;
     const key = toCategoryId(d.category);
+    const color = colorKeys[key];
 
     return {
       ...d,
@@ -73,7 +75,8 @@ const getChartData = (data: Data[], colorKeys: ColorKeys) => {
       percentageFormatted: formatAxis(percentage),
       showValue: false,
       highlightValue: false,
-      color: colorKeys[key],
+      color,
+      ...getIucnSliceStroke(color),
     };
   });
 };

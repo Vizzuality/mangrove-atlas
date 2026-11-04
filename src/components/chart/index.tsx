@@ -226,6 +226,8 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                     <Cell
                       key={`cell-${i}`}
                       fill={d.color}
+                      {...(d.stroke && { stroke: d.stroke })}
+                      {...(d.strokeWidth !== undefined && { strokeWidth: d.strokeWidth })}
                       aria-label={d.label ?? d.name ?? `${key}: ${d[key]}`}
                     />
                   ))}

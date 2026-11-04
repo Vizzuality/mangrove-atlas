@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import groupBy from 'lodash-es/groupBy';
 
+import { getIucnSliceStroke } from '@/lib/iucn-colors';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -112,6 +114,7 @@ export function useMangroveSpeciesThreatened(
       ? categoryEntries.map((item) => ({
           value: item[1],
           color: COLORS[item[0]],
+          ...getIucnSliceStroke(COLORS[item[0]]),
           label: `${RED_LIST_CATEGORIES[item[0]]}`,
           species: speciesByGroup[item[0]] ?? [],
         }))

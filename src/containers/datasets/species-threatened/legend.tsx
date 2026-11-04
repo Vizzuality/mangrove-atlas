@@ -28,7 +28,10 @@ const Legend = ({ items }: Legend) => {
                   className="flex items-center space-x-2"
                   onClick={() => handleCollapse(d.label)}
                 >
-                  <span className="h-4 w-2 rounded-md" style={{ backgroundColor: d.color }} />
+                  <span
+                    className="h-4 w-2 shrink-0 rounded-md border border-black/15"
+                    style={{ backgroundColor: d.color }}
+                  />
                   <span className="whitespace-nowrap text-black/85">{d.label}</span>
                   <ARROW_SVG
                     className={cn({
