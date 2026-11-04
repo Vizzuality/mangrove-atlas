@@ -38,9 +38,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const listboxRef = useRef<HTMLDivElement>(null);
 
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { id: locationId },
-  } = useLocation(id, locationType);
+  const { data: { id: locationId } = {} } = useLocation(id, locationType);
 
   const setMapSettings = useSetAtom(mapSettingsAtom);
   const setDrawingUploadToolState = useSetAtom(drawingUploadToolAtom);

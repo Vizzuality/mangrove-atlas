@@ -20,9 +20,7 @@ const ClimateWatchNationalDashboard = () => {
   const { type, id } = useSyncLocation();
   const locationType = (type ?? 'worldwide') as LocationTypes;
 
-  const {
-    data: { name, iso },
-  } = useLocation(id, locationType);
+  const { data: { name, iso } = {} } = useLocation(id, locationType);
   const { isFetched, isFetching, data } = useClimateWatchNDCS({
     indicators: [
       'ndce statement',
