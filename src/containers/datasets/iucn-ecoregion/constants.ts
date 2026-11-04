@@ -1,17 +1,33 @@
-import { IUCN_COLORS, IUCN_FONT_COLORS } from '@/lib/iucn-colors';
+// Official IUCN Red List category colors. Collapsed (CO) is ecosystem-only and not in
+// the official table, so it uses black like Extinct (EX).
+// Source: IUCN Red List Threat Categories – Colour Chart
+// https://nc.iucnredlist.org/redlist/resources/files/1759737820-IUCN_Red_List_Category_Colour_Chart.pdf
 
-// IUCN RLE risk categories (ecosystems), colors from the shared IUCN palette
-const CATEGORY_IDS = ['co', 'cr', 'en', 'vu', 'nt', 'lc', 'dd', 'ne'] as const;
+// Fill colors
+export const COLORS = {
+  co: '#000000',
+  cr: '#D81E05',
+  en: '#FC7F3F',
+  vu: '#F9E814',
+  nt: '#CCE226',
+  lc: '#60C659',
+  dd: '#D1D1C6',
+  ne: '#FFFFFF',
+} as const;
 
-export type CategoryId = (typeof CATEGORY_IDS)[number];
+export type CategoryId = keyof typeof COLORS;
 
-export const COLORS = Object.fromEntries(CATEGORY_IDS.map((key) => [key, IUCN_COLORS[key]])) as {
-  [K in CategoryId]: (typeof IUCN_COLORS)[K];
+// Text colors on top of each fill (chosen for contrast; not part of the official table)
+export const FONT_COLORS: Record<CategoryId, string> = {
+  co: '#FFFFFF',
+  cr: '#FFFFFF',
+  en: '#000000',
+  vu: '#000000',
+  nt: '#000000',
+  lc: '#000000',
+  dd: '#000000',
+  ne: '#000000',
 };
-
-export const FONT_COLORS = Object.fromEntries(
-  CATEGORY_IDS.map((key) => [key, IUCN_FONT_COLORS[key]])
-) as Record<CategoryId, string>;
 
 export const LABELS = {
   co: 'Collapsed',

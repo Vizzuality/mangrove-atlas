@@ -188,7 +188,7 @@ export function useLayers({
       type: 'line',
       paint: {
         'line-color': ['match', ['get', 'overall_assessment'], ...matchColors, '#ccc'],
-        'line-width': 2,
+        'line-width': 1.5,
         'line-opacity': opacity * 0.95,
       },
       layout: {
