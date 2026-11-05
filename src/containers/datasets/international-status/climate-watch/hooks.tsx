@@ -27,9 +27,7 @@ export function useClimateWatchNDCS(
   >
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { iso },
-  } = useLocation(id, locationType);
+  const { data: { iso } = {} } = useLocation(id, locationType);
 
   const fetchClimateWatchNDCS = () =>
     ClimateWatchAPI.request({
@@ -80,9 +78,7 @@ export function useClimateWatchNDCSCountriesDocs(
   >
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { iso },
-  } = useLocation(id, locationType);
+  const { data: { iso } = {} } = useLocation(id, locationType);
 
   const fetchClimateWatchNDCSCountriesDocs = () =>
     ClimateWatchAPI.request({
@@ -116,9 +112,7 @@ export function useClimateWatchNDCSContentOverview(
   >
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { iso },
-  } = useLocation(id, locationType);
+  const { data: { iso } = {} } = useLocation(id, locationType);
 
   const fetchClimateWatchNDCSContentOverview = () =>
     ClimateWatchAPI.request({

@@ -30,9 +30,7 @@ import type { DataResponse, Specie } from './types';
 
 const SpeciesLocation = () => {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location },
-  } = useLocation(id, locationType);
+  const { data: { name: location } = {} } = useLocation(id, locationType);
   const [specieSelected, setSpecie] = useAtom(
     SpeciesLocationState as unknown as PrimitiveAtom<DataResponse['data'][number] | null>
   );

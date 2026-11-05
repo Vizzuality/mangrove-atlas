@@ -33,9 +33,7 @@ export function useMangroveSpeciesLocation<T = DataResponse>(
     }).then(({ data }) => data);
 
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { id: currentLocation, location_id } = {} } = useLocation(id, locationType);
 
   return useQuery({
     queryKey: [QUERY_KEY, location_id],

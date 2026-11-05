@@ -12,7 +12,7 @@ const IucnEcoregionPopupLegend = ({ items = LEGEND_ITEMS }: IucnEcoregionPopupLe
         <li key={label} className="flex items-center gap-2.5">
           <span
             aria-hidden="true"
-            className="h-4 w-2 shrink-0 rounded"
+            className="h-4 w-2 shrink-0 rounded border border-black/15"
             style={{ backgroundColor: color }}
           />
           <span>{label}</span>

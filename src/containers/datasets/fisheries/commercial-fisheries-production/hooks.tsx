@@ -19,9 +19,10 @@ export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
 ): UseQueryResult<TData, Error> {
   const { type: locationType, id } = useSyncLocation();
 
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
 
   const fetchMangroveFisheryMitigationPotentials = async (): Promise<DataResponse> => {
     const response = await API.request<ApiResponse>({
