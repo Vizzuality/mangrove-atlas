@@ -28,7 +28,16 @@ const NationalDashboard = () => {
   const hasSources = indicators.some(({ sources }) => sources?.length);
   const otherResources = data?.metadata?.other_resources;
 
-  if (isFetched && !indicators.length) return <NoMetadata />;
+  // Same wrapper and spacing as the "no sources" state below, so both empty states match.
+  if (isFetched && !indicators.length) {
+    return (
+      <div className={WIDGET_CARD_WRAPPER_STYLE}>
+        <div className="pb-6.25">
+          <NoMetadata />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
