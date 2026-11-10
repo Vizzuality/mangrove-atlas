@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 
 import cn from '@/lib/classnames';
+import { isFeatureEnabled } from '@/lib/feature-flags';
 
 import { mapViewAtom } from '@/store/sidebar';
 
@@ -54,7 +55,7 @@ export default function MainApp() {
       </div>
 
       <WelcomeIntroMessage />
-      <DefaultViewSync />
+      {isFeatureEnabled('default-view') && <DefaultViewSync />}
     </>
   );
 }
