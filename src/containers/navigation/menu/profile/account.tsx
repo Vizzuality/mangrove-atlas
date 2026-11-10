@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
+import { isFeatureEnabled } from '@/lib/feature-flags';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signOut, useSession } from 'next-auth/react';
 import { z } from 'zod';
@@ -347,9 +349,11 @@ const AccountContent = () => {
           )}
         </div>
         {/* Saved independently of "Save changes" (its own PATCH). */}
-        <div className="pb-9">
-          <DefaultView />
-        </div>
+        {isFeatureEnabled('default-view') && (
+          <div className="pb-9">
+            <DefaultView />
+          </div>
+        )}
         {form.formState.errors.root?.message && (
           <p className="text-sm text-red-500">{form.formState.errors.root.message}</p>
         )}

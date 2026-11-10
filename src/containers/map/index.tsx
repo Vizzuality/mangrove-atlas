@@ -7,6 +7,7 @@ import { Map, Marker, useMap, type MapProps } from 'react-map-gl';
 import Image from 'next/image';
 
 import cn from '@/lib/classnames';
+import { isFeatureEnabled } from '@/lib/feature-flags';
 import { flyMapTo, registerMapRef } from '@/lib/map-fly';
 
 import { analysisAtom } from '@/store/analysis';
@@ -606,7 +607,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
                       />
                     </Helper>
                     {/* Default views are per user; nothing to save to when logged out. */}
-                    {sessionStatus === 'authenticated' && (
+                    {sessionStatus === 'authenticated' && isFeatureEnabled('default-view') && (
                       <Helper
                         className={{
                           button: 'top-1 left-8 z-20',
