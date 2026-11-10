@@ -70,11 +70,10 @@ const useFitFontSize = (text: string) => {
 const LocationWidget = () => {
   const { type, id } = useSyncLocation();
   const locationType = (type ?? 'worldwide') as LocationTypes;
-  const {
-    data: { name },
-  } = useLocation(id, locationType, {
+  const { data: location } = useLocation(id, locationType, {
     enabled: (!!locationType && !!id) || locationType !== 'custom-area',
   });
+  const name = location?.name;
 
   const [{ enabled: isAnalysisEnabled }] = useAtom(analysisAtom);
   const customAreaLabel = useAtomValue(customAreaLabelAtom);

@@ -20,9 +20,10 @@ export function useMangroveInternationalStatus(
   queryOptions?: Omit<UseQueryOptions<DataResponse, Error>, 'queryKey' | 'queryFn' | 'select'>
 ): InternationalStatusTypes {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
 
   const fetchMangroveInternationalStatus = (): Promise<DataResponse> =>
     API.request({

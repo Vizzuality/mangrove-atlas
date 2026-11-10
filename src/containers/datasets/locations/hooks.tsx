@@ -92,6 +92,8 @@ export function useLocation(
         };
       }
 
+      if (!data) return data;
+
       if (data.location_type === 'worldwide') {
         data.name = 'the world';
       }
