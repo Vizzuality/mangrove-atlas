@@ -1,4 +1,4 @@
-import { COLORS as IUCN_COLORS } from '@/containers/datasets/iucn-ecoregion/constants';
+import { IUCN_COLORS } from '@/lib/iucn-colors';
 
 type ThreatenedSpecies = 'ex' | 'ew' | 're' | 'cr' | 'en' | 'vu' | 'lr' | 'nt' | 'lc' | 'dd';
 
@@ -30,15 +30,11 @@ export const RED_LIST_CATEGORIES = {
   [Types.DD]: 'Data Deficient',
 };
 
-// Official IUCN Red List category colors, shared with the IUCN Red List of Ecosystems widget.
-// EX, EW and RE are species-only, so they are not in the ecoregion palette.
-// LR (Lower Risk) is not in the official table.
-// Source: IUCN Red List Threat Categories – Colour Chart
-// https://nc.iucnredlist.org/redlist/resources/files/1759737820-IUCN_Red_List_Category_Colour_Chart.pdf
+// Official IUCN palette, see `@/lib/iucn-colors`
 export const COLORS: Colors = {
-  ex: '#000000',
-  ew: '#542344',
-  re: '#9B4F96',
+  ex: IUCN_COLORS.ex,
+  ew: IUCN_COLORS.ew,
+  re: IUCN_COLORS.re,
   cr: IUCN_COLORS.cr,
   en: IUCN_COLORS.en,
   vu: IUCN_COLORS.vu,

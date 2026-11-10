@@ -1,18 +1,15 @@
-// Official IUCN Red List category colors. Collapsed (CO) is ecosystem-only and not in
-// the official table, so it uses black like Extinct (EX).
-// Source: IUCN Red List Threat Categories – Colour Chart
-// https://nc.iucnredlist.org/redlist/resources/files/1759737820-IUCN_Red_List_Category_Colour_Chart.pdf
+import { IUCN_COLORS } from '@/lib/iucn-colors';
 
-// Fill colors
+// Fill colors — official IUCN palette, see `@/lib/iucn-colors`
 export const COLORS = {
-  co: '#000000',
-  cr: '#D81E05',
-  en: '#FC7F3F',
-  vu: '#F9E814',
-  nt: '#CCE226',
-  lc: '#60C659',
-  dd: '#D1D1C6',
-  ne: '#FFFFFF',
+  co: IUCN_COLORS.ex,
+  cr: IUCN_COLORS.cr,
+  en: IUCN_COLORS.en,
+  vu: IUCN_COLORS.vu,
+  nt: IUCN_COLORS.nt,
+  lc: IUCN_COLORS.lc,
+  dd: IUCN_COLORS.dd,
+  ne: IUCN_COLORS.ne,
 } as const;
 
 export type CategoryId = keyof typeof COLORS;
