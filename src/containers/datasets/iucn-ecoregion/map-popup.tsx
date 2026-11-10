@@ -1,7 +1,8 @@
 import { trackEvent } from '@/lib/analytics/ga';
+import { IUCN_COLORS } from '@/lib/iucn-colors';
 
 // import { INFO } from '@/containers/datasets';
-import { COLORS, FONT_COLORS } from '@/containers/datasets/iucn-ecoregion/constants';
+import { FONT_COLORS, isCategoryId } from '@/containers/datasets/iucn-ecoregion/constants';
 import type { CategoryId } from '@/containers/datasets/iucn-ecoregion/constants';
 import { useMangroveEcoregions } from '@/containers/datasets/iucn-ecoregion/hooks';
 import IucnEcoregionPopupLegend from '@/containers/datasets/iucn-ecoregion/popup-legend';
@@ -96,9 +97,9 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
                       {tags.map((tag, index) => {
                         const infoKey = `${data}_${index + 1}`;
                         const colorKey = info[infoKey] as string | undefined;
-                        const categoryId = colorKey?.toLowerCase() as CategoryId | undefined;
-                        const resolvedId = categoryId && categoryId in COLORS ? categoryId : 'ne';
-                        const backgroundColor = COLORS[resolvedId];
+                        const categoryId = colorKey?.toLowerCase();
+                        const resolvedId: CategoryId = isCategoryId(categoryId) ? categoryId : 'ne';
+                        const backgroundColor = IUCN_COLORS[resolvedId];
                         const color = FONT_COLORS[resolvedId];
 
                         return (

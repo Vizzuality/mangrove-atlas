@@ -1,7 +1,7 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { formatAxis } from '@/lib/format';
-import { getIucnSliceStroke } from '@/lib/iucn-colors';
+import { getIucnSliceStroke, IUCN_COLORS } from '@/lib/iucn-colors';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
@@ -10,7 +10,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { COLORS, LABELS, OVERALL_ASSESSMENT } from './constants';
+import { LABELS, OVERALL_ASSESSMENT } from './constants';
 import type { CategoryId } from './constants';
 import CustomTooltip from './tooltip';
 import type { CategoryIds } from './types';
@@ -39,7 +39,7 @@ type DataResponse = {
 const getColorKeys = (data: Data[]): ColorKeys =>
   data?.reduce<ColorKeys>((acc, d) => {
     const key = toCategoryId(d.category);
-    return { ...acc, [key]: COLORS[key] };
+    return { ...acc, [key]: IUCN_COLORS[key] };
   }, {});
 
 const REPORTS = [

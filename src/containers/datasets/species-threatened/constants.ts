@@ -1,7 +1,5 @@
 type ThreatenedSpecies = 'ex' | 'ew' | 're' | 'cr' | 'en' | 'vu' | 'lr' | 'nt' | 'lc' | 'dd';
 
-type Colors = Partial<Record<ThreatenedSpecies, string>>;
-
 const Types: Record<string, ThreatenedSpecies> = {
   EX: 'ex',
   EW: 'ew',
@@ -26,17 +24,6 @@ export const RED_LIST_CATEGORIES = {
   [Types.NT]: 'Near Threatened',
   [Types.LC]: 'Least Concern',
   [Types.DD]: 'Data Deficient',
-};
-
-export const COLORS: Colors = {
-  ex: '#000000',
-  ew: '#542243',
-  cr: '#EE4D5A',
-  en: '#F97B57',
-  vu: '#F3AD6A',
-  nt: '#ECDA9A',
-  lc: '#B4DCAA',
-  dd: '#ECECEF',
 };
 
 // TO - DO - double check with data the categories with no label

@@ -1,21 +1,13 @@
-// Official IUCN Red List category colors. Collapsed (CO) is ecosystem-only and not in
-// the official table, so it uses black like Extinct (EX).
-// Source: IUCN Red List Threat Categories – Colour Chart
-// https://nc.iucnredlist.org/redlist/resources/files/1759737820-IUCN_Red_List_Category_Colour_Chart.pdf
+import { IUCN_COLORS } from '@/lib/iucn-colors';
 
-// Fill colors
-export const COLORS = {
-  co: '#000000',
-  cr: '#D81E05',
-  en: '#FC7F3F',
-  vu: '#F9E814',
-  nt: '#CCE226',
-  lc: '#60C659',
-  dd: '#D1D1C6',
-  ne: '#FFFFFF',
-} as const;
+// Red List of Ecosystems categories, in legend order. Fill colours come from the official
+// IUCN palette in `@/lib/iucn-colors`.
+export const CATEGORY_IDS = ['co', 'cr', 'en', 'vu', 'nt', 'lc', 'dd', 'ne'] as const;
 
-export type CategoryId = keyof typeof COLORS;
+export type CategoryId = (typeof CATEGORY_IDS)[number];
+
+export const isCategoryId = (id?: string): id is CategoryId =>
+  !!id && (CATEGORY_IDS as readonly string[]).includes(id);
 
 // Text colors on top of each fill (chosen for contrast; not part of the official table)
 export const FONT_COLORS: Record<CategoryId, string> = {
@@ -42,15 +34,15 @@ export const LABELS = {
 
 // Uppercase keys as emitted by the `overall_assessment` tileset property
 export const OVERALL_ASSESSMENT = Object.fromEntries(
-  Object.entries(COLORS).map(([key, color]) => [key.toUpperCase(), color])
+  CATEGORY_IDS.map((key) => [key.toUpperCase(), IUCN_COLORS[key]])
 ) as Record<Uppercase<CategoryId>, string>;
 
 export type LegendItem = {
-  color: (typeof COLORS)[CategoryId];
+  color: (typeof IUCN_COLORS)[CategoryId];
   label: (typeof LABELS)[CategoryId];
 };
 
-export const LEGEND_ITEMS: LegendItem[] = (Object.keys(COLORS) as CategoryId[]).map((key) => ({
-  color: COLORS[key],
+export const LEGEND_ITEMS: LegendItem[] = CATEGORY_IDS.map((key) => ({
+  color: IUCN_COLORS[key],
   label: LABELS[key],
 }));

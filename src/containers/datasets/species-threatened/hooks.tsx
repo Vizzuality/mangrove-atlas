@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import groupBy from 'lodash-es/groupBy';
 
+import { IUCN_COLORS } from '@/lib/iucn-colors';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -13,7 +15,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { COLORS, RED_LIST_CATEGORIES } from './constants';
+import { RED_LIST_CATEGORIES } from './constants';
 import CustomTooltip from './tooltip';
 
 type Categories = Readonly<{
@@ -111,7 +113,8 @@ export function useMangroveSpeciesThreatened(
     const chartData = categoryEntries.length
       ? categoryEntries.map((item) => ({
           value: item[1],
-          color: COLORS[item[0]],
+          // Official IUCN palette; LR has no official colour, so it stays undefined
+          color: IUCN_COLORS[item[0] as keyof typeof IUCN_COLORS],
           label: `${RED_LIST_CATEGORIES[item[0]]}`,
           species: speciesByGroup[item[0]] ?? [],
         }))
