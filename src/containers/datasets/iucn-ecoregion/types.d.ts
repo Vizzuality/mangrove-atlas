@@ -1,4 +1,4 @@
-import type { COLORS, LABELS } from './constants';
+import type { CategoryId, LABELS } from './constants';
 
 type Specie = Readonly<{
   scientific_name: string;
@@ -13,9 +13,7 @@ export type LegendItem = Readonly<{
   label: Label;
 }>;
 
-type LowerCategoryId = keyof typeof COLORS;
-
-export type CategoryIds = LowerCategoryId | Uppercase<LowerCategoryId>;
+export type CategoryIds = CategoryId | Uppercase<CategoryId>;
 
 export type IUCNEcoregionPopUpInfoLabels =
   | 'distribution_of_biotic_processes'

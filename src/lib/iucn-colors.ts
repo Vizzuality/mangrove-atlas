@@ -7,11 +7,12 @@
  * https://nc.iucnredlist.org/redlist/resources/files/1759737820-IUCN_Red_List_Category_Colour_Chart.pdf
  *
  * Not in the official chart:
- * - Collapsed (CO, ecosystems only): use `IUCN_COLORS.ex`.
- * - Lower Risk (LR): IUCN says to show LR/cd as NT and LR/lc as LC.
+ * - Collapsed (CO, ecosystems only): same black as Extinct (EX).
+ * - Lower Risk (LR): no colour; IUCN says to show LR/cd as NT and LR/lc as LC.
  */
 export const IUCN_COLORS = {
   ex: '#000000', // Extinct
+  co: '#000000', // Collapsed (ecosystems; not in the official chart, uses EX)
   ew: '#542344', // Extinct in the Wild
   re: '#9B4F96', // Regionally Extinct
   cr: '#D81E05', // Critically Endangered
