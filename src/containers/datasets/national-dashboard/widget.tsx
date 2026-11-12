@@ -35,6 +35,12 @@ const NationalDashboard = () => {
         <div className="pb-6.25">
           <NoMetadata />
         </div>
+        {!!otherResources?.length && (
+          <>
+            <Divider />
+            <OtherResources resources={otherResources} />
+          </>
+        )}
       </div>
     );
   }
