@@ -7,3 +7,4 @@ Write an ADR when a decision is expensive to reverse, affects more than one repo
 | # | Title | Status | Date |
 | --- | --- | --- | --- |
 | [001](001-mrtt-sites-as-custom-areas.md) | MRTT sites in Saved Areas reuse the custom-area analysis pipeline | Accepted | 2026-10-15 |
+| [002](002-railway-dockerfile-deployment.md) | Deploy to Railway from the repo Dockerfile | Proposed | 2026-11-18 |

@@ -132,7 +132,18 @@ This project uses **Google Analytics 4 (GA4)** via [`react-ga4`](https://github.
 
 ## Deployment
 
-The app is deployed on [Vercel](https://vercel.com/). Cloud functions are deployed independently via GitHub Actions on push to `develop`/`master` when their files change.
+The app is deployed on [Vercel](https://vercel.com/) and on [Railway](https://railway.com/) (project `mangroves-atlas`, service `mangrove-atlas`). Cloud functions are deployed independently via GitHub Actions on push to `develop`/`master` when their files change.
+
+### Railway
+
+Railway builds the root `Dockerfile` on every push to `develop` and runs the Next.js standalone server (`node server.js`). The Railway environment is named `production`, but it serves `develop` with `NEXT_PUBLIC_ENVIRONMENT=staging`.
+
+Variables live as **shared variables** in the Railway environment and are attached to the service as `${{shared.NAME}}` references. Because `NEXT_PUBLIC_*` values are inlined at build time and `env.mjs` validates the schema during `next build`, every variable must also be declared as an `ARG` in the Dockerfile's builder stage. When you add a variable to `env.mjs`:
+
+1. Add it to the Railway shared variables and reference it from the service.
+2. Add a matching `ARG` line to the `Dockerfile`.
+
+See [ADR 002](docs/adr/002-railway-dockerfile-deployment.md) for why the Dockerfile is used instead of Railway's auto-detected builder.
 
 Playwright tests run automatically on PRs to `develop` (after the Vercel preview deploy completes).
 
