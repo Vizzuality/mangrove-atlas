@@ -22,6 +22,7 @@ import GlobalTidalWetlandChangeLayer from '@/containers/datasets/contextual-laye
 import GlobalTidalWetlandChangeMapLegend from '@/containers/datasets/contextual-layers/global-tidal-wetland-change/map-legend';
 import HiResExtentInfo from '@/containers/datasets/contextual-layers/hi-res-extent/info.mdx';
 import HiResExtentLayer from '@/containers/datasets/contextual-layers/hi-res-extent/layer';
+import HiResExtentMapLegend from '@/containers/datasets/contextual-layers/hi-res-extent/map-legend';
 import PlanetSatelliteBasemapInfo from '@/containers/datasets/contextual-layers/planet/info.mdx';
 import ProtectedAreasLayer from '@/containers/datasets/contextual-layers/protected-areas/layer';
 import ProtectedAreasMapLegend from '@/containers/datasets/contextual-layers/protected-areas/map-legend';
@@ -134,6 +135,7 @@ export const MAP_LEGENDS = {
   mangrove_tidal_flats: TidalFlatsMapLegend,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeMapLegend,
   mangrove_protected_areas: ProtectedAreasMapLegend,
+  'hi-res-extent': HiResExtentMapLegend,
   mangrove_coastal_protection_area: FloodProtectionAreaMapLegend,
   mangrove_coastal_protection_population: FloodProtectionPopulationMapLegend,
   mangrove_coastal_protection_stock: FloodProtectionStockMapLegend,

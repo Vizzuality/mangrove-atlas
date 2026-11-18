@@ -271,7 +271,6 @@ const NetChangeWidget = () => {
                 origin="mangrove_net_change"
                 id={contextualLayers[0].id}
                 description={contextualLayers[0].description}
-                position="top"
               />
             </div>
           )}

@@ -1,7 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
+import { insertLayer } from '@/lib/layers/order';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
@@ -12,24 +13,21 @@ import type { ContextualBasemapsId } from 'types/widget';
 
 const HighResolutionExtentBasemap = () => {
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
-  const defaultActive =
-    activeLayers?.find((layer) => layer.id === 'hi-res-extent')?.id || 'no-layer';
-  const [isActive, setIsActive] = useState(defaultActive);
+  // Derived from the URL so map tip, map settings and legend stay in sync.
+  const isActive = activeLayers?.some((layer) => layer.id === 'hi-res-extent')
+    ? 'hi-res-extent'
+    : 'no-layer';
 
   const handleClick = useCallback(
     (id) => {
-      setIsActive(id);
       const layersUpdate =
         id === 'no-layer'
           ? activeLayers?.filter((w) => w.id !== 'hi-res-extent')
-          : ([
-              {
-                id: 'hi-res-extent' as ContextualBasemapsId,
-                opacity: '1',
-                visibility: 'visible',
-              },
-              ...activeLayers,
-            ] as Layer[]);
+          : insertLayer(activeLayers ?? [], {
+              id: 'hi-res-extent' as ContextualBasemapsId,
+              opacity: '1',
+              visibility: 'visible',
+            } as Layer);
       setActiveLayers(layersUpdate);
 
       // Google Analytics tracking
@@ -46,7 +44,7 @@ const HighResolutionExtentBasemap = () => {
 
   return (
     <div className="relative flex flex-col text-sm leading-none text-black/85">
-      <RadioGroup onValueChange={handleClick} defaultValue={defaultActive} className="space-y-2">
+      <RadioGroup onValueChange={handleClick} value={isActive} className="space-y-2">
         <RadioGroupItem
           option={{ value: 'no-layer', label: 'No layer' }}
           data-testid="no-layer"

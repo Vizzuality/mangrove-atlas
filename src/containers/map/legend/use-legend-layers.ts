@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
+import { normalizeLayers, reorderSubset } from '@/lib/layers/order';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
@@ -9,6 +10,7 @@ import { useSyncLocation } from 'hooks/use-sync-location';
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
+import { isBackgroundLayer, isContextualLayer } from '@/containers/layers/contextual-types';
 import { widgets } from '@/containers/widgets/constants';
 
 import type { Layer } from 'types/layers';
@@ -62,7 +64,8 @@ export const useLegendLayers = () => {
 
   const filteredLayers = useMemo(() => {
     const matched = (activeLayers ?? []).filter((layer) => {
-      const isStandardLayer = filteredLayersIds.includes(layer.id);
+      // Contextual layers get a row wherever they were turned on (widget, map tip, map settings).
+      const isStandardLayer = filteredLayersIds.includes(layer.id) || isContextualLayer(layer.id);
       const isCurrentNationalLayer =
         !!nationalLayerIdPrefix &&
         (layer.id === nationalLayerIdPrefix || layer.id.startsWith(`${nationalLayerIdPrefix}_`));
@@ -77,38 +80,41 @@ export const useLegendLayers = () => {
     );
   }, [activeLayers, filteredLayersIds, nationalLayerIdPrefix]);
 
-  const activeLayerNoPlanet = useMemo(
-    () =>
-      filteredLayers?.filter(
-        (layer) => !layer.id.includes('planet') && !layer.id.includes('custom-area')
-      ),
+  // custom-area is the analysis geometry, not a layer: no legend row.
+  const activeLayerNoCustomArea = useMemo(
+    () => filteredLayers?.filter((layer) => !layer.id.includes('custom-area')),
     [filteredLayers]
   );
 
   const legendLayers = useMemo(() => {
     const isNationalDashboardLocation = NATIONAL_DASHBOARD_LOCATIONS.includes(locationId);
-    if (isNationalDashboardLocation) return activeLayerNoPlanet;
-    return activeLayerNoPlanet?.filter((layer) => !layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX));
-  }, [activeLayerNoPlanet, locationId]);
+    // Background rows always sit at the bottom of the legend, matching the map.
+    if (isNationalDashboardLocation) return normalizeLayers(activeLayerNoCustomArea ?? []);
+    return normalizeLayers(
+      (activeLayerNoCustomArea ?? []).filter(
+        (layer) => !layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX)
+      )
+    );
+  }, [activeLayerNoCustomArea, locationId]);
+
+  const fixedLayerIds = useMemo(
+    () => legendLayers?.filter((layer) => isBackgroundLayer(layer.id)).map((layer) => layer.id),
+    [legendLayers]
+  );
 
   const handleChangeOrder = useCallback(
     (order: string[]) => {
-      const reorderedLayers = order
-        .map((layerId) => activeLayers?.find((layer) => layer.id === layerId))
-        .filter(Boolean) as Layer[];
-
-      const activePlanetLayers = activeLayers?.filter((layer) => layer.id.includes('planet')) ?? [];
-
       trackEvent('Layers order', {
         category: 'Layers',
         action: 'Drag and drop',
         label: `change layers order`,
       });
 
-      setActiveLayers([...reorderedLayers, ...activePlanetLayers]);
+      // Only legend rows move; layers without a row keep their slot, background stays last.
+      setActiveLayers(reorderSubset(activeLayers ?? [], order));
     },
     [activeLayers, setActiveLayers]
   );
 
-  return { legendLayers, handleChangeOrder };
+  return { legendLayers, fixedLayerIds, handleChangeOrder };
 };

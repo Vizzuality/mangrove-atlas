@@ -16,7 +16,7 @@ const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Elem
 const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
-  const { legendLayers, handleChangeOrder } = useLegendLayers();
+  const { legendLayers, fixedLayerIds, handleChangeOrder } = useLegendLayers();
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -64,6 +64,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 >
                   <SortableList
                     onChangeOrder={handleChangeOrder}
+                    fixedIds={fixedLayerIds}
                     sortable={{ handle: true, enabled: true }}
                   >
                     {legendLayers.map((layer) => (

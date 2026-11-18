@@ -1,4 +1,5 @@
 import { trackEvent } from '@/lib/analytics/ga';
+import { insertLayer } from '@/lib/layers/order';
 
 import { Layer } from 'types/layers';
 
@@ -15,5 +16,5 @@ export function updateLayers(newLayer: Layer, activeLayers: Layer[]): Layer[] {
     action: 'Toggle',
     label: `Add national dashboard layer - ${id}`,
   });
-  return [newLayer, ...activeLayers];
+  return insertLayer(activeLayers, newLayer);
 }

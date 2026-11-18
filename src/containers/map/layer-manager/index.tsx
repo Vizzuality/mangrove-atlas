@@ -2,6 +2,8 @@ import { useCallback, useMemo } from 'react';
 
 import { Layer } from 'react-map-gl';
 
+import { normalizeLayers } from '@/lib/layers/order';
+
 import { useSyncActiveLayers } from '@/store/layers';
 import { interactiveLayerIdsAtom } from '@/store/map';
 
@@ -35,15 +37,14 @@ const LayerManagerContainer = () => {
 
   const { id } = useSyncLocation();
 
-  // layers that act as basemap (planet imagery) must always be at the bottom
-  const basemap_layers = ACTIVE_LAYERS?.filter((layer) => layer?.includes('planet'));
-  const no_planet_layers = ACTIVE_LAYERS?.filter((layer) => !layer?.includes('planet'));
+  const visibleLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id)
+    ? ACTIVE_LAYERS?.filter((l) => !l?.includes('national_dashboard'))
+    : ACTIVE_LAYERS;
 
-  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id)
-    ? no_planet_layers?.filter((l) => !l?.includes('national_dashboard'))
-    : no_planet_layers;
-
-  const LAYERS_FILTERED = [...(filterNationalDashboardLayers || []), ...(basemap_layers || [])];
+  // Background layers (satellite imagery) always sit at the bottom, just above the basemap.
+  const LAYERS_FILTERED = normalizeLayers((visibleLayers || []).map((l) => ({ id: l }))).map(
+    (l) => l.id
+  );
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
@@ -69,20 +70,6 @@ const LayerManagerContainer = () => {
         onAdd={handleAdd}
         onRemove={handleRemove}
       />
-
-      {LAYERS_FILTERED.map((layer, i) => {
-        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
-
-        return (
-          <Layer
-            id={`${layer}-bg`}
-            key={`${layer}-bg`}
-            type="background"
-            layout={{ visibility: 'none' }}
-            beforeId={beforeId}
-          />
-        );
-      })}
 
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;

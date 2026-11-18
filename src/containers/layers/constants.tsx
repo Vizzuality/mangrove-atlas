@@ -103,6 +103,28 @@ export const LAYERS = [
   },
 ];
 
+/**
+ * Contextual layers that are not part of the widgets deck ("select all layers"
+ * must not turn them on) but still need a name for their legend row.
+ */
+export const CONTEXTUAL_LAYERS_LEGEND = [
+  {
+    name: 'High-resolution mangrove extent 2020',
+    id: 'hi-res-extent',
+  },
+  {
+    name: 'Planet imagery (visual)',
+    id: 'planet_medres_visual_monthly',
+  },
+  {
+    name: 'Planet imagery (analytic)',
+    id: 'planet_medres_analytic_monthly',
+  },
+];
+
+/** Name lookup for any layer that can have a legend row. */
+export const LEGEND_LAYERS = [...LAYERS, ...CONTEXTUAL_LAYERS_LEGEND];
+
 export const NATIONAL_DASHBOARD_LOCATIONS = [
   'AUS',
   'AIA',

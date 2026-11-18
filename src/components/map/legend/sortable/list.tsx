@@ -35,6 +35,7 @@ const SortableList: React.FC<SortableListProps> = ({
   sortable,
   onChangeOrder,
   divided = true,
+  fixedIds,
 }: SortableListProps) => {
   const uid = useId();
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -131,6 +132,7 @@ const SortableList: React.FC<SortableListProps> = ({
                 id={id}
                 sortable={sortable as SortableItemProps['sortable']}
                 divided={divided}
+                fixed={fixedIds?.includes(id)}
                 data-testid={`legend-item-${id}`}
               >
                 {cloneElement(Child as ReactElement, {

@@ -133,7 +133,6 @@ const MangrovesInProtectedAreas = () => {
               origin="mangrove_protection"
               id={contextualLayers[0].id}
               description={contextualLayers[0].description}
-              position="bottom"
             />
           </div>
           <MangrovesInProtectedAreasChart config={data.config} legend={data.legend} />

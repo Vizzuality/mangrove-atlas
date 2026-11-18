@@ -2,6 +2,7 @@ import React, { useCallback, FC } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
+import { insertLayer } from '@/lib/layers/order';
 
 import { useSyncActiveLayers } from '@/store/layers';
 import { useSyncActiveCategory } from '@/store/sidebar';
@@ -112,7 +113,7 @@ const WidgetsMenu: FC = () => {
       }
       const layersUpdate = isActive
         ? activeLayers?.filter((w) => w.id !== e)
-        : [{ id: e, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
+        : insertLayer(activeLayers, { id: e, opacity: '1', visibility: 'visible' as Visibility });
       setActiveLayers(layersUpdate);
     },
 

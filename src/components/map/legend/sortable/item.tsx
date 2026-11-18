@@ -11,6 +11,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
   id,
   sortable,
   divided = true,
+  fixed = false,
   children,
   'data-testid': dataTestId,
 }: SortableItemProps) => {
@@ -24,6 +25,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
     setActivatorNodeRef,
   } = useSortable({
     id,
+    disabled: fixed,
   });
 
   const style = {
@@ -36,9 +38,8 @@ const SortableItem: React.FC<SortableItemProps> = ({
   // item's other controls — nested interactive content (WCAG 4.1.2).
   const CHILD = cloneElement(children as ReactElement, {
     sortable,
-    listeners,
-    attributes,
-    setActivatorNodeRef,
+    fixed,
+    ...(!fixed && { listeners, attributes, setActivatorNodeRef }),
   });
 
   return (

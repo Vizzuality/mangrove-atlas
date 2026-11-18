@@ -32,14 +32,18 @@ test.describe('Planet date select popup', () => {
     await expect(trigger).toBeVisible({ timeout: 30000 });
     await trigger.click();
 
-    const popup = page.getByRole('listbox');
+    // Scope to this select's popup: other widgets (e.g. Species Location's inline
+    // search list) also expose a listbox with options on the same page.
+    const popupId = await trigger.getAttribute('aria-controls');
+    expect(popupId).toBeTruthy();
+    const popup = page.locator(`[id="${popupId}"]`);
     await expect(popup).toBeVisible();
 
     const box = await popup.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.height).toBeLessThan(300);
 
-    const items = page.getByRole('option');
+    const items = popup.getByRole('option');
     await expect(items).toHaveCount(MOCK_MOSAICS.mosaics.length);
 
     // Radix auto-scrolls the popup to the selected item (oldest mosaic, last

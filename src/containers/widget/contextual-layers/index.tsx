@@ -16,15 +16,9 @@ type ContextualLayersComponentProps = {
   id: string;
   origin?: WidgetSlugType; // Optional prop to track the origin of the suggestion
   description: string;
-  position?: 'top' | 'bottom'; // Where the layer lands in the active-layers stack when toggled on
 };
 
-const ContextualLayersComponent = ({
-  id,
-  origin,
-  description,
-  position = 'bottom',
-}: ContextualLayersComponentProps) => {
+const ContextualLayersComponent = ({ id, origin, description }: ContextualLayersComponentProps) => {
   const pathname = usePathname();
   const isPrintReport = pathname?.startsWith('/print-report');
   const [activeLayers] = useSyncActiveLayers();
@@ -46,7 +40,7 @@ const ContextualLayersComponent = ({
             <Content id={id} description={description} />
           </div>
         </div>
-        {!isPrintReport && <Controls id={id} origin={origin} position={position} />}
+        {!isPrintReport && <Controls id={id} origin={origin} />}
       </div>
     </div>
   );

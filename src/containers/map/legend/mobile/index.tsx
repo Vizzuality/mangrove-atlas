@@ -15,7 +15,7 @@ const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 const PANEL_STYLE = 'shadow-medium rounded-3xl border border-black/10 bg-white';
 
 const Legend = () => {
-  const { legendLayers, handleChangeOrder } = useLegendLayers();
+  const { legendLayers, fixedLayerIds, handleChangeOrder } = useLegendLayers();
   const [isOpen, setIsOpen] = useState(true);
 
   if (!legendLayers?.length) return null;
@@ -50,6 +50,7 @@ const Legend = () => {
         <div className="box-content flex max-h-[calc(100vh-266px)] flex-col overflow-y-auto p-4">
           <SortableList
             onChangeOrder={handleChangeOrder}
+            fixedIds={fixedLayerIds}
             sortable={{ handle: true, enabled: true }}
           >
             {legendLayers.map((layer) => (

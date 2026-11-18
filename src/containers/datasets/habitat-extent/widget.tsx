@@ -241,10 +241,9 @@ const HabitatExtent = () => {
             )}
           </div>
           <ContextualLayersWrapper
-            origin="mangrove_alerts"
+            origin="mangrove_habitat_extent"
             id={contextualLayers[0].id}
             description={contextualLayers[0].description}
-            position="top"
           />
         </div>
       )}
