@@ -2,7 +2,8 @@
  * Internal placement type of contextual layers. Not shown to users.
  *
  * - detail: more detailed version of data already on the map. Goes on top, or
- *   directly below its `parent` when the parent is active. Movable.
+ *   directly above its `parent` when the parent is active (and the parent,
+ *   turned on later, goes directly below it). Movable.
  * - context: adds context around the data (boundaries, other habitats). Goes
  *   below the data layers. Movable.
  * - background: satellite imagery. Always at the bottom, just above the

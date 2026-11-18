@@ -88,7 +88,7 @@ test.describe('contextual layers in the legend', () => {
     test.fixme(browserName === 'firefox', 'Firefox: hydration instability');
   });
 
-  test('hi-res extent from the map tip goes directly below habitat extent', async ({ page }) => {
+  test('hi-res extent from the map tip goes directly above habitat extent', async ({ page }) => {
     await page.goto(`/?${layersParam(['mangrove_net_change', 'mangrove_habitat_extent'])}`);
     await expect(page.getByTestId('legend-content')).toBeVisible();
 
@@ -98,7 +98,20 @@ test.describe('contextual layers in the legend', () => {
 
     await expect
       .poll(() => legendOrder(page))
-      .toEqual(['mangrove_net_change', 'mangrove_habitat_extent', 'hi-res-extent']);
+      .toEqual(['mangrove_net_change', 'hi-res-extent', 'mangrove_habitat_extent']);
+  });
+
+  test('habitat extent turned on after hi-res extent goes directly below it', async ({ page }) => {
+    await page.goto(`/?${layersParam(['mangrove_net_change', 'hi-res-extent'])}`);
+    await expect(page.getByTestId('legend-content')).toBeVisible();
+
+    const extentSwitch = page.getByTestId('mangrove_habitat_extent');
+    await extentSwitch.click();
+    await expect(extentSwitch).toHaveAttribute('data-state', 'checked');
+
+    await expect
+      .poll(() => legendOrder(page))
+      .toEqual(['mangrove_net_change', 'hi-res-extent', 'mangrove_habitat_extent']);
   });
 
   test('removing hi-res extent from the legend turns off the map tip', async ({ page }) => {
@@ -129,8 +142,8 @@ test.describe('contextual layers in the legend', () => {
 
   test('reordering the legend keeps layers without a row in the URL', async ({ page }) => {
     await page.goto(
-      // National dashboard layers have no row outside their countries.
-      `/?${layersParam(['mangrove_net_change', 'mangrove_habitat_extent', 'mangrove_national_dashboard_layer_KEN'])}`
+      // Drivers of change is a country-only widget: active, but no legend row worldwide.
+      `/?${layersParam(['mangrove_net_change', 'mangrove_habitat_extent', 'mangrove_drivers_change'])}`
     );
     const legendContent = page.getByTestId('legend-content');
     await expect(legendContent).toBeVisible();
@@ -152,6 +165,8 @@ test.describe('contextual layers in the legend', () => {
     await expect
       .poll(() => legendOrder(page))
       .toEqual(['mangrove_habitat_extent', 'mangrove_net_change']);
-    expect(urlLayerIds(page)).toContain('mangrove_national_dashboard_layer_KEN');
+    await expect
+      .poll(() => urlLayerIds(page))
+      .toEqual(['mangrove_habitat_extent', 'mangrove_net_change', 'mangrove_drivers_change']);
   });
 });

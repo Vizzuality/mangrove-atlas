@@ -39,10 +39,18 @@ export function insertLayer<T extends WithId>(layers: T[], newLayer: T): T[] {
     case 'detail': {
       const parent = CONTEXTUAL_LAYER_TYPES[newLayer.id]?.parent;
       const parentIdx = parent ? current.findIndex((l) => l.id === parent) : -1;
-      const at = parentIdx === -1 ? 0 : parentIdx + 1;
+      // Directly on top of its parent when the parent is active, otherwise on top.
+      const at = parentIdx === -1 ? 0 : parentIdx;
       return [...current.slice(0, at), newLayer, ...current.slice(at)];
     }
     default: {
+      // A parent turned on after its detail layer goes directly below it.
+      const detailIdx = current.findIndex(
+        (l) => CONTEXTUAL_LAYER_TYPES[l.id]?.parent === newLayer.id
+      );
+      if (detailIdx !== -1) {
+        return [...current.slice(0, detailIdx + 1), newLayer, ...current.slice(detailIdx + 1)];
+      }
       // Newest data layer goes on top of the data block, below leading detail layers.
       let at = 0;
       while (at < current.length && getLayerType(current[at].id) === 'detail') at += 1;

@@ -24,11 +24,21 @@ describe('insertLayer', () => {
     expect(ids(insertLayer([l(NET), l(WDPA)], l(HI_RES)))).toEqual([HI_RES, NET, WDPA]);
   });
 
-  it('puts a detail layer directly below its active parent', () => {
+  it('puts a detail layer directly above its active parent', () => {
     expect(ids(insertLayer([l(NET), l(EXTENT), l(WDPA)], l(HI_RES)))).toEqual([
       NET,
-      EXTENT,
       HI_RES,
+      EXTENT,
+      WDPA,
+    ]);
+  });
+
+  it('puts a parent turned on after its detail layer directly below it', () => {
+    expect(ids(insertLayer([l(HI_RES), l(NET)], l(EXTENT)))).toEqual([HI_RES, EXTENT, NET]);
+    expect(ids(insertLayer([l(NET), l(HI_RES), l(WDPA)], l(EXTENT)))).toEqual([
+      NET,
+      HI_RES,
+      EXTENT,
       WDPA,
     ]);
   });
@@ -65,7 +75,7 @@ describe('toggleLayer', () => {
   });
 
   it('inserts an inactive layer by type', () => {
-    expect(ids(toggleLayer([l(EXTENT)], l(HI_RES)))).toEqual([EXTENT, HI_RES]);
+    expect(ids(toggleLayer([l(EXTENT)], l(HI_RES)))).toEqual([HI_RES, EXTENT]);
   });
 });
 
