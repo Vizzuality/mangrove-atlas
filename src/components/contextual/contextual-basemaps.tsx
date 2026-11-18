@@ -1,7 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
+import { insertLayer } from '@/lib/layers/order';
 
 import { useSyncActiveLayers } from '@/store/layers';
 
@@ -15,13 +16,11 @@ import type { ContextualBasemapsId } from 'types/widget';
 
 const ContextualBasemapsMapSettings = () => {
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
-  const defaultActive =
-    activeLayers?.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
-  const [isActive, setIsActive] = useState(defaultActive);
+  // Derived from the URL so map tip, map settings and legend stay in sync.
+  const isActive = activeLayers?.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
 
   const handleClick = useCallback(
     (id) => {
-      setIsActive(id);
       const noPlanetLayers = activeLayers?.filter((w) => !w.id.includes('planet_medres'));
 
       // Google Analytics tracking
@@ -36,14 +35,11 @@ const ContextualBasemapsMapSettings = () => {
       const layersUpdate =
         id === 'no-layer'
           ? noPlanetLayers
-          : ([
-              {
-                id: id as ContextualBasemapsId,
-                opacity: '1',
-                visibility: 'visible',
-              },
-              ...noPlanetLayers,
-            ] as Layer[]);
+          : insertLayer(noPlanetLayers ?? [], {
+              id: id as ContextualBasemapsId,
+              opacity: '1',
+              visibility: 'visible',
+            } as Layer);
       setActiveLayers(layersUpdate);
     },
     [activeLayers, setActiveLayers]
@@ -51,7 +47,7 @@ const ContextualBasemapsMapSettings = () => {
 
   return (
     <div className="relative flex flex-col text-sm leading-none text-black/85">
-      <RadioGroup onValueChange={handleClick} defaultValue={defaultActive} className="space-y-2">
+      <RadioGroup onValueChange={handleClick} value={isActive} className="space-y-2">
         {/* The option text is rendered by RadioGroupItem, inside the radio
             button itself — see hi-res-extent-basemap.tsx for the reasoning. */}
         <RadioGroupItem

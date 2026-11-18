@@ -204,7 +204,6 @@ const AlertsWidget = () => {
               origin="mangrove_alerts"
               id={contextualLayers[0].id}
               description={contextualLayers[0].description}
-              position="bottom"
             />
           </div>
 

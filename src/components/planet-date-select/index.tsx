@@ -45,20 +45,13 @@ const DateSelect = ({
 
   const handleDate = useCallback(
     (value: string) => {
-      const layer = activeLayers?.find((l) => l.id === id);
-      const filteredLayers = activeLayers?.filter((l) => l.id !== id);
-      if (!!layer) {
-        setActiveLayers([
-          {
-            ...layer,
-            id: id as ContextualBasemapsId,
-            settings: {
-              ...layer.settings,
-              date: value,
-            },
-          },
-          ...filteredLayers,
-        ]);
+      if (activeLayers?.some((l) => l.id === id)) {
+        // Update in place: background layers keep their slot at the bottom.
+        setActiveLayers(
+          activeLayers.map((l) =>
+            l.id === id ? { ...l, settings: { ...l.settings, date: value } } : l
+          )
+        );
       }
 
       // Google Analytics tracking
@@ -78,8 +71,7 @@ const DateSelect = ({
     <Select value={selectedDate} onValueChange={handleDate}>
       <SelectTrigger
         className={cn({
-          'border-brand-800 border-opacity-50 z-70 flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border':
-            true,
+          'border-brand-800 border-opacity-50 z-70 flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border': true,
           [SIZE[size]]: true,
         })}
         aria-label="Select period"

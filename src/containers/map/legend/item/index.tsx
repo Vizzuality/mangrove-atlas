@@ -12,7 +12,7 @@ import { useAtomValue } from 'jotai';
 
 import { MAP_LEGENDS, WIDGETS } from '@/containers/datasets';
 import Helper from '@/containers/help/helper';
-import { LAYERS } from '@/containers/layers/constants';
+import { LEGEND_LAYERS } from '@/containers/layers/constants';
 import WidgetWrapper from '@/containers/widget';
 import { widgets } from '@/containers/widgets/constants';
 
@@ -36,10 +36,13 @@ const LegendItem = ({
   listeners,
   attributes,
   setActivatorNodeRef,
+  fixed = false,
 }: {
   id: string;
   embedded?: boolean;
   l: Layer;
+  // Injected by SortableItem. Fixed rows (background layers) have no drag handle.
+  fixed?: boolean;
   // Injected by SortableItem. The drag activator belongs on the handle button
   // below, not on the wrapper around the item's other controls.
   listeners?: SyntheticListenerMap;
@@ -63,7 +66,7 @@ const LegendItem = ({
   )?.settings?.name;
 
   const layerName = (label) => {
-    return LAYERS.find((w) => w.id === label)?.name;
+    return LEGEND_LAYERS.find((w) => w.id === label)?.name;
   };
 
   const HELPER_ID = activeLayers?.[0]?.id;
@@ -96,7 +99,11 @@ const LegendItem = ({
       <div className="flex w-full items-start justify-between">
         <div className="flex items-start gap-2">
           <Media greaterThanOrEqual="md">
-            {!embedded && (
+            {!embedded && fixed && (
+              // Keeps the title aligned with draggable rows.
+              <span className="min-h-6 min-w-6" aria-hidden="true" />
+            )}
+            {!embedded && !fixed && (
               <button
                 type="button"
                 ref={setActivatorNodeRef}
@@ -109,51 +116,58 @@ const LegendItem = ({
               </button>
             )}
           </Media>
-          <Dialog open={statisticsDialogVisibility} onOpenChange={setStatisticsDialogVisibility}>
-            <Tooltip>
-              <DialogTrigger asChild>
-                <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    aria-label="Layer statistics"
-                    className="flex min-h-6 cursor-pointer items-center"
-                  >
-                    <p className="pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
-                      {typeof title === 'string' ? <PreserveUnits>{title}</PreserveUnits> : title}
-                    </p>
-                  </button>
-                </TooltipTrigger>
-              </DialogTrigger>
-              <TooltipPortal>
-                <TooltipContent className="bg-gray-600 px-2 text-white">
-                  Layer statistics
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
+          {Widget ? (
+            <Dialog open={statisticsDialogVisibility} onOpenChange={setStatisticsDialogVisibility}>
+              <Tooltip>
+                <DialogTrigger asChild>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      aria-label="Layer statistics"
+                      className="flex min-h-6 cursor-pointer items-center"
+                    >
+                      <p className="pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
+                        {typeof title === 'string' ? <PreserveUnits>{title}</PreserveUnits> : title}
+                      </p>
+                    </button>
+                  </TooltipTrigger>
+                </DialogTrigger>
+                <TooltipPortal>
+                  <TooltipContent className="bg-gray-600 px-2 text-white">
+                    Layer statistics
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>
 
-            <DialogContent
-              className={cn({
-                'h-screen w-screen min-w-[min(33.75rem,100%)] md:mb-20 md:h-auto md:w-auto': true,
-                hidden: guideIsActive,
-              })}
-              overlay={false}
-            >
-              <DialogTitle className="sr-only">Layer statistics</DialogTitle>
-              <div className="no-scrollbar relative w-full min-w-0 overflow-x-auto overflow-y-auto px-3">
-                <WidgetWrapper
-                  key={l.id}
-                  title={title}
-                  applicability={widget?.applicability}
-                  contextualLayers={widget?.contextualLayers}
-                  id={widgetId as WidgetSlugType}
-                  info
-                >
-                  <Widget id={widgetId} />
-                </WidgetWrapper>
-              </div>
-              <DialogClose onClose={() => setStatisticsDialogVisibility(false)} />
-            </DialogContent>
-          </Dialog>
+              <DialogContent
+                className={cn({
+                  'h-screen w-screen min-w-[min(33.75rem,100%)] md:mb-20 md:h-auto md:w-auto': true,
+                  hidden: guideIsActive,
+                })}
+                overlay={false}
+              >
+                <DialogTitle className="sr-only">Layer statistics</DialogTitle>
+                <div className="no-scrollbar relative w-full min-w-0 overflow-x-auto overflow-y-auto px-3">
+                  <WidgetWrapper
+                    key={l.id}
+                    title={title}
+                    applicability={widget?.applicability}
+                    contextualLayers={widget?.contextualLayers}
+                    id={widgetId as WidgetSlugType}
+                    info
+                  >
+                    <Widget id={widgetId} />
+                  </WidgetWrapper>
+                </div>
+                <DialogClose onClose={() => setStatisticsDialogVisibility(false)} />
+              </DialogContent>
+            </Dialog>
+          ) : (
+            // Contextual layers without a widget (hi-res extent, Planet): plain title.
+            <p className="flex min-h-6 items-center pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
+              {typeof title === 'string' ? <PreserveUnits>{title}</PreserveUnits> : title}
+            </p>
+          )}
         </div>
         {!embedded && (
           <Helper
@@ -173,6 +187,12 @@ const LegendItem = ({
           </Helper>
         )}
       </div>
+
+      {fixed && (
+        <p className="w-full pt-2 pl-6 text-xs text-black/60">
+          Always drawn at the bottom of the map
+        </p>
+      )}
 
       {WidgetLegend && (
         <div

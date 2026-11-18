@@ -25,11 +25,14 @@ export interface SortableListProps extends PropsWithChildren {
   sortable?: Sortable;
   onChangeOrder: OnChangeOrder;
   divided?: boolean;
+  /** Item ids that can't be dragged (e.g. background layers pinned to the bottom). */
+  fixedIds?: string[];
 }
 
 export interface SortableItemProps extends PropsWithChildren {
   id: string;
   sortable: Sortable;
   divided?: boolean;
+  fixed?: boolean;
   'data-testid'?: string;
 }

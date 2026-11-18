@@ -10,7 +10,7 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 import { useAtomValue } from 'jotai';
 
 import { INFO } from '@/containers/datasets';
-import { LAYERS } from '@/containers/layers/constants';
+import { LEGEND_LAYERS } from '@/containers/layers/constants';
 
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -101,7 +101,7 @@ const LegendControls = ({
   );
 
   const layerName = (label) => {
-    return LAYERS.find((w) => w.id === label)?.name;
+    return LEGEND_LAYERS.find((w) => w.id === label)?.name;
   };
 
   const onChangeOpacity = useCallback(
