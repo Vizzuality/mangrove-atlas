@@ -16,24 +16,34 @@ const SIZE = {
   sm: 'h-8 w-8',
 };
 
-const DeleteDrawingButton = ({
-  size = 'md',
-  children = null,
-}: {
-  size?: 'sm' | 'md';
-  children?: ReactElement;
-}) => {
+// Clears the drawn/uploaded area and its analysis, and goes back to worldwide.
+export function useDeleteDrawing() {
   const resetAnalysisState = useResetAtom(analysisAtom);
   const resetDrawingState = useResetAtom(drawingToolAtom);
   const resetUploadedGeojson = useResetAtom(drawingUploadToolAtom);
   const { navigate } = useLocationNavigation();
 
-  const handleResetPage = useCallback(() => {
+  return useCallback(() => {
     resetDrawingState();
     resetAnalysisState();
     resetUploadedGeojson();
     navigate({ type: 'worldwide' });
   }, [navigate, resetDrawingState, resetUploadedGeojson, resetAnalysisState]);
+}
+
+const DeleteDrawingButton = ({
+  size = 'md',
+  children = null,
+  nested = false,
+}: {
+  size?: 'sm' | 'md';
+  children?: ReactElement;
+  // Set when rendered inside another <button>: a nested <button> is invalid HTML and
+  // breaks hydration, so render a decorative icon only. The parent button must call
+  // `useDeleteDrawing()` itself.
+  nested?: boolean;
+}) => {
+  const handleResetPage = useDeleteDrawing();
 
   return (
     <div className="flex w-full flex-col items-center justify-center space-y-1">
@@ -43,14 +53,20 @@ const DeleteDrawingButton = ({
           [SIZE[size]]: true,
         })}
       >
-        <button
-          type="button"
-          onClick={handleResetPage}
-          aria-label="Delete custom area"
-          data-testid="delete-custom-area-button"
-        >
-          <REMOVE_SVG className="h-3.5 w-3.5 fill-current text-white" aria-hidden={true} />
-        </button>
+        {nested ? (
+          <span data-testid="delete-custom-area-button">
+            <REMOVE_SVG className="h-3.5 w-3.5 fill-current text-white" aria-hidden={true} />
+          </span>
+        ) : (
+          <button
+            type="button"
+            onClick={handleResetPage}
+            aria-label="Delete custom area"
+            data-testid="delete-custom-area-button"
+          >
+            <REMOVE_SVG className="h-3.5 w-3.5 fill-current text-white" aria-hidden={true} />
+          </button>
+        )}
       </div>
     </div>
   );

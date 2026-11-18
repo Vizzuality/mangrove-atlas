@@ -10,7 +10,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 
 import Helper from '@/containers/help/helper';
-import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
+import DeleteDrawingButton, { useDeleteDrawing } from '@/containers/map/delete-drawing-button';
 
 import DRAW_SVG from '@/svgs/sidebar/draw';
 
@@ -20,17 +20,19 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
 
   const [{ uploadedGeojson }] = useAtom(drawingUploadToolAtom);
   const setMapCursor = useSetAtom(mapCursorAtom);
+  const deleteDrawing = useDeleteDrawing();
 
   const handleDrawingMode = useCallback(() => {
     const nextEnabled = !isDrawingToolEnabled;
     const action = isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw';
 
-    resetDrawingUploadToolState();
-
-    setDrawingToolState((prev) => ({
-      ...prev,
-      enabled: nextEnabled,
-    }));
+    if (isDrawingToolEnabled) {
+      // "Delete area": same as the delete (X) button — clear the area and its analysis.
+      deleteDrawing();
+    } else {
+      resetDrawingUploadToolState();
+      setDrawingToolState((prev) => ({ ...prev, enabled: true }));
+    }
 
     setMapCursor(nextEnabled ? 'pointer' : 'grab');
 
@@ -42,6 +44,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   }, [
     isDrawingToolEnabled,
     uploadedGeojson,
+    deleteDrawing,
     resetDrawingUploadToolState,
     setDrawingToolState,
     setMapCursor,
@@ -71,7 +74,11 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         data-testid="drawing-tool-button"
         disabled={!!uploadedGeojson}
       >
-        {isDrawingToolEnabled ? <DeleteDrawingButton size="sm" /> : <DRAW_SVG aria-hidden="true" />}
+        {isDrawingToolEnabled ? (
+          <DeleteDrawingButton size="sm" nested />
+        ) : (
+          <DRAW_SVG aria-hidden="true" />
+        )}
         <span
           className={cn({
             // Minimum width is customized to prevent layout shifts in the menu when the text changes.
