@@ -2,6 +2,7 @@
 
 import { trackEvent } from '@/lib/analytics/ga';
 
+import { Close as DialogPrimitiveClose } from '@radix-ui/react-dialog';
 import { useSession } from 'next-auth/react';
 
 import { formatSavedAt, useDefaultView } from 'hooks/use-default-view';
@@ -15,7 +16,7 @@ const DefaultView = () => {
   const { data: session } = useSession();
   const settings = session?.user?.settings;
 
-  const { getCurrentView, resetView } = useDefaultView();
+  const { getCurrentView, applyView, resetView } = useDefaultView();
   const updateDefaultView = useUpdateDefaultView();
 
   const basemapName = BASEMAPS.find(({ id }) => id === settings?.basemap)?.name;
@@ -26,6 +27,18 @@ const DefaultView = () => {
     trackEvent('Default view - save', {
       category: 'Menu - profile - default view',
       action: settings ? 'Replace' : 'Save',
+      label: 'Default view',
+    });
+  };
+
+  // No preventDefault: the button is wrapped in Radix `Dialog.Close`, which skips
+  // closing the host dialog when the click event is default-prevented.
+  const handleApply = () => {
+    if (!settings) return;
+    applyView(settings);
+    trackEvent('Default view - apply', {
+      category: 'Menu - profile - default view',
+      action: 'Apply',
       label: 'Default view',
     });
   };
@@ -43,22 +56,30 @@ const DefaultView = () => {
     <div className="flex flex-col gap-1.5 p-1">
       <p className="text-xs font-semibold">Default view</p>
       <div className="flex flex-col gap-4 rounded-2xl border border-gray-200 p-3">
-        <div className="flex flex-col gap-0.5 text-sm leading-5 text-black/85">
-          {settings ? (
-            <>
+        {settings ? (
+          // Close the host dialog so the map is visible after applying the view.
+          <DialogPrimitiveClose asChild>
+            <button
+              type="button"
+              title="Apply your default view"
+              className="focus-visible:ring-brand-500 -m-1 flex flex-col gap-0.5 rounded-lg p-1 text-left text-sm leading-5 text-black/85 hover:bg-gray-50 focus-visible:ring-2 focus-visible:outline-none"
+              onClick={handleApply}
+            >
               {settings.saved_at && (
-                <p className="font-semibold">Saved on {formatSavedAt(settings.saved_at)}</p>
+                <span className="font-semibold">Saved on {formatSavedAt(settings.saved_at)}</span>
               )}
-              <p className="font-light">
+              <span className="font-light">
                 {basemapName && `${basemapName} basemap · `}
                 <span className="notranslate">{widgetsCount}</span>{' '}
                 {widgetsCount === 1 ? 'widget' : 'widgets'}
-              </p>
-            </>
-          ) : (
+              </span>
+            </button>
+          </DialogPrimitiveClose>
+        ) : (
+          <div className="flex flex-col gap-0.5 text-sm leading-5 text-black/85">
             <p className="font-light">Using platform default</p>
-          )}
-        </div>
+          </div>
+        )}
         <div className="flex items-center gap-3">
           <Button
             type="button"
