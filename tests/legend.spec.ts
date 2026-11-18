@@ -1,4 +1,33 @@
+import type { Page } from '@playwright/test';
+
 import { expect, test } from './fixtures/test';
+
+// Keyboard-drags the first legend row down onto `targetId` and drops it there.
+// dnd-kit's KeyboardSensor attaches its keydown listener in a setTimeout after
+// the pick-up, so an ArrowDown sent right after "picked up" can be dropped.
+// Its live region is the signal: keep pressing until it announces the target
+// (extra presses are no-ops once the row is over the last droppable).
+const moveFirstLegendItemOnto = async (page: Page, targetId: string) => {
+  const announcement = () =>
+    page.evaluate(() =>
+      Array.from(document.querySelectorAll('[role="status"]'))
+        .map((el) => el.textContent ?? '')
+        .join(' ')
+    );
+
+  await page
+    .getByTestId('legend-content')
+    .getByRole('button', { name: 'Drag to reorder' })
+    .first()
+    .focus();
+  await page.keyboard.press('Space');
+  await expect.poll(announcement).toContain('Draggable item');
+  await expect(async () => {
+    await page.keyboard.press('ArrowDown');
+    expect(await announcement()).toContain(`droppable area ${targetId}`);
+  }).toPass({ intervals: [100, 250, 500] });
+  await page.keyboard.press('Space');
+};
 
 test('test legend order', async ({ page, browserName }) => {
   test.fixme(browserName === 'firefox', 'Firefox: Recoil/hydration instability');
@@ -47,21 +76,7 @@ test('a legend item can be reordered from its drag handle with the keyboard', as
   const order = () => items.evaluateAll((els) => els.map((el) => el.dataset.testid));
   const before = await order();
 
-  // dnd-kit drives the keyboard drag off animation frames, so each key has to
-  // land before the next one is meaningful. Its own live region is the signal.
-  const announcement = () =>
-    page.evaluate(() =>
-      Array.from(document.querySelectorAll('[role="status"]'))
-        .map((el) => el.textContent ?? '')
-        .join(' ')
-    );
-
-  await legendContent.getByRole('button', { name: 'Drag to reorder' }).first().focus();
-  await page.keyboard.press('Space');
-  await expect.poll(announcement).toContain('Draggable item');
-  await page.keyboard.press('ArrowDown');
-  await expect.poll(announcement).toContain(before[1].replace('legend-item-', ''));
-  await page.keyboard.press('Space');
+  await moveFirstLegendItemOnto(page, before[1].replace('legend-item-', ''));
 
   await expect.poll(order).toEqual([before[1], before[0]]);
 });
@@ -92,7 +107,9 @@ test.describe('contextual layers in the legend', () => {
     await page.goto(`/?${layersParam(['mangrove_net_change', 'mangrove_habitat_extent'])}`);
     await expect(page.getByTestId('legend-content')).toBeVisible();
 
-    const mapTipSwitch = page.locator('button#hi-res-extent');
+    const mapTipSwitch = page
+      .getByTestId('widget-mangrove_habitat_extent-content')
+      .getByRole('switch', { name: 'Toggle contextual layer' });
     await mapTipSwitch.click();
     await expect(mapTipSwitch).toHaveAttribute('data-state', 'checked');
 
@@ -122,7 +139,12 @@ test.describe('contextual layers in the legend', () => {
     await row.getByRole('button', { name: 'Remove layer' }).click();
 
     await expect(row).toHaveCount(0);
-    await expect(page.locator('button#hi-res-extent')).toHaveAttribute('data-state', 'unchecked');
+    // Every widget suggesting the map tip reflects the same layer state.
+    const mapTipSwitches = page.getByRole('switch', { name: 'Toggle contextual layer' });
+    await expect(mapTipSwitches.first()).toBeVisible();
+    for (const mapTipSwitch of await mapTipSwitches.all()) {
+      await expect(mapTipSwitch).toHaveAttribute('data-state', 'unchecked');
+    }
   });
 
   test('Planet has a fixed row at the bottom with no drag handle', async ({ page }) => {
@@ -145,22 +167,9 @@ test.describe('contextual layers in the legend', () => {
       // Drivers of change is a country-only widget: active, but no legend row worldwide.
       `/?${layersParam(['mangrove_net_change', 'mangrove_habitat_extent', 'mangrove_drivers_change'])}`
     );
-    const legendContent = page.getByTestId('legend-content');
-    await expect(legendContent).toBeVisible();
+    await expect(page.getByTestId('legend-content')).toBeVisible();
 
-    const announcement = () =>
-      page.evaluate(() =>
-        Array.from(document.querySelectorAll('[role="status"]'))
-          .map((el) => el.textContent ?? '')
-          .join(' ')
-      );
-
-    await legendContent.getByRole('button', { name: 'Drag to reorder' }).first().focus();
-    await page.keyboard.press('Space');
-    await expect.poll(announcement).toContain('Draggable item');
-    await page.keyboard.press('ArrowDown');
-    await expect.poll(announcement).toContain('mangrove_habitat_extent');
-    await page.keyboard.press('Space');
+    await moveFirstLegendItemOnto(page, 'mangrove_habitat_extent');
 
     await expect
       .poll(() => legendOrder(page))

@@ -67,7 +67,9 @@ const Controls = ({ id, origin }: ControlTypes) => {
         </DialogContent>
       </Dialog>
 
-      <SwitchWrapper id={id} label="Toggle contextual layer">
+      {/* The same contextual layer can be suggested by several widgets at once,
+          so the DOM id is scoped to the widget to keep it (and its label id) unique. */}
+      <SwitchWrapper id={origin ? `${id}-${origin}` : id} label="Toggle contextual layer">
         <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
           <SwitchThumb />
         </SwitchRoot>
