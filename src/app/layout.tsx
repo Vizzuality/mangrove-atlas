@@ -47,7 +47,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    // Browser extensions (e.g. LastPass) add attributes to <html> before hydration.
+    // Only silences attribute mismatches on this element, not its children.
+    <html lang="en" suppressHydrationWarning>
       <head>
         <MediaStylesTag />
         <style
