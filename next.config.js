@@ -19,6 +19,10 @@ const nextConfig = {
   output: process.env.VERCEL ? undefined : 'standalone',
   poweredByHeader: false,
 
+  experimental: {
+    agentUpgrade: 'security',
+  },
+
   images: {
     remotePatterns: [
       {
