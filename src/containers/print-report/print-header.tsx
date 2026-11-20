@@ -3,6 +3,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { customAreaLabelAtom } from '@/store/drawing-tool';
+import { printReportStatusAtom } from '@/store/print-report';
 
 import { useAtomValue } from 'jotai';
 
@@ -10,6 +11,13 @@ import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
+
+const STATUS_LABEL = {
+  restoring: 'Loading area...',
+  loading: 'Loading widgets...',
+  capturing: 'Preparing report...',
+  ready: 'Print report',
+} as const;
 
 const PrintHeader = () => {
   const { type, id } = useSyncLocation();
@@ -21,6 +29,8 @@ const PrintHeader = () => {
   });
 
   const customAreaLabel = useAtomValue(customAreaLabelAtom);
+  const status = useAtomValue(printReportStatusAtom);
+  const isReady = status === 'ready';
 
   const displayName = useMemo(() => {
     if (locationType === 'custom-area') return customAreaLabel ?? 'Custom Area';
@@ -36,9 +46,11 @@ const PrintHeader = () => {
       <button
         type="button"
         onClick={handlePrint}
-        className="print-report-no-print bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-8 py-2 text-sm font-semibold text-white shadow-md transition-colors"
+        disabled={!isReady}
+        aria-busy={!isReady || undefined}
+        className="print-report-no-print bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-8 py-2 text-sm font-semibold whitespace-nowrap text-white shadow-md transition-colors disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Print report
+        {STATUS_LABEL[status]}
       </button>
       <div>
         <h1 className="text-3xl font-light text-black/85 first-letter:uppercase">{displayName}</h1>
