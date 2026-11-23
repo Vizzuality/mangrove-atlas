@@ -33,10 +33,6 @@ jobs:
       AUTH_API_URL: ${{ secrets.AUTH_API_URL }}
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
       NEXTAUTH_URL: http://localhost:3000
-      NEXT_PUBLIC_SMTP_ADDRESS: ${{ secrets.NEXT_PUBLIC_SMTP_ADDRESS }}
-      NEXT_PUBLIC_SMTP_PASSWORD: ${{ secrets.NEXT_PUBLIC_SMTP_PASSWORD }}
-      NEXT_PUBLIC_SMTP_PORT: ${{ secrets.NEXT_PUBLIC_SMTP_PORT }}
-      NEXT_PUBLIC_SMTP_USER_NAME: ${{ secrets.NEXT_PUBLIC_SMTP_USER_NAME }}
       # NEXT_PUBLIC_VERCEL_ENV / ENVIRONMENT / FEATURED_FLAGS / GA_ID are
       # pinned in the committed .env.test (loaded by playwright.config.ts
       # with override:true). Keep build-time branching values there so local

@@ -47,6 +47,20 @@ export function isAllowedRedirectUri(uri: string): boolean {
   return isAllowedOrigin(uri);
 }
 
+/**
+ * CSRF guard for state-changing SSO endpoints (sync, logout).
+ * CORS only hides the response — a cross-site form/fetch POST still executes
+ * and sets/clears cookies. Browsers always send `Origin` on cross-origin POSTs
+ * (including the opaque "null" origin), so reject any present Origin that is
+ * not trusted. A missing Origin means a non-browser client, which can't ride
+ * a victim's cookies, so it is allowed.
+ */
+export function isCrossSiteRequestRejected(request: NextRequest): boolean {
+  const origin = request.headers.get('origin');
+  if (origin === null) return false;
+  return !isAllowedOrigin(origin);
+}
+
 const SSO_CORS_BASE_HEADERS: Record<string, string> = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
