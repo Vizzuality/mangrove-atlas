@@ -52,7 +52,11 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     isFetched,
   } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
-  const locationsToDisplay = searchValue === '' ? locations : searchResults;
+  // `locations` is undefined when /locations failed (retry: false).
+  const locationsToDisplay = useMemo(
+    () => (searchValue === '' ? locations : searchResults) ?? [],
+    [searchValue, locations, searchResults]
+  );
   // A fresh cache on every render discards all measured row heights, so the next
   // render re-measures and the rows shift. That shift lands between a click's
   // mousedown and mouseup and the click is lost — see the focus guard below.

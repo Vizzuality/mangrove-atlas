@@ -28,7 +28,17 @@ const defaultLayers: LayerState[] = [
 export const parseAsLayers = createParser({
   parse: (value: string) => {
     try {
-      return JSON.parse(value) as LayerState[];
+      const parsed: unknown = JSON.parse(value);
+      if (!Array.isArray(parsed)) return defaultLayers;
+      // Drop malformed entries (consumers call layer.id.startsWith etc.) and
+      // duplicate ids (a second addLayer with the same id breaks the map).
+      const seen = new Set<string>();
+      return parsed.filter((layer): layer is LayerState => {
+        if (!layer || typeof layer !== 'object' || typeof layer.id !== 'string') return false;
+        if (seen.has(layer.id)) return false;
+        seen.add(layer.id);
+        return true;
+      });
     } catch {
       return defaultLayers;
     }

@@ -2,16 +2,36 @@ import type { LayerProps } from 'react-map-gl';
 
 import { atom } from 'jotai';
 import type { LngLat } from 'mapbox-gl';
-import { createParser, parseAsString, useQueryState } from 'nuqs';
+import { createParser, parseAsStringLiteral, useQueryState } from 'nuqs';
+
+// Keep in sync with BasemapId in containers/datasets/contextual-layers/basemaps.
+// An unknown value would make mapbox fall back to its default style, which
+// lacks the `water` / `custom-layers` anchors every layer is inserted before.
+const BASEMAP_IDS = ['light', 'dark', 'satellite'] as const;
 
 export function useSyncBasemap() {
-  return useQueryState('basemap', parseAsString.withDefault('light'));
+  return useQueryState('basemap', parseAsStringLiteral(BASEMAP_IDS).withDefault('light'));
 }
 
+const isLngLat = (p: unknown): p is [number, number] =>
+  Array.isArray(p) &&
+  p.length === 2 &&
+  typeof p[0] === 'number' &&
+  typeof p[1] === 'number' &&
+  Number.isFinite(p[0]) &&
+  Number.isFinite(p[1]) &&
+  Math.abs(p[1]) <= 90;
+
+// Only accept [[lng, lat], [lng, lat]]. Anything else (truncated share links,
+// hand-edited URLs) would make mapbox throw "Invalid LngLat" on map init.
 export const parseAsBounds = createParser({
   parse: (value: string) => {
     try {
-      return JSON.parse(value) as number[][];
+      const parsed: unknown = JSON.parse(value);
+      if (Array.isArray(parsed) && parsed.length === 2 && parsed.every(isLngLat)) {
+        return parsed as number[][];
+      }
+      return null;
     } catch {
       return null;
     }

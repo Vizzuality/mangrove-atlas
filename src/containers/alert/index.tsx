@@ -1,17 +1,14 @@
 import { useCallback } from 'react';
 
-import { useMap } from 'react-map-gl';
-
-import { useRouter, useSearchParams } from 'next/navigation';
-
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { locationsModalAtom } from '@/store/locations';
-import { locationToolAtom } from '@/store/sidebar';
 
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
+
+import { useLocationNavigation } from 'hooks/location-navigation';
 
 import { Dialog, DialogPortal, DialogContent } from '@/components/ui/dialog';
 
@@ -20,10 +17,6 @@ import CLOSE_SVG from '@/svgs/ui/close';
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
 const AnalysisAlert = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const locationTool = useAtomValue(locationToolAtom);
   const setLocationsModalIsOpen = useSetAtom(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useAtom(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useAtom(skipAnalysisAlertAtom);
@@ -31,50 +24,33 @@ const AnalysisAlert = () => {
   const resetDrawingState = useResetAtom(drawingToolAtom);
   const resetDrawingUploadState = useResetAtom(drawingUploadToolAtom);
 
-  const { [`default-desktop`]: map } = useMap();
+  const { navigate } = useLocationNavigation();
 
   const handleCancelResetPage = useCallback(() => {
     setAnalysisAlert(false);
     setLocationsModalIsOpen(false);
   }, [setAnalysisAlert, setLocationsModalIsOpen]);
 
-  const handleWorldwideView = useCallback(() => {
-    resetDrawingState();
-    resetAnalysisState();
-
-    router.replace(`/?${searchParams.toString()}`);
-
-    map?.flyTo({
-      center: [0, 20],
-      zoom: 2,
-    });
-  }, [router, map, searchParams, resetAnalysisState, resetDrawingState]);
-
   const handleResetPage = useCallback(() => {
     if (skipAnalysisAlert) {
       window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
-    }
-
-    if (locationTool === 'worldwide') {
-      handleWorldwideView();
     }
 
     resetDrawingState();
     resetAnalysisState();
     resetDrawingUploadState();
 
-    router.replace(`/?${searchParams.toString()}`);
+    // Same client-side nav the rest of the app uses: sets the worldwide
+    // camera target (the map flies and rewrites `bounds`) and goes to `/`.
+    navigate({ type: 'worldwide' });
 
     setAnalysisAlert(false);
   }, [
-    locationTool,
-    searchParams,
-    router,
+    navigate,
     resetDrawingState,
     resetDrawingUploadState,
     resetAnalysisState,
     setAnalysisAlert,
-    handleWorldwideView,
     skipAnalysisAlert,
   ]);
 

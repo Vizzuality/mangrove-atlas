@@ -2,11 +2,14 @@ import { useCallback } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { tmpCameraAtom } from '@/store/map';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { useSetAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 import type { Location, LocationTypes } from '@/containers/datasets/locations/types';
 
@@ -53,6 +56,9 @@ export function useLocationNavigation() {
   const searchParams = useSearchParams();
   const setTmpCamera = useSetAtom(tmpCameraAtom);
   const queryClient = useQueryClient();
+  const resetAnalysis = useResetAtom(analysisAtom);
+  const resetDrawing = useResetAtom(drawingToolAtom);
+  const resetDrawingUpload = useResetAtom(drawingUploadToolAtom);
 
   const navigate = useCallback(
     (target: NavTarget, bbox?: BBox | null) => {
@@ -78,6 +84,15 @@ export function useLocationNavigation() {
     (location: Location) => {
       const target = locationToNavTarget(location);
 
+      // Leaving a custom area for a real location: drop the drawn/uploaded
+      // geometry and analysis mode, otherwise widgets keep POSTing the old
+      // polygon while the URL and header show the new location.
+      if (target.type !== 'custom-area') {
+        resetAnalysis();
+        resetDrawing();
+        resetDrawingUpload();
+      }
+
       // Seed `useLocation`'s cache with the object we already have. Without it,
       // the new key has no data and `useLocation` hands out its worldwide-shaped
       // placeholder, so every widget fetches and flashes worldwide data until
@@ -95,7 +110,7 @@ export function useLocationNavigation() {
       const bbox = location.bounds ? (turfBbox(location.bounds) as BBox) : null;
       navigate(target, bbox);
     },
-    [navigate, queryClient]
+    [navigate, queryClient, resetAnalysis, resetDrawing, resetDrawingUpload]
   );
 
   return { navigate, navigateToLocation };

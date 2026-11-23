@@ -7,7 +7,6 @@ import { mapSettingsAtom } from '@/store/map-settings';
 import { locationToolAtom } from '@/store/sidebar';
 
 import { useAtom, useSetAtom } from 'jotai';
-import { useResetAtom } from 'jotai/utils';
 
 import MAP_SETTINGS_SVG from '@/svgs/sidebar/map-settings';
 
@@ -17,12 +16,14 @@ const MapSettings = () => {
   const [mapSettings, setMapViewState] = useAtom(mapSettingsAtom);
   const saveLocationTool = useSetAtom(locationToolAtom);
 
-  const resetDrawingToolState = useResetAtom(drawingToolAtom);
+  const setDrawingToolState = useSetAtom(drawingToolAtom);
   const handleMapSettingsView = useCallback(() => {
     setMapViewState(true);
-    resetDrawingToolState();
+    // Only leave drawing mode. Resetting the whole atom deleted the drawn
+    // polygon while analysis stayed enabled, leaving widgets with no area.
+    setDrawingToolState((prev) => ({ ...prev, enabled: false }));
     saveLocationTool(null);
-  }, [resetDrawingToolState, saveLocationTool, setMapViewState]);
+  }, [setDrawingToolState, saveLocationTool, setMapViewState]);
 
   return (
     <div className="flex flex-col space-y-2 text-center">
