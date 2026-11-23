@@ -25,7 +25,10 @@ export function getSafeCallbackUrl(callbackUrl: string | null): string {
   try {
     const url = new URL(raw, window.location.origin);
     if (url.origin !== window.location.origin) return '/';
-    return `${url.pathname}${url.search}${url.hash}` || '/';
+    // A same-origin URL can still carry a "//host" path, which the browser
+    // would treat as protocol-relative when navigating — collapse it.
+    const pathname = url.pathname.replace(/^\/+/, '/');
+    return `${pathname}${url.search}${url.hash}`;
   } catch {
     return '/';
   }
