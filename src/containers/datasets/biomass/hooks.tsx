@@ -23,6 +23,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';
 
+import { years as BIOMASS_YEARS } from './constants';
 import Tooltip from './tooltip';
 import type { BiomassData, ColorKeysTypes, Data, DataResponse } from './types';
 
@@ -48,9 +49,10 @@ export function useMangroveBiomass(
   const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
 
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
 
   const geojson = customGeojson || uploadedGeojson;
 
@@ -84,7 +86,8 @@ export function useMangroveBiomass(
   );
 
   const query = useQuery({
-    queryKey: [widgetSlug, params, geojson, location_id],
+    // currentYear is sent to the API, so it must be in the key to refetch on change.
+    queryKey: [widgetSlug, params, geojson, location_id, currentYear],
     queryFn: fetchMangroveBiomass,
     placeholderData: {
       data: [],
@@ -168,7 +171,9 @@ export function useMangroveBiomass(
 }
 
 export function useSource(): SourceProps {
-  const year = useAtomValue(BiomassYearSettings);
+  // The year atom is only set once the widget renders; with the layer on and the
+  // widget not mounted it is null, which requested `/null/{z}/{x}/{y}` tiles.
+  const year = useAtomValue(BiomassYearSettings) ?? Math.max(...BIOMASS_YEARS);
 
   // TO - DO: update when client provides data for more years
   // const tiles = years.map<string>((year: number) => {

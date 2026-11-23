@@ -76,9 +76,10 @@ export function useMangroveSpeciesThreatened(
   queryOptions?: UseQueryOptions<DataResponse>
 ): SpeciesData {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
 
   const fetchMangroveSpecies = () =>
     API.request({

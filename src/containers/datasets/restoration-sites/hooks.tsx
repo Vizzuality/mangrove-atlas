@@ -27,9 +27,10 @@ export function useMangroveRestorationSites(
   queryOptions?: Omit<UseQueryOptions<DataResponse, Error, Data>, 'queryKey' | 'queryFn' | 'select'>
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const mapFilters = useAtomValue(RestorationSitesMapFilters);
   const filtersPending = useAtomValue(RestorationSitesFiltersApplication);
 
@@ -62,9 +63,7 @@ export function useMangroveRestorationSitesFilters(
   queryOptions?: Omit<UseQueryOptions<DataResponse, Error, DataFilters>, 'queryKey' | 'queryFn'>
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { id: currentLocation, location_id } = {} } = useLocation(id, locationType);
   const fetchMangroveRestorationSitesFilters = () =>
     API.request({
       method: 'GET',

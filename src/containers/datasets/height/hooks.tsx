@@ -77,9 +77,10 @@ export function useMangroveHeight(
   queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const { customGeojson } = useAtomValue(drawingToolAtom);
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
@@ -226,10 +227,12 @@ export function useMangroveHeight(
   };
 }
 
-export function useSource(years: number[]): SourceProps {
-  const tiles = years.map<string>((year: number) => {
-    return `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_canopy_height-v3/${year}/{z}/{x}/{y}.png`;
-  });
+// One year per source: mapbox treats multiple `tiles` URLs as mirrors of the
+// same tileset and picks one at random per tile, which mixed years together.
+export function useSource(year: number): SourceProps {
+  const tiles = [
+    `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_canopy_height-v3/${year}/{z}/{x}/{y}.png`,
+  ];
 
   return {
     id: 'mangrove_canopy_height-v3-source',

@@ -127,9 +127,10 @@ export function useMangroveNetChange(
   queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const { customGeojson } = useAtomValue(drawingToolAtom);
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
@@ -192,7 +193,7 @@ export function useMangroveNetChange(
   const years = data?.data?.length
     ? [...new Set(data.data.map((d) => d.year))].sort((a, b) => a - b)
     : [...(data?.metadata?.year ?? [])].sort((a, b) => a - b);
-  const unit = selectedUnit || data.metadata?.units.net_change;
+  const unit = selectedUnit || data?.metadata?.units?.net_change;
   // The start/end atoms are not reset on navigation, so a window picked for another
   // location (or a country before opening a custom area) may not exist in this series;
   // filtering by it would leave no rows and a "NaN" net change. Fall back to the full range.

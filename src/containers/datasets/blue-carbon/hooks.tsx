@@ -33,9 +33,10 @@ export function useMangroveBlueCarbon(
 ) {
   const { type: locationType, id } = useSyncLocation();
 
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const { customGeojson } = useAtomValue(drawingToolAtom);
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);

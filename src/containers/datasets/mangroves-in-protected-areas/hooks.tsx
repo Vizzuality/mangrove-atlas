@@ -56,9 +56,10 @@ export function useMangrovesInProtectedAreas(
   const units = ['ha', 'km²'];
 
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
 
   const { unit, ...restParams } = params;
   const fetchMangroveProtectedAreas = () =>
@@ -72,23 +73,31 @@ export function useMangrovesInProtectedAreas(
       },
       ...queryOptions,
     }).then((response) => response.data);
+  // API values are hectares; the sentence converts to km² (÷100), so the chart must too.
+  const unitFactor = unit === 'ha' ? 1 : 1 / 100;
+  const getProtectedPercentage = (row) =>
+    row?.total_area ? (row.protected_area * 100) / row.total_area : 0;
+
   const getChartData = (data) => {
-    const protectedPercentage = (data.protected_area * 100) / data.total_area;
+    if (!data) return [];
+    const protectedPercentage = getProtectedPercentage(data);
     const nonProtectedPercentage = 100 - protectedPercentage;
+    const protectedValue = data.protected_area * unitFactor;
+    const unprotectedValue = (data.total_area - data.protected_area) * unitFactor;
 
     return [
       {
         indicator: 'protected',
-        value: data.protected_area,
-        valueFormatted: numberFormat(data.protected_area),
+        value: protectedValue,
+        valueFormatted: numberFormat(protectedValue),
         color: getColor(protectedPercentage),
         percentage: numberFormat(protectedPercentage),
         unit,
       },
       {
         indicator: 'unprotected',
-        value: data.total_area - data.protected_area,
-        valueFormatted: numberFormat(data.total_area - data.protected_area),
+        value: unprotectedValue,
+        valueFormatted: numberFormat(unprotectedValue),
         color: '#ECECEF',
         percentage: numberFormat(nonProtectedPercentage),
         unit,
@@ -144,10 +153,7 @@ export function useMangrovesInProtectedAreas(
                       dominantBaseline="central"
                     >
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
-                        {numberFormat(
-                          (data?.data?.[0].protected_area * 100) / data?.data?.[0].total_area
-                        )}{' '}
-                        %
+                        {numberFormat(getProtectedPercentage(data?.data?.[0]))} %
                       </tspan>
                     </text>
                     <text

@@ -23,9 +23,7 @@ export function useMangroveEcosystemServices(
   queryOptions?: Omit<UseQueryOptions<DataResponse, Error, Data[]>, 'queryKey' | 'queryFn'>
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { id: currentLocation, location_id } = {} } = useLocation(id, locationType);
 
   const fetchMangroveEcosystemServices = () =>
     API.request({

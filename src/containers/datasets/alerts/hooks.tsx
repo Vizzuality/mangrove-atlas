@@ -138,7 +138,10 @@ const getData = (data) =>
   sortBy(
     data?.map((d) => {
       const year = Number(d.date.value.split('-', 1)[0]);
-      const month = MONTHS?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
+      // Read the month from the string: `new Date('YYYY-MM-DD')` is UTC midnight,
+      // so getMonth() in any timezone west of UTC returns the previous month.
+      const monthNumber = Number(d.date.value.split('-')[1]);
+      const month = MONTHS?.find((m) => m.value === monthNumber);
       const day = month ? new Date(year, month.value, 0).getDate() : 0;
 
       const lastDay = month ? new Date(year, month.value, 0).getDate() : 0;
@@ -171,7 +174,8 @@ const getData = (data) =>
         },
       };
     }),
-    ['month']
+    // ISO `start` strings sort chronologically (sorting by the `month` object was a no-op).
+    ['start']
   );
 
 const getTotal = (data: { count: number }[]) =>
@@ -258,9 +262,19 @@ export function useAlerts<TRaw = AlertsApiResponse>(
   };
 
   const query = useQuery<TRaw, Error, AlertData | undefined>({
-    queryKey: ['alerts', params, location_id],
+    // Every drawn/uploaded area has location_id 'custom-area', so the geometry
+    // must be part of the key or a new area reuses the previous area's results.
+    queryKey: [
+      'alerts',
+      params,
+      location_id,
+      isAnalysisRunning,
+      isAnalysisRunning ? dataParams : null,
+    ],
     queryFn: fetchAlerts,
-    enabled: (queryOptions?.enabled ?? true) && !!location_id, // avoid calling without location_id
+    enabled:
+      (queryOptions?.enabled ?? true) &&
+      (isAnalysisRunning ? !!dataParams?.geometry : !!location_id && location_id !== 'custom-area'),
     select: (raw): AlertData | undefined => {
       // IMPORTANT: raw is TRaw (your API response), not AlertData
       if (!raw) return undefined;

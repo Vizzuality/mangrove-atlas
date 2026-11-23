@@ -29,9 +29,7 @@ export function useNationalDashboard(
 ) {
   const { type: locationType, id } = useSyncLocation();
 
-  const {
-    data: { id: currentLocation, location_id, iso },
-  } = useLocation(id, locationType);
+  const { data: { id: currentLocation, location_id, iso } = {} } = useLocation(id, locationType);
 
   const fetchMangroveNationalDashboard = () =>
     API.request({
@@ -60,6 +58,9 @@ export function useNationalDashboard(
     queryFn: fetchMangroveNationalDashboard,
     select,
     ...queryOptions,
+    // National dashboards only exist for real locations; on /custom-area this
+    // sent location_id=custom-area and got a 400.
+    enabled: (queryOptions?.enabled ?? true) && location_id !== 'custom-area',
   });
 }
 

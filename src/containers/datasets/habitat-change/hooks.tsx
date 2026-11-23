@@ -1,7 +1,5 @@
 import Link from 'next/link';
 
-import { numberFormat } from '@/lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Rectangle } from 'recharts';
 import { CartesianViewBox } from 'recharts/types/util/types';
@@ -71,7 +69,8 @@ export function useMangroveHabitatChange(
   const currentStartYear = startYear || years?.[0];
   const currentEndYear = endYear || years?.[years?.length - 1];
 
-  const chartData = widgetData(data);
+  // widgetData(undefined) returns undefined when the query errored.
+  const chartData = widgetData(data) ?? [];
 
   // TO - DO - change when API gets correct values for gain and loss
   // let max = 0;
@@ -84,7 +83,9 @@ export function useMangroveHabitatChange(
   // const [startDomain, endDomain] = domainX;
   const allPositives = chartData.filter((d) => d.net_change > 0);
 
-  const maxValue = numberFormat(Math.max(...chartData.map((d) => Math.abs(d.net_change))));
+  // Keep the domain numeric: numberFormat returns a comma-grouped string
+  // ("1,234.56"), which turned the axis domain into NaN for values ≥ 1,000.
+  const maxValue = chartData.length ? Math.max(...chartData.map((d) => Math.abs(d.net_change))) : 0;
 
   const getDomainX = () => {
     if (allPositives.length === chartData.length) {
@@ -92,7 +93,7 @@ export function useMangroveHabitatChange(
     }
     if (!allPositives.length) {
       return [-maxValue, 0];
-    } else return [-maxValue, Number(maxValue)];
+    } else return [-maxValue, maxValue];
   };
   const domainX = getDomainX();
 

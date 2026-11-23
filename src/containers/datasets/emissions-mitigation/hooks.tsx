@@ -112,9 +112,10 @@ export function useMangroveEmissionsMitigation(
   queryOptions?: UseQueryOptions<DataResponse, unknown>
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const { filteredIndicators, ...rest } = params;
 
   const fetchMangroveEmissionsMitigation = () =>

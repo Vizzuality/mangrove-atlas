@@ -67,13 +67,9 @@ export function getHabitatExtentData({
     : null;
   const mangroveAreaLabel = `Coastline coverage in ${currentYear}`;
 
-  const coastlineCoverage = Number.isFinite(mangroveCoastCoverage)
-    ? unit === 'ha'
-      ? mangroveCoastCoverage * 100
-      : mangroveCoastCoverage
-    : null;
-  const nonMangrovesCoverage =
-    nonMangrove !== null ? (unit === 'ha' ? nonMangrove * 100 : nonMangrove) : null;
+  // Coastline values are lengths in km — the area unit (km²/ha) doesn't apply.
+  const coastlineCoverage = Number.isFinite(mangroveCoastCoverage) ? mangroveCoastCoverage : null;
+  const nonMangrovesCoverage = nonMangrove;
 
   const LegendData = [
     {
@@ -105,7 +101,7 @@ export function getHabitatExtentData({
           value: numberFormat(mangroveCoastCoveragePercentage),
           unit: '%',
         },
-        { label: 'Coverage', value: formatOrNull(coastlineCoverage), unit },
+        { label: 'Coverage', value: formatOrNull(coastlineCoverage), unit: 'km' },
       ],
     },
     {
@@ -118,7 +114,7 @@ export function getHabitatExtentData({
           value: numberFormat(100 - mangroveCoastCoveragePercentage),
           unit: '%',
         },
-        { label: 'Coverage:', value: formatOrNull(nonMangrovesCoverage), unit },
+        { label: 'Coverage:', value: formatOrNull(nonMangrovesCoverage), unit: 'km' },
       ],
     },
   ];

@@ -57,9 +57,10 @@ export function useMangroveDegradationAndLoss(
   queryOptions?: UseQueryOptions<DataResponse, Error, Data>
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const fetchMangroveDegradationAndLoss = () =>
     API.request<DataResponse>({
       method: 'GET',
