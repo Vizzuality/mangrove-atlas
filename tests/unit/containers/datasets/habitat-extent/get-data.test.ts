@@ -38,11 +38,12 @@ describe('getHabitatExtentData', () => {
     expect(result.noData).toBe(false);
   });
 
-  it('scales coverage by 100 when unit is ha', () => {
+  it('scales area by 100 when unit is ha, keeps coastline lengths in km', () => {
     const result = getHabitatExtentData({ ...base, unit: 'ha' });
     expect(result.area).toBe('5,000.00');
-    expect(result.chartData[0].value).toBe(3000);
-    expect(result.chartData[1].value).toBe(7000);
+    expect(result.chartData[0].value).toBe(30);
+    expect(result.chartData[1].value).toBe(70);
+    expect(result.chartData[0].settings[1].unit).toBe('km');
   });
 });
 
