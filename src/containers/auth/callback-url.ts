@@ -7,26 +7,28 @@
  * users on the GMW home page instead of finishing the SSO hand-off.
  */
 export function getSafeCallbackUrl(callbackUrl: string | null): string {
-  const raw = typeof callbackUrl === 'string' && callbackUrl ? callbackUrl : '/';
+  const raw = typeof callbackUrl === 'string' ? callbackUrl.trim() : '';
+  if (!raw) return '/';
 
-  if (typeof window !== 'undefined' && /^https?:\/\//i.test(raw)) {
-    try {
-      const url = new URL(raw);
-      if (url.origin !== window.location.origin) return '/';
-      return `${url.pathname}${url.search}${url.hash}` || '/';
-    } catch {
-      return '/';
-    }
+  // Backslashes and control characters are normalised away by browsers
+  // ("/\t/evil.com" → "//evil.com"), so reject them before resolving.
+
+  if (/[\\\u0000-\u001f\u007f]/.test(raw)) return '/';
+
+  // Server render has no origin to compare against; only allow plain paths.
+  if (typeof window === 'undefined') {
+    return raw.startsWith('/') && !raw.startsWith('//') ? raw : '/';
   }
 
-  // Only allow same-origin relative paths.
-  if (!raw.startsWith('/')) return '/';
-  // Disallow protocol-relative URLs like //example.com.
-  if (raw.startsWith('//') || raw.startsWith('/\\')) return '/';
-  // Disallow embedded schemes such as http:// or https:// in the path.
-  if (raw.includes('://')) return '/';
-
-  return raw;
+  // Resolve against our origin and compare origins instead of string prefixes,
+  // so relative and absolute inputs go through the same check.
+  try {
+    const url = new URL(raw, window.location.origin);
+    if (url.origin !== window.location.origin) return '/';
+    return `${url.pathname}${url.search}${url.hash}` || '/';
+  } catch {
+    return '/';
+  }
 }
 
 /** Route handlers (e.g. /api/auth/sso/authorize) need a full navigation, not a client route change. */
