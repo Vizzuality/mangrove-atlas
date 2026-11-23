@@ -2,12 +2,14 @@
 
 import { useCallback, useState } from 'react';
 
+import { getApiErrorMessage } from '@/lib/api-error';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { useAtomValue } from 'jotai';
 import { LuPlus } from 'react-icons/lu';
+import { toast } from 'sonner';
 
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import {
@@ -70,6 +72,13 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
   const { customGeojson } = useAtomValue(drawingToolAtom);
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
 
+  // The "new" row stays visible on /custom-area, so remember which geometry was
+  // just saved; repeat clicks would otherwise save duplicates and use up the quota.
+  const currentGeometry = customGeojson ?? uploadedGeojson;
+  const [savedGeometry, setSavedGeometry] = useState<GeoJSON.FeatureCollection | null>(null);
+  const isCurrentAreaSaved =
+    locationType === 'custom-area' && !!currentGeometry && savedGeometry === currentGeometry;
+
   const buildCustomGeometry = useCallback((): CustomGeometry | null => {
     const drawn = customGeojson?.features?.[0]?.geometry;
     const uploaded = uploadedGeojson?.features?.[0]?.geometry;
@@ -102,7 +111,7 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
       if (locationType === 'custom-area') {
         const custom_geometry = buildCustomGeometry();
         if (!custom_geometry) {
-          console.warn('No custom geometry available to save.');
+          toast.error('This area has no polygon that can be saved.');
           return;
         }
 
@@ -111,12 +120,14 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
           location_type: 'custom',
           custom_geometry,
         });
+        setSavedGeometry(currentGeometry);
+        toast.success(`"${finalName}" saved to your areas`);
         return;
       }
 
       // Create system area
       if (typeof systemLocationId !== 'number') {
-        console.warn('No systemLocationId available to save.');
+        toast.error('This location cannot be saved.');
         return;
       }
 
@@ -125,8 +136,10 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
         location_type: 'system',
         location_id: systemLocationId,
       });
+      toast.success(`"${finalName}" saved to your areas`);
     } catch (error) {
       console.error('Error saving location', error);
+      toast.error(getApiErrorMessage(error, 'The area could not be saved. Please try again.'));
     }
   }, [
     newName,
@@ -135,9 +148,12 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
     systemLocationId,
     buildCustomGeometry,
     createUserLocationMutation,
+    currentGeometry,
   ]);
 
-  const isDisabled = Boolean(disabled || createUserLocationMutation.isLoading);
+  const isDisabled = Boolean(
+    disabled || createUserLocationMutation.isLoading || isCurrentAreaSaved
+  );
 
   return (
     <li className="flex items-center justify-between gap-3">
@@ -155,7 +171,7 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
       <div className="flex space-x-2">
         <button
           type="button"
-          aria-label={`Add location ${name}`}
+          aria-label={isCurrentAreaSaved ? 'Area already saved' : `Add location ${name}`}
           disabled={isDisabled}
           onClick={handleClickSaveArea}
           className={cn(

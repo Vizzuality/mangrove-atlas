@@ -15,13 +15,13 @@ async function fetchCurrentUser(accessToken: string) {
     },
   });
 
-  if (!res.ok) return null;
+  if (!res.ok) return { status: res.status, user: null };
 
   try {
     const payload = await res.json();
-    return payload?.user ?? payload;
+    return { status: res.status, user: payload?.user ?? payload };
   } catch {
-    return null;
+    return { status: res.status, user: null };
   }
 }
 
@@ -38,11 +38,13 @@ export async function GET(request: NextRequest) {
 
   if (!accessToken) return NextResponse.json({ ok: false }, { status: 401 });
 
-  const data = await fetchCurrentUser(accessToken);
+  const { status, user } = await fetchCurrentUser(accessToken);
 
-  if (!data) return NextResponse.json({ ok: false }, { status: 502 });
+  // Pass an auth rejection through so the client can log out the stale session.
+  if (status === 401) return NextResponse.json({ ok: false }, { status: 401 });
+  if (!user) return NextResponse.json({ ok: false }, { status: 502 });
 
-  return NextResponse.json({ ok: true, data });
+  return NextResponse.json({ ok: true, data: user });
 }
 
 // Update the current user. Proxies to the auth service server-side so the browser
@@ -58,7 +60,12 @@ export async function PATCH(request: NextRequest) {
 
   if (!accessToken) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const body = await request.json();
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  }
 
   // Devise registrations#update — the BE update endpoint. current_user is GET-only,
   // so PATCH must target /users (see mangrove-atlas-api config/routes.rb).
@@ -94,7 +101,7 @@ export async function PATCH(request: NextRequest) {
   // response doesn't echo the full record, read it back from current_user.
   let user = data?.user ?? data;
   if (!user || user.email === undefined || user.user_roles === undefined) {
-    user = (await fetchCurrentUser(accessToken)) ?? user;
+    user = (await fetchCurrentUser(accessToken)).user ?? user;
   }
 
   return NextResponse.json({ ok: true, data: user });

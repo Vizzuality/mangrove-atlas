@@ -98,20 +98,42 @@ export default function SignupPage() {
           router.push('/auth/signin?verified=pending');
         },
         onError: (error: any) => {
-          const apiErrors = error?.response?.data?.errors;
+          const body = error?.response?.data;
+          const apiErrors = body?.errors ?? body?.details?.errors;
+
+          // Devise may send fragments ("has already been taken"); prefix the field
+          // name unless the message already includes it.
+          const withField = (field: string, message: string) => {
+            const label = field.replace(/_/g, ' ');
+            return message.toLowerCase().startsWith(label.toLowerCase())
+              ? message
+              : `${label.charAt(0).toUpperCase()}${label.slice(1)} ${message}`;
+          };
 
           if (apiErrors?.email?.[0]) {
-            form.setError('email', { type: 'server', message: apiErrors.email[0] });
+            form.setError('email', {
+              type: 'server',
+              message: withField('email', apiErrors.email[0]),
+            });
             return;
           }
           if (apiErrors?.password?.[0]) {
-            form.setError('password', { type: 'server', message: apiErrors.password[0] });
+            form.setError('password', {
+              type: 'server',
+              message: withField('password', apiErrors.password[0]),
+            });
             return;
           }
 
+          const [firstField, firstMessages] = Object.entries(apiErrors ?? {})[0] ?? [];
+          const fieldMessage =
+            firstField && Array.isArray(firstMessages) && firstMessages[0]
+              ? withField(firstField, String(firstMessages[0]))
+              : null;
+
           form.setError('root', {
             type: 'server',
-            message: error?.response?.data?.error || 'Signup failed',
+            message: fieldMessage || body?.error || 'Signup failed',
           });
         },
       }

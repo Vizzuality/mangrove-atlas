@@ -120,9 +120,9 @@ const AccountContent = () => {
           user_roles: user_roles ?? [],
           // Only send password fields when the user is actually changing it.
           ...(password ? { password, current_password } : {}),
-          ...(user_roles?.includes(OTHER_ROLE_VALUE) && otherRole
-            ? { user_role_other: otherRole }
-            : {}),
+          // Send '' when "Other" is deselected: omitting the key kept the old
+          // value on the backend, and SessionSync restored it on the next load.
+          user_role_other: user_roles?.includes(OTHER_ROLE_VALUE) && otherRole ? otherRole : '',
         },
       },
       {
@@ -133,7 +133,8 @@ const AccountContent = () => {
           // (read by the jwt callback in auth.ts) — map from the API's
           // `user_roles`/`user_role_other`. Fall back to form values only if the
           // response omits the user (keeps the UI responsive).
-          const persisted = (res as { data?: any })?.data;
+          // PATCH /users (Devise) answers { message, user }.
+          const persisted = (res as { user?: any; data?: any })?.user ?? (res as any)?.data;
 
           void updateSession(
             persisted
@@ -146,12 +147,22 @@ const AccountContent = () => {
                 }
               : {
                   name: username,
+                  email,
                   organization,
                   roles: user_roles ?? [],
                   other_role:
                     user_roles?.includes(OTHER_ROLE_VALUE) && otherRole ? otherRole : null,
                 }
           );
+
+          // Clear the password fields and the dirty state so "Save changes"
+          // doesn't stay enabled and re-send the password change.
+          form.reset({
+            ...values,
+            email: persisted?.email ?? email,
+            password: '',
+            current_password: '',
+          });
         },
         onError: (error: any) => {
           const apiErrors = error?.response?.data?.errors;
@@ -162,6 +173,15 @@ const AccountContent = () => {
           }
           if (apiErrors?.password?.[0]) {
             form.setError('password', { type: 'server', message: apiErrors.password[0] });
+            return;
+          }
+          // Devise reports a wrong current password here, with no top-level error.
+          if (apiErrors?.current_password?.[0]) {
+            const message = apiErrors.current_password[0];
+            form.setError('current_password', {
+              type: 'server',
+              message: /current password/i.test(message) ? message : `Current password ${message}`,
+            });
             return;
           }
 

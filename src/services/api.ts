@@ -1,5 +1,17 @@
-import axios from 'axios';
+import { handleExpiredSession } from '@/lib/auth/expired-session';
+
+import axios, { AxiosError, type AxiosInstance } from 'axios';
 import { getSession } from 'next-auth/react';
+
+// A 401 on a request we sent with a bearer token means the backend token is
+// no longer valid (logged-out requests carry no token, so they're unaffected).
+function logoutOnExpiredToken(instance: AxiosInstance) {
+  instance.interceptors.response.use(undefined, (error: AxiosError) => {
+    const sentToken = !!error.config?.headers?.Authorization;
+    if (error.response?.status === 401 && sentToken) void handleExpiredSession();
+    return Promise.reject(error);
+  });
+}
 
 const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -15,6 +27,7 @@ API.interceptors.request.use(async (config) => {
 
   return config;
 });
+logoutOnExpiredToken(API);
 
 export const AnalysisAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ANALYSIS_API_URL,
@@ -59,5 +72,6 @@ AuthAPI.interceptors.request.use(async (config) => {
 
   return config;
 });
+logoutOnExpiredToken(AuthAPI);
 
 export default API;

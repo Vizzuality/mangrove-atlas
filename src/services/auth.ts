@@ -41,8 +41,9 @@ export type UpdateUserPayload = {
     current_password?: string;
   };
 };
+// Devise registrations#update returns { message, user }.
 export type UpdateUserResponse =
-  | { ok: true; data?: any; message?: string }
+  | { ok?: true; user?: any; data?: any; message?: string }
   | { ok: false; error?: string; message?: string; errors?: Record<string, string[]> };
 
 // Functions
