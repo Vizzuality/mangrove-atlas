@@ -28,8 +28,7 @@ const Checkbox = forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(className, {
-      'border-brand-800/50 text-brand-800 data-state-checked:bg-brand-800 inline-flex min-h-6 min-w-6 shrink-0 cursor-pointer items-center justify-center rounded border-2 p-0.5 disabled:cursor-not-allowed disabled:opacity-50 data-state-checked:border-4 data-state-checked:text-white':
-        true,
+      'border-brand-800/50 text-brand-800 data-state-checked:bg-brand-800 inline-flex min-h-6 min-w-6 shrink-0 cursor-pointer items-center justify-center rounded border-2 p-0.5 disabled:cursor-not-allowed disabled:opacity-50 data-state-checked:border-4 data-state-checked:text-white': true,
     })}
     {...props}
   >

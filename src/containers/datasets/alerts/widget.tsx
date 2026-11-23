@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';

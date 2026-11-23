@@ -256,7 +256,7 @@ export function useAlerts<TRaw = AlertsApiResponse>(
         },
       });
       return response.data;
-    } catch (err) {
+    } catch {
       throw new Error('Error fetching alerts');
     }
   };

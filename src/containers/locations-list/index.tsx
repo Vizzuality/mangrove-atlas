@@ -11,7 +11,6 @@ import { mapSettingsAtom } from '@/store/map-settings';
 import { useSetAtom } from 'jotai';
 
 import { useLocationNavigation } from 'hooks/location-navigation';
-import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
 import { useSyncLocation } from 'hooks/use-sync-location';
 
@@ -20,7 +19,6 @@ import { Location } from '@/containers/datasets/locations/types';
 import Helper from '@/containers/help/helper';
 
 import Loading from '@/components/ui/loading';
-import { breakpoints } from '@/styles/styles.config';
 
 import CLOSE_SVG from '@/svgs/ui/close';
 
@@ -31,7 +29,6 @@ const locationNames = {
 };
 
 const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) => {
-  const screenWidth = useScreenWidth();
   const [searchValue, setSearchValue] = useState('');
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const listRef = useRef<List>(null);
