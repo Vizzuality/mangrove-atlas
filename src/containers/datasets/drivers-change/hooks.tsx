@@ -31,9 +31,7 @@ export function useMangroveDriversChange(
   queryOptions?: UseQueryOptions<DataResponse>
 ): DriversChangeData {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation } = {} } = useLocation(id, locationType);
 
   const fetchMangroveDriversChange = () =>
     API.request({

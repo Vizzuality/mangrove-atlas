@@ -1,10 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getSSOCorsHeaders, isAllowedRedirectUri } from '@/lib/auth/sso-config';
+import {
+  getSSOCorsHeaders,
+  isAllowedRedirectUri,
+  isCrossSiteRequestRejected,
+} from '@/lib/auth/sso-config';
 import { setSSOCookie } from '@/lib/auth/sso-cookie';
 
 export async function POST(request: NextRequest) {
   const corsHeaders = getSSOCorsHeaders(request);
+
+  if (isCrossSiteRequestRejected(request)) {
+    return NextResponse.json(
+      { error: 'Origin not allowed' },
+      { status: 403, headers: corsHeaders }
+    );
+  }
 
   let body: { token?: string; redirect_uri?: string };
   try {

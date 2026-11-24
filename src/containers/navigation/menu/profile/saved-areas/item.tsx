@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
+import { getApiErrorMessage } from '@/lib/api-error';
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
@@ -14,6 +15,7 @@ import type { Feature, FeatureCollection, Polygon, MultiPolygon, Geometry } from
 import { useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 import { LuPencil, LuCheck } from 'react-icons/lu';
+import { toast } from 'sonner';
 
 import { useLocationNavigation, locationToNavTarget } from 'hooks/location-navigation';
 
@@ -137,6 +139,7 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
       setEditMode(false);
     } catch (error) {
       console.error('Error updating location name', error);
+      toast.error(getApiErrorMessage(error, 'The area could not be renamed. Please try again.'));
     }
   }, [newName, name, updateUserLocationMutation, userLocationId]);
 
@@ -152,6 +155,7 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
       }
     } catch (error) {
       console.error('Error deleting location', error);
+      toast.error(getApiErrorMessage(error, 'The area could not be deleted. Please try again.'));
     }
   }, [
     deleteUserLocationArea,

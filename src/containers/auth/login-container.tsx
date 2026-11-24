@@ -14,6 +14,7 @@ import ForgotPassword from '@/components/auth/forgot-password';
 import SuccessAlert from 'components/auth/email-alert';
 import Logo from 'components/logo';
 
+import { getSafeCallbackUrl, goToCallback, isSSOCallback } from './callback-url';
 import LoginForm from './login-form';
 
 export default function LoginPage() {
@@ -23,14 +24,18 @@ export default function LoginPage() {
   const session = useSession();
   const status = session?.status;
 
-  // If already signed in, bounce away from /auth/signin
-  useEffect(() => {
-    if (status === 'authenticated') {
-      router.replace('/');
-    }
-  }, [status, router]);
+  const callbackUrl = getSafeCallbackUrl(searchParams.get('callbackUrl'));
+  const ssoReauth = isSSOCallback(callbackUrl);
 
-  if (status === 'loading' || status === 'authenticated') {
+  // If already signed in, continue to where the user was heading. SSO re-auth
+  // keeps the form: the session token was just rejected by the backend.
+  useEffect(() => {
+    if (status === 'authenticated' && !ssoReauth) {
+      goToCallback(callbackUrl, router.replace);
+    }
+  }, [status, router, callbackUrl, ssoReauth]);
+
+  if (status === 'loading' || (status === 'authenticated' && !ssoReauth)) {
     return null;
   }
 

@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import cn from '@/lib/classnames';
+import { getGeojsonBbox } from '@/lib/map-fly';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { mapCursorAtom } from '@/store/map';
 
-import turfBbox from '@turf/bbox';
 import { useAtom, useSetAtom } from 'jotai';
 import { toast } from 'sonner';
 
@@ -113,9 +113,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
             // Change location to custom-area using the same client-side navigation the
             // draw flow uses (history.replaceState — no RSC refetch/page remount) and fly
             // the map to the uploaded geometry's bounds.
-            const uploadedBbox = data?.data
-              ? (turfBbox(data.data) as [number, number, number, number])
-              : null;
+            const uploadedBbox = getGeojsonBbox(data?.data);
             navigate({ type: 'custom-area' }, uploadedBbox);
 
             toast.success('File uploaded successfully');

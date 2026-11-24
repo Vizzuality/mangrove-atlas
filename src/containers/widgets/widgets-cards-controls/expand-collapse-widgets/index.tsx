@@ -5,16 +5,11 @@ import cn from '@/lib/classnames';
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
 import { useAtom } from 'jotai';
-import { useWindowSize } from 'usehooks-ts';
 
 import Helper from '@/containers/help/helper';
 import { widgets } from '@/containers/widgets/constants';
 
-import { breakpoints } from '@/styles/styles.config';
-
 const ExpandCollapseWidgets: FC = () => {
-  const { width: screenWidth } = useWindowSize();
-
   const [widgetsCollapsed, setWidgetsCollapsed] = useAtom(widgetsCollapsedAtom);
 
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed)?.includes(true);

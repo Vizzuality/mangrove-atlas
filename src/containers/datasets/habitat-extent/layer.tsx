@@ -40,7 +40,9 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
     [data?.years]
   );
 
-  const currentYear = year || years[years.length - 1];
+  // Same fallback as the widget (get-data.tsx): a year picked for another
+  // location may not exist here, which left every layer at opacity 0.
+  const currentYear = year && years.includes(year) ? year : years[years.length - 1];
   const baseOpacity = parseFloat(activeLayer?.opacity ?? '1');
   const visibility = activeLayer?.visibility ?? 'visible';
 

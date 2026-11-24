@@ -8,9 +8,7 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 
 const CoastalProtection = () => {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location },
-  } = useLocation(id, locationType);
+  const { data: { name: location } = {} } = useLocation(id, locationType);
   return (
     <div
       className={cn({

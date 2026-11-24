@@ -22,9 +22,10 @@ export function useMangroveSpeciesDistribution(
   queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>
 ): SpeciesData {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const fetchMangroveSpecies = () =>
     API.request({
       method: 'GET',

@@ -31,9 +31,10 @@ export function useMangroveHabitatExtent(
   queryOptions: Omit<UseQueryOptions<ExtentData>, 'queryKey' | 'queryFn'> = {}
 ) {
   const { type: locationType, id } = useSyncLocation();
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(id, locationType);
+  const { data: { name: location, id: currentLocation, location_id } = {} } = useLocation(
+    id,
+    locationType
+  );
   const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
   const { customGeojson } = useAtomValue(drawingToolAtom);
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);

@@ -10,4 +10,7 @@ export function useSyncActiveCategory() {
 // Defaults to false so mobile users land on the data, not a bare map.
 export const mapViewAtom = atom<boolean>(false);
 
-export const locationToolAtom = atom<'worldwide' | 'upload' | 'search' | 'area'>('worldwide');
+// null = no location tool active (menus reset it on close).
+export const locationToolAtom = atom<'worldwide' | 'upload' | 'search' | 'area' | null>(
+  'worldwide'
+);

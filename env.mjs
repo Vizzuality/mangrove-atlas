@@ -16,6 +16,13 @@ export const env = createEnv({
     // (e.g. staging MRTT, http://localhost:3000). NEXT_PUBLIC_MRTT_SITE and
     // NEXTAUTH_URL are always allowed.
     SSO_ALLOWED_ORIGINS: z.string().optional(),
+    // Contact form mailer (src/app/api/send). Server-only: never prefix with
+    // NEXT_PUBLIC_ or the credentials get inlined into the client bundle.
+    // Optional so builds don't need them; the route returns 503 when unset.
+    SMTP_ADDRESS: z.string().optional(),
+    SMTP_PASSWORD: z.string().optional(),
+    SMTP_PORT: z.coerce.number().optional(),
+    SMTP_USER_NAME: z.string().optional(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -31,10 +38,6 @@ export const env = createEnv({
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: z.string(),
     NEXT_PUBLIC_PLANET_API_KEY: z.string(),
     NEXT_PUBLIC_TRANSIFEX_API_KEY: z.string(),
-    NEXT_PUBLIC_SMTP_ADDRESS: z.string(),
-    NEXT_PUBLIC_SMTP_PASSWORD: z.string(),
-    NEXT_PUBLIC_SMTP_PORT: z.coerce.number(),
-    NEXT_PUBLIC_SMTP_USER_NAME: z.string(),
     NEXT_PUBLIC_GA_ID: z.string(),
     NEXT_PUBLIC_VERCEL_ENV: z.enum(['development', 'production', 'preview']),
     NEXT_PUBLIC_FEATURED_FLAGS: z
@@ -69,10 +72,10 @@ export const env = createEnv({
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     AUTH_API_URL: process.env.AUTH_API_URL,
     SSO_ALLOWED_ORIGINS: process.env.SSO_ALLOWED_ORIGINS,
-    NEXT_PUBLIC_SMTP_ADDRESS: process.env.NEXT_PUBLIC_SMTP_ADDRESS,
-    NEXT_PUBLIC_SMTP_PASSWORD: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
-    NEXT_PUBLIC_SMTP_PORT: process.env.NEXT_PUBLIC_SMTP_PORT,
-    NEXT_PUBLIC_SMTP_USER_NAME: process.env.NEXT_PUBLIC_SMTP_USER_NAME,
+    SMTP_ADDRESS: process.env.SMTP_ADDRESS,
+    SMTP_PASSWORD: process.env.SMTP_PASSWORD,
+    SMTP_PORT: process.env.SMTP_PORT,
+    SMTP_USER_NAME: process.env.SMTP_USER_NAME,
     NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
     NEXT_PUBLIC_FEATURED_FLAGS: process.env.NEXT_PUBLIC_FEATURED_FLAGS,
     NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,

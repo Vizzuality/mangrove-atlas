@@ -19,33 +19,14 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
+import { getSafeCallbackUrl, goToCallback, isSSOCallback } from './callback-url';
+
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
   password: z.string().min(1, { message: 'Please enter your password' }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
-function getSafeCallbackUrl(callbackUrl: string | null): string {
-  const raw = typeof callbackUrl === 'string' ? callbackUrl : '/';
-
-  // Only allow same-origin relative paths.
-  if (!raw.startsWith('/')) {
-    return '/';
-  }
-
-  // Disallow protocol-relative URLs like //example.com.
-  if (raw.startsWith('//')) {
-    return '/';
-  }
-
-  // Disallow embedded schemes such as http:// or https:// in the path.
-  if (raw.includes('://')) {
-    return '/';
-  }
-
-  return raw;
-}
 
 function LoginForm() {
   const router = useRouter();
@@ -95,10 +76,11 @@ function LoginForm() {
       console.error('SSO cookie sync failed:', err);
     }
 
-    router.replace(result.url ?? callbackUrl);
+    goToCallback(callbackUrl, router.replace);
   }
 
-  if (status === 'loading' || status === 'authenticated') return null;
+  const ssoReauth = isSSOCallback(getSafeCallbackUrl(searchParams.get('callbackUrl')));
+  if (status === 'loading' || (status === 'authenticated' && !ssoReauth)) return null;
 
   return (
     <div className="space-y-6">

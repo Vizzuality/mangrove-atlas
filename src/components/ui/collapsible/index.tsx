@@ -53,8 +53,7 @@ const CollapsibleTrigger = forwardRef<
           strokeLinecap="round"
           strokeLinejoin="round"
           className={cn({
-            'text-brand-800 lucide lucide-chevron-down-icon lucide-chevron-down h-4 w-4 group-data-[state=closed]:block group-data-[state=open]:hidden':
-              true,
+            'text-brand-800 lucide lucide-chevron-down-icon lucide-chevron-down h-4 w-4 group-data-[state=closed]:block group-data-[state=open]:hidden': true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
           })}
@@ -75,8 +74,7 @@ const CollapsibleTrigger = forwardRef<
           strokeLinecap="round"
           strokeLinejoin="round"
           className={cn({
-            'text-brand-800 lucide lucide-chevron-up-icon lucide-chevron-up h-4 w-4 group-data-[state=closed]:hidden group-data-[state=open]:block':
-              true,
+            'text-brand-800 lucide lucide-chevron-up-icon lucide-chevron-up h-4 w-4 group-data-[state=closed]:hidden group-data-[state=open]:block': true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
           })}

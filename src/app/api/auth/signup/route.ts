@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  let body: any;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  }
   const { user } = body ?? {};
   const { email, password, ...rest } = user ?? {};
 
@@ -25,7 +30,12 @@ export async function POST(request: Request) {
 
   if (!upstream.ok) {
     return NextResponse.json(
-      { error: data?.error || data?.message || 'Signup failed', details: data ?? text },
+      {
+        error: data?.error || data?.message || 'Signup failed',
+        // Devise field errors, e.g. { email: ['has already been taken'] }.
+        errors: data?.errors,
+        details: data ?? text,
+      },
       { status: upstream.status }
     );
   }

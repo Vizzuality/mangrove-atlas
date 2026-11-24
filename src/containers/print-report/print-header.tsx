@@ -22,9 +22,7 @@ const STATUS_LABEL = {
 const PrintHeader = () => {
   const { type, id } = useSyncLocation();
   const locationType = (type ?? 'worldwide') as LocationTypes;
-  const {
-    data: { name: locationName },
-  } = useLocation(id, locationType, {
+  const { data: { name: locationName } = {} } = useLocation(id, locationType, {
     enabled: (!!locationType && !!id) || locationType !== 'custom-area',
   });
 

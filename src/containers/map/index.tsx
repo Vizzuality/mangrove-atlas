@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 import cn from '@/lib/classnames';
 import { isFeatureEnabled } from '@/lib/feature-flags';
-import { flyMapTo, registerMapRef } from '@/lib/map-fly';
+import { flyMapTo, getGeojsonBbox, isValidBbox, registerMapRef } from '@/lib/map-fly';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -27,7 +27,6 @@ import {
 import { mapViewAtom } from '@/store/sidebar';
 
 import { useQueryClient } from '@tanstack/react-query';
-import turfBbox from '@turf/bbox';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import type { GeoJSONFeature, LngLatBoundsLike } from 'mapbox-gl';
 import { useSession } from 'next-auth/react';
@@ -202,21 +201,29 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   );
 
   useEffect(() => {
-    if (!position && map && loaded && map.getSource('mangrove_restoration')) {
-      map.removeFeatureState({
-        sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-        source: 'mangrove_restoration',
-        id: clickedStateIdRef.current || '',
-      });
+    if (
+      !position &&
+      map &&
+      loaded &&
+      clickedStateIdRef.current !== null &&
+      map.getSource('mangrove_restoration')
+    ) {
+      map.removeFeatureState(
+        {
+          sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+          source: 'mangrove_restoration',
+          id: clickedStateIdRef.current,
+        },
+        'clicked'
+      );
+      clickedStateIdRef.current = null;
     }
   }, [position, map, loaded]);
 
   // Methods
   const handleCustomPolygon = useCallback((customPolygon) => {
-    const bbox = turfBbox(customPolygon);
-    if (bbox) {
-      flyMapTo(bbox as [number, number, number, number]);
-    }
+    const bbox = getGeojsonBbox(customPolygon);
+    if (bbox) flyMapTo(bbox);
   }, []);
 
   const handleUserDrawing = useCallback(
@@ -235,7 +242,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
         enabled: true,
       }));
 
-      const bbox = turfBbox(customGeojson) as [number, number, number, number] | null;
+      const bbox = getGeojsonBbox(customGeojson);
       if (bbox) queryClient.setQueryData(['location-bounds'], bbox);
 
       navigate({ type: 'custom-area' }, bbox);
@@ -393,12 +400,16 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
     }
 
     if (!restorationFeature) {
-      if (map?.getSource('mangrove_restoration')) {
-        map.removeFeatureState({
-          sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-          source: 'mangrove_restoration',
-          id: clickedStateIdRef.current || '',
-        });
+      if (clickedStateIdRef.current !== null && map?.getSource('mangrove_restoration')) {
+        map.removeFeatureState(
+          {
+            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+            source: 'mangrove_restoration',
+            id: clickedStateIdRef.current,
+          },
+          'clicked'
+        );
+        clickedStateIdRef.current = null;
       }
       removePopup('restoration');
     }
@@ -412,7 +423,13 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
             if (key === 'landscape_name' || key === 'site_name') {
               acc[label] = [value];
             } else {
-              const parsed = value ? JSON.parse(value) : null;
+              let parsed = null;
+              try {
+                parsed = value ? JSON.parse(value) : null;
+              } catch {
+                // Plain-string property (not JSON-encoded) — show it as-is.
+                parsed = value;
+              }
               acc[label] = Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
             }
 
@@ -449,37 +466,23 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
       );
 
       // *ON MOUSE ENTER
-      if (restorationData && map) {
-        if (clickedStateIdRef.current === restorationData?.id) {
-          map?.setFeatureState(
-            {
-              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-              source: 'mangrove_restoration',
-              id: hoveredStateIdRef.current ?? undefined,
-            },
-            { hover: true, clicked: true }
-          );
-        }
+      // setFeatureState merges keys, so toggling only `hover` leaves a
+      // feature's `clicked` state (and its open popup highlight) intact.
+      if (restorationData && map && restorationData.id !== undefined) {
+        const featureRef = {
+          sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+          source: 'mangrove_restoration',
+        };
         if (
           hoveredStateIdRef.current !== null &&
-          clickedStateIdRef.current !== restorationData?.id
+          hoveredStateIdRef.current !== undefined &&
+          hoveredStateIdRef.current !== restorationData.id
         ) {
-          map?.removeFeatureState({
-            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'mangrove_restoration',
-            id: hoveredStateIdRef.current,
-          });
+          map.setFeatureState({ ...featureRef, id: hoveredStateIdRef.current }, { hover: false });
         }
 
-        hoveredStateIdRef.current = restorationData?.id;
-        map?.setFeatureState(
-          {
-            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'mangrove_restoration',
-            id: hoveredStateIdRef.current,
-          },
-          { hover: true }
-        );
+        hoveredStateIdRef.current = restorationData.id;
+        map.setFeatureState({ ...featureRef, id: restorationData.id }, { hover: true });
       }
 
       // *ON MOUSE LEAVE
@@ -507,9 +510,24 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
     [map, loaded, isDrawingToolEnabled, customGeojson, setCursor]
   );
 
-  const handleMapLoad = useCallback(() => {
-    setLoaded(true);
-  }, []);
+  const handleMapLoad = useCallback(
+    (evt: Parameters<NonNullable<MapProps['onLoad']>>[0]) => {
+      setLoaded(true);
+
+      // Direct links like /country/IDN (no `?bounds`): the map renders before
+      // the page's HydrationBoundary, so `initialViewState` was computed before
+      // ['location-bounds'] reached the cache. By load time it has — frame it now.
+      if ('bounds' in initialViewState || !locationId) return;
+      const bounds = queryClient.getQueryData<number[]>(['location-bounds']);
+      if (isValidBbox(bounds)) {
+        evt.target.fitBounds(bounds, {
+          padding: { top: 50, bottom: 50, left: 50, right: 50 },
+          duration: 0,
+        });
+      }
+    },
+    [initialViewState, locationId, queryClient]
+  );
   const pitch = map?.getPitch();
 
   return (
@@ -648,8 +666,8 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
 
               {!!position && hasPopupContent && (
                 <Marker
-                  latitude={coordinates?.lat || undefined}
-                  longitude={coordinates?.lng || undefined}
+                  latitude={coordinates?.lat ?? undefined}
+                  longitude={coordinates?.lng ?? undefined}
                   offset={[0, 0]}
                   anchor="bottom"
                 >

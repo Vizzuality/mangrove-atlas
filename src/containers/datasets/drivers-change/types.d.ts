@@ -3,11 +3,7 @@ type Unit = {
 };
 
 type DriversChangeVariable =
-  | 'erosion_pct'
-  | 'episodic_disturbances_pct'
-  | 'commodities_pct'
-  | 'npc_pct'
-  | 'settlement_pct';
+  'erosion_pct' | 'episodic_disturbances_pct' | 'commodities_pct' | 'npc_pct' | 'settlement_pct';
 
 export type Data = { primary_driver: string; value: number; variable: DriversChangeVariable };
 

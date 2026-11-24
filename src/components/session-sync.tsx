@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 
+import { handleExpiredSession } from '@/lib/auth/expired-session';
+
 import { useSession } from 'next-auth/react';
 
 const SSO_RESTORE_KEY = 'gmw-sso-restore-attempted';
@@ -75,7 +77,14 @@ export function SessionSync() {
     hydrated.current = true;
 
     fetch('/api/auth/me')
-      .then((res) => res.json())
+      .then((res) => {
+        // Backend rejected the stored token: the session is dead, log out.
+        if (res.status === 401) {
+          void handleExpiredSession();
+          return null;
+        }
+        return res.json();
+      })
       .then((payload) => {
         if (!payload?.ok || !payload.data) return;
 

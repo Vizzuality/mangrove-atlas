@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
@@ -69,7 +69,35 @@ const AlertsWidget = () => {
     await refetch();
   }, [refetch]);
 
-  if (!data) return <NoData />;
+  const retryBlock = (
+    <div className="flex flex-col items-center space-y-4">
+      <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
+        An error occurred while fetching the data. You can try again.
+      </p>
+      <button
+        aria-label="Retry analysis"
+        type="button"
+        onClick={handleTryAgain}
+        className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
+      >
+        Try again
+      </button>
+    </div>
+  );
+
+  // No `placeholderData` here, so `data` is undefined both while loading and
+  // after an error — show those states instead of a misleading "No data".
+  if (!data) {
+    if (isLoading || isError) {
+      return (
+        <div className={WIDGET_CARD_WRAPPER_STYLE}>
+          <Loading visible={isLoading} iconClassName="flex w-10 h-10 m-auto my-10" />
+          {isError && !isLoading && retryBlock}
+        </div>
+      );
+    }
+    return <NoData />;
+  }
 
   const {
     alertsTotal,
@@ -90,21 +118,7 @@ const AlertsWidget = () => {
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
-      {isError && !isLoading && (
-        <div className="flex flex-col items-center space-y-4">
-          <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
-            An error occurred while fetching the data. You can try again.
-          </p>
-          <button
-            aria-label="Retry analysis"
-            type="button"
-            onClick={handleTryAgain}
-            className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
-          >
-            Try again
-          </button>
-        </div>
-      )}
+      {isError && !isLoading && retryBlock}
       {isFetched && !isLoading && !isError && (
         <div className="space-y-8">
           <p className={WIDGET_SENTENCE_STYLE}>

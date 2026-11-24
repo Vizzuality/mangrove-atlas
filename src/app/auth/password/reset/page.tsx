@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 
 import { useForm } from 'react-hook-form';
 
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -59,21 +60,40 @@ function ResetPasswordForm() {
     },
   });
 
+  const token = searchParams.get('token');
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    form.clearErrors('password');
+    if (!token) return;
+    form.clearErrors();
     updatePassword.mutate(
       {
         user: {
           password: values.password,
           password_confirmation: values.password_confirmation,
-          reset_password_token: searchParams.get('token') as string,
+          reset_password_token: token,
         },
       },
       {
         onSuccess: () => {
           router.push('/auth/signin');
         },
-        onError: (_e) => {
+        onError: (error: any) => {
+          const errors = error?.response?.data?.errors;
+          // Devise: an expired/used link comes back as reset_password_token errors.
+          if (errors?.reset_password_token?.length) {
+            form.setError('root', {
+              type: 'server',
+              message: 'This reset link has expired or was already used. Request a new one.',
+            });
+            return;
+          }
+          if (errors?.password?.[0]) {
+            form.setError('password', {
+              type: 'server',
+              message: `Password ${errors.password[0]}`,
+            });
+            return;
+          }
           form.setError('password_confirmation', {
             type: 'manual',
             message: 'Could not reset password. Please try again.',
@@ -101,6 +121,15 @@ function ResetPasswordForm() {
         <main id="main-content" className="flex h-full w-full flex-col justify-center space-y-10">
           <h1 className="text-brand-800 font-sans text-[40px] font-light">Reset Password</h1>
           <div className="space-y-6">
+            {!token && (
+              <p role="alert" className="text-sm text-red-500">
+                This reset link is invalid or incomplete. Use the link from your email, or{' '}
+                <Link href="/auth/signin" className="underline">
+                  go back to sign in
+                </Link>{' '}
+                to request a new one.
+              </p>
+            )}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <fieldset className="space-y-4">
@@ -147,7 +176,16 @@ function ResetPasswordForm() {
                     )}
                   />
                 </fieldset>
-                <Button type="submit" disabled={false} className="h-9 w-full font-semibold">
+                {form.formState.errors.root?.message && (
+                  <p role="alert" className="text-sm text-red-500">
+                    {form.formState.errors.root.message}
+                  </p>
+                )}
+                <Button
+                  type="submit"
+                  disabled={!token || updatePassword.isPending}
+                  className="h-9 w-full font-semibold"
+                >
                   Reset Password
                 </Button>
               </form>
