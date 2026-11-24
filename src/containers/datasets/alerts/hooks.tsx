@@ -256,8 +256,8 @@ export function useAlerts<TRaw = AlertsApiResponse>(
         },
       });
       return response.data;
-    } catch {
-      throw new Error('Error fetching alerts');
+    } catch (error) {
+      throw new Error('Error fetching alerts', { cause: error });
     }
   };
 
