@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const Footer = (): JSX.Element => (
+const Footer = (): React.JSX.Element => (
   <div className="relative z-20 flex w-full justify-center bg-white p-4">
     <div className="flex flex-col items-center justify-center gap-1">
       <p className="text-sm text-gray-800">

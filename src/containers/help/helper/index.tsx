@@ -170,7 +170,7 @@ const Helper = ({
             */}
             <div
               aria-hidden="true"
-              inert=""
+              inert
               className={cn({
                 'pointer-events-none fixed cursor-default': true,
                 [className.button]: !!className.button,

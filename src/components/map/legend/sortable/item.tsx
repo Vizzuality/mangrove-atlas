@@ -36,7 +36,7 @@ const SortableItem: React.FC<SortableItemProps> = ({
   // The drag activator goes on the child's own handle button. Spreading it here
   // instead would give this wrapper `role="button"` and `tabindex="0"` around the
   // item's other controls — nested interactive content (WCAG 4.1.2).
-  const CHILD = cloneElement(children as ReactElement, {
+  const CHILD = cloneElement(children as ReactElement<Record<string, unknown>>, {
     sortable,
     fixed,
     ...(!fixed && { listeners, attributes, setActivatorNodeRef }),

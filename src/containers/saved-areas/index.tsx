@@ -18,7 +18,9 @@ import {
 import ForgotPassword from '../../components/auth/forgot-password';
 import SavedAreasContent from '../navigation/menu/profile/saved-areas';
 
-const LuBookmarkIcon = LuBookmark as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+const LuBookmarkIcon = LuBookmark as unknown as (
+  p: React.SVGProps<SVGSVGElement>
+) => React.JSX.Element;
 
 const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const { status } = useSession();

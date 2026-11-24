@@ -12,7 +12,7 @@ type MapPopupDragProps = {
 
 const MdOutlineDragHandleIcon = MdOutlineDragHandle as unknown as (
   p: React.SVGProps<SVGSVGElement>
-) => JSX.Element;
+) => React.JSX.Element;
 
 const MapPopupDragHandler = ({
   listeners,

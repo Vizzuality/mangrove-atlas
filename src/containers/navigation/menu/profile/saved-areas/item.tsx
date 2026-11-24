@@ -77,8 +77,8 @@ function customGeometryToFeatureCollection(custom_geometry: {
   return { type: 'FeatureCollection', features: [feature] };
 }
 
-const LuPencilIcon = LuPencil as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
-const LuCheckIcon = LuCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+const LuPencilIcon = LuPencil as unknown as (p: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
+const LuCheckIcon = LuCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
 
 type Props = {
   userLocationId: number;

@@ -6,7 +6,7 @@ import type { PostProps } from 'hooks/blog/types';
 
 import LayoutMdx from '@/layouts/mdx';
 
-const HiXIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+const HiXIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
 
 const TooltipItem = ({ post }: { post: PostProps }) => (
   <li className="flex cursor-pointer items-start space-x-2 rounded-sm p-2 transition hover:bg-gray-100">

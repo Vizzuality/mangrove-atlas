@@ -113,7 +113,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                   data-testid={`widget-${id}-content`}
                   // Collapsed content stays in the DOM for the height animation, so `inert` is what
                   // keeps it out of the tab order and the accessibility tree.
-                  inert={isCollapsed ? '' : undefined}
+                  inert={isCollapsed}
                   initial={false}
                   animate={isCollapsed ? 'collapsed' : 'expanded'}
                   variants={{
