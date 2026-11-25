@@ -39,7 +39,6 @@ export const env = createEnv({
     NEXT_PUBLIC_PLANET_API_KEY: z.string(),
     NEXT_PUBLIC_TRANSIFEX_API_KEY: z.string(),
     NEXT_PUBLIC_GA_ID: z.string(),
-    NEXT_PUBLIC_VERCEL_ENV: z.enum(['development', 'production', 'preview']),
     NEXT_PUBLIC_FEATURED_FLAGS: z
       .string()
       .transform((val) => {
@@ -78,7 +77,6 @@ export const env = createEnv({
     SMTP_USER_NAME: process.env.SMTP_USER_NAME,
     NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
     NEXT_PUBLIC_FEATURED_FLAGS: process.env.NEXT_PUBLIC_FEATURED_FLAGS,
-    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
     NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
   },
 });

@@ -23,7 +23,6 @@ const ENV_DEFAULTS: Record<string, string> = {
   NEXT_PUBLIC_SMTP_PORT: '587',
   NEXT_PUBLIC_SMTP_USER_NAME: 'test',
   NEXT_PUBLIC_GA_ID: 'test',
-  NEXT_PUBLIC_VERCEL_ENV: 'development',
   NEXT_PUBLIC_ENVIRONMENT: 'development',
   NEXTAUTH_URL: 'https://example.com',
   NEXTAUTH_SECRET: 'test',

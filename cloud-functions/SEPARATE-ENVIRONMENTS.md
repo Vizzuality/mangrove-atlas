@@ -29,7 +29,7 @@ Deploy two independently named functions in the **same GCP project** (`mangrove-
 | Production  | main  | `analysis-production`| `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis-production`|
 
 - GCP project, region, runtime, and GEE credentials remain shared (no new GCP project needed).
-- Vercel already manages separate environments — only the env var value needs updating.
+- Heroku (staging, production) and Railway (previews) already manage separate environments — only the env var value needs updating.
 - No new GitHub Secrets are required (same `gcp_credentials` and `GEE_CREDENTIALS_JSON`).
 
 ---
@@ -87,21 +87,21 @@ The `test` step at the end (line 47–49) uses `${{ steps.deploy.outputs.url }}`
 
 ---
 
-### 2. Vercel Environment Variables
+### 2. Deploy Environment Variables
 
 Keep `NEXT_PUBLIC_ANALYSIS_API_URL` as the **bare base domain** in every environment. Add a new
 `NEXT_PUBLIC_ANALYSIS_API_PATH` variable holding the function name per environment. `AnalysisAPI`'s
 `baseURL` is composed from the two (see §3).
 
-Update in the Vercel project dashboard:
+Update in Heroku config vars (staging, production) and Railway shared variables (previews):
 
-| Vercel Environment | Variable                        | Value                                                                |
+| Environment        | Variable                        | Value                                                                |
 |--------------------|---------------------------------|----------------------------------------------------------------------|
 | All                | `NEXT_PUBLIC_ANALYSIS_API_URL`  | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net` (bare, unchanged) |
-| Preview (staging)  | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-staging`                                                   |
-| Production         | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-production`                                                |
+| Staging (Heroku)   | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-staging`                                                   |
+| Production (Heroku) | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-production`                                                |
 
-No other Vercel variables need to change.
+No other variables need to change.
 
 ---
 
@@ -211,8 +211,8 @@ The goal is to have `analysis-production` up and serving before cutting over, so
 ### Phase 3 — Update the client
 
 1. Merge the `api.ts` baseURL change (§3), `env.mjs` change (§5), and env file updates (§4) to `develop`.
-2. Update Vercel env vars (§2) — set `NEXT_PUBLIC_ANALYSIS_API_PATH` (URL stays bare) **before** the Vercel preview deploy picks up the new code, so both the env var and the code change land together.
-3. Validate on the Vercel staging preview:
+2. Update env vars (§2) — set `NEXT_PUBLIC_ANALYSIS_API_PATH` (URL stays bare) **before** the staging deploy picks up the new code, so both the env var and the code change land together.
+3. Validate on the Heroku staging app:
    - Open a staging deploy.
    - Draw a polygon on the map.
    - Confirm the analysis widgets load (network tab should show requests to `…/analysis-staging`).
@@ -220,7 +220,7 @@ The goal is to have `analysis-production` up and serving before cutting over, so
 ### Phase 4 — Promote to production
 
 1. Merge `develop` → `main` (normal release).
-2. Confirm Vercel production deploy has `NEXT_PUBLIC_ANALYSIS_API_PATH=analysis-production`.
+2. Confirm the Heroku production deploy has `NEXT_PUBLIC_ANALYSIS_API_PATH=analysis-production`.
 3. Verify analysis on production.
 
 ### Phase 5 — Decommission the old shared function (optional)
@@ -237,7 +237,7 @@ gcloud functions delete analysis --region=us-central1 --project=mangrove-atlas-2
 
 Because the old `analysis` function still exists until Phase 5:
 
-- **Client rollback:** set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Vercel back to `analysis` (the old shared function). `NEXT_PUBLIC_ANALYSIS_API_URL` stays the bare base — no URL or hook changes needed. No GCP changes needed.
+- **Client rollback:** set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Heroku back to `analysis` (the old shared function). `NEXT_PUBLIC_ANALYSIS_API_URL` stays the bare base — no URL or hook changes needed. No GCP changes needed.
 - **Function rollback:** GCP retains previous revisions of a Cloud Function; you can redeploy from the previous source or trigger a prior workflow run.
 
 ---
@@ -269,9 +269,9 @@ If fetch-alerts needs staging/production separation later, the same pattern appl
 1. In the workflow, derive the function name from the branch (same step as §1 above):
    - `fetch-alerts` → `fetch-alerts-staging` / `fetch-alerts-production`
 
-2. Make `src/services/cloud-functions/index.ts` env-var driven (introduce `NEXT_PUBLIC_CLOUD_FUNCTIONS_API_URL`) so Vercel can point each environment at the right base URL.
+2. Make `src/services/cloud-functions/index.ts` env-var driven (introduce `NEXT_PUBLIC_CLOUD_FUNCTIONS_API_URL`) so each deploy environment can point at the right base URL.
 
-3. Update Vercel to set `NEXT_PUBLIC_CLOUD_FUNCTIONS_API_URL` per environment.
+3. Update Heroku and Railway to set `NEXT_PUBLIC_CLOUD_FUNCTIONS_API_URL` per environment.
 
 This is deliberately out of scope now to keep the change set small and the risk low.
 
@@ -292,10 +292,10 @@ This is deliberately out of scope now to keep the change set small and the risk 
 - [ ] Trigger manual workflow dispatch from `main` to create `analysis-production`
 - [ ] Verify `analysis-production` is live and responding
 - [ ] Verify `analysis-staging` is deployed from `develop`
-- [ ] Set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Vercel (staging + production) before the next client deploy; keep `NEXT_PUBLIC_ANALYSIS_API_URL` bare
+- [ ] Set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Heroku (staging + production) before the next client deploy; keep `NEXT_PUBLIC_ANALYSIS_API_URL` bare
 - [ ] Compose `AnalysisAPI` baseURL from URL + PATH in `src/services/api.ts`
 - [ ] Add `NEXT_PUBLIC_ANALYSIS_API_PATH` to `env.mjs` (client schema + runtimeEnv)
 - [ ] Update `.env`, `.env.test`, `.env.default`, and `playwright.yml`
-- [ ] Validate staging Vercel deploy calls `analysis-staging`
-- [ ] Validate production Vercel deploy calls `analysis-production`
+- [ ] Validate staging Heroku deploy calls `analysis-staging`
+- [ ] Validate production Heroku deploy calls `analysis-production`
 - [ ] Delete old `analysis` function (after stability confirmed)
