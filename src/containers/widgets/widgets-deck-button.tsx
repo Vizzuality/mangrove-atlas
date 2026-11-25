@@ -46,7 +46,7 @@ export default function WidgetsDeckButton() {
         initial="rest"
         whileHover="hover"
         animate="rest"
-        className="fixed bottom-3 left-1/2 z-20 -translate-x-1/2 lg:left-[calc((572px-48px)/2)] lg:translate-x-0"
+        className="fixed bottom-24 left-1/2 z-20 -translate-x-1/2 lg:bottom-3 lg:left-[calc((572px-48px)/2)] lg:translate-x-0"
       >
         <DialogTrigger asChild>
           <motion.button

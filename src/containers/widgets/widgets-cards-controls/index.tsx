@@ -12,10 +12,10 @@ import WidgetsDeck from '@/containers/widgets/widgets-cards-controls/widgets-dec
 const WidgetsCardsControls: FC = () => {
   const locationTool = useAtomValue(locationToolAtom);
   return (
-    <div className="hidden py-1 lg:block">
+    <div className="py-1">
       <div
         className={cn({
-          'grid w-full grid-cols-2 justify-between gap-1': true,
+          'grid w-full grid-cols-2 justify-between gap-2 lg:gap-1': true,
           hidden: locationTool === 'area' || locationTool === 'upload',
         })}
       >

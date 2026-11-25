@@ -53,7 +53,9 @@ const WidgetsContainer: FC = () => {
           spacing is applied via Tailwind responsive utilities (reset at lg)
           rather than a JS width check, which previously delayed the list until
           hydration and caused a layout shift. */}
-      <div data-testid="widgets-wrapper" className="mt-5 pb-16 lg:mt-0 lg:pb-0">
+      {/* Mobile bottom padding clears the fixed nav bar plus the floating
+          widgets deck button stacked above it. */}
+      <div data-testid="widgets-wrapper" className="mt-2 pb-28 lg:mt-0 lg:pb-0">
         {widgetsAvailable.map((widget) => (
           <WidgetCard key={widget.slug} widget={widget} />
         ))}
