@@ -1,3 +1,5 @@
+import { isFeatureEnabled } from '@/lib/feature-flags';
+
 import { WidgetTypes } from 'types/widget';
 
 const widgets_dev = [] satisfies WidgetTypes[];
@@ -192,7 +194,7 @@ const widgets_prod = [
       'mangrove_coastal_protection_stock',
     ],
   },
-  ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
+  ...(isFeatureEnabled('iucn-ecoregion')
     ? ([
         {
           name: 'IUCN Ecosystem Red List Assessment',
@@ -256,10 +258,7 @@ const widgets_prod = [
   },
 ] satisfies WidgetTypes[];
 
-export const widgets =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
-    ? [...widgets_dev, ...widgets_prod]
-    : widgets_prod;
+export const widgets = [...widgets_dev, ...widgets_prod];
 
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_habitat_extent',

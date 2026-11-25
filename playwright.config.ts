@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
  * `override: true` replaces any values the developer has in their shell or
  * personal .env for the duration of this process, so `next build` bakes the
  * same NEXT_PUBLIC_* values into the client bundle on every machine. Without
- * this, a developer with NEXT_PUBLIC_VERCEL_ENV=development in their .env
+ * this, a developer with NEXT_PUBLIC_ENVIRONMENT=staging in their .env
  * builds a different binary than CI does, and tests silently diverge.
  *
  * Secrets (NEXTAUTH_SECRET, API URLs, Mapbox token, …) intentionally live

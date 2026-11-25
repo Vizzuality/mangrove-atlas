@@ -10,7 +10,7 @@
 
 The app is being deployed to Railway (project `mangroves-atlas`). Railway uses a root `Dockerfile` when one exists and falls back to Railpack, its auto-detecting builder, otherwise. The existing `Dockerfile` dated from the initial scaffold (Node 18, Yarn), so every Railway build failed.
 
-`next.config.js` already emits `output: 'standalone'` outside Vercel, and Playwright serves that standalone bundle. `next start` does not work with standalone output.
+`next.config.js` already emits `output: 'standalone'`, and Playwright serves that standalone bundle. `next start` does not work with standalone output.
 
 `env.mjs` validates the whole schema (server and client vars) during `next build`, and `NEXT_PUBLIC_*` values are inlined into the client bundle at build time, so all variables must be available to the build.
 

@@ -7,19 +7,19 @@ For the full design rationale, see [SEPARATE-ENVIRONMENTS.md](./SEPARATE-ENVIRON
 
 ## Before merging the PR
 
-Keep `NEXT_PUBLIC_ANALYSIS_API_URL` as the **bare base domain** in every Vercel environment.
+Keep `NEXT_PUBLIC_ANALYSIS_API_URL` as the **bare base domain** in every deploy environment (Heroku staging + production, Railway previews).
 Add a new `NEXT_PUBLIC_ANALYSIS_API_PATH` variable holding the function name per environment.
 `AnalysisAPI`'s `baseURL` is composed as `${URL}/${PATH}` in `src/services/api.ts`.
 
-In the **Vercel project dashboard**:
+In each environment's config vars (Heroku) or shared variables (Railway):
 
-| Vercel environment | Variable                        | Value |
+| Environment        | Variable                        | Value |
 |--------------------|---------------------------------|-------|
 | All                | `NEXT_PUBLIC_ANALYSIS_API_URL`  | `https://us-central1-mangrove-atlas-246414.cloudfunctions.net` (unchanged) |
-| Preview (staging)  | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-staging` |
-| Production         | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-production` |
+| Staging (Heroku)   | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-staging` |
+| Production (Heroku) | `NEXT_PUBLIC_ANALYSIS_API_PATH` | `analysis-production` |
 
-> ⚠️ Set `NEXT_PUBLIC_ANALYSIS_API_PATH` **before** any Vercel deploy picks up the new code.
+> ⚠️ Set `NEXT_PUBLIC_ANALYSIS_API_PATH` **before** any deploy picks up the new code.
 > If the path var is missing when the code goes live, env validation (`env.mjs`) fails the build.
 
 ---
@@ -37,8 +37,8 @@ curl -X POST \
   -d '{"geometry": {"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}}'
 ```
 
-**Verify the Vercel staging deploy:**
-1. Open a Vercel preview/staging deploy.
+**Verify the staging deploy (Heroku):**
+1. Open the staging app.
 2. Draw a polygon on the map.
 3. Open the browser network tab and confirm requests go to `…/analysis-staging`.
 
@@ -56,7 +56,7 @@ curl -X POST \
   -d '{"geometry": {"type":"Polygon","coordinates":[[[0,0],[1,0],[1,1],[0,1],[0,0]]]}}'
 ```
 
-**Verify the Vercel production deploy:**
+**Verify the production deploy (Heroku):**
 Same as above — draw a polygon, confirm network requests go to `…/analysis-production`.
 
 ---
@@ -122,6 +122,6 @@ gcloud functions delete analysis \
 
 If something goes wrong after the client code is live:
 
-1. Set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Vercel back to `analysis` (the old shared function).
+1. Set `NEXT_PUBLIC_ANALYSIS_API_PATH` in Heroku back to `analysis` (the old shared function).
 2. `NEXT_PUBLIC_ANALYSIS_API_URL` stays the bare base — no URL or hook changes needed.
 3. The old `analysis` function still exists until the cleanup step above — no GCP changes needed.
