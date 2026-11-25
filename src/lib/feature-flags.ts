@@ -4,6 +4,7 @@ import { env } from 'env.mjs';
 // overrides any of them without a code change.
 const DEFAULTS = {
   'default-view': env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
+  'iucn-ecoregion': env.NEXT_PUBLIC_ENVIRONMENT === 'development',
 } as const;
 
 export type FeatureFlag = keyof typeof DEFAULTS;
