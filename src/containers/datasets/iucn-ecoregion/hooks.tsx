@@ -187,7 +187,9 @@ export function useLayers({
       filter: ['has', 'overall_assessment'],
       type: 'line',
       paint: {
-        'line-color': ['match', ['get', 'overall_assessment'], ...matchColors, '#ccc'],
+        // Dark neutral outline so province edges stay visible against both the category fill
+        // and the basemap (a same-colour outline disappeared into light fills like VU/NE).
+        'line-color': '#333333',
         'line-width': 1.5,
         'line-opacity': opacity * 0.95,
       },

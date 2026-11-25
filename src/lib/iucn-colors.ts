@@ -9,6 +9,9 @@
  * Not in the official chart:
  * - Collapsed (CO, ecosystems only): same black as Extinct (EX).
  * - Lower Risk (LR): no colour; IUCN says to show LR/cd as NT and LR/lc as LC.
+ *
+ * Deviates from the official chart:
+ * - Endangered (EN): #FFA500 instead of the official #FC7F3F, as requested by IUCN.
  */
 export const IUCN_COLORS = {
   ex: '#000000', // Extinct
@@ -16,7 +19,7 @@ export const IUCN_COLORS = {
   ew: '#542344', // Extinct in the Wild
   re: '#9B4F96', // Regionally Extinct
   cr: '#D81E05', // Critically Endangered
-  en: '#FC7F3F', // Endangered
+  en: '#FFA500', // Endangered — requested by IUCN (official chart: #FC7F3F)
   vu: '#F9E814', // Vulnerable
   nt: '#CCE226', // Near Threatened
   lc: '#60C659', // Least Concern
