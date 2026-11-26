@@ -19,7 +19,7 @@ import {
 
 import { Input } from '@/components/ui/input';
 
-const LuPlusIcon = LuPlus as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+const LuPlusIcon = LuPlus as unknown as (p: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
 
 // Planar shoelace area of a linear ring — only used to compare relative polygon sizes,
 // so an unprojected approximation is fine.

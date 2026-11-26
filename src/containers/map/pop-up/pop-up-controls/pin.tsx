@@ -2,10 +2,12 @@ import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-const BsPinAngleIcon = BsPinAngle as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+const BsPinAngleIcon = BsPinAngle as unknown as (
+  p: React.SVGProps<SVGSVGElement>
+) => React.JSX.Element;
 const BsPinAngleFillIcon = BsPinAngleFill as unknown as (
   p: React.SVGProps<SVGSVGElement>
-) => JSX.Element;
+) => React.JSX.Element;
 
 type MapPopupPinProps = {
   handleClickToDocker?: (e: React.MouseEvent) => void;

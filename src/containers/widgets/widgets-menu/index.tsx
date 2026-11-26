@@ -21,7 +21,7 @@ import { Visibility } from '@/types/layers';
 import type { Layer } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
-const FaCheckIcon = FaCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+const FaCheckIcon = FaCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
 
 const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useSyncActiveCategory();

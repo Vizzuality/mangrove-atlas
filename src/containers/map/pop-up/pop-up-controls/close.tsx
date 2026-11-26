@@ -6,7 +6,7 @@ type MapPopupCloseProps = {
   handleClose: (e: React.MouseEvent) => void;
 };
 
-const HixIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+const HixIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
 
 const MapPopupClose = ({ handleClose }: MapPopupCloseProps) => {
   return (

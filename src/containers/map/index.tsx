@@ -94,7 +94,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   const [, setAnalysisState] = useAtom(analysisAtom);
   const guideIsActive = useAtomValue(activeGuideAtom);
   const mapView = useAtomValue(mapViewAtom);
-  const { width: screenWidth } = useWindowSize();
+  const { width: screenWidth = 0 } = useWindowSize({ initializeWithValue: false });
   const isDesktop = screenWidth >= breakpoints.lg;
   const isMobile = screenWidth > 0 && screenWidth < breakpoints.lg;
   const [locationPopUp, setLocationPopUp] = useState<{

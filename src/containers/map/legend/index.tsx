@@ -12,8 +12,8 @@ import SortableList from '@/components/map/legend/sortable/list';
 import LegendItem from './item';
 import { useLegendLayers } from './use-legend-layers';
 
-const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
-const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
+const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => React.JSX.Element;
+const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => React.JSX.Element;
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const { legendLayers, fixedLayerIds, handleChangeOrder } = useLegendLayers();

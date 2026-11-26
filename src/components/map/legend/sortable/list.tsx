@@ -135,7 +135,7 @@ const SortableList: React.FC<SortableListProps> = ({
                 fixed={fixedIds?.includes(id)}
                 data-testid={`legend-item-${id}`}
               >
-                {cloneElement(Child as ReactElement, {
+                {cloneElement(Child as ReactElement<Record<string, unknown>>, {
                   sortable,
                 })}
               </SortableItem>
@@ -148,7 +148,7 @@ const SortableList: React.FC<SortableListProps> = ({
       <DragOverlay>
         {isValidElement(ActiveItem) && (
           <div className="flex max-h-[calc(100vh-theme(space.16)-theme(space.6)-theme(space.48)-theme(space.40))] flex-col overflow-hidden">
-            {cloneElement(ActiveItem as ReactElement, {
+            {cloneElement(ActiveItem as ReactElement<Record<string, unknown>>, {
               sortable,
             })}
           </div>

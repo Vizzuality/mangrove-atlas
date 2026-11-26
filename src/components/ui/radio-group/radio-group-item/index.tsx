@@ -3,7 +3,7 @@ import cn from '@/lib/classnames';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { CgRadioCheck } from 'react-icons/cg';
 
-const RadioCheckIcon = CgRadioCheck as unknown as (p: IconBaseProps) => JSX.Element;
+const RadioCheckIcon = CgRadioCheck as unknown as (p: IconBaseProps) => React.JSX.Element;
 
 import { IconBaseProps } from 'react-icons/lib';
 

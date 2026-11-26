@@ -9,8 +9,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import LegendItem from '../item';
 import { useLegendLayers } from '../use-legend-layers';
 
-const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
-const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
+const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => React.JSX.Element;
+const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => React.JSX.Element;
 
 const PANEL_STYLE = 'shadow-medium rounded-3xl border border-black/10 bg-white';
 
