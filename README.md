@@ -133,14 +133,14 @@ This project uses **Google Analytics 4 (GA4)** via [`react-ga4`](https://github.
 
 ## Deployment
 
-- **Pull request previews** — [Railway](https://railway.com/) (project `mangroves-atlas`, service `mangrove-atlas`).
+- **Development and pull request previews** — [Railway](https://railway.com/) (project `mangroves-atlas`, service `mangrove-atlas`). Every push to `develop` deploys the development app; each PR gets its own preview.
 - **Staging and production** — [Heroku](https://www.heroku.com/).
 
 Cloud functions are deployed independently via GitHub Actions on push to `develop`/`master` when their files change.
 
 ### Railway
 
-Railway builds the root `Dockerfile` on every push to `develop` and runs the Next.js standalone server (`node server.js`). The Railway environment is named `production`, but it serves `develop` with `NEXT_PUBLIC_ENVIRONMENT=staging`.
+Railway builds the root `Dockerfile` on every push to `develop` (the development deploy) and for every PR (previews), and runs the Next.js standalone server (`node server.js`). The Railway environment is named `production`, but it serves the development app from `develop` with `NEXT_PUBLIC_ENVIRONMENT=staging`; the real staging and production apps are on Heroku.
 
 Variables live as **shared variables** in the Railway environment and are attached to the service as `${{shared.NAME}}` references. Because `NEXT_PUBLIC_*` values are inlined at build time and `env.mjs` validates the schema during `next build`, every variable must also be declared as an `ARG` in the Dockerfile's builder stage. When you add a variable to `env.mjs`:
 
